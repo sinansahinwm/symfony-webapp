@@ -12,8 +12,6 @@ class DocumentationController extends AbstractController
     #[Route('/documentation', name: 'documentation')]
     public function index(): Response
     {
-        return $this->render('admin/documentation/index.html.twig', [
-            'controller_name' => 'DocumentationController',
-        ]);
+        return $this->render('admin/documentation/index.html.twig');
     }
 }
