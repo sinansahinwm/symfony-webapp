@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\Dropzone\Form\DropzoneType;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class FileSharingType extends AbstractFormType
 {
@@ -24,8 +25,11 @@ class FileSharingType extends AbstractFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('fileName', DropzoneType::class, [
-            'label' => $this->t('Dosya')
+        $builder->add('theFile', DropzoneType::class, [
+            'label' => $this->t('Dosya'),
+            'attr' => [
+                'placeholder' => $this->t('Sürükleyip bırakın veya göz atın'),
+            ]
         ]);
         $builder->add('password', PasswordType::class, [
             'label' => $this->t('Şifre'),
