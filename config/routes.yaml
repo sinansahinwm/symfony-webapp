@@ -1,0 +1,11 @@
+index:
+    path: /
+    controller: App\Controller\AuthController::authSignIn
+crudtable_callback:
+    path: /admin/crudtable/callback
+    controller: App\Service\CrudTable\CrudTableService::isCallback
+controllers:
+    resource:
+        path: ../src/Controller/
+        namespace: App\Controller
+    type: attribute

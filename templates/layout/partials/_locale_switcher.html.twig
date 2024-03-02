@@ -1,0 +1,14 @@
+<li class="nav-item dropdown-language dropdown me-2 me-xl-0">
+    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+        <i class="bx bx-globe bx-sm"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end">
+        {% for appFallbackLocale in layout.locales %}
+        <li>
+            <a class="dropdown-item" href="{{ path('app_admin_profile_switch_locale_to', { fallback: appFallbackLocale.fallback }) }}">
+                <span class="align-middle">{{ appFallbackLocale.name }}</span>
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+</li>

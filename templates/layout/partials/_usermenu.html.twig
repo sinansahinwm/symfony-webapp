@@ -1,0 +1,46 @@
+<li>
+    <a class="dropdown-item" href="#">
+        <div class="d-flex">
+            <div class="flex-shrink-0 me-3">
+                {{ include('layout/partials/_user_avatar.html.twig') }}
+            </div>
+            <div class="flex-grow-1">
+                <span class="fw-medium d-block lh-1">{{ userMenu.name }}</span>
+                <small>{{ 'Hesap Adı'|trans }}</small>
+            </div>
+        </div>
+    </a>
+</li>
+{% for userMenuItem in userMenu.items %}
+    {% if userMenuItem.type is same as("section") %}
+        <li>
+            <div class="dropdown-divider"></div>
+        </li>
+    {% endif %}
+    {% if userMenuItem.type is same as("logout") %}
+        <li>
+            <a class="dropdown-item" href="{{ path('app_auth_signout') }}">
+                <i class="{{ userMenuItem.icon}} me-2"></i>
+                <span class="align-middle">{{ userMenuItem.label }}</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if userMenuItem.type is same as("route") %}
+        <li>
+            <a class="dropdown-item" href="{{ path(userMenuItem.routeName, userMenuItem.routeParameters) }}">
+                <i class="{{ userMenuItem.icon }} me-2"></i>
+                <span class="align-middle">{{ userMenuItem.label }}</span>
+            </a>
+        </li>
+    {% endif %}
+    {% if userMenuItem.type is same as("exit_impersonation") %}
+        {% if is_granted('IS_IMPERSONATOR') %}
+            <li>
+                <a class="dropdown-item" href="{{ impersonation_exit_path(path('app_auth_signin') ) }}">
+                    <i class="{{ userMenuItem.icon }} me-2"></i>
+                    <span class="align-middle">{{ userMenuItem.label }}</span>
+                </a>
+            </li>
+        {% endif %}
+    {% endif %}
+{% endfor %}

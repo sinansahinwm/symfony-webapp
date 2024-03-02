@@ -1,0 +1,10 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}Hello DocumentationController!{% endblock %}
+{% block contentTitle %}Hello DocumentationController!{% endblock %}
+
+{% block body %}
+    {% apply markdown_to_html %}
+        {{ include('admin/documentation/documentation.md.twig') }}
+    {% endapply %}
+{% endblock %}

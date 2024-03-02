@@ -1,0 +1,41 @@
+{% for menuItem in appAdminMenu(app.user) %}
+    {% if menuItem.type is same as("section") %}
+        <li class="menu-header small text-uppercase" id="menu_section_{{ menuItem.label }}">
+            <span class="menu-header-text">{{ menuItem.label }}</span>
+        </li>
+    {% endif %}
+    {% if menuItem.type is same as("route") %}
+        <li class="menu-item" id="menu_route_{{ menuItem.label }}">
+            <a href="{{ path(menuItem.routeName, menuItem.routeParameters) }}" class="menu-link" target="{{ menuItem.linkTarget }}">
+                <i class="menu-icon tf-icons {{ menuItem.icon }}"></i>
+                <div>{{ menuItem.label }}</div>
+                {% if menuItem.badge is not same as(null) %}
+                    <div class="badge bg-primary rounded-pill ms-auto">{{ menuItem.badge.content }}</div>
+                {% endif %}
+            </a>
+        </li>
+    {% endif %}
+    {% if menuItem.type is same as("submenu") %}
+        <li class="menu-item" id="menu_submenu_{{ menuItem.label }}">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons {{ menuItem.icon }}"></i>
+                <div>{{ menuItem.label }}</div>
+                {% if menuItem.badge is not same as(null) %}
+                    <div class="badge bg-primary rounded-pill ms-auto">{{ menuItem.badge.content }}</div>
+                {% endif %}
+            </a>
+            <ul class="menu-sub">
+                {% for subItem in menuItem.subItems %}
+                    <li class="menu-item">
+                        <a href="{{ path(subItem.routeName, subItem.routeParameters) }}" class="menu-link">
+                            <div>{{ subItem.label }}</div>
+                            {% if subItem.badge is not same as(null) %}
+                                <div class="badge bg-primary rounded-pill ms-auto">{{ subItem.badge.content }}</div>
+                            {% endif %}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </li>
+    {% endif %}
+{% endfor %}

@@ -1,0 +1,160 @@
+# ===============================
+# PARAMETERS CONFIGURATION
+# ===============================
+parameters:
+  app.defaultDomain: '%env(APP_DOMAIN)%'
+
+# ===============================
+# TWIG CONFIGURATION
+# ===============================
+twig:
+  form_themes: [ 'bootstrap_5_horizontal_layout.html.twig' ]
+  globals:
+    layout:
+      locales:
+        - fallback: "tr"
+          name: "Türkçe"
+        - fallback: "en"
+          name: "İngilizce"
+      admin:
+        logoPath: 'app_admin_dashboard'
+        logoText: 'My App'
+        developer:
+          name: "S.S"
+          url: '#'
+          documentationPath: 'app_admin_documentation'
+        favicon: '@theme/assets/img/favicon/favicon.ico'
+        meta:
+          - name: "description"
+            content: "My App"
+
+    email:
+      appName: 'The App'
+      footerLogo: 'https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_light_color_74x24dp.png'
+      headerLogo: 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_128dp.png'
+      bellIcon: 'https://www.gstatic.com/mobilesdk/180227_mobilesdk/crashlytics_icon@2x.png'
+      logoAltText: 'The App'
+      subscribingPath: 'app_auth_signup'
+      footerLine1: 'Google LLC'
+      footerLine2: '1600 Amphitheatre Pkwy'
+      footerLine3: 'Mountain View, CA, 94043 USA'
+
+# ===============================
+# FRAMEWORK CONFIGURATION
+# ===============================
+framework:
+  router:
+    default_uri: '%env(APP_DOMAIN)%'
+  default_locale: tr
+  translator:
+    default_path: '%kernel.project_dir%/translations'
+    fallbacks:
+      - tr
+      - en
+    providers:
+
+
+# ===============================
+# MONOLOG CONFIGURATION
+# ===============================
+monolog:
+  handlers:
+    app_logger:
+      type: fingers_crossed
+      level: error
+      handler: app_grouped
+      excluded_http_codes: [ 404, 405 ]
+    app_grouped: # Logs split into two groups.
+      type: group
+      members: [ app_rotating_file, app_deduplicated ]
+    app_rotating_file: # Save log to a file.
+      type: rotating_file
+      level: error
+      path: "%kernel.logs_dir%/error.log"
+      max_files: 10
+    app_deduplicated:
+      type: deduplication
+      handler: app_symfony_mailer
+    app_symfony_mailer: # Send log by email to administrator.
+      type: symfony_mailer
+      from_email: '%env(MAILER_FROM)%'
+      to_email: '%env(MONOLOG_ERROR_LOGGER_EMAIL_RECIPIENT)%'
+      subject: 'An Error Occurred!'
+      level: error
+      formatter: monolog.formatter.html
+      content_type: text/html
+
+# ===============================
+# VICH UPLOADED CONFIGURATION
+# ===============================
+vich_uploader:
+  db_driver: orm
+  mappings:
+    abstract_file:
+      uri_prefix: /storage
+      upload_destination: '%kernel.project_dir%/storage'
+      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
+
+# ===============================
+# DOCTRINE CONFIGURATION
+# ===============================
+doctrine:
+  dbal:
+    mapping_types:
+      enum: string
+    types:
+      notification_priority: App\Config\NotificationPriorityType
+
+# ===============================
+# TWIG COMPONENT CONFIGURATION
+# ===============================
+twig_component:
+  anonymous_template_directory: 'component/'
+  defaults:
+    # Namespace & directory for components
+    App\Twig\Component\: 'component/'
+
+# ===============================
+# DATATABLES CONFIGURATION
+# ===============================
+datatables:
+
+  # Load i18n data from DataTables CDN or locally
+  language_from_cdn: true
+
+  # Default HTTP method to be used for callbacks
+  method: POST # One of "GET"; "POST"
+
+  # Default options to load into DataTables
+  options:
+    lengthMenu: [ 10, 25, 50, 100, 250 ]
+    pageLength: 10
+    dom: '<"row"<"col-sm-12 col-md-6"l><"col-sm-12 col-md-6 d-flex justify-content-center justify-content-md-end"f>><"table-responsive"t><"row"<"col-sm-12 col-md-6"i><"col-sm-12 col-md-6"p>>'
+    stateSave: false
+    searching: true
+    pagingType: simple_numbers
+    processing: true
+    serverSide: true
+    fixedHeader: true
+
+
+  # Where to persist the current table state automatically
+  #persist_state: fragment # One of "none"; "query"; "fragment"; "local"; "session"
+
+  # Default service used to render templates, built-in TwigRenderer uses global Twig environment
+  # renderer: Omines\DataTablesBundle\Twig\TwigRenderer
+
+  # Default template to be used for DataTables HTML
+  # template: '@DataTables/datatable_html.html.twig'
+
+  # Default parameters to be passed to the template
+  template_parameters:
+
+    # Default class attribute to apply to the root table elements
+    className: 'table table-striped table-hover text-nowrap table-bordered'
+
+    # If and where to enable the DataTables Filter module
+    columnFilter: "thead" # One of "thead"; "tfoot"; "both"; null
+
+  # Default translation domain to be used
+  translation_domain: datatables

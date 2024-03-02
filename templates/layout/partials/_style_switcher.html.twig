@@ -1,0 +1,18 @@
+<li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
+
+    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+        <i class="bx bx-sm {% if app.user.darkMode is same as(true) %}bx-moon{% else %}bx-sun{% endif %}"></i>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end dropdown-styles">
+        <li>
+            <a class="dropdown-item" href="{{ path('app_admin_profile_switch_to_light_mode') }}" data-theme="light">
+                <span class="align-middle"><i class="bx bx-sun me-2"></i>{{ 'Aydınlık Tema'|trans }}</span>
+            </a>
+        </li>
+        <li>
+            <a class="dropdown-item" href="{{ path('app_admin_profile_switch_to_dark_mode') }}" data-theme="dark">
+                <span class="align-middle"><i class="bx bx-moon me-2"></i>{{ 'Karanlık Tema'|trans }}</span>
+            </a>
+        </li>
+    </ul>
+</li>

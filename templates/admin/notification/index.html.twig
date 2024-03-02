@@ -1,0 +1,11 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}Bildirimler{% endblock %}
+{% block contentTitle %}Bildirimler{% endblock %}
+
+{% block body %}
+
+
+    {{ component('_crud_table', { table: notificationTable, title: 'Bildirimleriniz'|trans}) }}
+
+{% endblock %}

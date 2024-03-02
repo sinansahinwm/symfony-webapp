@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default" data-assets-path="../../assets/" data-template="vertical-menu-template-no-customizer-starter">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+
+    <title>{{ layout.admin.logoText }} - {% block pageTitle %}{% endblock %}</title>
+
+    {{ include('layout/partials/_head.html.twig') }}
+</head>
+
+<body>
+<!-- Content -->
+
+<div class="authentication-wrapper authentication-cover">
+    <div class="authentication-inner row m-0">
+        <!-- /Left Text -->
+        <div class="d-none d-lg-flex col-lg-7 col-xl-8 align-items-center">
+            {% include 'layout/partials/_auth_left.html.twig' %}
+        </div>
+        <!-- /Left Text -->
+
+        <!-- Auth Body -->
+        {% block body %}
+        {% endblock %}
+        <!-- /Auth Body -->
+    </div>
+</div>
+
+<!-- / Content -->
+
+<!-- Core Scripts -->
+{% block appScripts %}
+    {{ encore_entry_script_tags('app') }}
+{% endblock %}
+
+{% include 'layout/_shared.html.twig' %}
+
+</body>
+</html>

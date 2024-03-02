@@ -1,0 +1,22 @@
+{% for meta in layout.admin.meta %}
+    <meta name="{{ meta.name }}" content="{{ meta.content }}" />
+{% endfor %}
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="{{ asset(layout.admin.favicon) }}" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+
+<!-- Core Stylesheets -->
+{% set isDarkModed = (app.user is not same as(null)) and (app.user.darkMode is same as(true)) %}
+{% block appStylesheets %}
+    {{ encore_entry_link_tags('app') }}
+    {% if isDarkModed is same as(true) %}
+        {{ encore_entry_link_tags('app-theme-dark') }}
+    {% else %}
+        {{ encore_entry_link_tags('app-theme-light') }}
+    {% endif %}
+{% endblock %}

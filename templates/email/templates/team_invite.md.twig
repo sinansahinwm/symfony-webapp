@@ -1,0 +1,15 @@
+{% extends 'layout/email.html.twig' %}
+
+{% block body %}
+    {% apply markdown_to_html %}
+            # {{ context.teamName }} bir takım daveti aldınız.
+
+            {{ context.teamOwnerName }} tarafından yeni bir davet aldınız.
+            {{ 'Takım davetini kabul etmek için aşağıdaki butona tıklayabilirsiniz.'|trans }}
+            {{ 'Butona tıkladığınızda sonuç alamadıysanız aşağıdaki linki kopyalayıp tarayıcınızın adres çubuğuna yapıştırın.'|trans }}
+
+            {{ 'Davetiye Bağlantısı:'|trans }} {{ context.action.url|raw }}
+
+            {{ 'Takım daveti, diğer ekip üyeleriyle beraber çalışmanızı sağlar.'|trans }}
+    {% endapply %}
+{% endblock %}

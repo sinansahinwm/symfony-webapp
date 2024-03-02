@@ -1,0 +1,38 @@
+{% extends 'layout/auth.html.twig' %}
+
+{% block pageTitle %}{{ 'Kaydol'|trans }}{% endblock %}
+
+{% form_theme registrationForm with ['bootstrap_5_layout.html.twig'] only %}
+
+{% block body %}
+    <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
+        <div class="w-px-400 mx-auto">
+            <div class="app-brand mb-4">
+                <a href="{{ path(layout.admin.logoPath) }}" class="app-brand-link gap-2 mb-2">
+                <span class="app-brand-logo demo">
+                  {% include 'layout/partials/_logo_svg.html.twig' %}
+                </span>
+                    <span class="app-brand-text demo h3 mb-0 fw-bold">
+                        {{ layout.admin.logoText }}
+                    </span>
+                </a>
+            </div>
+            <h4 class="mb-2">{{ 'Son bir adım kaldı'|trans }} 🚀</h4>
+            <p class="mb-4">{{ 'Devam etmek için e-posta adresinizle kaydolun!'|trans }}</p>
+            {{ form_start(registrationForm) }}
+            {{ form_errors(registrationForm) }}
+            {{ form_row(registrationForm.email) }}
+            {{ form_row(registrationForm.plainPassword) }}
+            {{ form_row(registrationForm.agreeTerms) }}
+            <button class="btn btn-primary d-grid w-100 mb-4">{{ 'Kaydol'|trans }}</button>
+            {{ form_end(registrationForm) }}
+            <p class="text-center">
+                <span>{{ 'Zaten hesabınız var mı?'|trans }}</span>
+                <a href="{{ path('app_auth_signin') }}">
+                    <span>{{ 'Giriş Yap'|trans }}</span>
+                </a>
+            </p>
+        </div>
+    </div>
+    {{ include('auth/_user_agreement_modal.html.twig') }}
+{% endblock %}

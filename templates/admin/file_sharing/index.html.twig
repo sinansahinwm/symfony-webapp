@@ -1,0 +1,17 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}Hello DocumentationController!{% endblock %}
+{% block contentTitle %}Hello DocumentationController!{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        {{ form_start(form) }}
+        <div class="card-body">
+            {{ form_widget(form) }}
+        </div>
+        {{ component('_card_action_footer') }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}

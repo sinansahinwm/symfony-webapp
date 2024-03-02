@@ -1,0 +1,72 @@
+{% if debug is defined %}
+    {% if debug is same as(true) and is_granted('ROLE_ADMIN') %}
+        {{ dump(table) }}
+    {% endif %}
+{% endif %}
+
+{% set tableID = table.options.stateSave|u.camel.title %}
+<!-- [TABLE DECORATOR] : {{ title }} -->
+<input type="hidden" class="crudTableDecorator"
+       data-target="#{{ tableID }}"
+       data-options='{{ datatable_settings(table) }}'
+       data-path="{{ path('crudtable_callback') }}"
+       data-fqcn="{{ table.options.stateSave }}"
+       data-language='{{ datatable_language(table) }}'>
+
+<!-- Chase -->
+
+
+<!-- [TABLE] : {{ title }}  -->
+<div class="card card-action">
+
+    <div class="card-img-overlay d-flex justify-content-center align-items-center" id="crudLoaderCardOverlay">
+        <div class="sk-chase sk-primary sk-center">
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+            <div class="sk-chase-dot"></div>
+        </div>
+    </div>
+
+    <div class="card-header ">
+        <h5 class="card-action-title">{{ title }}</h5>
+        <div class="card-action-element">
+            <ul class="list-inline mb-0">
+                <li class="list-inline-item">
+                    <a href="#{{ tableID }}OffCanvas" class="card-table-configurator" data-bs-toggle="offcanvas" ><i class="tf-icons bx bx-cog"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript:void(0);" class="card-collapsible"><i class="tf-icons bx bx-chevron-up"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript:void(0);" class="card-expand"><i class="tf-icons bx bx-fullscreen"></i></a>
+                </li>
+                <li class="list-inline-item">
+                    <a href="javascript:void(0);" class="card-close"><i class="tf-icons bx bx-x"></i></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="collapse show">
+        <div class="card-datatable table-responsive pt-0 crudTableFixMinH">
+            <table id="{{ tableID }}" class="dt-responsive table table-bordered">
+
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- [TABLE CONFIGURATOR] : {{ title }} -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="{{ tableID }}OffCanvas" aria-labelledby="{{ tableID }}OffCanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="{{ tableID }}OffCanvasLabel">{{ 'Tabloyu Özelleştir' }}</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="{{ 'Kapat'|trans }}"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div class="alert alert-warning">
+            {{ 'Bu tablo için hiçbir özelleştirme seçeneği sunulmadı.' }}
+        </div>
+    </div>
+</div>

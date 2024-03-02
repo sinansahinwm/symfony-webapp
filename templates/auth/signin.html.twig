@@ -1,0 +1,51 @@
+{% extends 'layout/auth.html.twig' %}
+
+{% block pageTitle %}{{ 'Giriş Yap'|trans }}{% endblock %}
+
+{% form_theme form with ['bootstrap_5_layout.html.twig'] only %}
+
+{% block body %}
+    <div class="d-flex col-12 col-lg-5 col-xl-4 align-items-center authentication-bg p-sm-5 p-4">
+        <div class="w-px-400 mx-auto">
+            <div class="app-brand mb-4">
+                <a href="{{ path(layout.admin.logoPath) }}" class="app-brand-link gap-2 mb-2">
+                <span class="app-brand-logo demo">
+                  {% include 'layout/partials/_logo_svg.html.twig' %}
+                </span>
+                    <span class="app-brand-text demo h3 mb-0 fw-bold">
+                        {{ layout.admin.logoText }}
+                    </span>
+                </a>
+            </div>
+            <h4 class="mb-2">{{ 'Hoşgeldin!'|trans }} 👋</h4>
+            <p class="mb-4">
+                {{ 'Kullanıcı hesabınızla devam etmek için lütfen giriş yapın'|trans }}
+            </p>
+            {{ form_start(form) }}
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            {% endif %}
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+            {{ form_widget(form) }}
+            <div class="mb-3 form-password-toggle">
+                <div class="d-flex justify-content-between">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="_remember_me" id="_remember_me" checked/>
+                        <label class="form-check-label" for="_remember_me"> {{ 'Beni Hatırla'|trans }} </label>
+                    </div>
+                    <a href="{{ path('app_auth_reset_password_request') }}">
+                        <small>{{ 'Şifremi Unuttum'|trans }}</small>
+                    </a>
+                </div>
+            </div>
+            <button class="btn btn-primary d-grid w-100 mb-4">{{ 'Giriş Yap'|trans }}</button>
+            {{ form_end(form) }}
+            <p class="text-center">
+                <span>{{ 'Hesabınız yok mu?'|trans }}</span>
+                <a href="{{ path('app_auth_signup') }}">
+                    <span>{{ 'Hesap Oluştur'|trans }}</span>
+                </a>
+            </p>
+        </div>
+    </div>
+{% endblock %}

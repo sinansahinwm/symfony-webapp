@@ -1,0 +1,14 @@
+{% extends 'layout/email.html.twig' %}
+
+{% block body %}
+    {% apply markdown_to_html %}
+        # {{ 'Merhaba, Lütfen e-posta adresinizi doğrulayın.'|trans }}
+
+        {{ 'Lütfen aşağıdaki butona tıklayarak bu e-posta adresinin size ait olduğunu doğrulayın.'|trans }}
+        {{ 'Butona tıkladığınızda sonuç alamadıysanız aşağıdaki linki kopyalayıp tarayıcınızın adres çubuğuna yapıştırın.'|trans }}
+
+        {{ 'Doğrulama Bağlantısı:'|trans }} {{ context.signedUrl|raw }}
+
+        {{ 'Bu e-posta doğrulama bağlantısının geçerlilik süresi:'|trans }} **{{ context.expiresAtMessageKey|trans(context.expiresAtMessageData, 'VerifyEmailBundle') }}**
+    {% endapply %}
+{% endblock %}

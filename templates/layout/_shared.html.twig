@@ -1,0 +1,6 @@
+{% for successFlash in app.flashes('pageNotificationSuccess') %}
+    <input type="hidden" class="pageNotificationSuccess" value="{{ successFlash }}">
+{% endfor %}
+{% for errorFlash in app.flashes('pageNotificationError') %}
+    <input type="hidden" class="pageNotificationError" value="{{ errorFlash }}">
+{% endfor %}

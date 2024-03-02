@@ -1,0 +1,97 @@
+<html{% if context.htmlLang is not null %} lang="{{ context.htmlLang }}"{% endif %}>
+<head>
+    <meta http-equiv=Content-Type content="text/html; charset=utf-8">
+    {% if context.title is not null %}
+        <title>{{ context.title }}</title>
+    {% endif %}
+</head>
+
+<body style=background-color:#f5f8fd;>
+
+<div role="presentation" style="font-family:roboto,sans-serif; border:1px solid #e0e0e0; background-color:#fff; max-width:600px; margin:0 auto;">
+    <header>
+        <div role=presentation style="text-align:center; padding:24px;">
+            <div role="presentation" style="display:inline-block; vertical-align:middle; margin-right:5px;">
+                <img src="{{ email.headerLogo }}" alt="{{ email.logoAltText }}" style="margin:auto; height:40px; max-height:40px; min-height:40px;">
+            </div>
+            <div aria-hidden="true" style="color:rgba(4,30,73,.7); display:inline-block; font-size:30px; font-weight:400; line-height:30px; vertical-align:middle;">
+                {{ email.appName }}
+            </div>
+        </div>
+        <table role="presentation" style="border-spacing:0; width:100%; background-color:#0b57d0;">
+            <tbody role="presentation">
+            <tr role=presentation>
+                <td role="presentation" style="padding:0; padding:24px;">
+                    <div role="presentation">
+                        <span role="group" aria-label="project name" style="font-size:14px; line-height:24px; color:#ecf3fe; padding-right:2px;">
+                            {{ 'İleti Konusu'|trans }}
+                        </span>
+                        <!--
+                        <span aria-hidden="true" style="font-size:14px; line-height:24px; color:#ecf3fe; padding-right:2px;">
+                            •
+                        </span>
+                        -->
+                    </div>
+                    <h1 style="font-size:20px; line-height:24px; margin:0; font-weight:400; color:#ecf3fe;">
+                        {{ context.subject }}
+                    </h1>
+                </td>
+                <td style="padding:0; padding:24px; text-align:right;">
+                    <img src="{{ email.bellIcon }}" style="height:24px; width:24px;">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </header>
+    <main>
+        <div style="background:#fafbff; padding-top:40px;">
+            <table role="presentation" style="border-spacing:0; width:100%; border-collapse:separate; border-radius:8px; border:1px solid #e0e0e0; margin:0 auto; max-width:430px; min-width:300px; overflow:hidden; padding:0; width:85%;">
+                <tbody role=presentation>
+                <tr role="presentation" style="word-wrap:break-word; word-break:break-word; color:#041e49;">
+                    <td role="presentation" style="padding:0; background:#fff; padding:20px 15px; text-align:left;">
+                        <div>
+                            {% block body %}
+                            {% endblock %}
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {% if context.action is defined %}
+        <div style="background:#fafbff; padding:20px 0;">
+            <a href="{{ context.action.url }}" target=_blank role="button" style="font-size:16px; font-weight:500; padding:12px 20px; margin-bottom:8px; text-decoration:none; text-transform:none; display:inline-block; border-radius:8px; background-color:#0b57d0; color:#fff; display:block; letter-spacing:.25px; width:85%; max-width:430px; min-width:300px; padding:.7em 0; margin:0 auto; text-align:center;">
+                {{ context.action.title|trans }}
+            </a>
+        </div>
+        {% endif %}
+    </main>
+    <footer>
+        <div style="background-color:#fafbff; padding:24px; font-size:12px; line-height:16px;">
+            <p style="color:rgba(4,30,73,.7); text-align:center; margin:0;">
+                {{ 'Bu e-posta, sizi projenizle bilgilendirmek amacıyla gönderilmiştir. Otomatik gönderilen bu iletiyi yanıtlamayın.' }}
+            </p>
+            <p style="color:rgba(4,30,73,.7); text-align:center; margin:0; margin-top:20px;">
+                <a href="{{ path(email.subscribingPath) }}" style="text-decoration:underline; color:#0b57d0;">
+                    {{ 'Uyarı ayarlarınızı yönetin'|trans }}
+                </a>
+            </p>
+        </div>
+        <table role="presentation" style="border-spacing:0; width:100%; background-color:#546e7a; padding:24px;">
+            <tbody role="presentation">
+                <tr role="presentation">
+                    <td aria-hidden="true" style="padding:0; width:70%;">
+                        <img src="{{ email.footerLogo }}" alt="{{ email.logoAltText }}" style="height:24px; max-height:24px; min-height:24px;">
+                    </td>
+                    <td role="presentation" style="padding:0; width:30%; font-size:10px; line-height:14px; font-weight:400; text-align:right;">
+                        <div style="color:#ecf3fe; text-decoration:none;">{{ email.footerLine1 }}</div>
+                        <div style="color:#ecf3fe; text-decoration:none;">{{ email.footerLine2 }}</div>
+                        <div style="color:#ecf3fe; text-decoration:none;">{{ email.footerLine3 }}</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </footer>
+</div>
+</body>
+</html>

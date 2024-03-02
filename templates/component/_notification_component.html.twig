@@ -1,0 +1,73 @@
+<div {{ attributes }} data-poll>
+    <li class="nav-item dropdown-notifications navbar-dropdown dropdown me-3 me-xl-2">
+        <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+            <i class="bx bx-bell bx-sm"></i>
+            {% if this.latestNotificationsCount > 0 %}
+                <span class="badge bg-danger rounded-pill badge-notifications" >{{ this.latestNotificationsCount }}</span>
+            {% endif %}
+        </a>
+        <ul class="dropdown-menu dropdown-menu-end py-0">
+            <li class="dropdown-menu-header border-bottom">
+                <div class="dropdown-header d-flex align-items-center py-3">
+                    <h5 class="text-body mb-0 me-auto">{{ 'Son Bildirimler'|trans }}</h5>
+                    {% if this.latestNotificationsCount > 0 %}
+                        <a href="javascript:void(0)" class="dropdown-notifications-all text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Tümünü okundu işaretle'|trans }}">
+                            <i class="bx fs-4 bx-envelope-open"></i>
+                        </a>
+                    {% endif %}
+                </div>
+            </li>
+            <li class="dropdown-notifications-list scrollable-container">
+                <ul class="list-group list-group-flush">
+                    {% for notification in this.latestNotifications %}
+                        <li class="list-group-item list-group-item-action dropdown-notifications-item">
+                            <div class="d-flex">
+                                <div class="flex-shrink-0 me-3">
+                                    <div class="avatar">
+                                        {% if notification.priority|upper is same as("LOW") %}
+                                            <span class="avatar-initial rounded-circle bg-label-secondary"><i class="bx bx-info-circle"></i></span>
+                                        {% elseif notification.priority|upper is same as("NORMAL") %}
+                                            <span class="avatar-initial rounded-circle bg-label-info"><i class="bx bx-alarm-exclamation"></i></span>
+                                        {% elseif notification.priority|upper is same as("HIGH") %}
+                                            <span class="avatar-initial rounded-circle bg-label-danger"><i class="bx bx-error"></i></span>
+                                        {% else %}
+                                            <span class="avatar-initial rounded-circle bg-label-secondary"><i class="bx bx-info-circle"></i></span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">
+                                        {% if notification.priority|upper is same as("LOW") %}
+                                            {{ 'Düşük Öncelikli Bildirim'|trans }}
+                                        {% elseif notification.priority|upper is same as("NORMAL") %}
+                                            {{ 'Bildirim'|trans }}
+                                        {% elseif notification.priority|upper is same as("HIGH") %}
+                                            {{ 'Öncelikli Bildirim'|trans }}
+                                        {% else %}
+                                            {{ 'Yeni Bildirim'|trans }}
+                                        {% endif %}
+                                    </h6>
+                                    <p class="mb-0">{{ notification.content }}</p>
+                                    <small class="text-muted">{{ notification.createdAt|ago }}</small>
+                                </div>
+                                <div class="flex-shrink-0 dropdown-notifications-actions">
+                                    <a href="{{ path('app_admin_notification_mark_as_read', { notification: notification.id }) }}" class="dropdown-notifications-read"><span class="badge badge-dot"></span></a>
+                                    <a href="javascript:void(0)" class="dropdown-notifications-archive"><span class="bx bx-x"></span></a>
+                                </div>
+                            </div>
+                        </li>
+                    {% else %}
+                        <div class="d-flex justify-content-center m-4">
+                            <span class="text-warning"><i class="bx bx-sad"></i> {{ 'Burada hiçbir şey yok'|trans }}</span>
+                        </div>
+                    {% endfor %}
+                </ul>
+            </li>
+            <li class="dropdown-menu-footer border-top">
+                <a href="{{ path('app_admin_notification_index') }}" class="dropdown-item d-flex justify-content-center p-3">
+                    {{ 'Tüm bildirimleri görüntüle'|trans }}
+                </a>
+            </li>
+        </ul>
+    </li>
+</div>
