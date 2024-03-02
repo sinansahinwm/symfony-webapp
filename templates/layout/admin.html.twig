@@ -95,7 +95,11 @@
             <div class="content-wrapper">
                 <!-- Content -->
                 <div class="container-xxl flex-grow-1 container-p-y">
-                    <h4 class="py-3 breadcrumb-wrapper mb-4">{% block contentTitle %}{% endblock %}</h4>
+                    <h4 class="py-3 breadcrumb-wrapper mb-4">
+                        {% if app.user.team %}
+                            <span class="text-muted fw-light">{{ app.user.team.name }} /</span>
+                        {% endif %}
+                        {% block contentTitle %}{% endblock %}</h4>
                     <div class="appContentBody">
                         {% block body %}
                         {% endblock %}
