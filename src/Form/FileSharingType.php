@@ -25,10 +25,16 @@ class FileSharingType extends AbstractFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $helperText = $this->t("Maksimum dosya boyutu: ") . AbstractFile::ALLOWED_MAX_FILE_SIZE_MB . 'MB';
+
         $builder->add('theFile', DropzoneType::class, [
             'label' => $this->t('Dosya'),
             'attr' => [
                 'placeholder' => $this->t('Sürükleyip bırakın veya göz atın'),
+            ],
+            'help' => $helperText,
+            'help_attr' => [
+                'class' => "text-warning"
             ]
         ]);
         $builder->add('password', PasswordType::class, [

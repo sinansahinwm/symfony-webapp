@@ -32,6 +32,10 @@ class FileSharingController extends AbstractController
         $fileSharingForm = $this->createForm(FileSharingType::class, $abstractFile);
         $fileSharingForm->handleRequest($request);
 
+        if ($loggedUser->getTeam() === NULL) {
+            $this->addFlash('pageNotificationError', t("Herhangi bir takımda olmadığınız için dosya paylaşamazsınız."));
+        }
+
         if ($fileSharingForm->isSubmitted() && $fileSharingForm->isValid()) {
 
             $sharingUsers = $fileSharingForm->get('toUser')->getData();
