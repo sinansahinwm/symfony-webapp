@@ -12,7 +12,7 @@
     <header>
         <div role=presentation style="text-align:center; padding:24px;">
             <div role="presentation" style="display:inline-block; vertical-align:middle; margin-right:5px;">
-                <img src="{{ email.headerLogo }}" alt="{{ email.logoAltText }}" style="margin:auto; height:40px; max-height:40px; min-height:40px;">
+                <img src="{{ absolute_url(asset(email.headerLogo)) }}" alt="{{ email.logoAltText }}" style="margin:auto; height:40px; max-height:40px; min-height:40px;">
             </div>
             <div aria-hidden="true" style="color:rgba(4,30,73,.7); display:inline-block; font-size:30px; font-weight:400; line-height:30px; vertical-align:middle;">
                 {{ email.appName }}
@@ -37,7 +37,7 @@
                     </h1>
                 </td>
                 <td style="padding:0; padding:24px; text-align:right;">
-                    <img src="{{ email.bellIcon }}" style="height:24px; width:24px;">
+                    <img src="{{ absolute_url(asset(email.bellIcon)) }}" style="height:24px; width:24px;">
                 </td>
             </tr>
             </tbody>
@@ -81,7 +81,7 @@
             <tbody role="presentation">
                 <tr role="presentation">
                     <td aria-hidden="true" style="padding:0; width:70%;">
-                        <img src="{{ email.footerLogo }}" alt="{{ email.logoAltText }}" style="height:24px; max-height:24px; min-height:24px;">
+                        <img src="{{ absolute_url(asset(email.footerLogo)) }}" alt="{{ email.logoAltText }}" style="height:24px; max-height:24px; min-height:24px;">
                     </td>
                     <td role="presentation" style="padding:0; width:30%; font-size:10px; line-height:14px; font-weight:400; text-align:right;">
                         <div style="color:#ecf3fe; text-decoration:none;">{{ email.footerLine1 }}</div>

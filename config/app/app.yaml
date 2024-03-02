@@ -30,9 +30,9 @@ twig:
 
     email:
       appName: 'The App'
-      footerLogo: 'https://www.gstatic.com/images/branding/googlelogo/2x/googlelogo_light_color_74x24dp.png'
-      headerLogo: 'https://www.gstatic.com/mobilesdk/160503_mobilesdk/logo/2x/firebase_128dp.png'
-      bellIcon: 'https://www.gstatic.com/mobilesdk/180227_mobilesdk/crashlytics_icon@2x.png'
+      footerLogo: 'build/media/emailFooterLogo.png'
+      headerLogo: 'build/media/emailHeaderLogo.png'
+      bellIcon: 'build/media/emailBellIcon.png'
       logoAltText: 'The App'
       subscribingPath: 'app_auth_signup'
       footerLine1: 'Google LLC'
