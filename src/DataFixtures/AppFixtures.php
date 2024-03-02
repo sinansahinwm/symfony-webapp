@@ -8,7 +8,6 @@ use App\Factory\DistrictFactory;
 use App\Factory\NotificationFactory;
 use App\Factory\TeamFactory;
 use App\Factory\TeamInviteFactory;
-use App\Factory\TeamOwnershipFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
@@ -19,8 +18,8 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class AppFixtures extends Fixture
 {
-    const USERS_COUNT = 50;
-    const TEAMS_COUNT = 5;
+    const USERS_COUNT = 100;
+    const TEAMS_COUNT = 10;
     const TEAM_INVITES_COUNT = 3;
     const COLLABORATORS_PER_TEAM = 10;
     const NOTIFICATIONS_COUNT_PER_USER = 10;
