@@ -23,7 +23,7 @@ twig:
           name: "S.S"
           url: '#'
           documentationPath: 'app_admin_documentation'
-        favicon: '@theme/assets/img/favicon/favicon.ico'
+        favicon: 'build/media/favicon.ico'
         meta:
           - name: "description"
             content: "My App"
