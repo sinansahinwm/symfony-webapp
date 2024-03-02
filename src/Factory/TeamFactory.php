@@ -41,7 +41,6 @@ final class TeamFactory extends ModelFactory
     {
         return [
             'name' => mb_substr(self::faker()->company(), 0, 20),
-            'owner' => UserFactory::createOne(),
             'created_at' => self::faker()->dateTimeBetween(AppFixtures::DATETIME_SEED_BETWEEEN),
             'users' => UserFactory::createMany(AppFixtures::COLLABORATORS_PER_TEAM),
         ];

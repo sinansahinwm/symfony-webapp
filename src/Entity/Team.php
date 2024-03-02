@@ -20,11 +20,6 @@ class Team
     #[ORM\Column(length: 20)]
     private ?string $name = null;
 
-    #[ORM\ManyToOne(inversedBy: 'teams')]
-    #[ORM\JoinColumn(nullable: true, onDelete: 'SET NULL')]
-   // DEPRECED FOR FIXTURES LOADING #[ORM\JoinColumn(nullable: false)]
-    private ?User $owner = null;
-
     #[ORM\Column(nullable: true)]
     private ?DateTimeImmutable $created_at = null;
 
@@ -53,18 +48,6 @@ class Team
     public function setName(string $name): static
     {
         $this->name = $name;
-
-        return $this;
-    }
-
-    public function getOwner(): ?User
-    {
-        return $this->owner;
-    }
-
-    public function setOwner(?User $owner): static
-    {
-        $this->owner = $owner;
 
         return $this;
     }

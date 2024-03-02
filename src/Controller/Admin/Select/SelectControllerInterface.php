@@ -10,6 +10,6 @@ interface SelectControllerInterface
 
     public function callback(Request $request): Response;
 
-    public function queryBuilder(EntityRepository $entityRepository): QueryBuilder;
+    public function queryBuilder(EntityRepository $entityRepository, ?string $searchKeyword = NULL): QueryBuilder;
 
 }
