@@ -1,5 +1,8 @@
 // ---- Imports ---- //
 
+// Admin CSS
+import './admin.css';
+
 // Toastr
 import * as toastr from 'toastr';
 import './theme/libs/toastr/toastr.scss';

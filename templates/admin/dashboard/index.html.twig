@@ -1,0 +1,14 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Genel Bakış'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Genel Bakış'|trans }}{% endblock %}
+
+{% block body %}
+
+    {% if app.user.team %}
+        {{ include('admin/dashboard/_team_dashboard.html.twig') }}
+        {% else %}
+        {{ include('admin/dashboard/_no_team.html.twig') }}
+    {% endif %}
+
+{% endblock %}

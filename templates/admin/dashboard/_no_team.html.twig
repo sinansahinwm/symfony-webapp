@@ -1,0 +1,31 @@
+<div class="app-academy">
+    {{ form_start(teamForm) }}
+    <div class="card p-0 mb-4">
+        <div class="card-body d-flex flex-column flex-md-row justify-content-between p-0 pt-4">
+            <div class="app-academy-md-25 card-body py-0">
+                <img src="{{ asset('build/media/misc/teamIdea.png') }}" class="img-fluid app-academy-img-height scaleX-n1-rtl" height="90" />
+            </div>
+            <div class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center">
+                <h3 class="card-title mb-4 lh-sm px-md-5">
+                    Education, talents, and career opportunities.
+                    <span class="text-primary fw-medium text-nowrap">All in one place</span>.
+                </h3>
+                <p class="mb-4">
+                    Grow your skill with the most reliable online courses and certifications in marketing, information technology,
+                    programming, and data science.
+                </p>
+                <div class="d-flex align-items-center justify-content-between app-academy-md-80">
+
+                    {{ form_widget(teamForm.name, { attr: { class: 'me-2' } }) }}
+                    <!--<input type="search" placeholder="{{ 'Bir takım adı belirleyin'|trans }}" class="form-control me-2" /> -->
+                    <button type="submit" class="btn btn-primary btn-icon"><i class="bx bx-plus"></i></button>
+
+                </div>
+            </div>
+            <div class="app-academy-md-25 d-flex align-items-end justify-content-end">
+                <img src="{{ asset('build/media/misc/teamLaunch.png') }}" alt="pencil rocket" height="188" class="scaleX-n1-rtl" />
+            </div>
+        </div>
+    </div>
+    {{ form_end(teamForm) }}
+</div>
