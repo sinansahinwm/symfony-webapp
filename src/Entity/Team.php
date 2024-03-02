@@ -29,9 +29,6 @@ class Team
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'team')]
     private Collection $users;
 
-    #[ORM\OneToOne(mappedBy: 'team', cascade: ['persist', 'remove'])]
-    private ?TeamOwnership $teamOwnership = null;
-
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -135,20 +132,4 @@ class Team
         return $this;
     }
 
-    public function getTeamOwnership(): ?TeamOwnership
-    {
-        return $this->teamOwnership;
-    }
-
-    public function setTeamOwnership(TeamOwnership $teamOwnership): static
-    {
-        // set the owning side of the relation if necessary
-        if ($teamOwnership->getTeam() !== $this) {
-            $teamOwnership->setTeam($this);
-        }
-
-        $this->teamOwnership = $teamOwnership;
-
-        return $this;
-    }
 }

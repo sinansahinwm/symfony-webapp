@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -57,6 +58,11 @@ class FileSharingType extends AbstractFormType
             'query_builder' => function (EntityRepository $entityRepository): QueryBuilder {
                 return $this->teamMatesSelectController->queryBuilder($entityRepository);
             },
+        ]);
+        $builder->add('publisherNotes', TextareaType::class, [
+            'label' => $this->t("Notlarınız"),
+            'help' => $this->t("Bu notlar gönderilen e-postanın alt bölümünde paylaşılan kullanıcıya gösterilecektir."),
+            'mapped' => FALSE
         ]);
     }
 

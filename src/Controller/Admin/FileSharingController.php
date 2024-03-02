@@ -53,7 +53,8 @@ class FileSharingController extends AbstractController
                     $generatedDownloadURL = $urlGenerator->generate('app_admin_storage', ["fileName" => $abstractFile->getFileName(), "download" => TRUE, "filePassword" => $filePassword], UrlGeneratorInterface::ABSOLUTE_URL);
                 }
                 $emailContext = [
-                    "publisherName" => $loggedUser->getDisplayName() ?? $loggedUser->getEmail()
+                    "publisherName" => $loggedUser->getDisplayName() ?? $loggedUser->getEmail(),
+                    "publisherNotes" => $filePassword = $fileSharingForm->get('publisherNotes')->getData() ?? NULL,
                 ];
                 $emailCTA = [
                     "title" => t("Dosyayı İndir"),
