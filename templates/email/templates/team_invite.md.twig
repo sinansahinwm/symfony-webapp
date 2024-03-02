@@ -2,9 +2,9 @@
 
 {% block body %}
     {% apply markdown_to_html %}
-            # {{ context.teamName }} bir takım daveti aldınız.
+            # {{ context.teamName }} {{ 'bir takım daveti aldınız.'|trans }}
 
-            {{ context.teamOwnerName }} tarafından yeni bir davet aldınız.
+            {{ context.teamOwnerName }} {{ 'tarafından yeni bir davet aldınız.'|trans }}
             {{ 'Takım davetini kabul etmek için aşağıdaki butona tıklayabilirsiniz.'|trans }}
             {{ 'Butona tıkladığınızda sonuç alamadıysanız aşağıdaki linki kopyalayıp tarayıcınızın adres çubuğuna yapıştırın.'|trans }}
 
