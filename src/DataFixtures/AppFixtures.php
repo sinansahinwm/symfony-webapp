@@ -8,6 +8,7 @@ use App\Factory\DistrictFactory;
 use App\Factory\NotificationFactory;
 use App\Factory\TeamFactory;
 use App\Factory\TeamInviteFactory;
+use App\Factory\TeamOwnershipFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;

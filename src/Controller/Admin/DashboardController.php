@@ -1,6 +1,7 @@
 <?php namespace App\Controller\Admin;
 
 use App\Entity\Team;
+use App\Entity\TeamOwnership;
 use App\Entity\User;
 use App\Form\TeamType;
 use DateTimeImmutable;
@@ -25,12 +26,23 @@ class DashboardController extends AbstractController
             if ($loggedUser->getTeam() instanceof Team) {
                 $this->addFlash('pageNotificationError', t("Zaten bir takımınız var. Yeni takım kuramazsınız."));
             } else {
+
+                // Persist Team
                 $myTeam->setCreatedAt(new DateTimeImmutable());
                 $entityManager->persist($myTeam);
                 $entityManager->flush();
+
+                // Persist User
                 $loggedUser->setTeam($myTeam);
                 $entityManager->persist($loggedUser);
                 $entityManager->flush();
+
+                // Persist Ownership
+                $userOwnership = new TeamOwnership();
+                $userOwnership->setUser($loggedUser);
+                $userOwnership->setTeam($myTeam);
+                $entityManager->flush();
+
             }
         }
         return $this->render('admin/dashboard/index.html.twig', [

@@ -64,6 +64,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Team $team = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?TeamOwnership $teamOwnership = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -334,6 +337,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTeam(?Team $team): static
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    public function getTeamOwnership(): ?TeamOwnership
+    {
+        return $this->teamOwnership;
+    }
+
+    public function setTeamOwnership(TeamOwnership $teamOwnership): static
+    {
+        // set the owning side of the relation if necessary
+        if ($teamOwnership->getUser() !== $this) {
+            $teamOwnership->setUser($this);
+        }
+
+        $this->teamOwnership = $teamOwnership;
 
         return $this;
     }

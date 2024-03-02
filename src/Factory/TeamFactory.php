@@ -4,8 +4,11 @@ namespace App\Factory;
 
 use App\DataFixtures\AppFixtures;
 use App\Entity\Team;
+use App\Entity\TeamOwnership;
 use App\Entity\User;
 use App\Repository\TeamRepository;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -32,7 +35,7 @@ use Zenstruck\Foundry\RepositoryProxy;
 final class TeamFactory extends ModelFactory
 {
 
-    public function __construct()
+    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager)
     {
         parent::__construct();
     }
@@ -42,14 +45,23 @@ final class TeamFactory extends ModelFactory
         return [
             'name' => mb_substr(self::faker()->company(), 0, 20),
             'created_at' => self::faker()->dateTimeBetween(AppFixtures::DATETIME_SEED_BETWEEEN),
-            'users' => UserFactory::createMany(AppFixtures::COLLABORATORS_PER_TEAM),
+            'users' => UserFactory::createMany(AppFixtures::COLLABORATORS_PER_TEAM)
         ];
     }
 
     protected function initialize(): self
     {
-        return $this// ->afterInstantiate(function(Team $team): void {})
-            ;
+        return $this->afterInstantiate(function (Team $team): void {
+            // Add Random Owner With Related Users
+            $relatedUsers = $team->getUsers();
+            $userIDArray = [];
+            foreach ($relatedUsers as $relatedUser) {
+                $userIDArray[] = $relatedUser->getId();
+            }
+            $randomOwnerID = $userIDArray[array_rand($userIDArray)];
+            $theOwnership = (new TeamOwnership())->setUser($this->userRepository->find($randomOwnerID))->setTeam($team);
+            $this->entityManager->persist($theOwnership);
+        });
     }
 
     protected static function getClass(): string
