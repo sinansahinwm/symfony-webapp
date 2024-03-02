@@ -38,12 +38,13 @@ class TeamMatesSelectController extends SelectController implements SelectContro
         if ($usersTeam instanceof Team && $entityRepository instanceof UserRepository) {
             $queryBuilder->innerJoin('qb.team', 't');
             $queryBuilder->where('qb.team = :param1')->setParameter('param1', $loggedUser->getTeam());
+
             if ($searchKeyword !== NULL) {
                 $queryBuilder->andWhere($queryBuilder->expr()->like('qb.email', ':param2'))->setParameter('param2', "%$searchKeyword%");
                 $queryBuilder->orWhere($queryBuilder->expr()->like('qb.display_name', ':param3'))->setParameter('param3', "%$searchKeyword%");
             }
         } else {
-            $queryBuilder->where("false");
+            $queryBuilder->where("1=2");
         }
 
         return $queryBuilder;

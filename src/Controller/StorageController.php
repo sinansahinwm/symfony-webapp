@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Handler\DownloadHandler;
 #[Route('/admin', name: 'app_admin_')]
 class StorageController extends AbstractController
 {
-    #[Route('/storage/{fileName}/{download}/{filePassword}', name: 'app_storage')]
+    #[Route('/storage/{fileName}/{download}/{filePassword}', name: 'storage')]
     public function index(AbstractFile $abstractFilePublic, Security $security, DownloadHandler $downloadHandler, TeamRepository $teamRepository, bool $download = TRUE, ?string $filePassword = NULL): StreamedResponse|BinaryFileResponse
     {
 

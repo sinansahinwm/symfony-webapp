@@ -7,5 +7,6 @@ class MessageBusDelays
 
     public const SEND_RESET_PASSWORD_EMAIL_AFTER_REQUESTED = 5000;
     public const SEND_INVITE_EMAIL_AFTER_PERSISTED = 5000;
+    public const SEND_FILE_SHARING_EMAIL_AFTER_PERSISTED = 5000;
 
 }

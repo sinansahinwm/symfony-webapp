@@ -1,0 +1,14 @@
+{% extends 'layout/email.html.twig' %}
+
+{% block body %}
+    {% apply markdown_to_html %}
+        # {{ context.publisherName }} {{ 'kişisinden bir dosya aldınız.'|trans }}
+
+        {{ 'Dosyayı indirmek için aşağıdaki butona tıklayabilirsiniz.'|trans }}
+        {{ 'Butona tıkladığınızda sonuç alamadıysanız aşağıdaki linki kopyalayıp tarayıcınızın adres çubuğuna yapıştırın.'|trans }}
+
+        {{ 'Davetiye Bağlantısı:'|trans }} {{ context.action.url|raw }}
+
+        {{ 'Dosyaya erişebilmek için giriş yapılmalıdır.'|trans }}
+    {% endapply %}
+{% endblock %}
