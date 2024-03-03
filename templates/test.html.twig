@@ -43,13 +43,13 @@
 <!-- beautify ignore:start -->
 
 
-<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact " dir="ltr" data-theme="theme-bordered" data-assets-path="../../assets/" data-template="vertical-menu-template-bordered">
+<html lang="en" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact " dir="ltr" data-theme="theme-default" data-assets-path="../../assets/" data-template="vertical-menu-template">
 
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Academy - Dashboard - App | Frest - Bootstrap Admin Template</title>
+    <title>Buttons - UI elements | Frest - Bootstrap Admin Template</title>
 
 
     <meta name="description" content="Start your development with a Dashboard for Bootstrap 5" />
@@ -81,16 +81,13 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="../../assets/vendor/css/rtl/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="../../assets/vendor/css/rtl/theme-bordered.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="../../assets/vendor/css/rtl/theme-default.css" class="template-customizer-theme-css" />
     <link rel="stylesheet" href="../../assets/css/demo.css" />
 
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="../../assets/vendor/libs/typeahead-js/typeahead.css" />
-    <link rel="stylesheet" href="../../assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css">
-    <link rel="stylesheet" href="../../assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css">
-    <link rel="stylesheet" href="../../assets/vendor/libs/datatables-buttons-bs5/buttons.bootstrap5.css">
-    <link rel="stylesheet" href="../../assets/vendor/libs/apex-charts/apex-charts.css" />
+
 
     <!-- Page CSS -->
 
@@ -199,7 +196,7 @@
                                 <div data-i18n="Logistics">Logistics</div>
                             </a>
                         </li>
-                        <li class="menu-item active">
+                        <li class="menu-item">
                             <a href="app-academy-dashboard.html" class="menu-link">
                                 <div data-i18n="Academy">Academy</div>
                             </a>
@@ -468,13 +465,13 @@
                 </li>
                 <!-- e-commerce-app menu end -->
                 <!-- Academy menu start -->
-                <li class="menu-item active open">
+                <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class='menu-icon tf-icons bx bx-book-open'></i>
                         <div data-i18n="Academy">Academy</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item active">
+                        <li class="menu-item">
                             <a href="app-academy-dashboard.html" class="menu-link">
                                 <div data-i18n="Dashboard">Dashboard</div>
                             </a>
@@ -890,7 +887,7 @@
                     </ul>
                 </li>
                 <!-- User interface -->
-                <li class="menu-item">
+                <li class="menu-item active open">
                     <a href="javascript:void(0)" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-box"></i>
                         <div data-i18n="User interface">User interface</div>
@@ -911,7 +908,7 @@
                                 <div data-i18n="Badges">Badges</div>
                             </a>
                         </li>
-                        <li class="menu-item">
+                        <li class="menu-item active">
                             <a href="ui-buttons.html" class="menu-link">
                                 <div data-i18n="Buttons">Buttons</div>
                             </a>
@@ -1771,467 +1768,519 @@
                 <div class="container-xxl flex-grow-1 container-p-y">
 
 
+                    <h4 class="py-3 breadcrumb-wrapper mb-4">
+                        <span class="text-muted fw-light">UI elements /</span>
+                        Buttons
+                    </h4>
 
-                    <!-- Hour chart  -->
-                    <div class="card bg-transparent border-0 my-4 shadow-none">
-                        <div class="card-body row p-0 pb-3">
-                            <div class="col-12 col-md-8 card-separator">
-                                <h3>Welcome back, Felecia 👋🏻 </h3>
-                                <div class="col-12 col-lg-7">
-                                    <p>Your progress this week is Awesome. let's keep it up and get a lot of points reward !</p>
+                    <div class="row">
+                        <!-- Basic Buttons -->
+
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Basic Buttons</h5>
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Default</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn btn-primary">Primary</button>
+                                        <button type="button" class="btn btn-secondary">Secondary</button>
+                                        <button type="button" class="btn btn-success">Success</button>
+                                        <button type="button" class="btn btn-danger">Danger</button>
+                                        <button type="button" class="btn btn-warning">Warning</button>
+                                        <button type="button" class="btn btn-info">Info</button>
+                                        <button type="button" class="btn btn-dark">Dark</button>
+                                    </div>
                                 </div>
-                                <div class="d-flex justify-content-between flex-wrap gap-3 me-5">
-                                    <div class="d-flex align-items-center gap-3 me-4 me-sm-0">
-          <span class=" bg-label-primary p-2 rounded">
-            <i class='bx bx-laptop bx-sm'></i>
-          </span>
-                                        <div class="content-right">
-                                            <p class="mb-0">Hours Spent</p>
-                                            <h4 class="text-primary mb-0">34h</h4>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Rounded</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn rounded-pill btn-primary">Primary</button>
+                                        <button type="button" class="btn rounded-pill btn-secondary">Secondary</button>
+                                        <button type="button" class="btn rounded-pill btn-success">Success</button>
+                                        <button type="button" class="btn rounded-pill btn-danger">Danger</button>
+                                        <button type="button" class="btn rounded-pill btn-warning">Warning</button>
+                                        <button type="button" class="btn rounded-pill btn-info">Info</button>
+                                        <button type="button" class="btn rounded-pill btn-dark">Dark</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Label Buttons -->
+
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Label Buttons</h5>
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Default</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn btn-label-primary">Primary</button>
+                                        <button type="button" class="btn btn-label-secondary">Secondary</button>
+                                        <button type="button" class="btn btn-label-success">Success</button>
+                                        <button type="button" class="btn btn-label-danger">Danger</button>
+                                        <button type="button" class="btn btn-label-warning">Warning</button>
+                                        <button type="button" class="btn btn-label-info">Info</button>
+                                        <button type="button" class="btn btn-label-dark">Dark</button>
+                                    </div>
+                                </div>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Rounded</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn rounded-pill btn-label-primary">Primary</button>
+                                        <button type="button" class="btn rounded-pill btn-label-secondary">Secondary</button>
+                                        <button type="button" class="btn rounded-pill btn-label-success">Success</button>
+                                        <button type="button" class="btn rounded-pill btn-label-danger">Danger</button>
+                                        <button type="button" class="btn rounded-pill btn-label-warning">Warning</button>
+                                        <button type="button" class="btn rounded-pill btn-label-info">Info</button>
+                                        <button type="button" class="btn rounded-pill btn-label-dark">Dark</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Outline Buttons -->
+
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Outline Buttons</h5>
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Default</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn btn-outline-primary">Primary</button>
+                                        <button type="button" class="btn btn-outline-secondary">Secondary</button>
+                                        <button type="button" class="btn btn-outline-success">Success</button>
+                                        <button type="button" class="btn btn-outline-danger">Danger</button>
+                                        <button type="button" class="btn btn-outline-warning">Warning</button>
+                                        <button type="button" class="btn btn-outline-info">Info</button>
+                                        <button type="button" class="btn btn-outline-dark">Dark</button>
+                                    </div>
+                                </div>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Rounded</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn rounded-pill btn-outline-primary">Primary</button>
+                                        <button type="button" class="btn rounded-pill btn-outline-secondary">Secondary</button>
+                                        <button type="button" class="btn rounded-pill btn-outline-success">Success</button>
+                                        <button type="button" class="btn rounded-pill btn-outline-danger">Danger</button>
+                                        <button type="button" class="btn rounded-pill btn-outline-warning">Warning</button>
+                                        <button type="button" class="btn rounded-pill btn-outline-info">Info</button>
+                                        <button type="button" class="btn rounded-pill btn-outline-dark">Dark</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Buttons with Icons -->
+
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Buttons with Icons</h5>
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Basic</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Primary
+                                                </button>
+                                                <button type="button" class="btn btn-secondary">
+                                                    <span class="tf-icons bx bx-bell me-1"></span>Secondary
+                                                </button>
+                                            </div>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn rounded-pill btn-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Primary
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-secondary">
+                                                    <span class="tf-icons bx bx-bell me-1"></span>Secondary
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Label</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-label-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Primary
+                                                </button>
+                                                <button type="button" class="btn btn-label-secondary">
+                                                    <span class="tf-icons bx bx-bell me-1"></span>Secondary
+                                                </button>
+                                            </div>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn rounded-pill btn-label-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Primary
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-label-secondary">
+                                                    <span class="tf-icons bx bx-bell me-1"></span>Secondary
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Outline</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-outline-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Primary
+                                                </button>
+                                                <button type="button" class="btn btn-outline-secondary">
+                                                    <span class="tf-icons bx bx-bell me-1"></span>Secondary
+                                                </button>
+                                            </div>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn rounded-pill btn-outline-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt me-1"></span>Primary
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-outline-secondary">
+                                                    <span class="tf-icons bx bx-bell me-1"></span>Secondary
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex align-items-center gap-3">
-          <span class="bg-label-info p-2 rounded">
-            <i class='bx bx-bulb bx-sm'></i>
-          </span>
-                                        <div class="content-right">
-                                            <p class="mb-0">Test Results</p>
-                                            <h4 class="text-info mb-0">82%</h4>
+                                </div>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Basic</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-icon btn-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-icon btn-secondary">
+                                                    <span class="tf-icons bx bx-bell"></span>
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-icon btn-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt"></span>
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-icon btn-secondary">
+                                                    <span class="tf-icons bx bx-bell"></span>
+                                                </button>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="d-flex align-items-center gap-3">
-          <span class="bg-label-warning p-2 rounded">
-            <i class='bx bx-check-circle bx-sm'></i>
-          </span>
-                                        <div class="content-right">
-                                            <p class="mb-0">Course Completed </p>
-                                            <h4 class="text-warning mb-0">14</h4>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Label</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-icon btn-label-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-icon btn-label-secondary">
+                                                    <span class="tf-icons bx bx-bell"></span>
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-icon btn-label-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt"></span>
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-icon btn-label-secondary">
+                                                    <span class="tf-icons bx bx-bell"></span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Outline</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-icon btn-outline-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt"></span>
+                                                </button>
+                                                <button type="button" class="btn btn-icon btn-outline-secondary">
+                                                    <span class="tf-icons bx bx-bell"></span>
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-icon btn-outline-primary">
+                                                    <span class="tf-icons bx bx-pie-chart-alt"></span>
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-icon btn-outline-secondary">
+                                                    <span class="tf-icons bx bx-bell"></span>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-4 ps-md-3 ps-lg-5 pt-3 pt-md-0">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <div>
-                                            <h5 class="mb-2">Time Spendings</h5>
-                                            <p class="mb-4">Weekly report</p>
+                        </div>
+
+                        <!-- Social Button -->
+
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Social Button</h5>
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Basic</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-facebook"><i class="tf-icons bx bxl-facebook me-1"></i>Facebook</button>
+                                                <button type="button" class="btn btn-twitter"><i class="tf-icons bx bxl-twitter me-1"></i>Twitter</button>
+                                            </div>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn rounded-pill btn-google-plus">
+                                                    <i class="tf-icons bx bxl-google-plus me-1"></i>Google+
+                                                </button>
+                                                <button type="button" class="btn rounded-pill btn-instagram">
+                                                    <i class="tf-icons bx bxl-instagram me-1"></i>Instagram
+                                                </button>
+                                            </div>
                                         </div>
-                                        <div class="time-spending-chart">
-                                            <h3 class="mb-2">231<span class="text-muted">h</span> 14<span class="text-muted">m</span> </h3>
-                                            <span class="badge bg-label-success">+18.4%</span>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Label</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-label-linkedin"><i class="tf-icons bx bxl-linkedin me-1"></i>Linkedin</button>
+                                                <button type="button" class="btn btn-label-github"><i class="tf-icons bx bxl-github me-1"></i>Github</button>
+                                            </div>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn rounded-pill btn-label-pinterest"> <i class="tf-icons bx bxl-pinterest me-1"></i>Pinterest </button>
+                                                <button type="button" class="btn rounded-pill btn-label-slack"> <i class="tf-icons bx bxl-slack me-1"></i>Slack </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Outline</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-outline-dribbble"> <i class="tf-icons bx bxl-dribbble me-1"></i>Dribbble </button>
+                                                <button type="button" class="btn btn-outline-reddit"><i class="tf-icons bx bxl-reddit me-1"></i>Reddit</button>
+                                            </div>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn rounded-pill btn-outline-youtube"> <i class="tf-icons bx bxl-youtube me-1"></i>Youtube </button>
+                                                <button type="button" class="btn rounded-pill btn-outline-vimeo"> <i class="tf-icons bx bxl-vimeo me-1"></i>Vimeo </button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div id="leadsReportChart"></div>
+                                </div>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Basic Icons</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-icon btn-facebook"><i class="tf-icons bx bxl-facebook"></i></button>
+                                                <button type="button" class="btn btn-icon btn-twitter"><i class="tf-icons bx bxl-twitter"></i></button>
+                                                <button type="button" class="btn btn-icon rounded-pill btn-google-plus">
+                                                    <i class="tf-icons bx bxl-google-plus"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-icon rounded-pill btn-instagram">
+                                                    <i class="tf-icons bx bxl-instagram"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Label Icons</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-icon btn-label-linkedin"><i class="tf-icons bx bxl-linkedin"></i></button>
+                                                <button type="button" class="btn btn-icon btn-label-github"><i class="tf-icons bx bxl-github"></i></button>
+                                                <button type="button" class="btn btn-icon rounded-pill btn-label-pinterest">
+                                                    <i class="tf-icons bx bxl-pinterest"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-icon rounded-pill btn-label-slack">
+                                                    <i class="tf-icons bx bxl-slack"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <small class="text-light fw-medium">Outline Icons</small>
+                                            <div class="demo-inline-spacing">
+                                                <button type="button" class="btn btn-icon btn-outline-dribbble">
+                                                    <i class="tf-icons bx bxl-dribbble"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-icon btn-outline-reddit"><i class="tf-icons bx bxl-reddit"></i></button>
+                                                <button type="button" class="btn btn-icon rounded-pill btn-outline-youtube">
+                                                    <i class="tf-icons bx bxl-youtube"></i>
+                                                </button>
+                                                <button type="button" class="btn btn-icon rounded-pill btn-outline-vimeo">
+                                                    <i class="tf-icons bx bxl-vimeo"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Button Options -->
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Button Options</h5>
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Sizes</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn btn-xl btn-primary">Button xl</button>
+                                        <button type="button" class="btn btn-lg btn-primary">Button lg</button>
+                                        <button type="button" class="btn btn-primary">Button</button>
+                                        <button type="button" class="btn btn-sm btn-primary">Button sm</button>
+                                        <button type="button" class="btn btn-xs btn-primary">Button xs</button>
+                                    </div>
+                                </div>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Buttons State</small>
+                                    <div class="demo-inline-spacing">
+                                        <button type="button" class="btn btn-primary">Normal</button>
+                                        <button type="button" class="btn btn-primary active">Active</button>
+                                        <button type="button" class="btn btn-primary" disabled>Disabled</button>
+                                    </div>
+                                </div>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <small class="text-light fw-medium">Block level buttons</small>
+                                    <div class="row mt-3">
+                                        <div class="d-grid gap-2 col-lg-6 mx-auto">
+                                            <button class="btn btn-primary btn-lg" type="button">Button</button>
+                                            <button class="btn btn-secondary btn-lg" type="button">Button</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Button Plugin -->
+                        <div class="col-12">
+                            <div class="card mb-4">
+                                <h5 class="card-header">Button Plugin</h5>
+                                <div class="card-body">
+                                    <div class="row gy-3">
+                                        <div class="col-xl-3">
+                                            <div class="text-light small fw-medium">Toggle states</div>
+                                            <div class="demo-vertical-spacing">
+                                                <button type="button" class="btn btn-primary d-block" data-bs-toggle="button">Toggle button</button>
+                                                <button type="button" class="btn btn-primary active d-block" data-bs-toggle="button" aria-pressed="true">Active toggle button</button>
+                                                <button type="button" class="btn btn-primary d-block" disabled data-bs-toggle="button">Disabled toggle button</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-3">
+                                            <div class="text-light small fw-medium">Checkbox toggle buttons</div>
+                                            <div class="demo-vertical-spacing">
+                                                <div class="d-block">
+                                                    <input type="checkbox" class="btn-check" id="btn-check">
+                                                    <label class="btn btn-primary" for="btn-check">Single toggle</label>
+                                                </div>
+                                                <div class="d-block">
+                                                    <input type="checkbox" class="btn-check" id="btn-check-2" checked>
+                                                    <label class="btn btn-primary" for="btn-check-2">Checked</label>
+                                                </div>
+                                                <div class="d-block">
+                                                    <input type="checkbox" class="btn-check" id="btn-check-3" checked>
+                                                    <label class="btn btn-primary" for="btn-check-3">Checked</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="text-light small fw-medium">Checkbox and radio</div>
+
+                                            <div class="demo-vertical-spacing">
+                                                <!-- Checkbox -->
+
+                                                <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
+                                                    <input type="checkbox" class="btn-check" id="btncheck1" checked>
+                                                    <label class="btn btn-outline-primary" for="btncheck1">Checkbox 1 (pre-checked)</label>
+
+                                                    <input type="checkbox" class="btn-check" id="btncheck2">
+                                                    <label class="btn btn-outline-primary" for="btncheck2">Checkbox 2</label>
+
+                                                    <input type="checkbox" class="btn-check" id="btncheck3">
+                                                    <label class="btn btn-outline-primary" for="btncheck3">Checkbox 3</label>
+                                                </div>
+
+
+                                                <br />
+
+                                                <!-- Radio -->
+
+                                                <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio1" checked>
+                                                    <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
+
+                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio2">
+                                                    <label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
+
+                                                    <input type="radio" class="btn-check" name="btnradio" id="btnradio3">
+                                                    <label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Button Group -->
+                        <div class="col-12">
+                            <div class="card">
+                                <h5 class="card-header">Button Group</h5>
+                                <div class="card-body">
+                                    <div class="row g-4">
+                                        <div class="col-md-6 col-lg-4">
+                                            <small class="text-light fw-medium">Basic</small>
+                                            <div class="mt-3">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button type="button" class="btn btn-secondary">Left</button>
+                                                    <button type="button" class="btn btn-secondary">Middle</button>
+                                                    <button type="button" class="btn btn-secondary">Right</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <small class="text-light fw-medium">Label</small>
+                                            <div class="mt-3">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button type="button" class="btn btn-label-secondary">Left</button>
+                                                    <button type="button" class="btn btn-label-secondary">Middle</button>
+                                                    <button type="button" class="btn btn-label-secondary">Right</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4">
+                                            <small class="text-light fw-medium">Outline</small>
+                                            <div class="mt-3">
+                                                <div class="btn-group" role="group" aria-label="Basic example">
+                                                    <button type="button" class="btn btn-outline-secondary">Left</button>
+                                                    <button type="button" class="btn btn-outline-secondary">Middle</button>
+                                                    <button type="button" class="btn btn-outline-secondary">Right</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="m-0" />
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-xl-6 mb-xl-0 mb-3">
+                                            <small class="text-light fw-medium">Button Toolbar</small>
+                                            <div class="btn-toolbar demo-inline-spacing" role="toolbar" aria-label="Toolbar with button groups">
+                                                <div class="btn-group" role="group" aria-label="First group">
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-bell"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-task"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-check-shield"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-comment-dots"></i></button>
+                                                </div>
+                                                <div class="btn-group" role="group" aria-label="Second group">
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-bold"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-italic"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-underline"></i></button>
+                                                </div>
+                                                <div class="btn-group" role="group" aria-label="Third group">
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-volume-full"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <small class="text-light fw-medium">Button Nesting</small>
+                                            <div class="mt-3">
+                                                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-car"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-rocket"></i></button>
+                                                    <button type="button" class="btn btn-outline-secondary"><i class="tf-icons bx bx-bulb"></i></button>
+                                                    <div class="btn-group" role="group">
+                                                        <button id="btnGroupDrop1" type="button" class="btn btn-outline-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</button>
+                                                        <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                                            <a class="dropdown-item" href="javascript:void(0);">Dropdown link</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);">Dropdown link</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- Hour chart End  -->
-
-                    <!-- Topic and Instructors -->
-                    <div class="row mb-4 g-4">
-                        <div class="col-12 col-xl-8">
-                            <div class="card h-100">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="card-title m-0 me-2">Topic you are interested in</h5>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="topic" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="topic">
-                                            <a class="dropdown-item" href="javascript:void(0);">Highest Views</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">See All</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body row g-3">
-                                    <div class="col-md-6">
-                                        <div id="horizontalBarChart"></div>
-                                    </div>
-                                    <div class="col-md-6 d-flex justify-content-around align-items-center">
-                                        <div>
-                                            <div class="d-flex align-items-baseline">
-                                                <span class="text-primary me-2"><i class='bx bxs-circle'></i></span>
-                                                <div>
-                                                    <p class="mb-2">UI Design</p>
-                                                    <h5>35%</h5>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex align-items-baseline my-3">
-                                                <span class="text-success me-2"><i class='bx bxs-circle'></i></span>
-                                                <div>
-                                                    <p class="mb-2">Music</p>
-                                                    <h5>14%</h5>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex align-items-baseline">
-                                                <span class="text-danger me-2"><i class='bx bxs-circle'></i></span>
-                                                <div>
-                                                    <p class="mb-2">React</p>
-                                                    <h5>10%</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div>
-                                            <div class="d-flex align-items-baseline">
-                                                <span class="text-info me-2"><i class='bx bxs-circle'></i></span>
-                                                <div>
-                                                    <p class="mb-2">UX Design</p>
-                                                    <h5>20%</h5>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex align-items-baseline my-3">
-                                                <span class="text-secondary me-2"><i class='bx bxs-circle'></i></span>
-                                                <div>
-                                                    <p class="mb-2">Animation</p>
-                                                    <h5>12%</h5>
-                                                </div>
-                                            </div>
-                                            <div class="d-flex align-items-baseline">
-                                                <span class="text-warning me-2"><i class='bx bxs-circle'></i></span>
-                                                <div>
-                                                    <p class="mb-2">SEO</p>
-                                                    <h5>9%</h5>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-12 col-xl-4 col-md-6">
-                            <div class="card h-100">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <div class="card-title mb-0">
-                                        <h5 class="m-0 me-2">Popular Instructors</h5>
-                                    </div>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="popularInstructors" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularInstructors">
-                                            <a class="dropdown-item" href="javascript:void(0);">Select All</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Share</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive">
-                                    <table class="table table-borderless border-top">
-                                        <thead class="border-bottom">
-                                        <tr>
-                                            <th>Instructors</th>
-                                            <th class="text-end">courses</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex justify-content-start align-items-center mt-lg-4">
-                                                    <div class="avatar me-3">
-                                                        <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <h6 class="mb-1 text-truncate">Maven Analytics</h6>
-                                                        <small class="text-truncate text-muted">Business Intelligence</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-end">
-                                                <div class="user-progress mt-lg-4">
-                                                    <h6 class="mb-0">33</h6>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex justify-content-start align-items-center">
-                                                    <div class="avatar me-3">
-                                                        <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <h6 class="mb-1 text-truncate">Zsazsa McCleverty</h6>
-                                                        <small class="text-truncate text-muted">Digital Marketing</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-end">
-                                                <div class="user-progress">
-                                                    <h6 class="mb-0">52</h6>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex justify-content-start align-items-center">
-                                                    <div class="avatar me-3">
-                                                        <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <h6 class="mb-1 text-truncate">Nathan Wagner</h6>
-                                                        <small class="text-truncate text-muted">UI/UX Design</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-end">
-                                                <div class="user-progress">
-                                                    <h6 class="mb-0">12</h6>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>
-                                                <div class="d-flex justify-content-start align-items-center">
-                                                    <div class="avatar me-3">
-                                                        <img src="../../assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
-                                                    </div>
-                                                    <div class="d-flex flex-column">
-                                                        <h6 class="mb-1 text-truncate">Emma Bowen</h6>
-                                                        <small class="text-truncate text-muted">React Native</small>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="text-end">
-                                                <div class="user-progress">
-                                                    <h6 class="mb-0">8</h6>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-12 col-xl-4 col-md-6">
-                            <div class="card h-100">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="card-title m-0 me-2">Top Courses</h5>
-                                    <div class="dropdown">
-                                        <button class="btn p-0" type="button" id="topCourses" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="topCourses">
-                                            <a class="dropdown-item" href="javascript:void(0);">Refresh</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">Download</a>
-                                            <a class="dropdown-item" href="javascript:void(0);">View All</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="list-unstyled mb-0">
-                                        <li class="d-flex mb-4 pb-1 align-items-center">
-                                            <div class="avatar flex-shrink-0 me-3">
-                                                <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-video"></i></span>
-                                            </div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
-                                                    <h6 class="mb-0 lh-sm">Videography Basic Design Course</h6>
-                                                </div>
-                                                <div class="col-sm-4 col-lg-12 col-xxl-4 text-sm-end text-lg-start text-xxl-end">
-                                                    <div class="badge bg-label-secondary">1.2k Views</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex mb-4 pb-1 align-items-center">
-                                            <div class="avatar flex-shrink-0 me-3">
-                                                <span class="avatar-initial rounded bg-label-info"><i class="bx bx-code-alt"></i></span>
-                                            </div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
-                                                    <h6 class="mb-0 lh-sm">Basic Front-end Development Course</h6>
-                                                </div>
-                                                <div class="col-sm-4 col-lg-12 col-xxl-4 text-sm-end text-lg-start text-xxl-end">
-                                                    <div class="badge bg-label-secondary">834 Views</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex mb-4 pb-1 align-items-center">
-                                            <div class="avatar flex-shrink-0 me-3">
-                                                <span class="avatar-initial rounded bg-label-success"><i class="bx bx-camera"></i></span>
-                                            </div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
-                                                    <h6 class="mb-0 lh-sm">Basic Fundamentals of Photography</h6>
-                                                </div>
-                                                <div class="col-sm-4 col-lg-12 col-xxl-4 text-sm-end text-lg-start text-xxl-end">
-                                                    <div class="badge bg-label-secondary">3.7k Views</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex mb-4 pb-1 align-items-center">
-                                            <div class="avatar flex-shrink-0 me-3">
-                                                <span class="avatar-initial rounded bg-label-warning"><i class="bx bx-basketball"></i></span>
-                                            </div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
-                                                    <h6 class="mb-0 lh-sm">Advance Dribble Base Visual Design</h6>
-                                                </div>
-                                                <div class="col-sm-4 col-lg-12 col-xxl-4 text-sm-end text-lg-start text-xxl-end">
-                                                    <div class="badge bg-label-secondary">2.5k Views</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex">
-                                            <div class="avatar flex-shrink-0 me-3">
-                                                <span class="avatar-initial rounded bg-label-danger"><i class="bx bx-microphone"></i></span>
-                                            </div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-sm-8 col-lg-12 col-xxl-8 mb-1 mb-sm-0 mb-lg-1 mb-xxl-0">
-                                                    <h6 class="mb-0 lh-sm">Your First Singing Lesson</h6>
-                                                </div>
-                                                <div class="col-sm-4 col-lg-12 col-xxl-4 text-sm-end text-lg-start text-xxl-end">
-                                                    <div class="badge bg-label-secondary">948 Views</div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-12 col-xl-4 col-md-6">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <div class="bg-label-primary rounded-3 text-center mb-3 pt-4">
-                                        <img class="img-fluid w-60" src="../../assets/img/illustrations/sitting-girl-with-laptop-light.png" alt="Card girl image" data-app-light-img="illustrations/sitting-girl-with-laptop-light.png" data-app-dark-img="illustrations/sitting-girl-with-laptop-dark.png" />
-                                    </div>
-                                    <h4 class="mb-2 pb-1">Upcoming Webinar</h4>
-                                    <p class="small">Next Generation Frontend Architecture Using Layout Engine And React Native Web.</p>
-                                    <div class="row mb-3 g-3">
-                                        <div class="col-6">
-                                            <div class="d-flex">
-                                                <div class="avatar flex-shrink-0 me-2">
-                                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-calendar-exclamation bx-sm"></i></span>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-0 text-nowrap">17 Nov 23</h6>
-                                                    <small>Date</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="d-flex">
-                                                <div class="avatar flex-shrink-0 me-2">
-                                                    <span class="avatar-initial rounded bg-label-primary"><i class="bx bx-time-five bx-sm"></i></span>
-                                                </div>
-                                                <div>
-                                                    <h6 class="mb-0 text-nowrap">32 minutes</h6>
-                                                    <small>Duration</small>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <a href="javascript:void(0);" class="btn btn-primary w-100">Join the event</a>
-                                </div>
-                            </div>
-                        </div>
-
-
-                        <div class="col-12 col-xl-4 col-md-6">
-                            <div class="card h-100">
-                                <div class="card-header d-flex align-items-center justify-content-between">
-                                    <h5 class="card-title m-0 me-2">Assignment Progress</h5>
-                                </div>
-                                <div class="card-body">
-                                    <ul class="p-0 m-0">
-                                        <li class="d-flex mb-3 pb-1">
-                                            <div class="chart-progress me-3" data-color="primary" data-series="72" data-progress_variant="true"></div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-9">
-                                                    <div class="me-2">
-                                                        <h6 class="mb-2">User experience Design</h6>
-                                                        <small>120 Tasks</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3 text-end">
-                                                    <button type="button" class="btn btn-sm btn-icon btn-label-secondary">
-                                                        <i class="bx bx-chevron-right scaleX-n1-rtl"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex mb-3 pb-1">
-                                            <div class="chart-progress me-3" data-color="success" data-series="48" data-progress_variant="true"></div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-9">
-                                                    <div class="me-2">
-                                                        <h6 class="mb-2">Basic fundamentals</h6>
-                                                        <small>32 Tasks</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3 text-end">
-                                                    <button type="button" class="btn btn-sm btn-icon btn-label-secondary">
-                                                        <i class="bx bx-chevron-right scaleX-n1-rtl"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex mb-3 pb-1">
-                                            <div class="chart-progress me-3" data-color="danger" data-series="15" data-progress_variant="true"></div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-9">
-                                                    <div class="me-2">
-                                                        <h6 class="mb-2">React native components</h6>
-                                                        <small>182 Tasks</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3 text-end">
-                                                    <button type="button" class="btn btn-sm btn-icon btn-label-secondary">
-                                                        <i class="bx bx-chevron-right scaleX-n1-rtl"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="d-flex">
-                                            <div class="chart-progress me-3" data-color="info" data-series="24" data-progress_variant="true"></div>
-                                            <div class="row w-100 align-items-center">
-                                                <div class="col-9">
-                                                    <div class="me-2">
-                                                        <h6 class="mb-2">Basic of music theory</h6>
-                                                        <small>56 Tasks</small>
-                                                    </div>
-                                                </div>
-                                                <div class="col-3 text-end">
-                                                    <button type="button" class="btn btn-sm btn-icon btn-label-secondary">
-                                                        <i class="bx bx-chevron-right scaleX-n1-rtl"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                    <!--  Topic and Instructors  End-->
-
-                    <!-- Course datatable -->
-                    <div class="card mb-4">
-                        <div class="table-responsive mb-3">
-                            <table class="table datatables-academy-course">
-                                <thead class="border-top">
-                                <tr>
-                                    <th></th>
-                                    <th></th>
-                                    <th>Course Name</th>
-                                    <th>Time</th>
-                                    <th class="w-25">Progress</th>
-                                    <th class="w-25">Status</th>
-                                </tr>
-                                </thead>
-                            </table>
-                        </div>
-                    </div>
-
-                    <!-- Course datatable End -->
-
 
                 </div>
                 <!-- / Content -->
@@ -2303,16 +2352,16 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/moment/moment.js"></script>
-<script src="../../assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
-<script src="../../assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+
 
 <!-- Main JS -->
 <script src="../../assets/js/main.js"></script>
 
 
 <!-- Page JS -->
-<script src="../../assets/js/app-academy-dashboard.js"></script>
+
+
 
 </body>
 

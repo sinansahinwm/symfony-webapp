@@ -1,37 +1,77 @@
+/* App Academy */
 .app-academy .app-academy-img-height {
-    height:130px
+    height: 130px
 }
 
 @media (min-width: 768px) {
     .app-academy .app-academy-md-25 {
-        width:25%
+        width: 25%
     }
 
     .app-academy .app-academy-md-50 {
-        width:50%
+        width: 50%
     }
 
     .app-academy .app-academy-md-80 {
-        width:80%
+        width: 80%
     }
 }
 
 @media (min-width: 576px) {
     .app-academy .app-academy-sm-40 {
-        width:40% !important
+        width: 40% !important
     }
 
     .app-academy .app-academy-sm-60 {
-        width:60% !important
+        width: 60% !important
     }
 }
 
 @media (min-width: 1200px) {
     .app-academy .app-academy-xl-100 {
-        width:100% !important
+        width: 100% !important
     }
 
     .app-academy .app-academy-xl-100 {
         width: 100% !important
+    }
+}
+
+/* User Profile */
+.user-profile-header-banner img {
+    width: 100%;
+    object-fit: cover;
+    height: 250px
+}
+
+.user-profile-header {
+    margin-top: -2rem
+}
+
+.user-profile-header .user-profile-img {
+    border: 5px solid;
+    width: 120px
+}
+
+.light-style .user-profile-header .user-profile-img {
+    border-color: #fff
+}
+
+.dark-style .user-profile-header .user-profile-img {
+    border-color: #283144
+}
+
+.dataTables_wrapper .card-header .dataTables_filter label {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important
+}
+
+@media (max-width: 767.98px) {
+    .user-profile-header-banner img {
+        height: 150px
+    }
+
+    .user-profile-header .user-profile-img {
+        width: 100px
     }
 }
