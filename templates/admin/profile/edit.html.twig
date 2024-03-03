@@ -11,13 +11,16 @@
 
     <!-- Content -->
     <div class="col-12">
+        {{ form_start(form) }}
         <div class="card mb-4">
             <h5 class="card-header">{{ 'Profili Düzenle'|trans }}</h5>
-            <hr class="m-0" />
+            <hr class="m-0"/>
             <div class="card-body">
-
+                {{ form_widget(form) }}
             </div>
+            {{ component('_card_action_footer', { label: 'Kaydet'|trans }) }}
         </div>
+        {{ form_end(form) }}
     </div>
     <!--/ Content -->
 

@@ -11,13 +11,18 @@
 
     <!-- Content -->
     <div class="col-12">
+        {{ form_start(form) }}
         <div class="card mb-4">
             <h5 class="card-header">{{ 'Pasife Al'|trans }}</h5>
-            <hr class="m-0" />
+            <hr class="m-0"/>
             <div class="card-body">
-
+                {% set warnText = 'Bu kullanıcıyı pasife alırsanız bir daha giriş yapamayacaktır. Buna rağmen yine de pasife almak istiyor musunuz?'|trans %}
+                {{ component('_alert', { type: 'danger', text: warnText }) }}
+                {{ form_widget(form) }}
             </div>
+            {{ component('_card_action_footer', { label: 'Eminim, Pasife Al!'|trans, type: 'danger' }) }}
         </div>
+        {{ form_end(form) }}
     </div>
     <!--/ Content -->
 

@@ -10,10 +10,13 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Translation\LocaleSwitcher;
 use Twig\Environment;
+use function Symfony\Component\Translation\t;
 
 #[Route(path: '/admin/profile', name: 'app_admin_profile_')]
 class ProfileController extends AbstractController
@@ -28,59 +31,102 @@ class ProfileController extends AbstractController
     #[Route(path: '/{theUser}', name: 'show')]
     public function otherUserProfile(User $theUser): Response
     {
+        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         return $this->render('admin/profile/index.html.twig', ["user" => $theUser]);
     }
 
     #[Route(path: '/{theUser}/edit', name: 'edit')]
-    public function userEdit(User $theUser, Request $request): Response
+    public function userEdit(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $myForm = $this->createForm(ProfileEditType::class, $theUser);
+        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
+        $myForm = $this->createForm(ProfileEditType::class, $theUser, [
+            'readonlyValue' => $theUser->getEmail()
+        ]);
+
         $myForm->handleRequest($request);
 
         if ($myForm->isSubmitted() && $myForm->isValid()) {
-            exit("FORM VALID");
+            $entityManager->persist($theUser);
+            $entityManager->flush();
+            $this->addFlash('pageNotificationSuccess', t("Profil bilgileriniz başarıyla kaydedildi."));
         }
 
-        return $this->render('admin/profile/edit.html.twig', ["user" => $theUser]);
+        return $this->render('admin/profile/edit.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
     #[Route(path: '/{theUser}/change_password', name: 'change_password')]
-    public function userChangePassword(User $theUser, Request $request): Response
+    public function userChangePassword(User $theUser, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
+        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         $myForm = $this->createForm(ProfileChangePasswordType::class, $theUser);
         $myForm->handleRequest($request);
 
         if ($myForm->isSubmitted() && $myForm->isValid()) {
-            exit("FORM VALID");
+
+            $passwordIsValid = $userPasswordHasher->isPasswordValid($theUser, $myForm->get("oldPassword")->getData());
+            if ($passwordIsValid) {
+                $hashedNewPassword = $userPasswordHasher->hashPassword($theUser, $myForm->get("newPassword")->getData());
+                $theUser->setPassword($hashedNewPassword);
+                $entityManager->persist($theUser);
+                $entityManager->flush();
+                $this->addFlash('pageNotificationSuccess', t("Şifreniz başarıyla değiştirildi."));
+            } else {
+                $this->addFlash('pageNotificationError', t("Eski şifrenizi yanlış girdiniz."));
+            }
         }
 
-        return $this->render('admin/profile/change_password.html.twig', ["user" => $theUser]);
+        return $this->render('admin/profile/change_password.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
     #[Route(path: '/{theUser}/make_passive', name: 'make_passive')]
-    public function userMakePassive(User $theUser, Request $request): Response
+    public function userMakePassive(User $theUser, Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response
     {
+        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         $myForm = $this->createForm(ProfileMakePassiveType::class, $theUser);
         $myForm->handleRequest($request);
 
+        $usersTeam = $theUser->getTeam();
         if ($myForm->isSubmitted() && $myForm->isValid()) {
-            exit("FORM VALID");
+            if ($usersTeam !== NULL && $usersTeam->getOwnerId() === $loggedUser->getId() && $theUser->getId() !== $loggedUser->getId()) {
+                $theUser->setIsPassive(TRUE);
+                $entityManager->persist($theUser);
+                $entityManager->flush();
+                $this->addFlash('pageNotificationSuccess', t("Kullanıcı hesabı pasife alındı."));
+            } else {
+                $this->addFlash('pageNotificationError', t("Kullanıcı hesabı pasife alınamadı. Takımınızda olmayan bir kullanıcıyı pasife alamazsınız."));
+            }
         }
 
-        return $this->render('admin/profile/make_passive.html.twig', ["user" => $theUser]);
+        return $this->render('admin/profile/make_passive.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
     #[Route(path: '/{theUser}/kick_team', name: 'kick_team')]
-    public function userKickTeam(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
+    public function userKickTeam(User $theUser, Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response
     {
+        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         $myForm = $this->createForm(ProfileKickTeamType::class, $theUser);
         $myForm->handleRequest($request);
 
         if ($myForm->isSubmitted() && $myForm->isValid()) {
-            exit("FORM VALID");
+            $usersTeam = $theUser->getTeam();
+            if ($usersTeam !== NULL && $usersTeam->getOwnerId() === $loggedUser->getId() && $theUser->getId() !== $loggedUser->getId()) {
+                $theUser->setTeam(NULL);
+                $entityManager->persist($theUser);
+                $entityManager->flush();
+                $this->addFlash('pageNotificationSuccess', t("Kullanıcı takımdan çıkarıldı."));
+            } else {
+                $this->addFlash('pageNotificationError', t("Kullanıcı takımdan çıkarılamadı. Kurucusu olduğunuz takımdan çıkamazsınız."));
+            }
         }
 
-        return $this->render('admin/profile/kick_team.html.twig', ["user" => $theUser]);
+        return $this->render('admin/profile/kick_team.html.twig', ["user" => $theUser, "form" => $myForm]);
+    }
+
+    #[IsGranted("ROLE_ADMIN")]
+    #[Route(path: '/{theUser}/impersonate', name: 'impersonate')]
+    public function userImpersonate(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        exit("IMPERSONATE");
     }
 
     #[Route('/current/switch_to_light_mode', name: 'switch_to_light_mode')]

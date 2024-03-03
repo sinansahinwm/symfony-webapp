@@ -1,8 +1,10 @@
 <div class="card-body">
     <div class="d-flex justify-content-end">
-        <button type="submit" class="btn btn-primary">
-            {% set btnText = label is defined ? label : 'Kaydet'|trans %}
-            {% set btnIcon = icon is defined ? icon : '' %}
+        {% set btnText = label is defined ? label : 'Kaydet'|trans %}
+        {% set btnIcon = icon is defined ? icon : '' %}
+        {% set btnType = type is defined ? type : 'primary' %}
+
+        <button type="submit" class="btn btn-{{ btnType }}">
             <i class="{{ btnIcon }}"></i> {{ btnText }}
         </button>
     </div>

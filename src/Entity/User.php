@@ -64,6 +64,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Team $team = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $is_passive = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -334,6 +337,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTeam(?Team $team): static
     {
         $this->team = $team;
+
+        return $this;
+    }
+
+    public function isIsPassive(): ?bool
+    {
+        return $this->is_passive;
+    }
+
+    public function setIsPassive(?bool $is_passive): static
+    {
+        $this->is_passive = $is_passive;
 
         return $this;
     }
