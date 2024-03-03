@@ -1,7 +1,6 @@
 <?php namespace App\Controller\Admin;
 
 use App\Entity\Team;
-use App\Entity\TeamOwnership;
 use App\Entity\User;
 use App\Form\TeamType;
 use DateTimeImmutable;
@@ -28,6 +27,7 @@ class DashboardController extends AbstractController
             } else {
 
                 // Persist Team
+                $myTeam->setOwnerId($loggedUser->getId());
                 $myTeam->setCreatedAt(new DateTimeImmutable());
                 $entityManager->persist($myTeam);
                 $entityManager->flush();
@@ -35,12 +35,6 @@ class DashboardController extends AbstractController
                 // Persist User
                 $loggedUser->setTeam($myTeam);
                 $entityManager->persist($loggedUser);
-                $entityManager->flush();
-
-                // Persist Ownership
-                $userOwnership = new TeamOwnership();
-                $userOwnership->setUser($loggedUser);
-                $userOwnership->setTeam($myTeam);
                 $entityManager->flush();
 
             }
