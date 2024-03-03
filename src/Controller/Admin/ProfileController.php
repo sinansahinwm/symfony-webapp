@@ -71,7 +71,7 @@ class ProfileController extends AbstractController
     }
 
     #[Route(path: '/{theUser}/kick_team', name: 'kick_team')]
-    public function userKickTeam(User $theUser, Request $request): Response
+    public function userKickTeam(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
     {
         $myForm = $this->createForm(ProfileKickTeamType::class, $theUser);
         $myForm->handleRequest($request);
