@@ -29,6 +29,9 @@ class Team
     #[ORM\OneToMany(targetEntity: User::class, mappedBy: 'team')]
     private Collection $users;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $owner_id = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -128,6 +131,18 @@ class Team
                 $user->setTeam(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOwnerId(): ?int
+    {
+        return $this->owner_id;
+    }
+
+    public function setOwnerId(?int $owner_id): static
+    {
+        $this->owner_id = $owner_id;
 
         return $this;
     }

@@ -4,11 +4,7 @@ namespace App\Factory;
 
 use App\DataFixtures\AppFixtures;
 use App\Entity\Team;
-use App\Entity\TeamOwnership;
-use App\Entity\User;
 use App\Repository\TeamRepository;
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Zenstruck\Foundry\ModelFactory;
 use Zenstruck\Foundry\Proxy;
 use Zenstruck\Foundry\RepositoryProxy;
@@ -35,10 +31,6 @@ use Zenstruck\Foundry\RepositoryProxy;
 final class TeamFactory extends ModelFactory
 {
 
-    public function __construct(private UserRepository $userRepository, private EntityManagerInterface $entityManager)
-    {
-        parent::__construct();
-    }
 
     protected function getDefaults(): array
     {
@@ -59,8 +51,7 @@ final class TeamFactory extends ModelFactory
                 $userIDArray[] = $relatedUser->getId();
             }
             $randomOwnerID = $userIDArray[array_rand($userIDArray)];
-            $theOwnership = (new TeamOwnership())->setUser($this->userRepository->find($randomOwnerID))->setTeam($team);
-            $this->entityManager->persist($theOwnership);
+            $team->setOwnerId($randomOwnerID);
         });
     }
 
