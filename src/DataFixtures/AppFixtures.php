@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\User;
 use App\Factory\CityFactory;
 use App\Factory\CountryFactory;
 use App\Factory\DistrictFactory;
@@ -10,8 +11,11 @@ use App\Factory\TeamFactory;
 use App\Factory\TeamInviteFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Yaml\Yaml;
 use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
@@ -26,7 +30,9 @@ class AppFixtures extends Fixture
     const ALLOWED_COUNTRIES = ["Turkey"];
     const DATETIME_SEED_BETWEEEN = '-100 days';
 
-    public function __construct(private ResetPasswordHelperInterface $resetPasswordHelper)
+    const ADMINISTRATOR_ROLES = ["ROLE_USER", "ROLE_ADMIN", "ROLE_CAN_SWITCH"];
+
+    public function __construct(private ResetPasswordHelperInterface $resetPasswordHelper, private UserPasswordHasherInterface $userPasswordHasher, private EntityManagerInterface $entityManager, private ContainerBagInterface $containerBag)
     {
     }
 
@@ -54,8 +60,30 @@ class AppFixtures extends Fixture
         // Create Notifications
         $myNotifications = NotificationFactory::createMany(self::NOTIFICATIONS_COUNT_PER_USER);
 
+        // Create Administrator
+        $this->createAdministrator();
     }
 
+    private function createAdministrator(): void
+    {
+
+        $adminEmail = $this->containerBag->get("app.fixtures.administrator.email");
+        $adminPlainPassword = $this->containerBag->get("app.fixtures.administrator.password");
+
+        $myUser = new User();
+        $myUser->setEmail($adminEmail);
+        $myUser->setPassword($this->userPasswordHasher->hashPassword($myUser, $adminPlainPassword));
+        $myUser->setRoles(self::ADMINISTRATOR_ROLES);
+        $myUser->setDisplayName("Administrator");
+        $myUser->setPhone(NULL);
+        $myUser->setIsVerified(TRUE);
+        $myUser->setIsPassive(FALSE);
+        $myUser->setLocale(NULL);
+        $myUser->setDarkMode(FALSE);
+        $myUser->setTeam(NULL);
+        $this->entityManager->persist($myUser);
+        $this->entityManager->flush();
+    }
 
     private function createUserPasswordRequests(): void
     {

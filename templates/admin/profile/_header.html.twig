@@ -26,29 +26,27 @@
                                 </li>
                             </ul>
                         </div>
-                        {% if is_granted("ROLE_ADMIN") or user.id is same as app.user.id or user.team.ownerId is same as(app.user.id) %}
                             <div class="btn-group" role="group" aria-label="{{ 'Profil İşlemleri'|trans }}">
+                                {% if is_granted('PROFILE_EDIT', user) %}
+                                    <a href="{{ path('app_admin_profile_edit', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Düzenle'|trans }}"><i class='bx bx-edit-alt'></i></a>
+                                {% endif %}
 
-                                <a href="{{ path('app_admin_profile_edit', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Düzenle'|trans }}"><i class='bx bx-edit-alt'></i></a>
-
-                                {% if is_granted("ROLE_ADMIN") or user.id is same as(app.user.id) %}
+                                {% if is_granted("PROFILE_CHANGE_PASSWORD", user) %}
                                     <a href="{{ path('app_admin_profile_change_password', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Şifre Değiştir'|trans }}"><i class='bx bx-key'></i></a>
                                 {% endif %}
 
-                                {% if is_granted("ROLE_ADMIN") or user.team.ownerId is same as(app.user.id) %}
+                                {% if is_granted("PROFILE_MAKE_PASSIVE", user) %}
                                     <a href="{{ path('app_admin_profile_make_passive', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Pasife Al'|trans }}"><i class='bx bx-user-x'></i></a>
                                 {% endif %}
 
-                                {% if is_granted("ROLE_ADMIN") or user.team.ownerId is same as(app.user.id) %}
+                                {% if is_granted("PROFILE_KICK_TEAM", user) %}
                                     <a href="{{ path('app_admin_profile_kick_team', { theUser: user.id }) }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Takımdan Çıkar'|trans }}"><i class='bx bx-x'></i></a>
                                 {% endif %}
 
-                                {% if is_granted('ROLE_CAN_SWITCH') %}
+                                {% if is_granted('ROLE_CAN_SWITCH', user) %}
                                     <a href="{{ path('app_admin_profile_impersonate', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Taklit Moduna Geç'|trans }}"><i class='bx bx-user-pin'></i></a>
                                 {% endif %}
-
                             </div>
-                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -28,17 +28,18 @@ class ProfileController extends AbstractController
         return $this->redirectToRoute('app_admin_profile_show', ['theUser' => $loggedUser->getId()]);
     }
 
+    #[IsGranted('PROFILE_SHOW', 'theUser')]
     #[Route(path: '/{theUser}', name: 'show')]
     public function otherUserProfile(User $theUser): Response
     {
-        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         return $this->render('admin/profile/index.html.twig', ["user" => $theUser]);
     }
 
+    #[IsGranted('PROFILE_EDIT', 'theUser')]
     #[Route(path: '/{theUser}/edit', name: 'edit')]
     public function userEdit(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
+        $this->denyAccessUnlessGranted('PROFILE_EDIT', $theUser);
         $myForm = $this->createForm(ProfileEditType::class, $theUser, [
             'readonlyValue' => $theUser->getEmail()
         ]);
@@ -54,6 +55,7 @@ class ProfileController extends AbstractController
         return $this->render('admin/profile/edit.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
+    #[IsGranted('PROFILE_CHANGE_PASSWORD', 'theUser')]
     #[Route(path: '/{theUser}/change_password', name: 'change_password')]
     public function userChangePassword(User $theUser, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
@@ -78,6 +80,7 @@ class ProfileController extends AbstractController
         return $this->render('admin/profile/change_password.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
+    #[IsGranted('PROFILE_MAKE_PASSIVE', 'theUser')]
     #[Route(path: '/{theUser}/make_passive', name: 'make_passive')]
     public function userMakePassive(User $theUser, Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response
     {
@@ -100,6 +103,7 @@ class ProfileController extends AbstractController
         return $this->render('admin/profile/make_passive.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
+    #[IsGranted('PROFILE_KICK_TEAM', 'theUser')]
     #[Route(path: '/{theUser}/kick_team', name: 'kick_team')]
     public function userKickTeam(User $theUser, Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response
     {
