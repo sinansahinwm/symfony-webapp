@@ -17,6 +17,7 @@ security:
             lazy: true
             provider: app_user_provider
             switch_user: { role: ROLE_CAN_SWITCH, parameter: _impersonate_user }
+            user_checker: App\Security\UserChecker
             login_throttling:
                 max_attempts: 5
                 interval: '1 minute'
