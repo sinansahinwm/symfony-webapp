@@ -8,6 +8,7 @@ use App\Form\Auth\Profile\ProfileMakePassiveType;
 use App\Security\LoginFormAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -124,9 +125,12 @@ class ProfileController extends AbstractController
 
     #[IsGranted("ROLE_ADMIN")]
     #[Route(path: '/{theUser}/impersonate', name: 'impersonate')]
-    public function userImpersonate(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
+    public function userImpersonate(User $theUser, Request $request, ContainerBagInterface $containerBag): Response
     {
-        exit("IMPERSONATE");
+        $theUrl = $request->getRequestUri();
+        $baseDomain = $containerBag->get("app.defaultDomain");
+        $impersonatePath = $baseDomain . $theUrl . "?impersonate_user=" . $theUser->getUserIdentifier();
+        return $this->redirect($impersonatePath);
     }
 
     #[Route('/current/switch_to_light_mode', name: 'switch_to_light_mode')]

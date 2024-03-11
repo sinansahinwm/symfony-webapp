@@ -16,7 +16,7 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            switch_user: true
+            switch_user: { role: ROLE_CAN_SWITCH, parameter: _impersonate_user }
             logout:
                 path: app_auth_signout
                 target: app_auth_signin
