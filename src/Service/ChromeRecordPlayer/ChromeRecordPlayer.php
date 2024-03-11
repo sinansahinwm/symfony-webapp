@@ -3,11 +3,8 @@
 use Exception;
 use Symfony\Component\BrowserKit\AbstractBrowser;
 use Symfony\Component\BrowserKit\Exception\UnexpectedValueException;
-use Symfony\Component\Config\Exception\LoaderLoadException;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
-use Symfony\Component\OptionsResolver\Exception\UndefinedOptionsException;
-
 class ChromeRecordPlayer
 {
 
@@ -18,6 +15,7 @@ class ChromeRecordPlayer
 
     private array $recordSteps = [];
     private array $formFields = [];
+
     private ?string $recordTitle = NULL;
     private AbstractBrowser $myBrowser;
     private Crawler $myCrawler;
@@ -37,12 +35,17 @@ class ChromeRecordPlayer
 
     public function play(): Crawler
     {
+
+        // Check Record File Is Loaded
         if ($this->chromeRecordReader->isSuccess() !== TRUE) {
             throw new FileNotFoundException();
         }
+
+        // Play Steps
         foreach ($this->recordSteps as $recordStep) {
             $this->playStep($recordStep);
         }
+
         return $this->myCrawler;
     }
 
@@ -153,4 +156,5 @@ class ChromeRecordPlayer
             }
         }
     }
+
 }

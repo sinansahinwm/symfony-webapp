@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class TestController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(ChromeRecordReader $chromeRecordReader, ChromeRecordPlayer $chromeRecordPlayer, BrowserStepper $browserStepper, RequestStep $requestStep, ClickLinkStep $clickLinkStep, FormStep $formStep, TextCheckStep $textCheckStep, XPathCheckStep $selectorMatchesStep, ClearStepsStep $clearStepsStep, FilterXPathStep $filterXPathStep): Response
+    public function index(ChromeRecordReader $chromeRecordReader, ChromeRecordPlayer $chromeRecordPlayer): Response
     {
 
         $playResult = $chromeRecordPlayer->load("/Users/meehouapp/Desktop/testKaydı.json")->play();
