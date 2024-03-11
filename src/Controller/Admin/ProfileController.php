@@ -39,7 +39,6 @@ class ProfileController extends AbstractController
     #[Route(path: '/{theUser}/edit', name: 'edit')]
     public function userEdit(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('PROFILE_EDIT', $theUser);
         $myForm = $this->createForm(ProfileEditType::class, $theUser, [
             'readonlyValue' => $theUser->getEmail()
         ]);
@@ -59,7 +58,6 @@ class ProfileController extends AbstractController
     #[Route(path: '/{theUser}/change_password', name: 'change_password')]
     public function userChangePassword(User $theUser, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
-        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         $myForm = $this->createForm(ProfileChangePasswordType::class, $theUser);
         $myForm->handleRequest($request);
 
@@ -84,7 +82,6 @@ class ProfileController extends AbstractController
     #[Route(path: '/{theUser}/make_passive', name: 'make_passive')]
     public function userMakePassive(User $theUser, Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response
     {
-        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         $myForm = $this->createForm(ProfileMakePassiveType::class, $theUser);
         $myForm->handleRequest($request);
 
@@ -107,7 +104,6 @@ class ProfileController extends AbstractController
     #[Route(path: '/{theUser}/kick_team', name: 'kick_team')]
     public function userKickTeam(User $theUser, Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response
     {
-        $this->denyAccessUnlessGranted('PROFILE_READ', $theUser);
         $myForm = $this->createForm(ProfileKickTeamType::class, $theUser);
         $myForm->handleRequest($request);
 
