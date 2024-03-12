@@ -17,12 +17,11 @@ cd assets/puppeteer_replayer && npm install && cd ~
 ### Run Command
 
 ~~~
-nohup heroku-php-apache2 > app_heroku.out
-cd assets/puppeteer_replayer
-nohup node server.js > app_node.out
-cd ~
-nohup php bin/console messenger:consume async > app_messenger
+heroku-php-apache2 & node ~/assets/puppeteer_replayer/server.js & php bin/console messenger:consume async
 ~~~
+
+### Then Console
+
 
 # -- When Prod
 
