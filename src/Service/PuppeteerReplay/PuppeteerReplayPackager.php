@@ -36,16 +36,12 @@ class PuppeteerReplayPackager
     {
         $myFS = new Filesystem();
         $zipFilename = $myFS->tempnam('/tmp', 'puppeteer_replayer_package_', '.zip');
-        $replayerFilesBasePath = $this->containerBag->get("app.projectDir") . "/assets/puppeteer_replayer";
-        $packageContents = [
-            "extension.js" => $replayerFilesBasePath . "/extension.js",
-            "package.json" => $replayerFilesBasePath . "/package.json",
-            "package-lock.json" => $replayerFilesBasePath . "/package-lock.json",
-        ];
+        $replayerPackageBaseDir = $this->containerBag->get("app.projectDir") . "/assets/puppeteer_replayer";
         $packageZip = new ZipArchive();
         if ($packageZip->open($zipFilename, ZipArchive::CREATE) === TRUE) {
-            foreach ($packageContents as $entryName => $filePath) {
-                $packageZip->addFromString($entryName, file_get_contents($filePath));
+            foreach (glob($replayerPackageBaseDir . "/*.*") as $packageFile) {
+                $basename = basename($packageFile);
+                $packageZip->addFromString($basename, file_get_contents($packageFile));
             }
             $packageZip->addFromString('index.js', $combinedJS);
             $packageZip->close();

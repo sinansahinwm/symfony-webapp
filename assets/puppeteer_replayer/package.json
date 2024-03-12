@@ -12,6 +12,7 @@
   "dependencies": {
     "@puppeteer/replay": "^3.0.0",
     "axios": "^1.6.7",
+    "express": "^4.18.3",
     "fs": "^0.0.1-security",
     "puppeteer": "^22.4.1",
     "uuid": "^9.0.1"

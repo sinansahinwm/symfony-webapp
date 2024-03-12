@@ -76,3 +76,6 @@ fabric.properties
 !.vscode/*.code-snippets
 .history/
 *.vsix
+
+# ----- OTHER ---- #
+assets/puppeteer_replayer/node_modules
