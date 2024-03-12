@@ -1,5 +1,6 @@
-## DigitalOcean - App Platform Configuration
+# DigitalOcean - App Platform Configuration
 
+## -- When Dev
 ### Build Command
 
 ~~~
@@ -22,3 +23,7 @@ nohup node server.js > app_node.out
 cd ~
 nohup php bin/console messenger:consume async > app_messenger
 ~~~
+
+# -- When Prod
+
+TODO : todo
