@@ -1,6 +1,6 @@
 <?php namespace App\Controller\Admin;
 
-use App\Service\PuppeteerReplay\PuppeteerReplayPackager;
+use App\Service\PuppeteerReplay\PuppeteerReplayService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,9 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class TestController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(PuppeteerReplayPackager $puppeteerReplayService): Response
+    public function index(PuppeteerReplayService $puppeteerReplayService): Response
     {
-        $packagePath = $puppeteerReplayService->loadRecord("/Users/meehouapp/Desktop/replay.js")->package("sdg", "sdg");
+        $playEnvelope = $puppeteerReplayService->setOptions("dgsg", "sdgsdg")->play("/Users/meehouapp/Desktop/replay.js");
         return new JsonResponse([]);
     }
 
