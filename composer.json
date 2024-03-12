@@ -68,7 +68,8 @@
         "twig/markdown-extra": "^3.8",
         "twig/string-extra": "^3.8",
         "twig/twig": "^2.12|^3.0",
-        "vich/uploader-bundle": "^2.3"
+        "vich/uploader-bundle": "^2.3",
+        "ext-zip": "*"
     },
     "config": {
         "allow-plugins": {

@@ -2,6 +2,7 @@
 # PARAMETERS CONFIGURATION
 # ===============================
 parameters:
+  app.projectDir: '%kernel.project_dir%'
   app.defaultDomain: '%env(APP_DOMAIN)%'
   app.fixtures.administrator.email: '%env(FIXTURES_ADMINISTRATOR_EMAIL)%'
   app.fixtures.administrator.password: '%env(FIXTURES_ADMINISTRATOR_PASSWORD)%'
