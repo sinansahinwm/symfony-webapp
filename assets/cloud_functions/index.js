@@ -14,6 +14,9 @@ functions.http('puppeteerReplayer', _puppeteerReplayer);
 // Define Function Handlers
 async function _puppeteerReplayer(request, response) {
 
+    // Read DotEnv
+
+    // Get Request Parameters
     const requestAppSecret = request.headers["X-Authorization-AppSecret"];
     const validAppSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
     const requestContentType = request.get('Content-Type').toLowerCase();
@@ -33,10 +36,13 @@ async function _puppeteerReplayer(request, response) {
         const myBrowser = await puppeteer.launch(puppeteerLaunchOptions);
         const myPage = await myBrowser.newPage();
 
+        // Create Flow
         const myFlow = {
             title: instanceID,
             steps: puppeteerSteps,
         };
+
+        // Create Runner
         const myRunner = await createRunner(
             myFlow,
             new PuppeteerBridgeExtension(myBrowser, myPage, timeOut, webhookURL, instanceID)
