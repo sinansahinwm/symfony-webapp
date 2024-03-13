@@ -19,7 +19,7 @@ class NodeAppPackagerService
     {
     }
 
-    public function packageApp(string $appName, string $entryPointContent, string $entryPointFile = self::APP_PACKAGE_INDEX_ENTRYPOINT): string
+    public function packageApp(string $appName, string $entryPointContent): string
     {
         $packageZipFileName = $this->myFileSystem->tempnam('/tmp', $appName . "_", '.zip');
         $appBaseDirectory = $this->getAppsBaseDirectory($appName);
@@ -34,7 +34,7 @@ class NodeAppPackagerService
                 }
             }
             // Add Entry Point File
-            $appPackageZip->addFromString($entryPointFile, $this->capsulateEntrypointContent($entryPointContent, $appName));
+            $appPackageZip->addFromString(self::APP_PACKAGE_INDEX_ENTRYPOINT, $this->capsulateEntrypointContent($entryPointContent, $appName));
             $appPackageZip->close();
         }
         return $packageZipFileName;

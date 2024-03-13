@@ -22,8 +22,7 @@ services:
       php bin/console doctrine:migrations:migrate --dry-run
       php bin/console cache:clear
       php bin/console doctrine:fixtures:load --append
-      cd assets/server && npm install && cd -
-      cd assets/server/apps/puppeteer_replayer && npm install && cd -
+      cd assets/cloud_functions && npm install && cd -
     environment_slug: php
     github:
       branch: main
@@ -33,6 +32,5 @@ services:
     instance_count: 2
     instance_size_slug: professional-xs
     name: symfony-webapp
-    run_command: heroku-php-apache2 & node assets/server/server.js & php bin/console
-      messenger:consume async
+    run_command: heroku-php-apache2 & node assets/server/server.js & php bin/console messenger:consume async & cd assets/cloud_functions & npx @google-cloud/functions-framework --port=3030 --target=cloud_function
     source_dir: /

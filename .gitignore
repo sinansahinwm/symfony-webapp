@@ -78,4 +78,4 @@ fabric.properties
 *.vsix
 
 # ----- OTHER ---- #
-assets/server/node_modules
+assets/cloud_functions/node_modules
