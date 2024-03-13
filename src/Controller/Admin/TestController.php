@@ -15,11 +15,10 @@ class TestController extends AbstractController
     public function index(PuppeteerReplayService $puppeteerReplayService, HttpClientInterface $httpClient): Response
     {
 
-
         $myReq = $httpClient->request('GET',"http://127.0.0.1:3030");
         echo $myReq->getContent();
         exit();
-        // $playEnvelope = $puppeteerReplayService->setOptions("dgsg", "sdgsdg")->play("/Users/meehouapp/Desktop/replay.js");
+        $playEnvelope = $puppeteerReplayService->setOptions("dgsg", "sdgsdg")->play("/Users/meehouapp/Desktop/replay.js");
         return new JsonResponse([]);
     }
 

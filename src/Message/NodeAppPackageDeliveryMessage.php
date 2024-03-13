@@ -2,7 +2,7 @@
 
 namespace App\Message;
 
-final class DeliverPuppeteerReplayMessage
+final class NodeAppPackageDeliveryMessage
 {
 
     public function __construct(private string $packagePath)

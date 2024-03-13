@@ -1,6 +1,6 @@
 <?php namespace App\Service\PuppeteerReplay;
 
-use App\Message\DeliverPuppeteerReplayMessage;
+use App\Message\NodeAppPackageDeliveryMessage;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Envelope;
@@ -31,7 +31,7 @@ class PuppeteerReplayService
     {
         try {
             $puppeteerReplayPackage = $this->packager->loadRecord($recordPath)->package($this->webHookUrl, $this->instanceID, $this->timeOut, $this->puppeteerLaunchOptions);
-            $deliverReplayNotification = new DeliverPuppeteerReplayMessage($puppeteerReplayPackage);
+            $deliverReplayNotification = new NodeAppPackageDeliveryMessage($puppeteerReplayPackage);
             return $this->messageBus->dispatch($deliverReplayNotification);
         } catch (Exception $exception) {
             $this->logger->error($exception);
