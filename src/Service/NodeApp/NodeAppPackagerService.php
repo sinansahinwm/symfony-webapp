@@ -1,4 +1,4 @@
-<?php namespace App\Service;
+<?php namespace App\Service\NodeApp;
 
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\NotFoundExceptionInterface;
@@ -19,7 +19,7 @@ class NodeAppPackagerService
     {
     }
 
-    public function packageApp(string $appName, ?string $entrypointContent = NULL, string $entryPointFile = self::APP_PACKAGE_INDEX_ENTRYPOINT)
+    public function packageApp(string $appName, ?string $entrypointContent = NULL, string $entryPointFile = self::APP_PACKAGE_INDEX_ENTRYPOINT): string
     {
         $packageZipFileName = $this->myFileSystem->tempnam('/tmp', $appName . "_", '.zip');
         $appBaseDirectory = $this->getAppsBaseDirectory($appName);

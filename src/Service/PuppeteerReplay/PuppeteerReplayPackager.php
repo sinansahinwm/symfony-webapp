@@ -1,13 +1,11 @@
 <?php namespace App\Service\PuppeteerReplay;
 
-use App\Service\NodeAppPackagerService;
+use App\Service\NodeApp\NodeAppPackagerService;
 
 class PuppeteerReplayPackager
 {
 
     const NODE_APP_NAME = 'puppeteer_replayer';
-    const NODE_PACKAGE_START_ENTRYPOINT = 'index.js';
-    const NODE_PACKAGE_GLOB = "/*.*";
     private PuppeteerReplayCombinator $replayCombinator;
 
     public function __construct(PuppeteerReplayCombinator $replayCombinator, private PuppeteerReplayLoader $replayLoader, private NodeAppPackagerService $nodeAppPackagerService)
