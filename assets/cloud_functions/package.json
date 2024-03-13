@@ -10,6 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@google-cloud/functions-framework": "^3.3.0"
+    "@google-cloud/functions-framework": "^3.3.0",
+    "@puppeteer/replay": "^3.0.0",
+    "axios": "^1.6.7",
+    "puppeteer": "^22.4.1",
+    "uuid": "^9.0.1"
   }
 }
