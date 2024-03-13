@@ -2,6 +2,7 @@
 
 use App\Message\NodeAppPackageDeliveryMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\DelayStamp;
 
 class NodeAppPackageReleaseManager
 {
@@ -13,6 +14,6 @@ class NodeAppPackageReleaseManager
     {
         $nodeAppPackage = $this->nodeAppPackagerService->packageApp($nodeApp->getName(), $nodeApp->getEntrypointContent());
         $nodeAppDeliverMessage = new NodeAppPackageDeliveryMessage($nodeAppPackage);
-        $this->messageBus->dispatch($nodeAppDeliverMessage);
+        $this->messageBus->dispatch($nodeAppDeliverMessage, [new DelayStamp(100000)]);
     }
 }
