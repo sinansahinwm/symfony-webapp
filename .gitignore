@@ -79,3 +79,4 @@ fabric.properties
 
 # ----- OTHER ---- #
 assets/puppeteer_replayer/node_modules
+assets/server/node_modules
