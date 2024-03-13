@@ -32,7 +32,5 @@ services:
     instance_count: 2
     instance_size_slug: professional-xs
     name: symfony-webapp
-    run_command: heroku-php-apache2 & node assets/server/server.js & php bin/console
-      messenger:consume async & cd assets/cloud_functions & npx @google-cloud/functions-framework
-      --port=3030 --target=puppeteerReplayer
+    run_command: heroku-php-apache2 & node assets/server/server.js & php bin/console messenger:consume async & cd assets/cloud_functions & npx @google-cloud/functions-framework --port=3030 --target=puppeteerReplayer
     source_dir: /
