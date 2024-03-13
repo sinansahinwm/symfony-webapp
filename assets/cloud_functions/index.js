@@ -4,6 +4,7 @@ import functions from '@google-cloud/functions-framework';
 // Library Imports
 import {createRunner} from '@puppeteer/replay';
 import puppeteer from "puppeteer";
+import dotenv from 'dotenv';
 
 // Vendor Imports
 import PuppeteerBridgeExtension from './vendor/extension.js';
@@ -15,6 +16,8 @@ functions.http('puppeteerReplayer', _puppeteerReplayer);
 async function _puppeteerReplayer(request, response) {
 
     // Read DotEnv
+    const dotEnv = dotenv.config({ path: './../../.env' });
+    console.log(dotEnv);
 
     // Get Request Parameters
     const requestAppSecret = request.headers["X-Authorization-AppSecret"];

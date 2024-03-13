@@ -1,6 +1,4 @@
 import {PuppeteerRunnerExtension} from "@puppeteer/replay";
-import puppeteer from "puppeteer";
-import {v4 as uuidv4} from 'uuid';
 import axios from 'axios';
 
 export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
@@ -10,7 +8,6 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         this.browser = browser;
         this.page = page;
         this.timeout = timeout;
-        this.instanceID = uuidv4();
         this.webhookUrl = webhookUrl;
         this.instanceID = instanceID;
     }
