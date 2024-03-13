@@ -5,14 +5,15 @@
 
 ~~~
 composer install
+npm install
 npm run build
+cd assets/server && npm install && cd .. & cd ..
+cd assets/server/apps/puppeteer_replayer && npm install && cd .. & cd .. & cd .. & cd..
 php bin/console doctrine:schema:drop --force
 php bin/console doctrine:schema:create
 php bin/console doctrine:migrations:migrate --dry-run
 php bin/console cache:clear
 php bin/console doctrine:fixtures:load --append
-cd assets/server && npm install && cd ~
-cd assets/server/apps/puppeteer_replayer && npm install && cd ~
 ~~~
 
 ### Run Command
