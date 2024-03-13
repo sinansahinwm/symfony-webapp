@@ -78,5 +78,4 @@ fabric.properties
 *.vsix
 
 # ----- OTHER ---- #
-assets/server/apps/puppeteer_replayer/node_modules
 assets/server/node_modules
