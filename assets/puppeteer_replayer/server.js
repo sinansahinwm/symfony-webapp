@@ -1,7 +1,7 @@
 import express from 'express';
 
 const myServer = express();
-const myServerPort = 3000;
+const myServerPort = 3030;
 
 myServer.listen(myServerPort, () =>
     console.log('Puppeteer Replayer Server Started On Port: ' + myServerPort),
