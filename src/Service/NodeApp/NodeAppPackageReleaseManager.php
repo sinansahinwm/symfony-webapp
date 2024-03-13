@@ -14,6 +14,6 @@ class NodeAppPackageReleaseManager
     {
         $nodeAppPackage = $this->nodeAppPackagerService->packageApp($nodeApp->getName(), $nodeApp->getEntrypointContent());
         $nodeAppDeliverMessage = new NodeAppPackageDeliveryMessage($nodeAppPackage);
-        $this->messageBus->dispatch($nodeAppDeliverMessage, [new DelayStamp(100000)]);
+        $this->messageBus->dispatch($nodeAppDeliverMessage);
     }
 }
