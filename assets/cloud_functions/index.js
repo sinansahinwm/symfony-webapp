@@ -1,3 +1,3 @@
-exports.cloud_function = (req, res) => {
-    res.send('Hello, World');
+exports.puppeteerReplayer = (req, res) => {
+    res.send('Puppeteer Replayer');
 };
