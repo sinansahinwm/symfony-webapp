@@ -1,4 +1,4 @@
-<?php namespace App\Service\PuppeteerReplay;
+<?php namespace App\Service\NodeApp\PuppeteerReplayer;
 
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
