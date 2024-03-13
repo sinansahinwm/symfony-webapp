@@ -13,4 +13,5 @@ functions.http('puppeteerReplayer', _puppeteerReplayer);
 // Define Function Handlers
 function _puppeteerReplayer(request, response) {
     response.send("Hello from pup");
+    console.log(request);
 }
