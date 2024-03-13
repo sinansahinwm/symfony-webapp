@@ -32,5 +32,5 @@ services:
     instance_count: 2
     instance_size_slug: professional-xs
     name: symfony-webapp
-    run_command: heroku-php-apache2 & node assets/server/server.js & php bin/console messenger:consume async & cd assets/cloud_functions & npm run cloud_functions
+    run_command: heroku-php-apache2 & php bin/console messenger:consume async & cd assets/cloud_functions & npm run cloud_functions
     source_dir: /
