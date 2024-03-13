@@ -16,7 +16,7 @@ class TestController extends AbstractController
     {
 
 
-        $myReq = $httpClient->request("http://127.0.0.1:3030");
+        $myReq = $httpClient->request('GET',"http://127.0.0.1:3030");
         echo $myReq->getContent();
         exit();
         // $playEnvelope = $puppeteerReplayService->setOptions("dgsg", "sdgsdg")->play("/Users/meehouapp/Desktop/replay.js");
