@@ -44,9 +44,9 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         const webhookData = {
             instanceID: this.instanceID,
             phase: phase,
-            step: "stp",
-            screenshot: "ss",
-            content: "cnt",
+            step: step,
+            screenshot: pageScreenshot,
+            content: pageContent,
         }
 
         // Send Webhook
@@ -58,7 +58,6 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         }
 
         hookHeaders[authHeaderName] = authHeaderValue;
-
 
         await axios.post(this.webhookUrl, webhookData, {headers: hookHeaders})
             .catch(function (error) {

@@ -98,6 +98,7 @@ async function _puppeteerReplayerHandler(request, response) {
         const errorHookData = {
             instanceID: instanceID,
             phase: "error",
+            error: e.toString()
         }
         await axios.post(webhookURL, errorHookData, {headers: errorHookHeaders}).catch(function (error) {
             console.log(error);
