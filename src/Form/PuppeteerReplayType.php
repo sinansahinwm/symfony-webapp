@@ -18,7 +18,6 @@ class PuppeteerReplayType extends AbstractFormType
     {
 
         $helperText = $this->t("Maksimum dosya boyutu: ") . '1MB';
-
         $builder->add('theFile', DropzoneType::class, [
             'label' => $this->t('Dosya'),
             'attr' => [
@@ -30,7 +29,6 @@ class PuppeteerReplayType extends AbstractFormType
             ]
         ]);
 
-        $builder->add('theFile', DropzoneType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
