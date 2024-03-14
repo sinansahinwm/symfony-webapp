@@ -59,7 +59,6 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
 
         hookHeaders[authHeaderName] = authHeaderValue;
 
-        console.log(this.webhookUrl);
         await axios.post(this.webhookUrl, webhookData, {headers: hookHeaders})
             .catch(function (error) {
                 console.log(error);
