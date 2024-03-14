@@ -18,15 +18,19 @@ class PuppeteerWebhookHandlerService
         $dataIsValid = $this->checkBodyData($hookBodyData);
         if ($dataIsValid === TRUE) {
             $bodyInstanceID = $hookBodyData["instanceID"];
+            $bodyPhase = $hookBodyData["phase"];
+
             $instanceEntity = $this->puppeteerReplayRepository->find($bodyInstanceID);
             if ($instanceEntity instanceof PuppeteerReplay) {
-                $bodyPhase = $hookBodyData["phase"];
-                $bodyStep = $hookBodyData["step"];
-                $bodyScreenshot = $hookBodyData["screenshot"];
-                $bodyContent = $hookBodyData["content"];
 
                 // Update Replay Life Cycle
                 $this->updateLifeCycle($instanceEntity, $bodyPhase);
+
+                // $bodyStep = $hookBodyData["step"];
+                // $bodyScreenshot = $hookBodyData["screenshot"];
+                // $bodyContent = $hookBodyData["content"];
+
+
             } else {
                 throw new BadRequestHttpException();
             }
@@ -37,7 +41,7 @@ class PuppeteerWebhookHandlerService
 
     private function checkBodyData(array $hookBodyData): bool
     {
-        return TRUE;
+        return isset($hookBodyData["phase"]) && isset($hookBodyData["instanceID"]);
     }
 
     private function updateLifeCycle(PuppeteerReplay $puppeteerReplay, $phase): void
@@ -46,6 +50,7 @@ class PuppeteerWebhookHandlerService
             default => PuppeteerReplayStatusType::UPLOAD,
             'beforeEachStep', 'afterEachStep' => PuppeteerReplayStatusType::PROCESSING,
             'afterAllSteps' => PuppeteerReplayStatusType::COMPLETED,
+            'error' => PuppeteerReplayStatusType::ERROR,
         };
         $puppeteerReplay->setStatus($puppeteerReplayStatus);
         $this->entityManager->persist($puppeteerReplay);

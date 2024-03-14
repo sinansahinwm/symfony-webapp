@@ -5,6 +5,7 @@ import functions from '@google-cloud/functions-framework';
 import {createRunner} from '@puppeteer/replay';
 import puppeteer from "puppeteer";
 import dotenv from 'dotenv';
+import axios from 'axios';
 
 // Vendor Imports
 import PuppeteerBridgeExtension from './vendor/extension.js';
@@ -55,12 +56,14 @@ async function _puppeteerReplayerHandler(request, response) {
     // Send 200 Status Code & Run Steps
     response.status(200).send("OK");
 
+    // Mandatory Data
+    const requestBody = request.body;
+    const webhookURL = requestBody.webhookURL;
+    const instanceID = requestBody.instanceID;
+
     try {
 
         // Get Params
-        const requestBody = request.body;
-        const instanceID = requestBody.instanceID;
-        const webhookURL = requestBody.webhookURL;
         const timeOut = requestBody.timeOut;
         const puppeteerLaunchOptions = requestBody.puppeteerLaunchOptions;
         const puppeteerSteps = requestBody.steps;
@@ -86,6 +89,21 @@ async function _puppeteerReplayerHandler(request, response) {
         await myBrowser.close();
 
     } catch (e) {
-        // TODO : Error handler
+
+
+        // Send Webhook
+        const errorHookHeaders = {
+            'Content-Type': 'application/json',
+        }
+
+        errorHookHeaders[authHeaderName] = validAppSecret;
+        const errorHookData = {
+            instanceID: instanceID,
+            phase: "error",
+        }
+        await axios.post(webhookURL, errorHookData, {headers: errorHookHeaders}).catch(function (error) {
+            console.log(error);
+        });
+
     }
 }
