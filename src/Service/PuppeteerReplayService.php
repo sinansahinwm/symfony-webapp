@@ -11,7 +11,7 @@ class PuppeteerReplayService
     private string $recordPath;
     private string $webhookUrl;
     private string $instanceID;
-    private int $timeOut = 7000;
+    private int $timeOut = 20000;
 
     private BaseWebhook $webhook;
 

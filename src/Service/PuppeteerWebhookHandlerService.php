@@ -74,9 +74,18 @@ class PuppeteerWebhookHandlerService
             $puppeteerReplay->setLastErrorMessage($errorIfExist);
         }
 
+        if ($puppeteerReplayStatus === PuppeteerReplayStatusType::COMPLETED) {
+            $this->whenStatusCompleted($puppeteerReplay);
+        }
+
         $this->entityManager->persist($puppeteerReplay);
         $this->entityManager->flush();
         return $puppeteerReplay;
+    }
+
+    private function whenStatusCompleted(PuppeteerReplay $puppeteerReplay): void
+    {
+
     }
 
 }
