@@ -2,11 +2,13 @@
 
 use App\Entity\PuppeteerReplay;
 use App\Service\CrudTable\ActionsColumn;
+use App\Service\CrudTable\BadgeColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
+use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableTypeInterface;
@@ -25,8 +27,13 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
     public function configure(DataTable $dataTable, array $options): void
     {
         $dataTable->add('file_name', TextColumn::class);
-        $dataTable->add('created_at', TextColumn::class);
-        $dataTable->add('status', TextColumn::class);
+        $dataTable->add('created_at', DateTimeColumn::class);
+        $dataTable->add('status', BadgeColumn::class, [
+            'type' => 'success',
+            'label' => function ($value) {
+                return $value;
+            }
+        ]);
         $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
