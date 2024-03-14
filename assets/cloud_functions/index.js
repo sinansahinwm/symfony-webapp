@@ -16,7 +16,8 @@ functions.http('puppeteerReplayer', _puppeteerReplayer);
 async function _puppeteerReplayer(request, response) {
 
     // Read DotEnv
-    const dotEnv = dotenv.config({path: './../../.env'});
+    const envPath = import.meta.dirname + "/../../.env";
+    const dotEnv = dotenv.config({path: envPath});
     const parsedDotEnv = dotEnv.parsed;
     console.log(dotEnv);
 
