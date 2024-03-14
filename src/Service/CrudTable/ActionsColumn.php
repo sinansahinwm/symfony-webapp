@@ -14,12 +14,13 @@ class ActionsColumn extends AbstractColumn
     public function normalize(mixed $value): string
     {
         $dropdownItems = array_map(function (callable $actionCallable, $value) {
+            exit(serialize($value));
             if (is_callable($actionCallable)) {
                 $callResult = call_user_func($actionCallable, $value, $this->urlGenerator);
                 $iconDef = ($callResult->getIcon() !== NULL) ? '<i class="' . $callResult->getIcon() . ' me-1"></i> ' : ' ';
                 return '<a class="dropdown-item" href="' . $callResult->getText() . '">' . $iconDef . $callResult->getText() . '</a>';
             }
-            return $this->options["label"];
+            return '';
         }, $this->options["actions"]);
         return '<div class="dropdown"><button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button><div class="dropdown-menu">' . implode('', $dropdownItems) . ' </div></div>';
     }
