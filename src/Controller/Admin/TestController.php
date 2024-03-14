@@ -16,12 +16,10 @@ class TestController extends AbstractController
     {
         $playEnvelope = $puppeteerReplayService
             ->setRecordPath("/Users/meehouapp/Desktop/hb.json")
-            ->setWebhookUrl("https://webhook-test.com/fd517bb52f8ee0aaf77803a02da4c597")
+            ->setWebhookUrl("https://webhook-test.com/8f5cdbaa6ebcf5d72faf4fe1dcb1e854")
             ->setInstanceID("my instance id")
             ->play();
 
-        //$myNodeApp = $puppeteerReplayerNodeApp->setRecordPath("/Users/meehouapp/Desktop/replay.js")->setOptions("https://DENEME.com", "my instance id");
-        //$nodeAppPackageReleaseManager->releaseApp($myNodeApp);
         return new JsonResponse([]);
     }
 

@@ -10,11 +10,24 @@ import dotenv from 'dotenv';
 import PuppeteerBridgeExtension from './vendor/extension.js';
 
 // Define Functions
-functions.http('puppeteerReplayer', _puppeteerReplayer);
+functions.http('httpCloudFunction', _httpCloudFunctionHandler);
 
 // Define Function Handlers
-async function _puppeteerReplayer(request, response) {
+async function _httpCloudFunctionHandler(request, response) {
 
+    const myHandlerFunction = request.get("X-Cloud-Function-Handler");
+    switch (myHandlerFunction) {
+        case "puppeteer_replayer":
+            await _puppeteerReplayerHandler(request, response);
+            break;
+        default:
+            response.status(500).send();
+    }
+
+}
+
+async function _puppeteerReplayerHandler(request, response) {
+    console.log("sdgsdgsdg");
     // Read DotEnv
     const envPath = import.meta.dirname + "/../../.env";
     const dotEnv = dotenv.config({path: envPath});
@@ -74,5 +87,4 @@ async function _puppeteerReplayer(request, response) {
     } catch (e) {
         // TODO : Error handler
     }
-
 }

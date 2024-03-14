@@ -76,6 +76,7 @@ final class PuppeteerReplayerDeliveryMessageHandler
         $requestOptions["headers"] = [
             'Accept' => 'application/json',
             'Content-Type' => 'application/json',
+            'X-Cloud-Function-Handler' => "puppeteer_replayer",
             $authHeaderKey => $authHeaderValue,
         ];
 
