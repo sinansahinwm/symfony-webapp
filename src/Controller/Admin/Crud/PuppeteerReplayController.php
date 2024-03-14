@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/admin/puppeteer/replay', name: 'app_admin_puppeteer_replay_')]
 class PuppeteerReplayController extends AbstractController
 {
-    #[Route('/', name: 'index', methods: ['GET'])]
+    #[Route('/', name: 'index')]
     public function index(Request $request, CrudTableService $crudTableService): Response
     {
         $notificationTable = $crudTableService->createFromFQCN($request, PuppeteerReplayTable::class);
