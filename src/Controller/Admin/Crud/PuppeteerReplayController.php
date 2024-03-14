@@ -49,7 +49,7 @@ class PuppeteerReplayController extends AbstractController
         ]);
     }
 
-    #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'delete')]
     public function delete(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $puppeteerReplay->getId(), $request->request->get('_token'))) {
