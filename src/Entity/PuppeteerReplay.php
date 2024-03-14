@@ -47,16 +47,6 @@ class PuppeteerReplay
         return $this;
     }
 
-    public function setTheFile(?File $theFile = NULL): void
-    {
-        $this->theFile = $theFile;
-    }
-
-    public function getTheFile(): ?File
-    {
-        return $this->theFile;
-    }
-
     public function getStatus()
     {
         return $this->status;
