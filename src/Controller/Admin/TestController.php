@@ -18,7 +18,6 @@ class TestController extends AbstractController
             ->setRecordPath("/Users/meehouapp/Desktop/hb.json")
             ->setWebhookUrl("https://webhook-test.com/fd517bb52f8ee0aaf77803a02da4c597")
             ->setInstanceID("my instance id")
-            ->setTimeOut(1000)
             ->play();
 
         //$myNodeApp = $puppeteerReplayerNodeApp->setRecordPath("/Users/meehouapp/Desktop/replay.js")->setOptions("https://DENEME.com", "my instance id");
