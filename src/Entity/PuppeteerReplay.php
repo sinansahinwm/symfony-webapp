@@ -76,13 +76,13 @@ class PuppeteerReplay
     }
 
     #[ORM\PrePersist]
-    public function setDefaultStatus()
+    public function setDefaults(): void
     {
         if ($this->status === NULL) {
             $this->setStatus(PuppeteerReplayStatusType::UPLOAD);
         }
         if ($this->created_at === NULL) {
-            $this->created_at = new DateTimeImmutable();
+            $this->setCreatedAt(new DateTimeImmutable());
         }
     }
 

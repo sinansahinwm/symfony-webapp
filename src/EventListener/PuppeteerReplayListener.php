@@ -4,7 +4,6 @@ use App\Controller\Webhook\PuppeteerReplayerWebhook;
 use App\Entity\PuppeteerReplay;
 use App\Service\PuppeteerReplayService;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
-use Doctrine\ORM\Event\PostPersistEventArgs;
 use Doctrine\ORM\Events;
 use Exception;
 use Psr\Log\LoggerInterface;
@@ -19,8 +18,9 @@ class PuppeteerReplayListener
 
     public function postPersist(PuppeteerReplay $puppeteerReplay): void
     {
-        try {
+        exit("post flush");
 
+        try {
 
             $resolvedFilePath = $this->storage->resolvePath($puppeteerReplay);
 
