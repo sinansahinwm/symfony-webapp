@@ -12,7 +12,7 @@ class PuppeteerReplayType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('fileName', DropzoneType::class);
+        $builder->add('theFile', DropzoneType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

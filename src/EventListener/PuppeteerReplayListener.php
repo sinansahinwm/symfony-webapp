@@ -18,12 +18,8 @@ class PuppeteerReplayListener
 
     public function postPersist(PuppeteerReplay $puppeteerReplay): void
     {
-        exit("post flush");
-
         try {
-
             $resolvedFilePath = $this->storage->resolvePath($puppeteerReplay);
-
             $this->puppeteerReplayService
                 ->setRecordPath($resolvedFilePath)
                 ->setWebhook($this->puppeteerReplayerWebhook)

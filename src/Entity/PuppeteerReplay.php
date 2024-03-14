@@ -2,9 +2,7 @@
 
 namespace App\Entity;
 
-use App\Config\PuppeteerReplayStatusType;
 use App\Repository\PuppeteerReplayRepository;
-use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
