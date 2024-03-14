@@ -10,7 +10,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-#[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: PuppeteerReplayRepository::class)]
 class PuppeteerReplay
@@ -30,7 +29,7 @@ class PuppeteerReplay
     #[ORM\Column(length: 255)]
     private ?string $fileName = null;
 
-    #[ORM\Column(type: 'puppeteer_replay_status')]
+    #[ORM\Column(type: 'puppeteer_replay_status', nullable: true)]
     private $status = null;
 
     public function getId(): ?int
@@ -50,18 +49,6 @@ class PuppeteerReplay
         return $this;
     }
 
-    public function getStatus()
-    {
-        return $this->status;
-    }
-
-    public function setStatus($status): static
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
     public function getTheFile(): ?File
     {
         return $this->theFile;
@@ -72,12 +59,16 @@ class PuppeteerReplay
         $this->theFile = $theFile;
     }
 
-    #[ORM\PrePersist]
-    public function setDefaults(): void
+    public function getStatus()
     {
-        if ($this->status === NULL) {
-            $this->setStatus(PuppeteerReplayStatusType::UPLOAD);
-        }
+        return $this->status;
+    }
+
+    public function setStatus($status): static
+    {
+        $this->status = $status;
+
+        return $this;
     }
 
 }
