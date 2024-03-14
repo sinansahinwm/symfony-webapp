@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PuppeteerReplay{% endblock %}
+
+{% block body %}
+    <h1>PuppeteerReplay</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ puppeteer_replay.id }}</td>
+            </tr>
+            <tr>
+                <th>FileName</th>
+                <td>{{ puppeteer_replay.fileName }}</td>
+            </tr>
+            <tr>
+                <th>Status</th>
+                <td>{{ puppeteer_replay.status }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_puppeteer_replay_index') }}">back to list</a>
+
+    <a href="{{ path('app_puppeteer_replay_edit', {'id': puppeteer_replay.id}) }}">edit</a>
+
+    {{ include('puppeteer_replay/_delete_form.html.twig') }}
+{% endblock %}

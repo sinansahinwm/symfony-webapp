@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PuppeteerReplay index{% endblock %}
+
+{% block body %}
+    <h1>PuppeteerReplay index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>FileName</th>
+                <th>Status</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for puppeteer_replay in puppeteer_replays %}
+            <tr>
+                <td>{{ puppeteer_replay.id }}</td>
+                <td>{{ puppeteer_replay.fileName }}</td>
+                <td>{{ puppeteer_replay.status }}</td>
+                <td>
+                    <a href="{{ path('app_puppeteer_replay_show', {'id': puppeteer_replay.id}) }}">show</a>
+                    <a href="{{ path('app_puppeteer_replay_edit', {'id': puppeteer_replay.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_puppeteer_replay_new') }}">Create new</a>
+{% endblock %}
