@@ -2,7 +2,6 @@
 
 namespace App\Controller\Admin\Crud;
 
-use App\Controller\Admin\Table\NotificationTable;
 use App\Controller\Admin\Table\PuppeteerReplayTable;
 use App\Entity\PuppeteerReplay;
 use App\Form\PuppeteerReplayType;
@@ -42,33 +41,15 @@ class PuppeteerReplayController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_puppeteer_replay_show', methods: ['GET'])]
+    #[Route('/show/{id}', name: 'show', methods: ['GET'])]
     public function show(PuppeteerReplay $puppeteerReplay): Response
     {
-        return $this->render('puppeteer_replay/show.html.twig', [
+        return $this->render('admin/crud/puppeteer_replay/show.html.twig', [
             'puppeteer_replay' => $puppeteerReplay,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'app_puppeteer_replay_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(PuppeteerReplayType::class, $puppeteerReplay);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
-
-            return $this->redirectToRoute('app_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
-        }
-
-        return $this->render('puppeteer_replay/edit.html.twig', [
-            'puppeteer_replay' => $puppeteerReplay,
-            'form' => $form,
-        ]);
-    }
-
-    #[Route('/{id}', name: 'app_puppeteer_replay_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $puppeteerReplay->getId(), $request->request->get('_token'))) {
@@ -76,6 +57,6 @@ class PuppeteerReplayController extends AbstractController
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_admin_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
     }
 }
