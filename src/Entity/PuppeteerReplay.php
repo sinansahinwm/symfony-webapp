@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use App\Config\PuppeteerReplayStatusType;
 use App\Repository\PuppeteerReplayRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: PuppeteerReplayRepository::class)]
 class PuppeteerReplay
@@ -21,7 +23,7 @@ class PuppeteerReplay
         maxSize: "1M",
         mimeTypes: "application/json"
     )]
-    #[Vich\UploadableField(mapping: 'puppeteer_replay', fileNameProperty: "theFile")]
+    #[Vich\UploadableField(mapping: 'puppeteer_replay', fileNameProperty: "fileName")]
     public ?File $theFile;
 
     #[ORM\Column(length: 255)]
@@ -67,6 +69,14 @@ class PuppeteerReplay
     public function setTheFile(?File $theFile): void
     {
         $this->theFile = $theFile;
+    }
+
+    #[ORM\PrePersist]
+    public function setDefaultStatus()
+    {
+        if ($this->status === NULL) {
+            $this->setStatus(PuppeteerReplayStatusType::UPLOAD);
+        }
     }
 
 }

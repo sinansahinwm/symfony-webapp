@@ -1,14 +1,25 @@
 <?php namespace App\EventListener;
 
-use App\Config\PuppeteerReplayStatusType;
-use Vich\UploaderBundle\Event\Event;
+use App\Entity\PuppeteerReplay;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
+use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Events;
+use Vich\UploaderBundle\Storage\StorageInterface;
 
+#[AsEntityListener(event: Events::postPersist, method: "postPersist", entity: PuppeteerReplay::class)]
 class PuppeteerReplayListener
 {
-    public function onVichUploaderPreUpload(Event $event): void
+    public function __construct(private StorageInterface $storage)
     {
-        $object = $event->getObject();
-        $object->setStatus(PuppeteerReplayStatusType::UPLOAD);
+    }
+
+    public function postPersist(PuppeteerReplay $puppeteerReplay): void
+    {
+
+        $resolvedFilePath = $this->storage->resolvePath($puppeteerReplay);
+
+
+        exit($resolvedFilePath);
     }
 
 }

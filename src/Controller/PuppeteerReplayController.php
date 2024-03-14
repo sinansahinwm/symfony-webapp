@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Config\PuppeteerReplayStatusType;
 use App\Entity\PuppeteerReplay;
 use App\Form\PuppeteerReplayType;
 use App\Repository\PuppeteerReplayRepository;
