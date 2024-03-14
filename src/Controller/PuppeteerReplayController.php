@@ -31,6 +31,8 @@ class PuppeteerReplayController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            exit($puppeteerReplay->getFileName());
             $entityManager->persist($puppeteerReplay);
             $entityManager->flush();
 

@@ -33,9 +33,6 @@ class PuppeteerReplay
     #[ORM\Column(type: 'puppeteer_replay_status')]
     private $status = null;
 
-    #[ORM\Column]
-    private ?DateTimeImmutable $created_at = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -81,21 +78,6 @@ class PuppeteerReplay
         if ($this->status === NULL) {
             $this->setStatus(PuppeteerReplayStatusType::UPLOAD);
         }
-        if ($this->created_at === NULL) {
-            $this->setCreatedAt(new DateTimeImmutable());
-        }
-    }
-
-    public function getCreatedAt(): ?DateTimeImmutable
-    {
-        return $this->created_at;
-    }
-
-    public function setCreatedAt(DateTimeImmutable $created_at): static
-    {
-        $this->created_at = $created_at;
-
-        return $this;
     }
 
 }
