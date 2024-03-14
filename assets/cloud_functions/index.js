@@ -90,8 +90,6 @@ async function _puppeteerReplayerHandler(request, response) {
 
     } catch (e) {
 
-
-        // Send Webhook
         const errorHookHeaders = {
             'Content-Type': 'application/json',
         }
