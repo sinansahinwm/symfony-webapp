@@ -86,7 +86,7 @@ final class AppEmailMessageHandler
         return $this->twig->render($templatePath, $mailContext);
     }
 
-    private function fixLocalhostProblem(string $renderedHTML): string
+    public function fixLocalhostProblem(string $renderedHTML): string
     {
         try {
             $expectedUrl = $this->containerBag->get('app.defaultDomain');

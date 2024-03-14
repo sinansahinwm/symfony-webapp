@@ -1,5 +1,6 @@
 <?php namespace App\Service;
 
+use App\Controller\Webhook\BaseWebhook;
 use App\Message\PuppeteerReplayerDeliveryMessage;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -11,6 +12,8 @@ class PuppeteerReplayService
     private string $webhookUrl;
     private string $instanceID;
     private int $timeOut = 7000;
+
+    private BaseWebhook $webhook;
 
     public function __construct(private MessageBusInterface $messageBus)
     {
@@ -101,5 +104,18 @@ class PuppeteerReplayService
         $this->timeOut = $timeOut;
         return $this;
     }
+
+    public function getWebhook(): BaseWebhook
+    {
+        return $this->webhook;
+    }
+
+    public function setWebhook(BaseWebhook $webhook): self
+    {
+        $this->webhook = $webhook;
+        $this->setWebhookUrl($webhook->getAbsoluteUrl());
+        return $this;
+    }
+
 
 }
