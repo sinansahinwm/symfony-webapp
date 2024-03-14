@@ -6,6 +6,8 @@ parameters:
   app.defaultDomain: '%env(APP_DOMAIN)%'
   app.fixtures.administrator.email: '%env(FIXTURES_ADMINISTRATOR_EMAIL)%'
   app.fixtures.administrator.password: '%env(FIXTURES_ADMINISTRATOR_PASSWORD)%'
+  app.cloud_functions.auth_header: '%env(CLOUD_FUNCTIONS_AUTHORIZATION_HEADER)%'
+  app.cloud_functions.auth_secret: '%env(APP_SECRET)%'
 
 # ===============================
 # TWIG CONFIGURATION
