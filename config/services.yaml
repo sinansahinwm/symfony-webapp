@@ -25,3 +25,6 @@ services:
     App\EventListener\AbstractFileListener:
         tags:
             - { name: kernel.event_listener, event: vich_uploader.pre_upload }
+    App\EventListener\PuppeteerReplayListener:
+        tags:
+            - { name: kernel.event_listener, event: vich_uploader.pre_upload }

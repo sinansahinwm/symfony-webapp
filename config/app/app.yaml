@@ -109,6 +109,7 @@ doctrine:
       enum: string
     types:
       notification_priority: App\Config\NotificationPriorityType
+      puppeteer_replay_status: App\Config\PuppeteerReplayStatusType
 
 # ===============================
 # TWIG COMPONENT CONFIGURATION
