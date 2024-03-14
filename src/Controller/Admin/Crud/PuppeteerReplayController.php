@@ -23,7 +23,7 @@ class PuppeteerReplayController extends AbstractController
         return $this->render('admin/crud/puppeteer_replay/index.html.twig', ['puppeteerReplayTable' => $notificationTable]);
     }
 
-    #[Route('/new', name: 'app_puppeteer_replay_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $puppeteerReplay = new PuppeteerReplay();
@@ -31,14 +31,12 @@ class PuppeteerReplayController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
             $entityManager->persist($puppeteerReplay);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_admin_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('puppeteer_replay/new.html.twig', [
+        return $this->render('admin/crud/puppeteer_replay/new.html.twig', [
             'puppeteer_replay' => $puppeteerReplay,
             'form' => $form,
         ]);

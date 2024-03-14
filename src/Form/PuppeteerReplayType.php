@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\AbstractFile;
 use App\Entity\PuppeteerReplay;
 use App\Repository\PuppeteerReplayHookRecordRepository;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
@@ -10,21 +11,26 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Dropzone\Form\DropzoneType;
 
-class PuppeteerReplayType extends AbstractType
+class PuppeteerReplayType extends AbstractFormType
 {
-
-    public function __construct(private PuppeteerReplayHookRecordRepository $hookRecordRepository)
-    {
-    }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+        $helperText = $this->t("Maksimum dosya boyutu: ") . '1MB';
+
+        $builder->add('theFile', DropzoneType::class, [
+            'label' => $this->t('Dosya'),
+            'attr' => [
+                'placeholder' => $this->t('Sürükleyip bırakın veya göz atın'),
+            ],
+            'help' => $helperText,
+            'help_attr' => [
+                'class' => "text-warning"
+            ]
+        ]);
+
         $builder->add('theFile', DropzoneType::class);
-        $builder->add('field', CKEditorType::class, array(
-            'mapped' => FALSE,
-            'config_name' => 'app_xpath_selector',
-            "data" => $this->hookRecordRepository->find(24)->getContent()
-        ));
     }
 
     public function configureOptions(OptionsResolver $resolver): void
