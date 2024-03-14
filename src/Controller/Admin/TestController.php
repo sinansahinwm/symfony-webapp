@@ -1,7 +1,5 @@
 <?php namespace App\Controller\Admin;
 
-use App\Service\NodeApp\NodeAppPackageReleaseManager;
-use App\Service\NodeApp\PuppeteerReplayerNodeApp;
 use App\Service\PuppeteerReplayService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
