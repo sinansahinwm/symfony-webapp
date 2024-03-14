@@ -14,7 +14,7 @@ class TestController extends AbstractController
     {
         $playEnvelope = $puppeteerReplayService
             ->setRecordPath("/Users/meehouapp/Desktop/hb.json")
-            ->setWebhookUrl("https://webhook-test.com/8f5cdbaa6ebcf5d72faf4fe1dcb1e854")
+            ->setWebhookUrl("https://webhook-test.com/e11cca3022e60d860ee5671e3288f284")
             ->setInstanceID("my instance id")
             ->play();
 

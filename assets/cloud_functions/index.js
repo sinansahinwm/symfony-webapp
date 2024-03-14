@@ -77,7 +77,7 @@ async function _puppeteerReplayerHandler(request, response) {
         // Create Runner
         const myRunner = await createRunner(
             myFlow,
-            new PuppeteerBridgeExtension(myBrowser, myPage, timeOut, webhookURL, instanceID)
+            new PuppeteerBridgeExtension(myBrowser, myPage, timeOut, webhookURL, instanceID, authHeaderName, validAppSecret)
         );
 
         // Run & Dispose

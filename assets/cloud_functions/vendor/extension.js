@@ -3,13 +3,15 @@ import axios from 'axios';
 
 export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
 
-    constructor(browser, page, timeout, webhookUrl, instanceID) {
+    constructor(browser, page, timeout, webhookUrl, instanceID, authHeader, authSecret) {
         super(browser, page, timeout);
         this.browser = browser;
         this.page = page;
         this.timeout = timeout;
         this.webhookUrl = webhookUrl;
         this.instanceID = instanceID;
+        this.authHeader = authHeader;
+        this.authSecret = authSecret;
     }
 
     async beforeAllSteps(flow) {
@@ -48,7 +50,14 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         }
 
         // Send Webhook
-        await axios.post(this.webhookUrl, webhookData);
+        const authHeaderName = this.authHeader;
+        const authHeaderValue = this.authSecret;
+        const hookHeaders = {
+            'Content-Type': 'application/json',
+            authHeaderName: authHeaderValue
+        }
+
+        await axios.post(this.webhookUrl, webhookData, {headers: hookHeaders});
 
     }
 
