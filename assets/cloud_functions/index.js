@@ -25,6 +25,7 @@ async function _puppeteerReplayer(request, response) {
     const validAppSecret = parsedDotEnv.APP_SECRET;
     const requestAppSecret = request.get(authHeaderName);
     console.log(authHeaderName,validAppSecret, requestAppSecret);
+
     // Check For Authentication
     if (validAppSecret !== requestAppSecret) {
         response.status(401).send();
@@ -33,7 +34,7 @@ async function _puppeteerReplayer(request, response) {
 
     // Check For Content Type
     const requestContentType = request.get('Content-Type');
-    if (requestContentType !== "application/json") {
+    if (requestContentType.toString() !== "application/json") {
         response.status(415).send();
         return;
     }
