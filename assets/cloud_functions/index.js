@@ -16,24 +16,40 @@ functions.http('puppeteerReplayer', _puppeteerReplayer);
 async function _puppeteerReplayer(request, response) {
 
     // Read DotEnv
-    const dotEnv = dotenv.config({ path: './../../.env' });
-    console.log(dotEnv);
+    const dotEnv = dotenv.config({path: './../../.env'});
+    const parsedDotEnv = dotEnv.parsed;
 
     // Get Request Parameters
-    const requestAppSecret = request.headers["X-Authorization-AppSecret"];
-    const validAppSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
-    const requestContentType = request.get('Content-Type').toLowerCase();
+    const authHeaderName = parsedDotEnv.CLOUD_FUNCTIONS_AUTHORIZATION_HEADER.toLowerCase();
+    const validAppSecret = parsedDotEnv.APP_SECRET;
+    const requestAppSecret = request.get(authHeaderName);
 
-    // Check Content Type & Authorization
-    if ((requestContentType === "application/json") && (requestAppSecret === validAppSecret)) {
+    // Check For Authentication
+    if (validAppSecret !== requestAppSecret) {
+        response.status(401).send();
+        return;
+    }
 
-        // Get Data
+    // Check For Content Type
+    const requestContentType = request.get('Content-Type');
+    if (requestContentType !== "application/json") {
+        response.status(415).send();
+        return;
+    }
+
+    // Run Steps
+    try {
+
+        // Get Params
         const requestBody = request.body;
         const instanceID = requestBody.instanceID;
         const webhookURL = requestBody.webhookURL;
         const timeOut = requestBody.timeOut;
         const puppeteerLaunchOptions = requestBody.puppeteerLaunchOptions;
         const puppeteerSteps = requestBody.steps;
+
+        // Send Response Before Starting Puppeteer Replayer
+        response.status(200).send("OK");
 
         // Create Puppeteer Instance
         const myBrowser = await puppeteer.launch(puppeteerLaunchOptions);
@@ -55,8 +71,8 @@ async function _puppeteerReplayer(request, response) {
         await myRunner.run();
         await myBrowser.close();
 
-        response.send("OK");
+    } catch (e) {
+        // TODO : Error handler
     }
 
-    response.next();
 }
