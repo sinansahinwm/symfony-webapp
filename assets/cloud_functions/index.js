@@ -37,7 +37,9 @@ async function _puppeteerReplayer(request, response) {
         return;
     }
 
-    // Run Steps
+    // Send 200 Status Code & Run Steps
+    response.status(200).send("OK");
+
     try {
 
         // Get Params
@@ -47,9 +49,6 @@ async function _puppeteerReplayer(request, response) {
         const timeOut = requestBody.timeOut;
         const puppeteerLaunchOptions = requestBody.puppeteerLaunchOptions;
         const puppeteerSteps = requestBody.steps;
-
-        // Send Response Before Starting Puppeteer Replayer
-        response.status(200).send("OK");
 
         // Create Puppeteer Instance
         const myBrowser = await puppeteer.launch(puppeteerLaunchOptions);
