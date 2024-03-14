@@ -39,6 +39,12 @@ class PuppeteerReplay
     #[ORM\OneToMany(targetEntity: PuppeteerReplayHookRecord::class, mappedBy: 'replay')]
     private Collection $puppeteerReplayHookRecords;
 
+    #[ORM\Column]
+    private ?\DateTimeImmutable $created_at = null;
+
+    #[ORM\ManyToOne]
+    private ?User $created_by = null;
+
     public function __construct()
     {
         $this->puppeteerReplayHookRecords = new ArrayCollection();
@@ -111,6 +117,30 @@ class PuppeteerReplay
                 $puppeteerReplayHookRecord->setReplay(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?User
+    {
+        return $this->created_by;
+    }
+
+    public function setCreatedBy(?User $created_by): static
+    {
+        $this->created_by = $created_by;
 
         return $this;
     }
