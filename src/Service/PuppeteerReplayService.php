@@ -42,7 +42,7 @@ class PuppeteerReplayService
             $stepsContent = file_get_contents($this->recordPath);
             if ($stepsContent !== FALSE) {
                 if (json_validate($stepsContent) === TRUE) {
-                    $decodedJSON = json_decode($stepsContent, JSON_OBJECT_AS_ARRAY);
+                    $decodedJSON = json_decode($stepsContent, true, 512,JSON_OBJECT_AS_ARRAY);
                     return $decodedJSON["steps"];
                 }
             }

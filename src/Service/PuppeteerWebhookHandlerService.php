@@ -27,6 +27,8 @@ class PuppeteerWebhookHandlerService
 
                 // Update Replay Life Cycle
                 $this->updateLifeCycle($instanceEntity, $bodyPhase);
+            } else {
+                throw new BadRequestHttpException();
             }
         } else {
             throw new BadRequestHttpException();

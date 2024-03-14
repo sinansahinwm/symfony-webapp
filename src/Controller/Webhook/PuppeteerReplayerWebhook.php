@@ -1,8 +1,10 @@
 <?php namespace App\Controller\Webhook;
 
 use App\Service\PuppeteerWebhookHandlerService;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/webhook', name: "webhook_")]
@@ -30,15 +32,19 @@ class PuppeteerReplayerWebhook extends BaseWebhook implements WebHookInterface
         $hookContent = $this->getHookContentAsArray($request);
         if ($hookContent) {
             $puppeteerWebhookHandlerService->handleHook($hookContent);
+        } else {
+            throw new BadRequestHttpException();
         }
     }
 
-    private function getHookContentAsArray(Request $request): array|null
+    private function getHookContentAsArray(Request $request): array
     {
-        if (json_validate($request->getContent())) {
-            return json_decode($request->getContent(), true, JSON_OBJECT_AS_ARRAY);
+        $requestContent = $request->getContent();
+        if (json_validate($requestContent) === TRUE) {
+            return json_decode($requestContent, true, 512, JSON_OBJECT_AS_ARRAY);
+        } else {
+            throw new BadRequestHttpException();
         }
-        return NULL;
     }
 
 }

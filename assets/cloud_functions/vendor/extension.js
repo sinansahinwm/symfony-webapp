@@ -44,9 +44,9 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         const webhookData = {
             instanceID: this.instanceID,
             phase: phase,
-            step: step,
-            screenshot: pageScreenshot,
-            content: pageContent,
+            step: "stp",
+            screenshot: "ss",
+            content: "cnt",
         }
 
         // Send Webhook
