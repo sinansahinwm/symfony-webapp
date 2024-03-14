@@ -1,0 +1,21 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="adminOffCanvas" aria-labelledby="adminOffCanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="adminOffCanvasLabel">{{ 'Yönetici Paneli'|trans }}</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="{{ 'Close'|trans }}"></button>
+    </div>
+    <div class="offcanvas-body">
+
+        <!-- Impersonate -->
+        <form action="{{ path('app_admin_dashboard') }}" method="GET">
+            <div class="mb-3">
+                <label for="_impersonate_user" class="form-label">{{ 'Kullanıcıyı Taklit Et'|trans }}</label>
+                <div class="input-group">
+                    <input type="text" class="form-control" id="_impersonate_user" name="_impersonate_user" placeholder="{{ 'E-Posta adresi'|trans }}">
+                    <button class="btn btn-secondary" type="submit">{{ 'Taklit Et'|trans }}</button>
+                </div>
+            </div>
+        </form>
+        <!-- Impersonate -->
+
+    </div>
+</div>

@@ -56,6 +56,10 @@
 
                         <ul class="navbar-nav flex-row align-items-center ms-auto">
 
+                            <!-- Admin Bar -->
+                            {% include 'layout/partials/_admin_bar.html.twig' %}
+                            <!--/ AdminBar -->
+
                             <!-- File Sharing -->
                             {% include 'layout/partials/_file_sharing.html.twig' %}
                             <!--/ File Sharing -->
@@ -126,6 +130,12 @@
 
 </div>
 <!-- / Layout wrapper -->
+
+<!-- / Admin OffCanvas -->
+{% if is_granted('ROLE_ADMIN') %}
+    {{ include('layout/partials/_administrator.html.twig') }}
+{% endif %}
+<!-- / Admin OffCanvas -->
 
 <!-- Core Scripts -->
 {% block appScripts %}

@@ -39,10 +39,10 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
     {
         $menuItems = $this->convertMenuItemsToDto([
             MenuItem::section(),
-            MenuItem::linkToRoute('Profilim', 'bx bx-user', 'app_admin_dashboard'),
+            MenuItem::linkToRoute('Profilim', 'bx bx-user', 'app_admin_profile_current'),
             MenuItem::linkToRoute('Dokümantasyon', 'bx bx-help-circle', 'app_admin_dashboard'),
             MenuItem::section(),
-            MenuItem::linkToExitImpersonation("İmpersanatosf", 'bx bx-bomb'),
+            MenuItem::linkToExitImpersonation("Taklit Modundan Çık", 'bx bx-bomb'),
             MenuItem::linkToLogout($this->t('Güvenli Çıkış'), 'bx bx-power-off'),
         ]);
 
