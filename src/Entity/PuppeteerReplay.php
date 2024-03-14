@@ -21,7 +21,7 @@ class PuppeteerReplay
         maxSize: "1M",
         mimeTypes: "application/json"
     )]
-    #[Vich\UploadableField(mapping: 'abstract_file', fileNameProperty: "theFile")]
+    #[Vich\UploadableField(mapping: 'puppeteer_replay', fileNameProperty: "theFile")]
     public ?File $theFile;
 
     #[ORM\Column(length: 255)]
@@ -58,4 +58,15 @@ class PuppeteerReplay
 
         return $this;
     }
+
+    public function getTheFile(): ?File
+    {
+        return $this->theFile;
+    }
+
+    public function setTheFile(?File $theFile): void
+    {
+        $this->theFile = $theFile;
+    }
+
 }
