@@ -14,9 +14,8 @@ class ActionsColumn extends AbstractColumn
     public function normalize(mixed $value): string
     {
         $dropdownItems = array_map(function (callable $actionCallable, $value) {
-            exit(serialize($value));
             if (is_callable($actionCallable)) {
-                $callResult = call_user_func($actionCallable, $value, $this->urlGenerator);
+                $callResult = call_user_func($actionCallable, [$value, $this->urlGenerator]);
                 $iconDef = ($callResult->getIcon() !== NULL) ? '<i class="' . $callResult->getIcon() . ' me-1"></i> ' : ' ';
                 return '<a class="dropdown-item" href="' . $callResult->getText() . '">' . $iconDef . $callResult->getText() . '</a>';
             }
