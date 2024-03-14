@@ -13,7 +13,9 @@ parameters:
 # TWIG CONFIGURATION
 # ===============================
 twig:
-  form_themes: [ 'bootstrap_5_horizontal_layout.html.twig' ]
+  form_themes:
+    - 'bootstrap_5_horizontal_layout.html.twig'
+    - '@FOSCKEditor/Form/ckeditor_widget.html.twig'
   globals:
     layout:
       locales:
@@ -123,6 +125,19 @@ twig_component:
   defaults:
     # Namespace & directory for components
     App\Twig\Component\: 'component/'
+
+# ===============================
+# CKEDITOR 4.22.0 CONFIGURATION
+# ===============================
+fos_ck_editor:
+  base_path: "build/ckeditor"
+  js_path: "build/ckeditor/ckeditor.js"
+  configs:
+    app_xpath_selector:
+      toolbar: [ [ "Source"]]
+      fullPage: true
+      readOnly: true
+
 
 # ===============================
 # DATATABLES CONFIGURATION

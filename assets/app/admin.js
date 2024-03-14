@@ -45,7 +45,7 @@ const adminPagesGlobalInitializer = function () {
     }
 
     const _initTooltips = function () {
-        $('[data-toggle="tooltip"]').tooltip();
+        // $('[data-toggle="tooltip"]').tooltip();
     }
 
     const _initCardActions = function () {
