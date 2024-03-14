@@ -16,6 +16,7 @@ functions.http('httpCloudFunction', _httpCloudFunctionHandler);
 async function _httpCloudFunctionHandler(request, response) {
 
     const myHandlerFunction = request.get("X-Cloud-Function-Handler");
+
     switch (myHandlerFunction) {
         case "puppeteer_replayer":
             await _puppeteerReplayerHandler(request, response);

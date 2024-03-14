@@ -23,7 +23,7 @@ final class PuppeteerReplayerDeliveryMessageHandler
     const DEFAULT_LOCALHOST_PORT = 3030;
 
     const PUPPETEER_LAUNCH_OPTIONS = [
-        "headless" => TRUE,
+        "headless" => FALSE,
     ];
 
     public function __construct(private HttpClientInterface $httpClient, private LoggerInterface $logger, private ContainerBagInterface $containerBag)

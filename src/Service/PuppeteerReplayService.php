@@ -55,7 +55,7 @@ class PuppeteerReplayService
         if ($this->timeOut < 1000) {
             return FALSE;
         }
-        if (parse_url($this->webhookUrl, PHP_URL_SCHEME) !== 'https') {
+        if (!str_starts_with(parse_url($this->webhookUrl, PHP_URL_SCHEME), 'http')) {
             return FALSE;
         }
         return TRUE;

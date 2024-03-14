@@ -17,7 +17,7 @@ class TestController extends AbstractController
             ->setRecordPath("/Users/meehouapp/Desktop/hb.json")
             ->setWebhook($puppeteerReplayerWebhook)
             // ->setWebhookUrl("https://webhook-test.com/e11cca3022e60d860ee5671e3288f284")
-            ->setInstanceID("my instance id")
+            ->setInstanceID("the instance")
             ->play();
 
         return new JsonResponse([]);
