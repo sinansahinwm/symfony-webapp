@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Config\PuppeteerReplayStatusType;
 use App\Repository\PuppeteerReplayRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -31,6 +32,9 @@ class PuppeteerReplay
 
     #[ORM\Column(type: 'puppeteer_replay_status')]
     private $status = null;
+
+    #[ORM\Column]
+    private ?DateTimeImmutable $created_at = null;
 
     public function getId(): ?int
     {
@@ -77,6 +81,21 @@ class PuppeteerReplay
         if ($this->status === NULL) {
             $this->setStatus(PuppeteerReplayStatusType::UPLOAD);
         }
+        if ($this->created_at === NULL) {
+            $this->created_at = new DateTimeImmutable();
+        }
+    }
+
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
     }
 
 }

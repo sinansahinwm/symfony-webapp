@@ -20,6 +20,8 @@ class PuppeteerReplayListener
     public function postPersist(PuppeteerReplay $puppeteerReplay): void
     {
         try {
+
+
             $resolvedFilePath = $this->storage->resolvePath($puppeteerReplay);
 
             $this->puppeteerReplayService
