@@ -36,11 +36,10 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
         ]);
         $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
-                function ($value, UrlGeneratorInterface $urlGenerator) {
+                function (UrlGeneratorInterface $urlGenerator, $value) {
                     return new CrudTableAction($this->translatorBag->trans('Göster'), 'https://www.google.com', 'bx bx-home');
                 },
-                function ($value, UrlGeneratorInterface $urlGenerator) {
-            exit(serialize($value));
+                function (UrlGeneratorInterface $urlGenerator, $value) {
                     $actionUrl = $urlGenerator->generate('app_admin_puppeteer_replay_delete', ["id" => $value]);
                     return new CrudTableAction($this->translatorBag->trans('Sil'), $actionUrl, 'bx bx-trash');
                 },

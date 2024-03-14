@@ -15,7 +15,7 @@ class ActionsColumn extends AbstractColumn
     {
         $dropdownItems = array_map(function (callable $actionCallable, $theValue) {
             if (is_callable($actionCallable)) {
-                $callResult = call_user_func($actionCallable, [$theValue, $this->urlGenerator]);
+                $callResult = call_user_func($actionCallable, $this->urlGenerator, $theValue);
                 $iconDef = ($callResult->getIcon() !== NULL) ? '<i class="' . $callResult->getIcon() . ' me-1"></i> ' : ' ';
                 return '<a class="dropdown-item" href="' . $callResult->getText() . '">' . $iconDef . $callResult->getText() . '</a>';
             }
