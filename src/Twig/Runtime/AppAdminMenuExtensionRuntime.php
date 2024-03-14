@@ -32,7 +32,7 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
             ]),
             MenuItem::section($this->t('OTOMASYON')),
             MenuItem::subMenu('İçe Aktarım', 'bx bx-import')->setSubItems([
-                MenuItem::linkToRoute('Google Chrome Kayıtları', 'bx bx-chrome', 'app_admin_dashboard')->setBadge("1"),
+                MenuItem::linkToRoute('Chrome Aktarıcısı', 'bx bx-chrome', 'app_admin_puppeteer_replay_index')->setBadge("1"),
             ]),
             MenuItem::section($this->t('Ayarlar')),
         ];
