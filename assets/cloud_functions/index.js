@@ -24,7 +24,6 @@ async function _puppeteerReplayer(request, response) {
     const authHeaderName = parsedDotEnv.CLOUD_FUNCTIONS_AUTHORIZATION_HEADER;
     const validAppSecret = parsedDotEnv.APP_SECRET;
     const requestAppSecret = request.get(authHeaderName);
-    console.log(authHeaderName,validAppSecret, requestAppSecret);
 
     // Check For Authentication
     if (validAppSecret !== requestAppSecret) {
