@@ -1,0 +1,10 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Google Chrome Kayıtları'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Google Chrome Kayıtları'|trans }}{% endblock %}
+
+{% block body %}
+
+    {{ component('_crud_table', { table: puppeteerReplayTable, title: 'Yüklenmiş Kayıtlar'|trans}) }}
+
+{% endblock %}

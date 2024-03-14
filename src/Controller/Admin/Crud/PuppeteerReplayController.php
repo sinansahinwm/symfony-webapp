@@ -1,26 +1,26 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Admin\Crud;
 
-use App\Config\PuppeteerReplayStatusType;
+use App\Controller\Admin\Table\NotificationTable;
+use App\Controller\Admin\Table\PuppeteerReplayTable;
 use App\Entity\PuppeteerReplay;
 use App\Form\PuppeteerReplayType;
-use App\Repository\PuppeteerReplayRepository;
+use App\Service\CrudTable\CrudTableService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/puppeteer/replay')]
+#[Route('/admin/puppeteer/replay', name: 'app_admin_puppeteer_replay_')]
 class PuppeteerReplayController extends AbstractController
 {
-    #[Route('/', name: 'app_puppeteer_replay_index', methods: ['GET'])]
-    public function index(PuppeteerReplayRepository $puppeteerReplayRepository): Response
+    #[Route('/', name: 'index', methods: ['GET'])]
+    public function index(Request $request, CrudTableService $crudTableService): Response
     {
-        return $this->render('puppeteer_replay/index.html.twig', [
-            'puppeteer_replays' => $puppeteerReplayRepository->findAll(),
-        ]);
+        $notificationTable = $crudTableService->createFromFQCN($request, PuppeteerReplayTable::class);
+        return $this->render('admin/crud/puppeteer_replay/index.html.twig', ['puppeteerReplayTable' => $notificationTable]);
     }
 
     #[Route('/new', name: 'app_puppeteer_replay_new', methods: ['GET', 'POST'])]
@@ -73,7 +73,7 @@ class PuppeteerReplayController extends AbstractController
     #[Route('/{id}', name: 'app_puppeteer_replay_delete', methods: ['POST'])]
     public function delete(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$puppeteerReplay->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $puppeteerReplay->getId(), $request->request->get('_token'))) {
             $entityManager->remove($puppeteerReplay);
             $entityManager->flush();
         }
