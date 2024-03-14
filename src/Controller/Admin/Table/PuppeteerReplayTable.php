@@ -18,15 +18,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class PuppeteerReplayTable extends AbstractController implements DataTableTypeInterface
 {
 
-    public function __construct(private TranslatorInterface $translatorBag, private Security $security)
+    public function __construct(private TranslatorInterface $translatorBag)
     {
     }
 
     public function configure(DataTable $dataTable, array $options): void
     {
-
-        $loggedUser = $this->security->getUser();
-
         $dataTable->add('file_name', TextColumn::class);
         $dataTable->add('created_at', TextColumn::class);
         $dataTable->add('status', TextColumn::class);
@@ -47,10 +44,8 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
                 new DisableCachingCriteriaProvider(),
                 new SearchCriteriaProvider(),
             ],
-            'query' => function (QueryBuilder $builder, $loggedUser) {
-                $builder->select('x')->from(PuppeteerReplay::class, 'x')
-                    ->where('x.created_by = :param1')
-                    ->setParameter('param1', $loggedUser);
+            'query' => function (QueryBuilder $builder) {
+                $builder->select('x')->from(PuppeteerReplay::class, 'x');
             },
         ]);
 
