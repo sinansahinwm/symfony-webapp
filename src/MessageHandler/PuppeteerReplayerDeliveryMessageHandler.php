@@ -38,7 +38,7 @@ final class PuppeteerReplayerDeliveryMessageHandler
                 $requestStatusCode = $myRequest->getStatusCode();
                 if ($requestStatusCode !== 200) {
                     $requestContent = $myRequest->getContent(FALSE);
-                    exit("200 buldum");
+                    $this->logger->error($requestContent);
                 }
             } catch (TransportExceptionInterface|ClientExceptionInterface|ServerExceptionInterface|RedirectionExceptionInterface $e) {
                 $this->logger->error($e);
