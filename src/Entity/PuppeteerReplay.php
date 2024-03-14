@@ -22,7 +22,7 @@ class PuppeteerReplay
         mimeTypes: "application/json"
     )]
     #[Vich\UploadableField(mapping: 'puppeteer_replay', fileNameProperty: "fileName")]
-    public ?File $theFile;
+    public ?File $theFile = null;
 
     #[ORM\Column(length: 255)]
     private ?string $fileName = null;
