@@ -30,6 +30,10 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
                 MenuItem::linkToRoute('Bildirimler', 'bx bx-home-circle', 'app_admin_notification_index'),
                 MenuItem::linkToRoute('Takım Panosu', 'bx bx-home-circle', 'app_admin_dashboard'),
             ]),
+            MenuItem::section($this->t('OTOMASYON')),
+            MenuItem::subMenu('İçe Aktarım', 'bx bx-import')->setSubItems([
+                MenuItem::linkToRoute('Google Chrome Kayıtları', 'bx bx-chrome', 'app_admin_dashboard')->setBadge("1"),
+            ]),
             MenuItem::section($this->t('Ayarlar')),
         ];
         return $this->convertMenuItemsToDto($menuItems);
