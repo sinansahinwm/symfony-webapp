@@ -100,8 +100,8 @@ vich_uploader:
       upload_destination: '%kernel.project_dir%/storage'
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
     puppeteer_replay:
-      uri_prefix: /puppeteer_replay
-      upload_destination: '%kernel.project_dir%/puppeteer_replay'
+      uri_prefix: /storage/puppeteer_replay
+      upload_destination: '%kernel.project_dir%/storage/puppeteer_replay'
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
 
 # ===============================
