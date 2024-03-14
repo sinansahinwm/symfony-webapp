@@ -13,7 +13,7 @@ class BadgeColumn extends AbstractColumn
 
     public function normalize(mixed $value): string
     {
-        $badgeLabelCallable = $this->options["label"];
+        $badgeLabelCallable = $this->options["content"];
         $finalBadgeLabel = is_callable($badgeLabelCallable) ? call_user_func($badgeLabelCallable, $value) : $value;
 
         return '<span class="badge rounded-pill bg-' . $this->options["type"] . '">' . $finalBadgeLabel . '</span>';
@@ -26,9 +26,10 @@ class BadgeColumn extends AbstractColumn
         $resolver->setDefault('type', 'secondary');
         $resolver->setAllowedTypes('type', ['null', 'string']);
 
-        $resolver->setDefault('label', null);
-        $resolver->setAllowedTypes('label', ['null', 'callable']);
+        $resolver->setDefault('content', null);
+        $resolver->setAllowedTypes('content', ['null', 'callable']);
 
+        $resolver->setDefault('label', ' ');
         $resolver->setDefault('className', 'text-center');
         $resolver->setDefault('searchable', FALSE);
         $resolver->setDefault('globalSearchable', FALSE);
