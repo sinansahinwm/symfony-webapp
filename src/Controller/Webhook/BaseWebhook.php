@@ -1,5 +1,6 @@
 <?php namespace App\Controller\Webhook;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -19,7 +20,7 @@ class BaseWebhook extends AbstractController
     {
         $authHeaderName = $this->getParameter("app.cloud_functions.auth_header");
         $authHeaderValue = $this->getParameter("app.cloud_functions.auth_secret");
-        $requestedHeaderVal = $request->get($authHeaderName);
+        $requestedHeaderVal = $request->headers->get($authHeaderName);
         return $requestedHeaderVal === $authHeaderValue;
     }
 

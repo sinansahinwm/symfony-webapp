@@ -44,8 +44,6 @@ final class PuppeteerReplayerDeliveryMessageHandler
                 $this->logger->error($e);
             }
         }
-
-
     }
 
     private function createRequestForSteps(PuppeteerReplayerDeliveryMessage $message): ResponseInterface|null
