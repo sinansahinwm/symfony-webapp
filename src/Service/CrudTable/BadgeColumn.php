@@ -7,10 +7,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class BadgeColumn extends AbstractColumn
 {
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
-    {
-    }
-
     public function normalize(mixed $value): string
     {
         $badgeLabelCallable = $this->options["content"];
