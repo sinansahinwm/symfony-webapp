@@ -19,10 +19,9 @@ async function _puppeteerReplayer(request, response) {
     const envPath = import.meta.dirname + "/../../.env";
     const dotEnv = dotenv.config({path: envPath});
     const parsedDotEnv = dotEnv.parsed;
-    console.log(dotEnv);
 
     // Get Request Parameters
-    const authHeaderName = parsedDotEnv.CLOUD_FUNCTIONS_AUTHORIZATION_HEADER.toLowerCase();
+    const authHeaderName = parsedDotEnv.CLOUD_FUNCTIONS_AUTHORIZATION_HEADER;
     const validAppSecret = parsedDotEnv.APP_SECRET;
     const requestAppSecret = request.get(authHeaderName);
 
