@@ -42,8 +42,8 @@ class PuppeteerReplayController extends AbstractController
         ]);
     }
 
-    #[IsGranted("PUPPETEER_REPLAY_SHOW", 'id')]
-    #[Route('/show/{id}', name: 'show', methods: ['GET'])]
+    #[IsGranted("PUPPETEER_REPLAY_SHOW", 'puppeteerReplay')]
+    #[Route('/show/{puppeteerReplay}', name: 'show', methods: ['GET'])]
     public function show(PuppeteerReplay $puppeteerReplay): Response
     {
         return $this->render('admin/crud/puppeteer_replay/show.html.twig', [
@@ -51,8 +51,8 @@ class PuppeteerReplayController extends AbstractController
         ]);
     }
 
-    #[IsGranted("PUPPETEER_REPLAY_SHOW", 'delete')]
-    #[Route('/delete/{id}', name: 'delete')]
+    #[IsGranted("PUPPETEER_REPLAY_DELETE", 'puppeteerReplay')]
+    #[Route('/delete/{puppeteerReplay}', name: 'delete')]
     public function delete(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete' . $puppeteerReplay->getId(), $request->request->get('_token'))) {
