@@ -1,15 +1,10 @@
 <?php namespace App\Controller\Admin;
 
 use App\Config\MessageBusDelays;
-use App\Controller\Admin\Table\NotificationTable;
 use App\Entity\AbstractFile;
-use App\Entity\Notification;
 use App\Entity\User;
 use App\Form\FileSharingType;
-use App\Form\UserType;
 use App\Message\AppEmailMessage;
-use App\Repository\UserRepository;
-use App\Service\CrudTable\CrudTableService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
