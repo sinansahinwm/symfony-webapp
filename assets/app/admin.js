@@ -18,7 +18,6 @@ import './theme/libs/spinkit/spinkit.scss';
 // Select2
 import './theme/libs/select2/select2';
 import './theme/libs/select2/select2.scss';
-import * as trLang from 'select2/src/js/select2/i18n/tr';
 
 const adminPagesGlobalInitializer = function () {
 
