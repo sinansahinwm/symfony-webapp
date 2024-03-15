@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function Symfony\Component\Translation\t;
 
 class ProfileChangePasswordType extends AbstractFormType
 {
@@ -19,7 +20,7 @@ class ProfileChangePasswordType extends AbstractFormType
 
         $builder->add('oldPassword', PasswordType::class, [
             'required' => TRUE,
-            'label' => $this->t("Eski Şifreniz"),
+            'label' => t("Eski Şifreniz"),
             'mapped' => FALSE,
             'attr' => [
                 'placeholder' => "********"
@@ -28,29 +29,29 @@ class ProfileChangePasswordType extends AbstractFormType
 
         $builder->add('newPassword', RepeatedType::class, [
             'required' => TRUE,
-            'label' => $this->t("Yeni Şifreniz"),
+            'label' => t("Yeni Şifreniz"),
             'mapped' => FALSE,
             'type' => PasswordType::class,
             'first_options' => [
-                'label' => $this->t("Yeni Şifreniz"),
+                'label' => t("Yeni Şifreniz"),
                 'attr' => [
                     'placeholder' => "********"
                 ],
             ],
             'second_options' => [
-                'label' => $this->t("Yeni Şifreniz (Tekrar)"),
+                'label' => t("Yeni Şifreniz (Tekrar)"),
                 'attr' => [
                     'placeholder' => "********"
                 ],
             ],
-            'invalid_message' => $this->t("Yeni şifreler birbiriyle uyuşmuyor."),
+            'invalid_message' => t("Yeni şifreler birbiriyle uyuşmuyor."),
             'constraints' => [
                 new NotBlank([
-                    'message' => $this->t('Lütfen bir şifre belirleyin.'),
+                    'message' => t('Lütfen bir şifre belirleyin.'),
                 ]),
                 new Length([
                     'min' => AuthSignupType::PASSWORD_MIN_LENGTH,
-                    'minMessage' => $this->t('Şifreniz en az %limit% karakter uzunluğunda olmalıdır.', ["%limit%" => AuthSignupType::PASSWORD_MIN_LENGTH]),
+                    'minMessage' => t('Şifreniz en az %limit% karakter uzunluğunda olmalıdır.', ["%limit%" => AuthSignupType::PASSWORD_MIN_LENGTH]),
                     'max' => AuthSignupType::PASSWORD_MAX_LENGTH,
                 ]),
             ],

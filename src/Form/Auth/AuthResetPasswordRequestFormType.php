@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function Symfony\Component\Translation\t;
 
 class AuthResetPasswordRequestFormType extends AbstractFormType
 {
@@ -14,10 +15,10 @@ class AuthResetPasswordRequestFormType extends AbstractFormType
     {
         $builder
             ->add('email', EmailType::class, [
-                'attr' => ['autocomplete' => 'email', 'placeholder' => $this->t('E-Posta adresinizi girin'),],
+                'attr' => ['autocomplete' => 'email', 'placeholder' => t('E-Posta adresinizi girin'),],
                 'constraints' => [
                     new NotBlank([
-                        'message' => $this->t('Lütfen e-posta adresinizi giriniz.'),
+                        'message' => t('Lütfen e-posta adresinizi giriniz.'),
                     ]),
                 ],
             ]);

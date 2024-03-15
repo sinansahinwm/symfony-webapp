@@ -6,6 +6,7 @@ use App\Entity\Team;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function Symfony\Component\Translation\t;
 
 class TeamType extends AbstractFormType
 {
@@ -14,7 +15,7 @@ class TeamType extends AbstractFormType
         $builder->add('name', TextType::class, [
             'label' => FALSE,
             'attr' => [
-                'placeholder' => $this->t("Bir takım adı belirleyin")
+                'placeholder' => t("Bir takım adı belirleyin")
             ]
         ]);
     }

@@ -7,13 +7,14 @@ use App\Form\AbstractFormType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function Symfony\Component\Translation\t;
 
 class ProfileMakePassiveType extends AbstractFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('boolConfirmation', CheckboxType::class, [
-            'label' => $this->t("Onaylıyorum, oluşabilecek durumların farkındayım."),
+            'label' => t("Onaylıyorum, oluşabilecek durumların farkındayım."),
             'required' => TRUE,
             'mapped' => FALSE
         ]);

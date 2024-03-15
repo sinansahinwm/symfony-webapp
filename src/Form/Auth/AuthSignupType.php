@@ -4,7 +4,6 @@ namespace App\Form\Auth;
 
 use App\Entity\User;
 use App\Form\AbstractFormType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
@@ -13,7 +12,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use function Symfony\Component\Translation\t;
 
 class AuthSignupType extends AbstractFormType
 {
@@ -26,10 +25,10 @@ class AuthSignupType extends AbstractFormType
     {
         $builder
             ->add('email', EmailType::class, [
-                'label' => $this->t('E-Posta'),
+                'label' => t('E-Posta'),
                 'attr' => [
                     'autofocus' => 'autofocus',
-                    'placeholder' => 'E-Posta adresinizi girin'
+                    'placeholder' => t('E-Posta adresinizi girin')
                 ]
             ])
             ->add('agreeTerms', CheckboxType::class, [
@@ -38,15 +37,15 @@ class AuthSignupType extends AbstractFormType
                     'class' => "showModalOnCheck",
                     'modalId' => "userAgreementModal"
                 ],
-                'label' => $this->t('Kullanım koşullarını onaylıyorum.'),
+                'label' => t('Kullanım koşullarını onaylıyorum.'),
                 'constraints' => [
                     new IsTrue([
-                        'message' => $this->t('Kullanım koşullarını onaylamak zorunludur.'),
+                        'message' => t('Kullanım koşullarını onaylamak zorunludur.'),
                     ]),
                 ],
             ])
             ->add('plainPassword', PasswordType::class, [
-                'label' => $this->t('Şifre'),
+                'label' => t('Şifre'),
                 'mapped' => false,
                 'attr' => [
                     'autocomplete' => 'new-password',
@@ -54,11 +53,11 @@ class AuthSignupType extends AbstractFormType
                 ],
                 'constraints' => [
                     new NotBlank([
-                        'message' => $this->t('Lütfen bir şifre belirleyin.'),
+                        'message' => t('Lütfen bir şifre belirleyin.'),
                     ]),
                     new Length([
                         'min' => self::PASSWORD_MIN_LENGTH,
-                        'minMessage' => $this->t('Şifreniz en az %limit% karakter uzunluğunda olmalıdır.', ["%limit%" => self::PASSWORD_MIN_LENGTH]),
+                        'minMessage' => t('Şifreniz en az %limit% karakter uzunluğunda olmalıdır.', ["%limit%" => self::PASSWORD_MIN_LENGTH]),
                         'max' => self::PASSWORD_MAX_LENGTH,
                     ]),
                 ],

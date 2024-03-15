@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\UX\Dropzone\Form\DropzoneType;
-use Vich\UploaderBundle\Form\Type\VichFileType;
+use function Symfony\Component\Translation\t;
 
 class FileSharingType extends AbstractFormType
 {
@@ -26,12 +26,12 @@ class FileSharingType extends AbstractFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $helperText = $this->t("Maksimum dosya boyutu: ") . AbstractFile::ALLOWED_MAX_FILE_SIZE_MB . 'MB';
+        $helperText = t("Maksimum dosya boyutu: ") . AbstractFile::ALLOWED_MAX_FILE_SIZE_MB . 'MB';
 
         $builder->add('theFile', DropzoneType::class, [
-            'label' => $this->t('Dosya'),
+            'label' => t('Dosya'),
             'attr' => [
-                'placeholder' => $this->t('Sürükleyip bırakın veya göz atın'),
+                'placeholder' => t('Sürükleyip bırakın veya göz atın'),
             ],
             'help' => $helperText,
             'help_attr' => [
@@ -39,18 +39,18 @@ class FileSharingType extends AbstractFormType
             ]
         ]);
         $builder->add('password', PasswordType::class, [
-            'label' => $this->t('Şifre'),
+            'label' => t('Şifre'),
             'required' => FALSE,
             'attr' => [
-                'placeholder' => $this->t('Şifresiz paylaşmak için boş bırakın.')
+                'placeholder' => t('Şifresiz paylaşmak için boş bırakın.')
             ]
         ]);
         $builder->add('toUser', EntityType::class, [
-            'label' => $this->t('Şu Kişilerle Paylaş'),
+            'label' => t('Şu Kişilerle Paylaş'),
             'attr' => [
                 'class' => 'select2',
                 'data-ajax--url' => $this->teamMatesSelectController::CALLBACK_PATH,
-                'data-placeholder' => $this->t("Kullanıcı seçimi yapınız")
+                'data-placeholder' => t("Kullanıcı seçimi yapınız")
             ],
             'multiple' => TRUE,
             'mapped' => FALSE,
@@ -60,8 +60,8 @@ class FileSharingType extends AbstractFormType
             },
         ]);
         $builder->add('publisherNotes', TextareaType::class, [
-            'label' => $this->t("Notlarınız"),
-            'help' => $this->t("Bu notlar gönderilen e-postanın alt bölümünde paylaşılan kullanıcıya gösterilecektir."),
+            'label' => t("Notlarınız"),
+            'help' => t("Bu notlar gönderilen e-postanın alt bölümünde paylaşılan kullanıcıya gösterilecektir."),
             'mapped' => FALSE
         ]);
     }

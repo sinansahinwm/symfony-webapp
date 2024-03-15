@@ -9,6 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use function Symfony\Component\Translation\t;
 
 class AuthChangePasswordFormType extends AbstractFormType
 {
@@ -25,23 +26,22 @@ class AuthChangePasswordFormType extends AbstractFormType
                 'first_options' => [
                     'constraints' => [
                         new NotBlank([
-                            'message' => $this->t('Lütfen bir şifre belirtiniz.'),
+                            'message' => t('Lütfen bir şifre belirtiniz.'),
                         ]),
                         new Length([
-                            'min' =>  AuthSignupType::PASSWORD_MIN_LENGTH,
-                            'minMessage' => $this->t('Şifreniz en az %limit% karakter uzunluğunda olmalıdır.', ['limit' => AuthSignupType::PASSWORD_MIN_LENGTH]),
-                            'max' =>  AuthSignupType::PASSWORD_MAX_LENGTH,
+                            'min' => AuthSignupType::PASSWORD_MIN_LENGTH,
+                            'minMessage' => t('Şifreniz en az %limit% karakter uzunluğunda olmalıdır.', ['limit' => AuthSignupType::PASSWORD_MIN_LENGTH]),
+                            'max' => AuthSignupType::PASSWORD_MAX_LENGTH,
                         ]),
                     ],
-                    'label' => $this->t('Yeni Şifreniz'),
+                    'label' => t('Yeni Şifreniz'),
                 ],
                 'second_options' => [
-                    'label' => $this->t('Şifrenizi Tekrarlayın'),
+                    'label' => t('Şifrenizi Tekrarlayın'),
                 ],
-                'invalid_message' => $this->t('Şifre alanları birbiriyle uyuşmuyor.'),
+                'invalid_message' => t('Şifre alanları birbiriyle uyuşmuyor.'),
                 'mapped' => false,
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
