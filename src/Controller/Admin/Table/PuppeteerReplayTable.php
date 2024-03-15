@@ -10,25 +10,19 @@ use App\Service\CrudTable\FormattedDateTimeColumn;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\DateTimeColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableTypeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
+use function Symfony\Component\Translation\t;
 
 class PuppeteerReplayTable extends AbstractController implements DataTableTypeInterface
 {
 
-    public function __construct(private TranslatorInterface $translatorBag)
-    {
-    }
-
     public function configure(DataTable $dataTable, array $options): void
     {
-        $dataTable->add('file_name', TextColumn::class, [
+        $dataTable->add('fileName', TextColumn::class, [
             'orderable' => FALSE,
         ]);
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
@@ -46,21 +40,21 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
             },
             'content' => function ($value) {
                 return match ($value) {
-                    PuppeteerReplayStatusType::UPLOAD => $this->translatorBag->trans("Yüklendi"),
-                    PuppeteerReplayStatusType::PROCESSING => $this->translatorBag->trans("İşleniyor"),
-                    PuppeteerReplayStatusType::COMPLETED => $this->translatorBag->trans("Tamamlandı"),
-                    PuppeteerReplayStatusType::ERROR => $this->translatorBag->trans("Hata"),
-                    default => $this->translatorBag->trans("Bilinmiyor"),
+                    PuppeteerReplayStatusType::UPLOAD => t("Yüklendi"),
+                    PuppeteerReplayStatusType::PROCESSING => t("İşleniyor"),
+                    PuppeteerReplayStatusType::COMPLETED => t("Tamamlandı"),
+                    PuppeteerReplayStatusType::ERROR => t("Hata"),
+                    default => t("Bilinmiyor"),
                 };
             }
         ]);
         $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction($this->translatorBag->trans('Göster'), $urlGenerator->generate("app_admin_puppeteer_replay_show", ["id" => $value]), 'bx bx-home');
+                    return new CrudTableAction(t('Göster'), $urlGenerator->generate("app_admin_puppeteer_replay_show", ["id" => $value]), 'bx bx-chevron-right');
                 },
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction($this->translatorBag->trans('Sil'), $urlGenerator->generate("app_admin_puppeteer_replay_delete", ["id" => $value]), 'bx bx-trash');
+                    return new CrudTableAction(t('Sil'), $urlGenerator->generate("app_admin_puppeteer_replay_delete", ["id" => $value]), 'bx bx-trash');
                 },
             ]
         ]);
