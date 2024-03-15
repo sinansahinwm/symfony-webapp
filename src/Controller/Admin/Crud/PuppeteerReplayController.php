@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/admin/puppeteer/replay', name: 'app_admin_puppeteer_replay_')]
 class PuppeteerReplayController extends AbstractController
@@ -41,6 +42,7 @@ class PuppeteerReplayController extends AbstractController
         ]);
     }
 
+    #[IsGranted("PUPPETEER_REPLAY_SHOW", 'id')]
     #[Route('/show/{id}', name: 'show', methods: ['GET'])]
     public function show(PuppeteerReplay $puppeteerReplay): Response
     {
@@ -49,6 +51,7 @@ class PuppeteerReplayController extends AbstractController
         ]);
     }
 
+    #[IsGranted("PUPPETEER_REPLAY_SHOW", 'delete')]
     #[Route('/delete/{id}', name: 'delete')]
     public function delete(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager): Response
     {
