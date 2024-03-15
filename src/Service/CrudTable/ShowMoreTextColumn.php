@@ -6,7 +6,7 @@ class ShowMoreTextColumn extends TextColumn
 {
     const SLICE_THRESHOLD = 10;
     const SLICE_SHOW_MORE_DELIMETER = '...';
-    const SLICE_SHOW_MORE_SPAN_CLASS = ['text-primary', 'ms-2'];
+    const SLICE_SHOW_MORE_SPAN_CLASS = ['text-primary'];
 
     public function normalize(mixed $value): string
     {
@@ -20,7 +20,7 @@ class ShowMoreTextColumn extends TextColumn
 
     private function getSlicedPostFix(string $value): string
     {
-        return '<span class="showMoreSpan ' . implode('', self::SLICE_SHOW_MORE_SPAN_CLASS) . '" data-content="' . $value . '">' . self::SLICE_SHOW_MORE_DELIMETER . '</span>';
+        return '<span class="showMoreSpan ' . implode(' ', self::SLICE_SHOW_MORE_SPAN_CLASS) . '" data-content="' . $value . '">' . self::SLICE_SHOW_MORE_DELIMETER . '</span>';
     }
 
 }
