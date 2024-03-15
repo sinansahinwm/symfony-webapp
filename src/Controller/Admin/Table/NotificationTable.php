@@ -8,6 +8,7 @@ use App\Service\CrudTable\BoolIndicatorColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use App\Service\CrudTable\FormattedDateTimeColumn;
+use App\Service\CrudTable\ShowMoreTextColumn;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -23,7 +24,9 @@ class NotificationTable extends AbstractController implements DataTableTypeInter
     public function configure(DataTable $dataTable, array $options): void
     {
 
-        $dataTable->add('created_at', FormattedDateTimeColumn::class);
+        $dataTable->add('created_at', FormattedDateTimeColumn::class, [
+            'label' => t("Yaratılma Zamanı")
+        ]);
         $dataTable->add('priority', BadgeColumn::class, [
             'type' => function ($value) {
                 return match ($value) {
@@ -42,7 +45,9 @@ class NotificationTable extends AbstractController implements DataTableTypeInter
                 };
             }
         ]);
-        $dataTable->add('content', TextColumn::class);
+        $dataTable->add('content', ShowMoreTextColumn::class, [
+            'label' => t("İçerik"),
+        ]);
         $dataTable->add('is_read', BoolIndicatorColumn::class);
         $dataTable->add('url', ActionsColumn::class, [
             'actions' => [
