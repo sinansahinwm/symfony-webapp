@@ -73,7 +73,7 @@ if (document.getElementById('layout-menu')) {
 
     let layoutMenuEl = document.querySelectorAll('#layout-menu');
     layoutMenuEl.forEach(function (element) {
-        menu = new Menu(element, {
+        menu = new window.Menu.Menu(element, {
             orientation: isHorizontalLayout ? 'horizontal' : 'vertical',
             closeChildren: isHorizontalLayout ? true : false,
             // ? This option only works with Horizontal menu
