@@ -1,5 +1,6 @@
 <?php namespace App\Controller\Admin\Table;
 
+use App\Config\PuppeteerReplayStatusType;
 use App\Entity\PuppeteerReplay;
 use App\Service\CrudTable\ActionsColumn;
 use App\Service\CrudTable\BadgeColumn;
@@ -34,10 +35,22 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
         ]);
         $dataTable->add('status', BadgeColumn::class, [
             'type' => function ($value) {
-                return $value;
+                return match ($value) {
+                    PuppeteerReplayStatusType::UPLOAD => "secondary",
+                    PuppeteerReplayStatusType::PROCESSING => "info",
+                    PuppeteerReplayStatusType::COMPLETED => "success",
+                    PuppeteerReplayStatusType::ERROR => "danger",
+                    default => 'secondary',
+                };
             },
             'content' => function ($value) {
-                return $value;
+                return match ($value) {
+                    PuppeteerReplayStatusType::UPLOAD => $this->translatorBag->trans("Yüklendi"),
+                    PuppeteerReplayStatusType::PROCESSING => $this->translatorBag->trans("İşleniyor"),
+                    PuppeteerReplayStatusType::COMPLETED => $this->translatorBag->trans("Tamamlandı"),
+                    PuppeteerReplayStatusType::ERROR => $this->translatorBag->trans("Hata"),
+                    default => $this->translatorBag->trans("Bilinmiyor"),
+                };
             }
         ]);
         $dataTable->add('id', ActionsColumn::class, [
