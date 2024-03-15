@@ -23,12 +23,15 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
     public function configure(DataTable $dataTable, array $options): void
     {
         $dataTable->add('fileName', TextColumn::class, [
+            'label' => t("Dosya Adı"),
             'orderable' => FALSE,
         ]);
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
+            'label' => t("Yaratılma Zamanı"),
             'orderable' => FALSE
         ]);
         $dataTable->add('status', BadgeColumn::class, [
+            'label' => t("Durum"),
             'type' => function ($value) {
                 return match ($value) {
                     PuppeteerReplayStatusType::UPLOAD => "secondary",
