@@ -30,10 +30,10 @@ class NotificationTable extends AbstractController implements DataTableTypeInter
         $dataTable->add('phone', TextColumn::class);
         $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
-                function ($value, UrlGeneratorInterface $urlGenerator) {
+                function (UrlGeneratorInterface $urlGenerator, $value) {
                     return new CrudTableAction("Göster", 'https://www.google.com', 'bx bx-home');
                 },
-                function ($value, UrlGeneratorInterface $urlGenerator) {
+                function (UrlGeneratorInterface $urlGenerator, $value) {
                     return new CrudTableAction("Sil", 'https://www.google.com', 'bx bx-home');
                 },
             ]

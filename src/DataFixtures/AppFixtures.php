@@ -39,7 +39,7 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-        return;
+        // return;
 
         // Set Ini For Fixtures
         ini_set('memory_limit', '-1');
