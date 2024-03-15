@@ -261,6 +261,12 @@ const adminPagesGlobalInitializer = function () {
         $('.sf-toolbar').remove();
     }
 
+    const _initShowMoreSpan = function () {
+        $(".showMoreSpan").on("click", function (index) {
+            console.log("showing more");
+        });
+    }
+
     return {
         init: function () {
             _initKeyboardSearch();
@@ -270,6 +276,7 @@ const adminPagesGlobalInitializer = function () {
             _initCardActions();
             _initTooltips();
             _initSelect2();
+            _initShowMoreSpan();
             // _initSymfonyToolbarShortcuts();
         }
     }
