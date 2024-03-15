@@ -30,6 +30,9 @@ class PuppeteerReplayHookRecord
     #[ORM\Column(length: 255)]
     private ?string $phase = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $initial_page_url = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +94,18 @@ class PuppeteerReplayHookRecord
     public function setPhase(string $phase): static
     {
         $this->phase = $phase;
+
+        return $this;
+    }
+
+    public function getInitialPageUrl(): ?string
+    {
+        return $this->initial_page_url;
+    }
+
+    public function setInitialPageUrl(?string $initial_page_url): static
+    {
+        $this->initial_page_url = $initial_page_url;
 
         return $this;
     }

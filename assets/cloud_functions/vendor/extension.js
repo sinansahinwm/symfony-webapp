@@ -39,6 +39,7 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         // Get Data
         const pageContent = await this.page.content();
         const pageScreenshot = await this.page.screenshot({encoding: "base64"});
+        const initialPageUrl = this.page.url()
 
         // Add Snapshot
         const webhookData = {
@@ -47,6 +48,7 @@ export default class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
             step: step,
             screenshot: pageScreenshot,
             content: pageContent,
+            url: initialPageUrl
         }
 
         // Send Webhook

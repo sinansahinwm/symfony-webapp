@@ -47,6 +47,7 @@ class PuppeteerWebhookHandlerService
             $myRecord->setScreenshot($hookBodyData["screenshot"]);
             $myRecord->setContent($hookBodyData["content"]);
             $myRecord->setPhase($hookBodyData["phase"]);
+            $myRecord->setInitialPageUrl($hookBodyData["url"] ?? NULL);
             $this->entityManager->persist($myRecord);
             $this->entityManager->flush();
 
