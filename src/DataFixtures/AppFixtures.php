@@ -39,6 +39,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
+        // Create Administrator
+        $this->createAdministrator();
+        
         return;
 
         // Set Ini For Fixtures
@@ -62,8 +65,7 @@ class AppFixtures extends Fixture
         // Create Notifications
         $myNotifications = NotificationFactory::createMany(self::NOTIFICATIONS_COUNT_PER_USER);
 
-        // Create Administrator
-        $this->createAdministrator();
+
     }
 
     private function createAdministrator(): void
