@@ -6,6 +6,7 @@ use App\Service\CrudTable\ActionsColumn;
 use App\Service\CrudTable\BadgeColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
+use App\Service\CrudTable\FormattedDateTimeColumn;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -30,7 +31,7 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
         $dataTable->add('file_name', TextColumn::class, [
             'orderable' => FALSE,
         ]);
-        $dataTable->add('created_at', DateTimeColumn::class, [
+        $dataTable->add('created_at', FormattedDateTimeColumn::class, [
             'orderable' => FALSE
         ]);
         $dataTable->add('status', BadgeColumn::class, [
