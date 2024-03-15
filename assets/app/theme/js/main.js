@@ -7,8 +7,7 @@
 import * as appHelpers from "./helpers";
 window.Helpers = appHelpers.Helpers;
 
-import * as appMenu from './menu';
-window.Menu = appMenu.Menu;
+import * as appMenu from './menu.js';
 
 // App Config
 let config = {
@@ -73,9 +72,10 @@ if (document.getElementById('layout-menu')) {
 
     let layoutMenuEl = document.querySelectorAll('#layout-menu');
     layoutMenuEl.forEach(function (element) {
-        menu = new window.Menu.Menu(element, {
+        let theMenu = appMenu.Menu; // the default export
+        menu = new theMenu(element, {
             orientation: isHorizontalLayout ? 'horizontal' : 'vertical',
-            closeChildren: isHorizontalLayout ? true : false,
+            closeChildren: isHorizontalLayout,
             // ? This option only works with Horizontal menu
             showDropdownOnHover: localStorage.getItem('templateCustomizer-' + templateName + '--ShowDropdownOnHover') // If value(showDropdownOnHover) is set in local storage
                 ? localStorage.getItem('templateCustomizer-' + templateName + '--ShowDropdownOnHover') === 'true' // Use the local storage value
