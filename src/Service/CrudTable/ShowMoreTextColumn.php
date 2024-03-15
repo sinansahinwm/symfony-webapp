@@ -5,7 +5,7 @@ use Omines\DataTablesBundle\Column\TextColumn;
 class ShowMoreTextColumn extends TextColumn
 {
     const SLICE_THRESHOLD = 10;
-    const SLICE_SHOW_MORE_DELIMETER = '';
+    const SLICE_SHOW_MORE_DELIMETER = '...';
     const SLICE_SHOW_MORE_SPAN_CLASS = ['text-primary', 'ms-2'];
 
     public function normalize(mixed $value): string
