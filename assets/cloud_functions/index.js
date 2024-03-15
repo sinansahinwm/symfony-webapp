@@ -30,6 +30,8 @@ async function _httpCloudFunctionHandler(request, response) {
 
 async function _puppeteerReplayerHandler(request, response) {
 
+    console.log("HANDLING REQUEST");
+
     // Read DotEnv
     const envPath = import.meta.dirname + "/../../.env";
     const dotEnv = dotenv.config({path: envPath});
@@ -53,6 +55,8 @@ async function _puppeteerReplayerHandler(request, response) {
         return;
     }
 
+    console.log("SEND 200");
+
     // Send 200 Status Code & Run Steps
     response.status(200).send("OK");
 
@@ -62,6 +66,8 @@ async function _puppeteerReplayerHandler(request, response) {
     const instanceID = requestBody.instanceID;
 
     try {
+
+        console.log("TRY TO RUN PUPPETEER");
 
         // Get Params
         const timeOut = requestBody.timeOut;
@@ -83,6 +89,8 @@ async function _puppeteerReplayerHandler(request, response) {
             myFlow,
             new PuppeteerBridgeExtension(myBrowser, myPage, timeOut, webhookURL, instanceID, authHeaderName, validAppSecret)
         );
+
+        console.log("RUNNER START");
 
         // Run & Dispose
         await myRunner.run();

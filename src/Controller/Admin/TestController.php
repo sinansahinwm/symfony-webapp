@@ -1,6 +1,8 @@
 <?php namespace App\Controller\Admin;
 
 use App\Controller\Webhook\PuppeteerReplayerWebhook;
+use App\Repository\PuppeteerReplayHookRecordRepository;
+use App\Service\DomContentFramerService;
 use App\Service\PuppeteerReplayService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -11,15 +13,16 @@ use Symfony\Component\Routing\Attribute\Route;
 class TestController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(PuppeteerReplayService $puppeteerReplayService, PuppeteerReplayerWebhook $puppeteerReplayerWebhook): Response
+    public function index(DomContentFramerService $domContentFixerService, PuppeteerReplayHookRecordRepository $hookRecordRepository): Response
     {
-        $playEnvelope = $puppeteerReplayService
-            ->setRecordPath("/Users/meehouapp/Desktop/hb.json")
-            ->setWebhook($puppeteerReplayerWebhook)
-            ->setInstanceID("the instance")
-            ->play();
 
-        return new JsonResponse([]);
+
+        $theContent = $hookRecordRepository->find(24);
+        $newHTML = $domContentFixerService
+            ->setHtml($theContent->getContent())
+            ->setUrlSchemeSource($theContent->getInitialPageUrl())
+            ->getFramedContent();
+        return new Response($newHTML);
     }
 
 }
