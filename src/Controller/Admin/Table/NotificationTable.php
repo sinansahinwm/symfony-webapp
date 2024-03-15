@@ -12,20 +12,18 @@ use App\Service\CrudTable\ShowMoreTextColumn;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableTypeInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use function Symfony\Component\Translation\t;
 
-class NotificationTable extends AbstractController implements DataTableTypeInterface
+class NotificationTable extends TableAbstractController implements DataTableTypeInterface
 {
+
     public function configure(DataTable $dataTable, array $options): void
     {
 
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
-            'label' => t("Yaratılma Zamanı")
+            'label' => $this->t("Yaratılma Zamanı")
         ]);
         $dataTable->add('priority', BadgeColumn::class, [
             'type' => function ($value) {
@@ -38,21 +36,21 @@ class NotificationTable extends AbstractController implements DataTableTypeInter
             },
             'content' => function ($value) {
                 return match ($value) {
-                    NotificationPriorityType::LOW => t("Düşük"),
-                    NotificationPriorityType::NORMAL => t("Normal"),
-                    NotificationPriorityType::HIGH => t("Yüksek"),
-                    default => t("Bilinmiyor"),
+                    NotificationPriorityType::LOW => $this->t("Düşük"),
+                    NotificationPriorityType::NORMAL => $this->t("Normal"),
+                    NotificationPriorityType::HIGH => $this->t("Yüksek"),
+                    default => $this->t("Bilinmiyor"),
                 };
             }
         ]);
         $dataTable->add('content', ShowMoreTextColumn::class, [
-            'label' => t("İçerik"),
+            'label' => $this->t("İçerik"),
         ]);
         $dataTable->add('is_read', BoolIndicatorColumn::class);
         $dataTable->add('url', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction(t("Bildirimi Görüntüle"), $value, 'bx bx-envelope');
+                    return new CrudTableAction($this->t("Bildirimi Görüntüle"), $value, 'bx bx-envelope');
                 },
             ]
         ]);

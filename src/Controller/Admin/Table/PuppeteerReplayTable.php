@@ -11,28 +11,25 @@ use App\Service\CrudTable\ShowMoreTextColumn;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableTypeInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use function Symfony\Component\Translation\t;
 
-class PuppeteerReplayTable extends AbstractController implements DataTableTypeInterface
+class PuppeteerReplayTable extends TableAbstractController implements DataTableTypeInterface
 {
 
     public function configure(DataTable $dataTable, array $options): void
     {
         $dataTable->add('fileName', ShowMoreTextColumn::class, [
-            'label' => t("Dosya Adı"),
+            'label' => $this->t("Dosya Adı"),
             'orderable' => FALSE,
         ]);
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
-            'label' => t("Yaratılma Zamanı"),
+            'label' => $this->t("Yaratılma Zamanı"),
             'orderable' => FALSE
         ]);
         $dataTable->add('status', BadgeColumn::class, [
-            'label' => t("Durum"),
+            'label' => $this->t("Durum"),
             'type' => function ($value) {
                 return match ($value) {
                     PuppeteerReplayStatusType::UPLOAD => "secondary",
@@ -44,21 +41,21 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
             },
             'content' => function ($value) {
                 return match ($value) {
-                    PuppeteerReplayStatusType::UPLOAD => t("Yüklendi"),
-                    PuppeteerReplayStatusType::PROCESSING => t("İşleniyor"),
-                    PuppeteerReplayStatusType::COMPLETED => t("Tamamlandı"),
-                    PuppeteerReplayStatusType::ERROR => t("Hata"),
-                    default => t("Bilinmiyor"),
+                    PuppeteerReplayStatusType::UPLOAD => $this->t("Yüklendi"),
+                    PuppeteerReplayStatusType::PROCESSING => $this->t("İşleniyor"),
+                    PuppeteerReplayStatusType::COMPLETED => $this->t("Tamamlandı"),
+                    PuppeteerReplayStatusType::ERROR => $this->t("Hata"),
+                    default => $this->t("Bilinmiyor"),
                 };
             }
         ]);
         $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction(t('Göster'), $urlGenerator->generate("app_admin_puppeteer_replay_show", ["id" => $value]), 'bx bx-chevron-right');
+                    return new CrudTableAction($this->t('Göster'), $urlGenerator->generate("app_admin_puppeteer_replay_show", ["id" => $value]), 'bx bx-chevron-right');
                 },
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction(t('Sil'), $urlGenerator->generate("app_admin_puppeteer_replay_delete", ["id" => $value]), 'bx bx-trash');
+                    return new CrudTableAction($this->t('Sil'), $urlGenerator->generate("app_admin_puppeteer_replay_delete", ["id" => $value]), 'bx bx-trash');
                 },
             ]
         ]);
