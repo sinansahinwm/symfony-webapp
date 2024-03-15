@@ -33,7 +33,9 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
             'orderable' => FALSE
         ]);
         $dataTable->add('status', BadgeColumn::class, [
-            'type' => 'success',
+            'type' => function ($value) {
+                return $value;
+            },
             'content' => function ($value) {
                 return $value;
             }

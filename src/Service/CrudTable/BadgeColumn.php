@@ -6,21 +6,22 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class BadgeColumn extends AbstractColumn
 {
-
     public function normalize(mixed $value): string
     {
         $badgeLabelCallable = $this->options["content"];
+        $badgeTypeCallable = $this->options["type"];
         $finalBadgeLabel = is_callable($badgeLabelCallable) ? call_user_func($badgeLabelCallable, $value) : $value;
+        $finalBadgeType = is_callable($badgeTypeCallable) ? call_user_func($badgeTypeCallable, $value) : $value;
 
-        return '<span class="badge rounded-pill bg-' . $this->options["type"] . '">' . $finalBadgeLabel . '</span>';
+        return '<span class="badge rounded-pill bg-' . $finalBadgeType . '">' . $finalBadgeLabel . '</span>';
     }
 
     protected function configureOptions(OptionsResolver $resolver): static
     {
         parent::configureOptions($resolver);
 
-        $resolver->setDefault('type', 'secondary');
-        $resolver->setAllowedTypes('type', ['null', 'string']);
+        $resolver->setDefault('type', null);
+        $resolver->setAllowedTypes('type', ['null', 'callable']);
 
         $resolver->setDefault('content', null);
         $resolver->setAllowedTypes('content', ['null', 'callable']);
