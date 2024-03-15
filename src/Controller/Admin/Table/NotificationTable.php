@@ -2,26 +2,20 @@
 
 use App\Config\NotificationPriorityType;
 use App\Entity\Notification;
-use App\Entity\User;
 use App\Service\CrudTable\ActionsColumn;
 use App\Service\CrudTable\BadgeColumn;
 use App\Service\CrudTable\BoolIndicatorColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use App\Service\CrudTable\FormattedDateTimeColumn;
-use Closure;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
-use Omines\DataTablesBundle\Column\NumberColumn;
 use Omines\DataTablesBundle\Column\TextColumn;
 use Omines\DataTablesBundle\DataTable;
 use Omines\DataTablesBundle\DataTableTypeInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use Zenstruck\Assert\Not;
 use function Symfony\Component\Translation\t;
 
 class NotificationTable extends AbstractController implements DataTableTypeInterface
