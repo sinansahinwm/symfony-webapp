@@ -113,53 +113,26 @@
                     <!-- Chats -->
                     <ul class="list-unstyled chat-contact-list" id="chat-list">
                         <li class="chat-contact-list-item chat-contact-list-item-title">
-                            <h5 class="text-primary mb-0">{{ 'Çalıştırma Fazları' }}</h5>
+                            <h5 class="text-primary mb-0">{{ 'Çalıştırma Fazları'|trans }}</h5>
                         </li>
-
                         <li class="chat-contact-list-item chat-list-item-0 d-none">
-                            <h6 class="text-muted mb-0">No Chats Found</h6>
+                            <h6 class="text-muted mb-0">{{ 'Hiçbir Kayıt Yok'|trans }}</h6>
                         </li>
-
                         {% for pr in puppeteer_replay.puppeteerReplayHookRecords %}
-                        <li class="chat-contact-list-item">
-                            <a class="d-flex align-items-center">
-                                <div class="flex-shrink-0 avatar avatar-online">
-                                    <img src="../../assets/img/avatars/13.png" alt="Avatar" class="rounded-circle">
+                        <li class="chat-contact-list-item {% if hook is not null and hook.id is same as(pr.id) %}active{% endif %}">
+                            <a class="d-flex align-items-center" href="{{ path('app_admin_puppeteer_replay_show', { puppeteerReplay: puppeteer_replay.id ,hook: pr.id }) }}">
+                                <div class="flex-shrink-0 avatar">
+                                    <img src="data:image/png;base64, {{ pr.screenshot }}" alt="{{ 'Ekran Görüntüsü'|trans }}" class="rounded-circle">
                                 </div>
                                 <div class="chat-contact-info flex-grow-1 ms-3">
                                     <h6 class="chat-contact-name text-truncate m-0">{{ pr.phase }}</h6>
-                                    <p class="chat-contact-status text-truncate mb-0 text-muted">Refer friends. Get rewards.</p>
+                                    <p class="chat-contact-status text-truncate mb-0 text-muted">
+                                        {{ pr.initialPageUrl ?? '--' }}
+                                    </p>
                                 </div>
-                                <small class="text-muted mb-auto">5 Minutes</small>
                             </a>
                         </li>
                         {% endfor %}
-                        <li class="chat-contact-list-item active">
-                            <a class="d-flex align-items-center">
-                                <div class="flex-shrink-0 avatar avatar-offline">
-                                    <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle">
-                                </div>
-                                <div class="chat-contact-info flex-grow-1 ms-3">
-                                    <h6 class="chat-contact-name text-truncate m-0">{{ puppeteer_replay.fileName }}</h6>
-                                    <p class="chat-contact-status text-truncate mb-0 text-muted">
-                                        {{ puppeteer_replay.status }}
-                                        👍</p>
-                                </div>
-                                <small class="text-muted mb-auto">30 Minutes</small>
-                            </a>
-                        </li>
-                        <li class="chat-contact-list-item">
-                            <a class="d-flex align-items-center">
-                                <div class="flex-shrink-0 avatar avatar-busy">
-                                    <span class="avatar-initial rounded-circle bg-label-success">CM</span>
-                                </div>
-                                <div class="chat-contact-info flex-grow-1 ms-3">
-                                    <h6 class="chat-contact-name text-truncate m-0">Calvin Moore</h6>
-                                    <p class="chat-contact-status text-truncate mb-0 text-muted">If it takes long you can mail inbox user</p>
-                                </div>
-                                <small class="text-muted mb-auto">1 Day</small>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>
@@ -188,8 +161,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="chat-history-body bg-body">
-                        {{ dump(puppeteer_replay) }}
+                    <div class="chat-history-body bg-body m-0 p-0">
+                        {% if hook is not null %}
+                            <iframe src="{{ path('app_admin_puppeteer_replay_iframe', { hook: hook.id }) }}" style="height: 1000px; width: 100%"></iframe>
+                            {% else %}
+                            hook seçin
+                        {% endif %}
                     </div>
                 </div>
             </div>

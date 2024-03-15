@@ -4,6 +4,7 @@ namespace App\Controller\Admin\Crud;
 
 use App\Controller\Admin\Table\PuppeteerReplayTable;
 use App\Entity\PuppeteerReplay;
+use App\Entity\PuppeteerReplayHookRecord;
 use App\Form\PuppeteerReplayType;
 use App\Service\CrudTable\CrudTableService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -43,11 +44,12 @@ class PuppeteerReplayController extends AbstractController
     }
 
     #[IsGranted("PUPPETEER_REPLAY_SHOW", 'puppeteerReplay')]
-    #[Route('/show/{puppeteerReplay}', name: 'show', methods: ['GET'])]
-    public function show(PuppeteerReplay $puppeteerReplay): Response
+    #[Route('/show/{puppeteerReplay}/{hook}', name: 'show', defaults: ['hook' => NULL], methods: ['GET'])]
+    public function show(PuppeteerReplay $puppeteerReplay, ?PuppeteerReplayHookRecord $hook = NULL): Response
     {
         return $this->render('admin/crud/puppeteer_replay/show.html.twig', [
             'puppeteer_replay' => $puppeteerReplay,
+            'hook' => $hook
         ]);
     }
 
@@ -61,5 +63,11 @@ class PuppeteerReplayController extends AbstractController
         }
 
         return $this->redirectToRoute('app_admin_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/iframe/{hook}', name: 'iframe')]
+    public function iframe(PuppeteerReplayHookRecord $hook): Response
+    {
+        return new Response($hook->getContent());
     }
 }
