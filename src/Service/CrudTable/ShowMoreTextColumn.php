@@ -10,7 +10,7 @@ class ShowMoreTextColumn extends TextColumn
     {
         $normalizedParent = parent::normalize($value);
         if (strlen($normalizedParent) > self::SLICE_THRESHOLD) {
-            return $value;
+            return  "slicing" . $value;
         }
         return $value;
     }
