@@ -4,3 +4,11 @@
 {% for errorFlash in app.flashes('pageNotificationError') %}
     <input type="hidden" class="pageNotificationError" value="{{ errorFlash }}">
 {% endfor %}
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="showMoreSpanOffCanvas" aria-labelledby="showMoreSpanOffCanvasLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="showMoreSpanOffCanvasLabel">{{ 'Yönetici Paneli'|trans }}</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="{{ 'Close'|trans }}"></button>
+    </div>
+    <div class="offcanvas-body" id="showMoreSpanOffCanvasBody"></div>
+</div>

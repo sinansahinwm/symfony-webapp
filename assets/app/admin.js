@@ -262,8 +262,11 @@ const adminPagesGlobalInitializer = function () {
     }
 
     const _initShowMoreSpan = function () {
+        const staticOffCanvas = document.getElementById('showMoreSpanOffCanvas')
         $(".showMoreSpan").on("click", function (index) {
-            console.log("showing more");
+            $('#showMoreSpanOffCanvasBody').html($(this).attr('data-content'));
+            const showMoreSpanOffCanvas = new bootstrap.Offcanvas(staticOffCanvas);
+            showMoreSpanOffCanvas.show();
         });
     }
 
