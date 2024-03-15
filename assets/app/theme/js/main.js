@@ -4,7 +4,7 @@
 
 'use strict';
 
-import * as appHelpers from './helpers';
+import * as appHelpers from "./helpers";
 window.Helpers = appHelpers.Helpers;
 
 import * as appMenu from './menu';

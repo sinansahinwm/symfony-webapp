@@ -56,7 +56,7 @@ const adminPagesGlobalInitializer = function () {
 
         // Card Action : [CONFIGURATOR]
         if (configuratorElementList) {
-            // TODO : TABLE CONFIGURATOR console.log("CONFI");
+            // TODO : TABLE CONFIGURATOR console.log("CONFIG");
         }
 
         // Card Action : [CLOSE]
