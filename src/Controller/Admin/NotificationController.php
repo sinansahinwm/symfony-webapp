@@ -32,7 +32,7 @@ class NotificationController extends AbstractController
         return $this->redirectToRoute('app_admin_notification_index');
     }
 
-    #[Route('/read/{notification}', name: 'remove')]
+    #[Route('/remove/{notification}', name: 'remove')]
     public function removeNotification(Notification $notification, #[CurrentUser] User $loggedUser, EntityManagerInterface $entityManager): Response
     {
         if ($notification->getToUser()->getUserIdentifier() === $loggedUser->getUserIdentifier()) {
