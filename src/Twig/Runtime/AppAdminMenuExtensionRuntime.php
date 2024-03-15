@@ -7,34 +7,29 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\UserMenuDto;
 use Symfony\Component\String\UnicodeString;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Extension\RuntimeExtensionInterface;
+use function Symfony\Component\Translation\t;
 
 class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
 {
 
     const DEFAULT_AVATAR_LETTER = '...';
 
-    public function __construct(private TranslatorInterface $translator)
-    {
-
-    }
-
     public function appAdminMenu(User $user): iterable
     {
         $menuItems = [
-            MenuItem::section($this->t('ÖZET')),
-            MenuItem::linkToRoute('Genel Bakış', 'bx bx-home-alt', 'app_admin_dashboard'),
-            MenuItem::subMenu('Profilim', 'bx bx-user')->setBadge("DE")->setSubItems([
-                MenuItem::linkToRoute('Profilim', 'bx bx-home-circle', 'app_admin_dashboard')->setBadge("1"),
-                MenuItem::linkToRoute('Bildirimler', 'bx bx-home-circle', 'app_admin_notification_index'),
-                MenuItem::linkToRoute('Takım Panosu', 'bx bx-home-circle', 'app_admin_dashboard'),
+            MenuItem::section(t('ÖZET')),
+            MenuItem::linkToRoute(t('Genel Bakış'), 'bx bx-home-alt', 'app_admin_dashboard'),
+            MenuItem::subMenu(t('Profilim'), 'bx bx-user')->setBadge("DE")->setSubItems([
+                MenuItem::linkToRoute(t('Profilim'), 'bx bx-home-circle', 'app_admin_dashboard')->setBadge("1"),
+                MenuItem::linkToRoute(t('Bildirimler'), 'bx bx-home-circle', 'app_admin_notification_index'),
+                MenuItem::linkToRoute(t('Takım Panosu'), 'bx bx-home-circle', 'app_admin_dashboard'),
             ]),
-            MenuItem::section($this->t('OTOMASYON')),
-            MenuItem::subMenu('İçe Aktarım', 'bx bx-import')->setSubItems([
-                MenuItem::linkToRoute('Chrome Aktarıcısı', 'bx bx-chrome', 'app_admin_puppeteer_replay_index'),
+            MenuItem::section(t('OTOMASYON')),
+            MenuItem::subMenu(t('Servisler'), 'bx bx-import')->setSubItems([
+                MenuItem::linkToRoute(t('Chrome Aktarıcısı'), 'bx bx-chrome', 'app_admin_puppeteer_replay_index'),
             ]),
-            MenuItem::section($this->t('Ayarlar')),
+            MenuItem::section(t('Ayarlar')),
         ];
         return $this->convertMenuItemsToDto($menuItems);
     }
@@ -43,11 +38,11 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
     {
         $menuItems = $this->convertMenuItemsToDto([
             MenuItem::section(),
-            MenuItem::linkToRoute('Profilim', 'bx bx-user', 'app_admin_profile_current'),
-            MenuItem::linkToRoute('Dokümantasyon', 'bx bx-help-circle', 'app_admin_dashboard'),
+            MenuItem::linkToRoute(t('Profilim'), 'bx bx-user', 'app_admin_profile_current'),
+            MenuItem::linkToRoute(t('Dokümantasyon'), 'bx bx-help-circle', 'app_admin_dashboard'),
             MenuItem::section(),
-            MenuItem::linkToExitImpersonation("Taklit Modundan Çık", 'bx bx-bomb'),
-            MenuItem::linkToLogout($this->t('Güvenli Çıkış'), 'bx bx-power-off'),
+            MenuItem::linkToExitImpersonation(t("Taklit Modundan Çık"), 'bx bx-bomb'),
+            MenuItem::linkToLogout(t('Güvenli Çıkış'), 'bx bx-power-off'),
         ]);
 
         return UserMenu::new()
@@ -65,11 +60,6 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
             $dtoItems[] = $menuItem->getAsDto();
         }
         return $dtoItems;
-    }
-
-    private function t(string $label): string
-    {
-        return $this->translator->trans($label);
     }
 
     private function createUserAvatarUrl(User $user): string
