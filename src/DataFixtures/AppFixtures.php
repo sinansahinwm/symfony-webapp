@@ -29,8 +29,10 @@ class AppFixtures extends Fixture
     const NOTIFICATIONS_COUNT_PER_USER = 10;
     const ALLOWED_COUNTRIES = ["Turkey"];
     const DATETIME_SEED_BETWEEEN = '-100 days';
-
     const ADMINISTRATOR_ROLES = ["ROLE_USER", "ROLE_ADMIN", "ROLE_CAN_SWITCH"];
+
+    // Tweak Configuration
+    const DISABLE_HASHING_PASSWORDS_WHEN_LOADING_FIXTURES = TRUE;
 
     public function __construct(private ResetPasswordHelperInterface $resetPasswordHelper, private UserPasswordHasherInterface $userPasswordHasher, private EntityManagerInterface $entityManager, private ContainerBagInterface $containerBag)
     {
@@ -41,7 +43,7 @@ class AppFixtures extends Fixture
 
         // Create Administrator
         $this->createAdministrator();
-        
+
         return;
 
         // Set Ini For Fixtures

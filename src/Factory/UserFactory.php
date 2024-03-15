@@ -59,7 +59,11 @@ final class UserFactory extends ModelFactory
     protected function initialize(): self
     {
         return $this->afterInstantiate(function (User $user): void {
-            $user->setPassword($this->userPasswordHasher->hashPassword($user, $user->getPassword()));
+            if (AppFixtures::DISABLE_HASHING_PASSWORDS_WHEN_LOADING_FIXTURES === TRUE) {
+                $user->setPassword(self::faker()->randomLetter());
+            } else {
+                $user->setPassword($this->userPasswordHasher->hashPassword($user, $user->getPassword()));
+            }
         });
     }
 
