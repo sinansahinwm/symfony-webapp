@@ -5,6 +5,7 @@ use App\Entity\Notification;
 use App\Entity\User;
 use App\Service\CrudTable\ActionsColumn;
 use App\Service\CrudTable\BadgeColumn;
+use App\Service\CrudTable\BoolIndicatorColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use App\Service\CrudTable\FormattedDateTimeColumn;
@@ -48,7 +49,7 @@ class NotificationTable extends AbstractController implements DataTableTypeInter
             }
         ]);
         $dataTable->add('content', TextColumn::class);
-        $dataTable->add('is_read', TextColumn::class);
+        $dataTable->add('is_read', BoolIndicatorColumn::class);
         $dataTable->add('url', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
