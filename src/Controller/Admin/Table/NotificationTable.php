@@ -23,9 +23,11 @@ class NotificationTable extends TableAbstractController implements DataTableType
     {
 
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
-            'label' => $this->t("Yaratılma Zamanı")
+            'label' => $this->t("Yaratılma Zamanı"),
+            'orderable' => FALSE
         ]);
         $dataTable->add('priority', BadgeColumn::class, [
+            'orderable' => FALSE,
             'type' => function ($value) {
                 return match ($value) {
                     NotificationPriorityType::LOW => "label-secondary",
@@ -44,6 +46,7 @@ class NotificationTable extends TableAbstractController implements DataTableType
             }
         ]);
         $dataTable->add('content', ShowMoreTextColumn::class, [
+            'orderable' => FALSE,
             'label' => $this->t("İçerik"),
         ]);
         $dataTable->add('is_read', BoolIndicatorColumn::class);
