@@ -52,10 +52,10 @@ class PuppeteerReplayTable extends TableAbstractController implements DataTableT
         $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction($this->t('Göster'), $urlGenerator->generate("app_admin_puppeteer_replay_show", ["id" => $value]), 'bx bx-chevron-right');
+                    return new CrudTableAction($this->t('Göster'), $urlGenerator->generate("app_admin_puppeteer_replay_show", ["puppeteerReplay" => $value]), 'bx bx-chevron-right');
                 },
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction($this->t('Sil'), $urlGenerator->generate("app_admin_puppeteer_replay_delete", ["id" => $value]), 'bx bx-trash');
+                    return new CrudTableAction($this->t('Sil'), $urlGenerator->generate("app_admin_puppeteer_replay_delete", ["puppeteerReplay" => $value]), 'bx bx-trash');
                 },
             ]
         ]);
