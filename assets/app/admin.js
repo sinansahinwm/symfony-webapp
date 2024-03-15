@@ -257,7 +257,7 @@ const adminPagesGlobalInitializer = function () {
 
     }
 
-    const _initSymfonyToolbarShortcuts = function () {
+    const _initSymfonyToolbarBlock = function () {
         $('.sf-toolbar').remove();
     }
 
@@ -280,7 +280,7 @@ const adminPagesGlobalInitializer = function () {
             _initTooltips();
             _initSelect2();
             _initShowMoreSpan();
-            // _initSymfonyToolbarShortcuts();
+            _initSymfonyToolbarBlock();
         }
     }
 
