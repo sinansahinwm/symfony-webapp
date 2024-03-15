@@ -19,9 +19,9 @@ use function Symfony\Component\Translation\t;
 
 class FileSharingType extends AbstractFormType
 {
-    public function __construct(TranslatorInterface $translator, private TeamMatesSelectController $teamMatesSelectController, UrlGeneratorInterface $urlGenerator)
+    public function __construct(private TeamMatesSelectController $teamMatesSelectController, UrlGeneratorInterface $urlGenerator)
     {
-        parent::__construct($translator);
+
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
