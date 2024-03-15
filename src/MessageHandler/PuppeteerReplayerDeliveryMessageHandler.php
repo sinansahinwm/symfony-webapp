@@ -3,7 +3,6 @@
 namespace App\MessageHandler;
 
 use App\Message\PuppeteerReplayerDeliveryMessage;
-use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
