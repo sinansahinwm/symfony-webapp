@@ -26,8 +26,12 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
 
     public function configure(DataTable $dataTable, array $options): void
     {
-        $dataTable->add('file_name', TextColumn::class);
-        $dataTable->add('created_at', DateTimeColumn::class);
+        $dataTable->add('file_name', TextColumn::class, [
+            'orderable' => FALSE,
+        ]);
+        $dataTable->add('created_at', DateTimeColumn::class, [
+            'orderable' => FALSE
+        ]);
         $dataTable->add('status', BadgeColumn::class, [
             'type' => 'success',
             'content' => function ($value) {
@@ -52,7 +56,10 @@ class PuppeteerReplayTable extends AbstractController implements DataTableTypeIn
                 new SearchCriteriaProvider(),
             ],
             'query' => function (QueryBuilder $builder) {
-                $builder->select('x')->from(PuppeteerReplay::class, 'x');
+                $builder
+                    ->select('x')
+                    ->from(PuppeteerReplay::class, 'x')
+                    ->orderBy('x.created_by', 'DESC');
             },
         ]);
 
