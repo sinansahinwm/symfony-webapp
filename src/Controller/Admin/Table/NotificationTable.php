@@ -1,8 +1,10 @@
 <?php namespace App\Controller\Admin\Table;
 
+use App\Config\NotificationPriorityType;
 use App\Entity\Notification;
 use App\Entity\User;
 use App\Service\CrudTable\ActionsColumn;
+use App\Service\CrudTable\BadgeColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use App\Service\CrudTable\FormattedDateTimeColumn;
@@ -27,7 +29,24 @@ class NotificationTable extends AbstractController implements DataTableTypeInter
     {
 
         $dataTable->add('created_at', FormattedDateTimeColumn::class);
-        $dataTable->add('priority', TextColumn::class);
+        $dataTable->add('priority', BadgeColumn::class, [
+            'type' => function ($value) {
+                return match ($value) {
+                    NotificationPriorityType::LOW => "label-secondary",
+                    NotificationPriorityType::NORMAL => "secondary",
+                    NotificationPriorityType::HIGH => "danger",
+                    default => 'label-secondary',
+                };
+            },
+            'content' => function ($value) {
+                return match ($value) {
+                    NotificationPriorityType::LOW => t("Düşük"),
+                    NotificationPriorityType::NORMAL => t("Normal"),
+                    NotificationPriorityType::HIGH => t("Yüksek"),
+                    default => t("Bilinmiyor"),
+                };
+            }
+        ]);
         $dataTable->add('content', TextColumn::class);
         $dataTable->add('is_read', TextColumn::class);
         $dataTable->add('url', ActionsColumn::class, [
