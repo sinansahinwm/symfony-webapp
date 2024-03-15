@@ -4,10 +4,15 @@ use Omines\DataTablesBundle\Column\TextColumn;
 
 class ShowMoreTextColumn extends TextColumn
 {
+    const SLICE_THRESHOLD = 10;
+
     public function normalize(mixed $value): string
     {
         $normalizedParent = parent::normalize($value);
-        return "show mored text" . $value;
+        if (strlen($normalizedParent) > self::SLICE_THRESHOLD) {
+            return $value;
+        }
+        return $value;
     }
 
 }
