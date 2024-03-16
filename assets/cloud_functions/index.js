@@ -93,10 +93,10 @@ async function _puppeteerReplayerHandler(request, response) {
 
     } catch (e) {
 
+        // Runtime Errors Reporting
         const errorHookHeaders = {
             'Content-Type': 'application/json',
         }
-
         errorHookHeaders[authHeaderName] = validAppSecret;
         const errorHookData = {
             instanceID: instanceID,
