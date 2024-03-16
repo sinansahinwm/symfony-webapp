@@ -80,3 +80,4 @@ fabric.properties
 
 # ----- OTHER ---- #
 assets/cloud_functions/node_modules
+assets/cloud_functions/chrome
