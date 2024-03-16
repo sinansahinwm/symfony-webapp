@@ -6,6 +6,7 @@ use App\Entity\PuppeteerReplayHookRecord;
 use App\Repository\PuppeteerReplayRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
+use function Symfony\Component\Translation\t;
 
 class PuppeteerWebhookHandlerService
 {
@@ -30,10 +31,10 @@ class PuppeteerWebhookHandlerService
                 $this->saveHookDataIfStatusAcceptable($puppeteerReplayWithRefreshedStatus, $hookBodyData);
 
             } else {
-                throw new BadRequestHttpException();
+                throw new BadRequestHttpException(t("Hatalı istek, geçersiz oturum kimliği."));
             }
         } else {
-            throw new BadRequestHttpException();
+            throw new BadRequestHttpException(t("Hatalı istek, gövde verisi geçersiz."));
         }
     }
 
@@ -52,7 +53,7 @@ class PuppeteerWebhookHandlerService
             $this->entityManager->flush();
 
         } else {
-            throw new BadRequestHttpException(serialize($hookBodyData));
+            throw new BadRequestHttpException(t("Hatalı istek, gövde parametreleri kabul edilmedi. Gövde: ") . json_encode($hookBodyData));
         }
     }
 
@@ -86,7 +87,7 @@ class PuppeteerWebhookHandlerService
 
     private function whenStatusCompleted(PuppeteerReplay $puppeteerReplay): void
     {
-
+        // TODO : When completed
     }
 
 }
