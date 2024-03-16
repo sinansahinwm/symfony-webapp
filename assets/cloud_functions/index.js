@@ -30,6 +30,8 @@ async function _httpCloudFunctionHandler(request, response) {
 
 async function _puppeteerReplayerHandler(request, response) {
 
+    console.log(puppeteer.executablePath());
+
     // Read DotEnv
     const envPath = import.meta.dirname + "/../../.env";
     const dotEnv = dotenv.config({path: envPath});
