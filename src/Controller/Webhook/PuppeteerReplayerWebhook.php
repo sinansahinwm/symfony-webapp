@@ -33,7 +33,7 @@ class PuppeteerReplayerWebhook extends BaseWebhook implements WebHookInterface
         if (json_validate($requestContent) === TRUE) {
             return json_decode($requestContent, true, 512, JSON_OBJECT_AS_ARRAY);
         } else {
-            throw new BadRequestHttpException(t("Hatalı istek, içerik validasyonu başarısız. İçerik: ") . $requestContent);
+            throw new BadRequestHttpException(t("Hatalı istek, içerik validasyonu başarısız. İçerik: ") . serialize($requestContent));
         }
     }
 
