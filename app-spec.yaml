@@ -23,7 +23,7 @@ services:
       php bin/console doctrine:migrations:migrate --dry-run
       php bin/console cache:clear
       php bin/console doctrine:fixtures:load --append
-      cd assets/cloud_functions && npm install && npx puppeteer browsers install chrome && cd -
+      cd assets/cloud_functions && npm install && npx @puppeteer/browsers install chrome@stable && cd -
     environment_slug: php
     github:
       branch: main
