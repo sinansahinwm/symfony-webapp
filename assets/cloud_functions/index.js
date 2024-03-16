@@ -71,7 +71,11 @@ async function _puppeteerReplayerHandler(request, response) {
         const puppeteerSteps = requestBody.steps;
 
         // Create Puppeteer Instance
-        const myBrowser = await puppeteer.launch(puppeteerLaunchOptions);
+        const myBrowser = await puppeteer.launch({
+            executablePath: process.env.PUPPETEER_EXECUTABLE_PATH,
+            args: ['--no-sandbox'],
+            ...puppeteerLaunchOptions,
+        });
         const myPage = await myBrowser.newPage();
 
         // Create Flow
