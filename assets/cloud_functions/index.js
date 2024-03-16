@@ -71,7 +71,7 @@ async function _puppeteerReplayerHandler(request, response) {
         // Create Puppeteer Instance
         console.log(process.env.PUPPETEER_EXECUTABLE_PATH);
         const myBrowser = await puppeteer.launch({
-            args: ['--no-sandbox'],
+            args: ['--no-sandbox', '--disable-setuid--sandbox'],
             ...puppeteerLaunchOptions,
         });
         const myPage = await myBrowser.newPage();
