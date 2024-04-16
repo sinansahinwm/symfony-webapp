@@ -64,18 +64,20 @@ class PuppeteerReplayController extends AbstractController
         // Check Status
         if (($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::PROCESSING) or ($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::UPLOAD)) {
             $this->addFlash('pageNotificationError', t('Bu öge şu anda silinemez. Lütfen birkaç dakika bekleyin ve tekrar deneyin.'));
-        }
+        } else {
 
-        // Remove Records
-        $hookRecords = $puppeteerReplay->getPuppeteerReplayHookRecords();
-        foreach ($hookRecords as $hookRecord) {
-            $entityManager->remove($hookRecord);
+            // Remove Records
+            $hookRecords = $puppeteerReplay->getPuppeteerReplayHookRecords();
+            foreach ($hookRecords as $hookRecord) {
+                $entityManager->remove($hookRecord);
+                $entityManager->flush();
+            }
+
+            // Remove PuppeteerReplay
+            $entityManager->remove($puppeteerReplay);
             $entityManager->flush();
-        }
 
-        // Remove PuppeteerReplay
-        $entityManager->remove($puppeteerReplay);
-        $entityManager->flush();
+        }
 
         return $this->redirectToRoute('app_admin_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
     }
