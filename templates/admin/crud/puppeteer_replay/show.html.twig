@@ -125,7 +125,20 @@
                                     <img src="data:image/png;base64, {{ pr.screenshot }}" alt="{{ 'Ekran Görüntüsü'|trans }}" class="rounded-circle">
                                 </div>
                                 <div class="chat-contact-info flex-grow-1 ms-3">
-                                    <h6 class="chat-contact-name text-truncate m-0">{{ pr.phase }}</h6>
+                                    <h6 class="chat-contact-name text-truncate m-0">
+                                        {% if pr.phase is same as("beforeAllSteps") %}
+                                            {{ 'Başlangıç'|trans }}
+                                        {% endif %}
+                                        {% if pr.phase is same as("beforeEachStep") %}
+                                            {{ 'Adım Öncesi'|trans }}
+                                        {% endif %}
+                                        {% if pr.phase is same as("afterEachStep") %}
+                                            {{ 'Adım Sonrası'|trans }}
+                                        {% endif %}
+                                        {% if pr.phase is same as("afterAllSteps") %}
+                                            {{ 'Bitiş'|trans }}
+                                        {% endif %}
+                                    </h6>
                                     <p class="chat-contact-status text-truncate mb-0 text-muted">
                                         {{ pr.initialPageUrl ?? '--' }}
                                     </p>
@@ -150,7 +163,20 @@
                                 </div>
                                 <div class="chat-contact-info flex-grow-1 ms-3">
                                     <h6 class="m-0">{{ puppeteer_replay.fileName }}</h6>
-                                    <small class="user-status text-muted">{{ puppeteer_replay.status }}</small>
+                                    <small class="user-status text-muted">
+                                        {% if puppeteer_replay.status is same as("UPLOAD") %}
+                                            {{ 'YÜKLENDİ'|trans }}
+                                        {% endif %}
+                                        {% if puppeteer_replay.status is same as("PROCESSING") %}
+                                            {{ 'İŞLENİYOR'|trans }}
+                                        {% endif %}
+                                        {% if puppeteer_replay.status is same as("COMPLETED") %}
+                                            {{ 'TAMAMLANDI'|trans }}
+                                        {% endif %}
+                                        {% if puppeteer_replay.status is same as("ERROR") %}
+                                            {{ 'HATA'|trans }} : <span class="text-danger">{{ puppeteer_replay.lastErrorMessage }}</span>
+                                        {% endif %}
+                                    </small>
                                 </div>
                             </div>
                             <div class="d-flex align-items-center">
