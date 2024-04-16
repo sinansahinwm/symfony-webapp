@@ -19,6 +19,9 @@ import './theme/libs/spinkit/spinkit.scss';
 import './theme/libs/select2/select2';
 import './theme/libs/select2/select2.scss';
 
+// Perfect Scrollbar
+import PerfectScrollbar from "perfect-scrollbar";
+
 const adminPagesGlobalInitializer = function () {
 
     const _initKeyboardSearch = function () {
@@ -270,6 +273,29 @@ const adminPagesGlobalInitializer = function () {
         });
     }
 
+    const _initPerfectScrollbars = function () {
+
+        const chatContactsBody = document.querySelector('.app-chat-contacts .sidebar-body');
+        const chatHistoryBody = document.querySelector('.chat-history-body');
+
+        // Init Chat Contacts Body
+        if (chatContactsBody) {
+            new PerfectScrollbar(chatContactsBody, {
+                wheelPropagation: false,
+                suppressScrollX: true
+            });
+        }
+
+        // Init Chat History Body
+        if (chatHistoryBody) {
+            new PerfectScrollbar(chatHistoryBody, {
+                wheelPropagation: false,
+                suppressScrollX: true
+            });
+        }
+
+    }
+
     return {
         init: function () {
             _initKeyboardSearch();
@@ -281,6 +307,7 @@ const adminPagesGlobalInitializer = function () {
             _initSelect2();
             _initShowMoreSpan();
             _initSymfonyToolbarBlock();
+            _initPerfectScrollbars();
         }
     }
 
