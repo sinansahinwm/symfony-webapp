@@ -26,7 +26,8 @@ exports.puppeterReplayer = onRequest(async (request, response) => {
     const puppeteerReplayerConfiguration = {
         authorizationHeader: "X-Authorization-AppSecret",
         authorizationSecret: "8c9db0e6d88f9190ac9a001fadaf1e8d",
-        allowedHooks: "beforeAllSteps,beforeEachStep,afterEachStep,afterAllSteps"
+        // DEPRECED allowedHooks: "beforeAllSteps,beforeEachStep,afterEachStep,afterAllSteps"
+        allowedHooks: "afterEachStep,afterAllSteps"
     };
 
     // Puppeteer Configuration
