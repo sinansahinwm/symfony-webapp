@@ -86,7 +86,14 @@ class DomContentFramerService
         $myCrawler->filterXPath('//*')->each(function (Crawler $crawler) {
             foreach ($crawler as $node) {
                 if ($node->getNodePath() !== NULL) {
+
+                    // Set Path Attribute
                     $node->setAttribute(self::NODE_XPATH_INJECT_ATTRIBUTE, $this->prepareNodeXPath($node));
+
+                    // Add Class Attributes
+                    $nodeClasses = [$node->getAttribute("class"), "nodeXPath"];
+                    $node->setAttribute("class", implode(" ", $nodeClasses));
+
                 }
             }
         });
