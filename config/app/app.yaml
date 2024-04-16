@@ -8,6 +8,8 @@ parameters:
   app.fixtures.administrator.password: '%env(FIXTURES_ADMINISTRATOR_PASSWORD)%'
   app.cloud_functions.auth_header: '%env(CLOUD_FUNCTIONS_AUTHORIZATION_HEADER)%'
   app.cloud_functions.auth_secret: '%env(APP_SECRET)%'
+  app.cloud_functions.ping_pong_url: '%env(CLOUD_FUNCTIONS_PING_PONG_URL)%'
+  app.cloud_functions.puppeteer_replayer_url: '%env(CLOUD_FUNCTIONS_PUPPETEER_REPLAYER_URL)%'
 
 # ===============================
 # TWIG CONFIGURATION
