@@ -90,7 +90,6 @@ final class PuppeteerReplayerDeliveryMessageHandler
 
         // Add JSON
         $requestOptions['json'] = $this->getRequestJSONBody($message);
-
         return $requestOptions;
     }
 
