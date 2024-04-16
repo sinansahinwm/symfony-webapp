@@ -2,10 +2,12 @@
 
 namespace App\Controller\Admin\Crud;
 
+use App\Config\PuppeteerReplayStatusType;
 use App\Controller\Admin\Table\PuppeteerReplayTable;
 use App\Entity\PuppeteerReplay;
 use App\Entity\PuppeteerReplayHookRecord;
 use App\Form\PuppeteerReplayType;
+use App\Repository\PuppeteerReplayHookRecordRepository;
 use App\Service\CrudTable\CrudTableService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -13,6 +15,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use function Symfony\Component\Translation\t;
 
 #[Route('/admin/puppeteer/replay', name: 'app_admin_puppeteer_replay_')]
 class PuppeteerReplayController extends AbstractController
@@ -55,12 +58,24 @@ class PuppeteerReplayController extends AbstractController
 
     #[IsGranted("PUPPETEER_REPLAY_DELETE", 'puppeteerReplay')]
     #[Route('/delete/{puppeteerReplay}', name: 'delete')]
-    public function delete(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager): Response
+    public function delete(Request $request, PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager, PuppeteerReplayHookRecordRepository $puppeteerReplayHookRecordRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $puppeteerReplay->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($puppeteerReplay);
+
+        // Check Status
+        if (($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::PROCESSING) or ($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::UPLOAD)) {
+            $this->addFlash('pageNotificationError', t('Bu öge şu anda silinemez. Lütfen birkaç dakika bekleyin ve tekrar deneyin.'));
+        }
+
+        // Remove Records
+        $hookRecords = $puppeteerReplay->getPuppeteerReplayHookRecords();
+        foreach ($hookRecords as $hookRecord) {
+            $entityManager->remove($hookRecord);
             $entityManager->flush();
         }
+
+        // Remove PuppeteerReplay
+        $entityManager->remove($puppeteerReplay);
+        $entityManager->flush();
 
         return $this->redirectToRoute('app_admin_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
     }
