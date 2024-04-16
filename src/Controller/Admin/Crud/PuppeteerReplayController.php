@@ -4,17 +4,21 @@ namespace App\Controller\Admin\Crud;
 
 use App\Config\PuppeteerReplayStatusType;
 use App\Controller\Admin\Table\PuppeteerReplayTable;
+use App\Controller\Webhook\PuppeteerReplayerWebhook;
 use App\Entity\PuppeteerReplay;
 use App\Entity\PuppeteerReplayHookRecord;
 use App\Form\PuppeteerReplayType;
 use App\Repository\PuppeteerReplayHookRecordRepository;
 use App\Service\CrudTable\CrudTableService;
+use App\Service\PuppeteerReplayService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Vich\UploaderBundle\Storage\StorageInterface;
 use function Symfony\Component\Translation\t;
 
 #[Route('/admin/puppeteer/replay', name: 'app_admin_puppeteer_replay_')]
@@ -87,4 +91,48 @@ class PuppeteerReplayController extends AbstractController
     {
         return new Response($hook->getContent());
     }
+
+
+    #[IsGranted("PUPPETEER_REPLAY_SHOW", 'puppeteerReplay')]
+    #[Route('/rereplay/{puppeteerReplay}', name: 'rereplay')]
+    public function rereplay(PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager, StorageInterface $storage, PuppeteerReplayService $puppeteerReplayService, PuppeteerReplayerWebhook $puppeteerReplayerWebhook): Response
+    {
+        // Check Status
+        if (($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::PROCESSING) or ($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::UPLOAD)) {
+            $this->addFlash('pageNotificationError', t('Bu öge şu anda yeniden başlatılamaz. Lütfen birkaç dakika bekleyin ve tekrar deneyin.'));
+        } else {
+            // Remove Old Step Hook Records
+            $hookRecords = $puppeteerReplay->getPuppeteerReplayHookRecords();
+            foreach ($hookRecords as $hookRecord) {
+                $entityManager->remove($hookRecord);
+                $entityManager->flush();
+            }
+
+            // Clear Status
+            $puppeteerReplay->setStatus(PuppeteerReplayStatusType::UPLOAD);
+            $entityManager->persist($puppeteerReplay);
+            $entityManager->flush();
+
+            // Add New Notification
+            $resolvedFilePath = $storage->resolvePath($puppeteerReplay);
+            $replayEnvelope = $puppeteerReplayService
+                ->setRecordPath($resolvedFilePath)
+                ->setWebhook($puppeteerReplayerWebhook)
+                ->setInstanceID($puppeteerReplay->getId())
+                ->play();
+
+            $this->addFlash('pageNotificationSuccess', t('Kayıt yeniden çalıştırma başarılı.'));
+
+        }
+        return $this->redirectToRoute('app_admin_puppeteer_replay_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[IsGranted("PUPPETEER_REPLAY_SHOW", 'puppeteerReplay')]
+    #[Route('/downloadsteps/{puppeteerReplay}', name: 'downloadsteps')]
+    public function downloadsteps(PuppeteerReplay $puppeteerReplay, StorageInterface $storage): Response
+    {
+        $resolvedPath = $storage->resolvePath($puppeteerReplay);
+        return new BinaryFileResponse($resolvedPath);
+    }
+
 }
