@@ -7,10 +7,11 @@ To run your app, follow steps below.
 3. Build & Release Application
 4. Run Application
 
-## Build Phase: Localhost
+## Build & Deploy
+
+1. Build Symfony's Web App
 
 ~~~
-
 # Install back-end dependencies.
 composer install
 
@@ -38,21 +39,24 @@ php bin/console cache:clear
 # Load symfony's fixtures
 php bin/console doctrine:fixtures:load --append
 
-# Build & Deploy firebase cloud functions
-
-## Select firebase project
-
-# Login to firebase.
-firebase login
-
-# Select firebase account to publish this app's functions.
-firebase login:use meehouofficial@gmail.com
-
-# Select firebase project
-firebase use meehou-6cbe0
-
-# Deploy & release firebase functions
-firebase deploy --only functions
-
 cd assets/cloud_functions && npm install && npx @puppeteer/browsers install chrome@stable && cd -
 ~~~
+
+2. Build & Deploy Firebase Cloud Functions
+
+This needed to use puppeteer replayer.
+
+~~~
+# 1. Login to firebase with your account
+firebase login
+
+# 3. Select firebase account to publish this app's functions.
+firebase login:use youremail@yourdomain.com
+
+# 4. Select firebase project
+firebase use your-firebase-project-id
+
+# 5. Deploy & release firebase functions
+firebase deploy --only functions
+~~~
+
