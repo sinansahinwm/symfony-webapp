@@ -59,7 +59,18 @@ final class PuppeteerReplayerDeliveryMessageHandler
 
     private function getServerRequestURL(): string
     {
-        return self::DEFAULT_LOCALHOST_URL . ":" . self::DEFAULT_LOCALHOST_PORT;
+        [$pingPongUrl, $remoteServerUrl] = $this->getRemoteServerUrl() ?? [NULL, NULL];
+        return $remoteServerUrl ?? self::DEFAULT_LOCALHOST_URL . ":" . self::DEFAULT_LOCALHOST_PORT;
+    }
+
+    private function getRemoteServerUrl(): array|null
+    {
+        $deliveryUrl = $this->containerBag->get("app.cloud_functions.puppeteer_replayer_url");
+        $pingPongUrl = $this->containerBag->get("app.cloud_functions.ping_pong_url");
+        if (strlen(parse_url($deliveryUrl, PHP_URL_HOST)) > 0) {
+            return [$pingPongUrl, $deliveryUrl];
+        }
+        return NULL;
     }
 
     private function getRequestOptions(PuppeteerReplayerDeliveryMessage $message): array
