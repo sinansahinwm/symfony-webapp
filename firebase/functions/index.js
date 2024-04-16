@@ -11,7 +11,7 @@ const {createRunner, PuppeteerRunnerExtension} = require("@puppeteer/replay");
 const axios = require('axios');
 
 // Set Global Options
-const globalOptions = { timeoutSeconds: 300, memory: "4GiB"};
+const globalOptions = {timeoutSeconds: 300, memory: "4GiB"};
 setGlobalOptions(globalOptions);
 
 // [FUNCTION] : Ping & Pong
@@ -54,7 +54,7 @@ exports.puppeterReplayer = onRequest(async (request, response) => {
         const requestBody = request.body;
         const webhookURL = requestBody.webhookURL;
         const instanceID = requestBody.instanceID;
-    }catch (e){
+    } catch (e) {
         response.status(400).send();
         return;
     }
@@ -89,7 +89,16 @@ exports.puppeterReplayer = onRequest(async (request, response) => {
         };
 
         // Create Runner
-        const myExtension = new PuppeteerBridgeExtension(myBrowser, myPage, timeOut, webhookURL, instanceID, puppeteerReplayerConfiguration.authorizationHeader, puppeteerReplayerConfiguration.authorizationSecret);
+        const myExtension = new PuppeteerBridgeExtension(
+            myBrowser,
+            myPage,
+            timeOut,
+            webhookURL,
+            instanceID,
+            puppeteerReplayerConfiguration.authorizationHeader,
+            puppeteerReplayerConfiguration.authorizationSecret,
+            puppeteerReplayerConfiguration.allowedHooks
+        );
         const myRunner = await createRunner(
             myFlow,
             myExtension
@@ -100,14 +109,32 @@ exports.puppeterReplayer = onRequest(async (request, response) => {
         await myBrowser.close();
 
     } catch (e) {
+
+        // Add Firebase Error & Return 500
         logger.error(e);
         response.status(500).send();
+
+
+        // Add Hook Error
+        const errorHookHeaders = {
+            'Content-Type': 'application/json',
+        }
+        errorHookHeaders[puppeteerReplayerConfiguration.authorizationHeader] = puppeteerReplayerConfiguration.authorizationSecret;
+        const errorHookData = {
+            instanceID: instanceID,
+            phase: "error",
+            error: e.toString()
+        }
+        await axios.post(webhookURL, errorHookData, {headers: errorHookHeaders}).catch(function (error) {
+            logger.error(error);
+        });
+
     }
 });
 
 // [HELPER] : Puppeteer Bridge Extension
 class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
-    constructor(browser, page, timeout, webhookUrl, instanceID, authHeader, authSecret) {
+    constructor(browser, page, timeout, webhookUrl, instanceID, authHeader, authSecret, allowedHooks) {
         super(browser, page, timeout);
         this.browser = browser;
         this.page = page;
@@ -116,6 +143,7 @@ class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         this.instanceID = instanceID;
         this.authHeader = authHeader;
         this.authSecret = authSecret;
+        this.allowedHooks = allowedHooks;
     }
 
     async beforeAllSteps(flow) {
@@ -139,6 +167,12 @@ class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
     }
 
     async sendWebhook(phase = null, step = null) {
+
+        if (phase !== null) {
+            if (this.allowedHooks.includes(phase) === false) {
+                return;
+            }
+        }
 
         // Get Data
         const pageContent = await this.page.content();
@@ -167,7 +201,7 @@ class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
 
         await axios.post(this.webhookUrl, webhookData, {headers: hookHeaders})
             .catch(function (error) {
-                console.log(error);
+                logger.error(error);
             });
 
     }
