@@ -39,7 +39,8 @@ php bin/console cache:clear
 # Load symfony's fixtures
 php bin/console doctrine:fixtures:load --append
 
-cd assets/cloud_functions && npm install && npx @puppeteer/browsers install chrome@stable && cd -
+# Install firebase's functions dependecies
+cd firebase/functions && npm install
 ~~~
 
 2. Build & Deploy Firebase Cloud Functions
@@ -58,5 +59,22 @@ firebase use your-firebase-project-id
 
 # 5. Deploy & release firebase functions
 firebase deploy --only functions
+~~~
+
+To emulate firebase functions;
+
+~~~
+# Start emulators
+firebase emulators:start
+
+# Go to emulators panel
+http://127.0.0.1:4000
+
+# Copy function urls
+http://127.0.0.1:5001/your-project-id/us-central1/pingPong
+
+# Change environment variables
+CLOUD_FUNCTIONS_PING_PONG_URL=your-ping-pong-function-url
+CLOUD_FUNCTIONS_PUPPETEER_REPLAYER_URL=your-puppeteer-replayer-function-url
 ~~~
 
