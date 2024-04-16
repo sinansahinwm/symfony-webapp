@@ -4,7 +4,7 @@
 {% block contentTitle %}{{ 'Google Chrome Kaydı'|trans }}{% endblock %}
 
 {% block pageActions %}
-    <a href="{{ path('app_admin_puppeteer_replay_new') }}" class="btn btn-danger" role="button">{{ 'Sil'|trans }}</a>
+    <a href="{{ path('app_admin_puppeteer_replay_delete', { puppeteerReplay: puppeteer_replay.id }) }}" class="btn btn-danger" role="button">{{ 'Sil'|trans }}</a>
 {% endblock %}
 
 {% block body %}
@@ -154,18 +154,27 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center">
-                                <i class="bx bx-download cursor-pointer d-sm-block d-none me-3 fs-4" data-bs-toggle="tooltip" title="{{ 'İndir'|trans }}"></i>
-                                <i class="bx bx-refresh cursor-pointer d-sm-block d-none me-3 fs-4" data-bs-toggle="tooltip" title="{{ 'Yeniden Çalıştır'|trans }}"></i>
-                                <i class="bx bx-expand-horizontal cursor-pointer d-sm-block d-none me-3 fs-4" data-bs-toggle="tooltip" title="{{ 'Kaynak Hatalarını Gider'|trans }}"></i>
-                                <i class="bx bx-edit-alt cursor-pointer d-sm-block d-none fs-4" data-bs-toggle="tooltip" title="{{ 'Adımları Düzenle'|trans }}"></i>
+                                <a href="{{ path('app_admin_puppeteer_replay_downloadsteps', { puppeteerReplay: puppeteer_replay.id }) }}" class="text-secondary">
+                                    <i class="bx bx-download cursor-pointer d-sm-block d-none me-3 fs-4" data-bs-toggle="tooltip" title="{{ 'İndir'|trans }}"></i>
+                                </a>
+                                <a href="{{ path('app_admin_puppeteer_replay_rereplay', { puppeteerReplay: puppeteer_replay.id }) }}" class="text-secondary">
+                                    <i class="bx bx-refresh cursor-pointer d-sm-block d-none me-3 fs-4" data-bs-toggle="tooltip" title="{{ 'Yeniden Çalıştır'|trans }}"></i>
+                                </a>
+                                <a href="#" class="text-secondary">
+                                    <i class="bx bx-edit-alt cursor-pointer d-sm-block d-none fs-4" data-bs-toggle="tooltip" title="{{ 'Adımları Düzenle'|trans }}"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
                     <div class="chat-history-body bg-body m-0 p-0">
                         {% if hook is not null %}
-                            <iframe src="{{ path('app_admin_puppeteer_replay_iframe', { hook: hook.id }) }}" style="height: 1000px; width: 100%"></iframe>
+                            <iframe src="{{ path('app_admin_puppeteer_replay_iframe', { hook: hook.id }) }}" style="height: 100%; width: 100%; pointer-events: none;"></iframe>
                             {% else %}
-                            hook seçin
+                            <div class="d-flex justify-content-center my-5">
+                                <span>
+                                    {{ 'İçeriği görüntülemek için lütfen bir aşama seçin.'|trans }}
+                                </span>
+                            </div>
                         {% endif %}
                     </div>
                 </div>
