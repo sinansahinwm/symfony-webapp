@@ -252,6 +252,19 @@ const adminPagesGlobalInitializer = function () {
                     $(this).remove();
                 });
 
+                // Add Datatable Drawn Event
+                myTable.on( 'draw.dt', function () {
+                    _initShowMoreSpan();
+                    _initSelect2();
+                    _initTooltips();
+                });
+
+                // Add Datatable Error Event
+                myTable.on('error.dt', function (e, settings, techNote, message) {
+                    const tableFirstParent = myTable.parent();
+                    tableFirstParent.html(message);
+                });
+
             });
 
 
@@ -266,7 +279,6 @@ const adminPagesGlobalInitializer = function () {
     const _initShowMoreSpan = function () {
         const staticOffCanvas = document.getElementById('showMoreSpanOffCanvas')
         $(".showMoreSpan").on("click", function (index) {
-            console.log("SHOWING MORE");
             $('#showMoreSpanOffCanvasBody').html($(this).attr('data-content'));
             const showMoreSpanOffCanvas = new bootstrap.Offcanvas(staticOffCanvas);
             showMoreSpanOffCanvas.show();

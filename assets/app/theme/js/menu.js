@@ -839,6 +839,7 @@ class Menu {
 
     if (window.innerWidth < window.Helpers.LAYOUT_BREAKPOINT) {
       if (this._scrollbar !== null) {
+        console.log(this._scrollbar);
         // window.Helpers.menuPsScroll.destroy()
         this._scrollbar.destroy()
         this._scrollbar = null

@@ -1,5 +1,6 @@
 <?php namespace App\EventListener;
 
+use App\Config\NotificationPriorityType;
 use App\Entity\PuppeteerReplayHookRecord;
 use App\Service\DomContentFramerService;
 use App\Service\NotificationService;
@@ -33,6 +34,14 @@ class PuppeteerReplayHookRecordListener
             $translatedNotificationMessage = t("Chrome Aktarıcısı hizmeti başarıyla tamamlandı.");
             $this->notificationService->setMessage($translatedNotificationMessage)->release($hookCreatedBy, $hookActionUrl);
         }
+
+        if ($puppeteerReplayHookRecord->getPhase() === "error") {
+            $hookCreatedBy = $puppeteerReplayHookRecord->getReplay()->getCreatedBy();
+            $hookActionUrl = $this->urlGenerator->generate("app_admin_puppeteer_replay_show", ["puppeteerReplay" => $puppeteerReplayHookRecord->getReplay()->getId()], UrlGeneratorInterface::ABSOLUTE_URL);
+            $translatedNotificationMessage = t("Chrome Aktarıcısı hizmeti çalıştırılırken bir hata oluştu.");
+            $this->notificationService->setMessage($translatedNotificationMessage)->release($hookCreatedBy, $hookActionUrl, NotificationPriorityType::HIGH);
+        }
+
     }
 
 

@@ -5,6 +5,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TableAbstractController extends AbstractController
 {
+
+    const DEFAULT_ORDER_DIRECTION_CREATED_AT = "DESC";
+
     public function __construct(private TranslatorInterface $translator)
     {
     }

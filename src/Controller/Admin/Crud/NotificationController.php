@@ -3,6 +3,7 @@
 use App\Controller\Admin\Table\NotificationTable;
 use App\Entity\Notification;
 use App\Entity\User;
+use App\Repository\NotificationRepository;
 use App\Service\CrudTable\CrudTableService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,8 +30,22 @@ class NotificationController extends AbstractController
         if ($notification->getToUser()->getUserIdentifier() === $loggedUser->getUserIdentifier()) {
             $notification->setIsRead(TRUE);
             $entityManager->persist($notification);
-            $entityManager->flush();
         }
+
+        $entityManager->flush();
+        return $this->redirectToRoute('app_admin_notification_index');
+    }
+
+    #[Route('/read_all', name: 'mark_as_read_all')]
+    public function markAsReadAll(#[CurrentUser] User $loggedUser, EntityManagerInterface $entityManager, NotificationRepository $notificationRepository): Response
+    {
+        $usersNotificationsUnread = $notificationRepository->findBy(["to_user" => $loggedUser, "is_read" => FALSE]);
+        foreach ($usersNotificationsUnread as $index => $usersNotification) {
+            $usersNotification->setIsRead(TRUE);
+            $entityManager->persist($usersNotification);
+        }
+
+        $entityManager->flush();
         return $this->redirectToRoute('app_admin_notification_index');
     }
 

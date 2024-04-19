@@ -21,13 +21,14 @@ class NotificationTable extends TableAbstractController implements DataTableType
 
     public function configure(DataTable $dataTable, array $options): void
     {
-
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
             'label' => $this->t("Yaratılma Zamanı"),
-            'orderable' => FALSE
+            'orderable' => TRUE,
         ]);
         $dataTable->add('priority', BadgeColumn::class, [
             'orderable' => FALSE,
+            'searchable' => FALSE,
+            'globalSearchable' => FALSE,
             'type' => function ($value) {
                 return match ($value) {
                     NotificationPriorityType::LOW => "label-secondary",
@@ -68,11 +69,13 @@ class NotificationTable extends TableAbstractController implements DataTableType
                 $builder
                     ->select('x')
                     ->from(Notification::class, 'x')
-                    ->orderBy('x.created_at', 'DESC')
                     ->where('x.to_user = :param1')
                     ->setParameter('param1', $this->getUser());
             },
         ]);
+
+        // Add Default Order
+        $dataTable->addOrderBy("created_at", self::DEFAULT_ORDER_DIRECTION_CREATED_AT);
 
     }
 

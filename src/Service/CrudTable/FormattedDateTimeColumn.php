@@ -37,6 +37,8 @@ class FormattedDateTimeColumn extends AbstractColumn
                 'createFromFormat' => '',
                 'format' => self::DEFAULT_FORMAT,
                 'nullValue' => '',
+                'searchable' => FALSE,
+                'globalSearchable' => FALSE
             ])
             ->setAllowedTypes('createFromFormat', 'string')
             ->setAllowedTypes('format', 'string')

@@ -26,7 +26,7 @@ class PuppeteerReplayTable extends TableAbstractController implements DataTableT
         ]);
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
             'label' => $this->t("Yaratılma Zamanı"),
-            'orderable' => FALSE
+            'orderable' => TRUE,
         ]);
         $dataTable->add('status', BadgeColumn::class, [
             'label' => $this->t("Durum"),
@@ -69,10 +69,12 @@ class PuppeteerReplayTable extends TableAbstractController implements DataTableT
             'query' => function (QueryBuilder $builder) {
                 $builder
                     ->select('x')
-                    ->from(PuppeteerReplay::class, 'x')
-                    ->orderBy('x.created_by', 'DESC');
+                    ->from(PuppeteerReplay::class, 'x');
             },
         ]);
+
+        // Add Default Order
+        $dataTable->addOrderBy('created_at', self::DEFAULT_ORDER_DIRECTION_CREATED_AT);
 
     }
 

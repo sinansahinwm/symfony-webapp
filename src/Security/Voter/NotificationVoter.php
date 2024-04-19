@@ -17,7 +17,7 @@ class NotificationVoter extends Voter
 
     protected function supports(string $attribute, mixed $subject): bool
     {
-        return in_array($attribute, [self::NOTIFICATION_MARK_AS_READ, self::NOTIFICATION_DELETE]) && $subject instanceof PuppeteerReplay;
+        return in_array($attribute, [self::NOTIFICATION_MARK_AS_READ, self::NOTIFICATION_DELETE]) && $subject instanceof Notification;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
