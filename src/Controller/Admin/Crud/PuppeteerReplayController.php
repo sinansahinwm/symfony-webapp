@@ -97,8 +97,18 @@ class PuppeteerReplayController extends AbstractController
     #[Route('/rereplay/{puppeteerReplay}', name: 'rereplay')]
     public function rereplay(PuppeteerReplay $puppeteerReplay, EntityManagerInterface $entityManager, StorageInterface $storage, PuppeteerReplayService $puppeteerReplayService, PuppeteerReplayerWebhook $puppeteerReplayerWebhook): Response
     {
-        // Check Status
-        if (($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::PROCESSING) or ($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::UPLOAD)) {
+
+        $checkTimeDiffMin = (time() - $puppeteerReplay->getCreatedAt()->getTimestamp()) / 60;
+
+        // Check Status -> By Status
+        $replayAccessDenied = ($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::PROCESSING) || ($puppeteerReplay->getStatus() === PuppeteerReplayStatusType::UPLOAD);
+
+        // Check Status -> By Time
+        if($checkTimeDiffMin > 120){
+            $replayAccessDenied = FALSE;
+        }
+
+        if ($replayAccessDenied === TRUE) {
             $this->addFlash('pageNotificationError', t('Bu öge şu anda yeniden başlatılamaz. Lütfen birkaç dakika bekleyin ve tekrar deneyin.'));
         } else {
             // Remove Old Step Hook Records
