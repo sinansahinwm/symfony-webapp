@@ -97,6 +97,7 @@ final class PuppeteerReplayerDeliveryMessageHandler
     {
         $preparedBodyJson = [];
         $preparedBodyJson["instanceID"] = $message->getInstanceID();
+        $preparedBodyJson["userID"] = $message->getUserID();
         $preparedBodyJson["webhookURL"] = $message->getWebhookUrl();
         $preparedBodyJson["timeOut"] = $message->getTimeOut();
         $preparedBodyJson["puppeteerLaunchOptions"] = self::PUPPETEER_LAUNCH_OPTIONS;

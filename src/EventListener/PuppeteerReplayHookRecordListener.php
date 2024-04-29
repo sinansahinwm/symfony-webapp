@@ -25,6 +25,8 @@ class PuppeteerReplayHookRecordListener
         } catch (Exception) {
             return;
         }
+
+        // Shift New Content
         $puppeteerReplayHookRecord->setContent($framedContent);
 
         // Send afterAllSteps Notification

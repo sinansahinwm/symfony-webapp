@@ -3,7 +3,7 @@
 class PuppeteerReplayerDeliveryMessage
 {
 
-    public function __construct(private string $instanceID, private array $steps, private string $webhookUrl, private int $timeOut)
+    public function __construct(private string $instanceID, private array $steps, private string $webhookUrl, private int $timeOut, private int $userID)
     {
     }
 
@@ -45,6 +45,16 @@ class PuppeteerReplayerDeliveryMessage
     public function setTimeOut(int $timeOut): void
     {
         $this->timeOut = $timeOut;
+    }
+
+    public function getUserID(): int
+    {
+        return $this->userID;
+    }
+
+    public function setUserID(int $userID): void
+    {
+        $this->userID = $userID;
     }
 
 }

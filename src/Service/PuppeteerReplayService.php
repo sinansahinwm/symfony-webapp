@@ -2,8 +2,10 @@
 
 use App\Controller\Webhook\BaseWebhook;
 use App\Message\PuppeteerReplayerDeliveryMessage;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Messenger\Envelope;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class PuppeteerReplayService
 {
@@ -15,7 +17,7 @@ class PuppeteerReplayService
 
     private BaseWebhook $webhook;
 
-    public function __construct(private MessageBusInterface $messageBus)
+    public function __construct(private MessageBusInterface $messageBus, private Security $security)
     {
     }
 
@@ -30,10 +32,14 @@ class PuppeteerReplayService
         return NULL;
     }
 
-    private function prepareReplayerEnvelope(array $steps): Envelope
+    private function prepareReplayerEnvelope(array $steps): Envelope|null
     {
-        $myMessage = new PuppeteerReplayerDeliveryMessage($this->instanceID, $steps, $this->webhookUrl, $this->timeOut);
-        return $this->messageBus->dispatch($myMessage);
+        if ($this->security->getUser() instanceof UserInterface) {
+            $loggedUserID = $this->security->getUser()->getId();
+            $myMessage = new PuppeteerReplayerDeliveryMessage($this->instanceID, $steps, $this->webhookUrl, $this->timeOut, $loggedUserID);
+            return $this->messageBus->dispatch($myMessage);
+        }
+        return NULL;
     }
 
     private function readSteps(): bool|array
@@ -42,7 +48,7 @@ class PuppeteerReplayService
             $stepsContent = file_get_contents($this->recordPath);
             if ($stepsContent !== FALSE) {
                 if (json_validate($stepsContent) === TRUE) {
-                    $decodedJSON = json_decode($stepsContent, true, 512,JSON_OBJECT_AS_ARRAY);
+                    $decodedJSON = json_decode($stepsContent, true, 512, JSON_OBJECT_AS_ARRAY);
                     return $decodedJSON["steps"];
                 }
             }
