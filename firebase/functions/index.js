@@ -27,13 +27,12 @@ exports.puppeterReplayer = onRequest(async (request, response) => {
         authorizationHeader: "X-Authorization-AppSecret",
         authorizationSecret: "8c9db0e6d88f9190ac9a001fadaf1e8d",
         // DEPRECED allowedHooks: "beforeAllSteps,beforeEachStep,afterEachStep,afterAllSteps"
-        allowedHooks: "afterEachStep,afterAllSteps"
-    };
-
-    // Puppeteer Configuration
-    const puppeteerLaunchOptions = {
-        headless: true,
-        args: ['--no-sandbox', '--disable-setuid--sandbox']
+        allowedHooks: "afterEachStep,afterAllSteps",
+        defaultUserAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+        defaultGeoLocation: {
+            latitude: 39,
+            longitude: 32,
+        },
     };
 
     // Check For Authentication
@@ -60,11 +59,24 @@ exports.puppeterReplayer = onRequest(async (request, response) => {
         return;
     }
 
+
     // Get Data
     const requestBody = request.body;
     const webhookURL = requestBody.webhookURL;
     const instanceID = requestBody.instanceID;
+    const userID = requestBody.userID;
 
+    // Puppeteer Configuration
+    const puppeteerLaunchOptions = {
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid--sandbox',
+            '--enable-chrome-browser-cloud-management',
+            '--disable-features=site-per-process,'
+        ],
+        // DEPRECED userDataDir: './tmp/user_' + userID,
+    };
 
     // Try To Run
     try {
@@ -74,14 +86,23 @@ exports.puppeterReplayer = onRequest(async (request, response) => {
 
         // Get Params
         const timeOut = requestBody.timeOut;
-        const puppeteerLaunchOptions = requestBody.puppeteerLaunchOptions;
+        const puppeteerLaunchOptionsRequested = requestBody.puppeteerLaunchOptions;
         const puppeteerSteps = requestBody.steps;
 
         // Open Browser
-        const myBrowser = await puppeteer.launch(puppeteerLaunchOptions);
+        const myBrowser = await puppeteer.launch({
+            ...puppeteerLaunchOptions,
+            ...puppeteerLaunchOptionsRequested
+        });
 
         // Create New Page
         const myPage = await myBrowser.newPage();
+
+        // Set Page GeoLocation
+        await myPage.setGeolocation(puppeteerReplayerConfiguration.defaultGeoLocation);
+
+        // Set Page User Agent
+        await myPage.setUserAgent(puppeteerReplayerConfiguration.defaultUserAgent);
 
         // Create Flow
         const myFlow = {
@@ -145,11 +166,20 @@ class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
         this.authHeader = authHeader;
         this.authSecret = authSecret;
         this.allowedHooks = allowedHooks;
+
+        // Constants
+        this.playbackSpeed = 5000;
     }
 
     async beforeAllSteps(flow) {
         await super.beforeAllSteps(flow);
         await this.sendWebhook('beforeAllSteps');
+
+        // Sleep Until Miliseconds
+        await this.sleepUntilMS(this.playbackSpeed);
+
+        // Check Captcha
+        console.log("DEBUG : BEFORE ALL STEPS (Ex: Check Captcha)");
     }
 
     async beforeEachStep(step, flow) {
@@ -205,6 +235,9 @@ class PuppeteerBridgeExtension extends PuppeteerRunnerExtension {
                 logger.error(error);
             });
 
+    }
+    sleepUntilMS(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
     }
 
 }
