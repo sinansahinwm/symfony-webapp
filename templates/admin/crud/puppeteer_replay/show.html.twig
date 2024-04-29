@@ -97,14 +97,20 @@
             <!-- Chat & Contacts -->
             <div class="col app-chat-contacts app-sidebar flex-grow-0 overflow-hidden border-end" id="app-chat-contacts">
                 <div class="sidebar-header py-3 px-4 border-bottom">
-                    <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center justify-content-center">
 
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-primary">Veri Aktarıcısı Oluştur</button>
+                        </div>
+
+                        <!-- DEPRECED
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="button-addon2">
                             <button class="btn btn-secondary" type="button" id="button-addon2">
                                 <i class="bx bx-filter"></i>
                             </button>
                         </div>
+                        -->
 
                     </div>
                     <i class="bx bx-x cursor-pointer position-absolute top-0 end-0 mt-2 me-1 fs-4 d-lg-none d-block" data-overlay data-bs-toggle="sidebar" data-target="#app-chat-contacts"></i>
@@ -112,9 +118,11 @@
                 <div class="sidebar-body">
                     <!-- Chats -->
                     <ul class="list-unstyled chat-contact-list" id="chat-list">
+                        <!-- DEPRECED
                         <li class="chat-contact-list-item chat-contact-list-item-title">
                             <h5 class="text-primary mb-0">{{ 'Çalıştırma Fazları'|trans }}</h5>
                         </li>
+                        -->
                         <li class="chat-contact-list-item chat-list-item-0 d-none">
                             <h6 class="text-muted mb-0">{{ 'Hiçbir Kayıt Yok'|trans }}</h6>
                         </li>
