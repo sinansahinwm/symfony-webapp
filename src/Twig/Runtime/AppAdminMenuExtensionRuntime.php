@@ -34,7 +34,7 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
                 // Notifications
                 ($userUnreadNotificationsCount === 0) ? MenuItem::linkToRoute(t('Bildirimler'), 'bx bx-home-circle', 'app_admin_notification_index') : MenuItem::linkToRoute(t('Bildirimler'), 'bx bx-home-circle', 'app_admin_notification_index')->setBadge($userUnreadNotificationsCount),
                 // Team Board
-                MenuItem::linkToRoute(t('Takım Panosu'), 'bx bx-home-circle', 'app_admin_dashboard'),
+                MenuItem::linkToRoute(t('Takım Panosu'), 'bx bx-home-circle', 'app_admin_team_board'),
             ]),
         ];
         return $this->convertMenuItemsToDto($menuItems);

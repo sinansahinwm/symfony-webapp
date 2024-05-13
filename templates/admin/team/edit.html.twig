@@ -1,0 +1,21 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Takım Panosu'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Takım Panosu'|trans }}{% endblock %}
+
+{% block pageActions %}
+    <a href="{{ path('app_admin_team_board') }}" class="btn btn-info">{{ 'Panoya Geri Dön'|trans }}</a>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        {{ form_start(form) }}
+        <div class="card-body">
+            {{ form_widget(form) }}
+        </div>
+        {{ component('_card_action_footer', { label: "Değişiklikleri Kaydet"|trans }) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
