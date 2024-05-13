@@ -6,10 +6,6 @@ parameters:
   app.defaultDomain: '%env(APP_DOMAIN)%'
   app.fixtures.administrator.email: '%env(FIXTURES_ADMINISTRATOR_EMAIL)%'
   app.fixtures.administrator.password: '%env(FIXTURES_ADMINISTRATOR_PASSWORD)%'
-  app.cloud_functions.auth_header: '%env(CLOUD_FUNCTIONS_AUTHORIZATION_HEADER)%'
-  app.cloud_functions.auth_secret: '%env(APP_SECRET)%'
-  app.cloud_functions.ping_pong_url: '%env(CLOUD_FUNCTIONS_PING_PONG_URL)%'
-  app.cloud_functions.puppeteer_replayer_url: '%env(CLOUD_FUNCTIONS_PUPPETEER_REPLAYER_URL)%'
 
 # ===============================
 # TWIG CONFIGURATION
@@ -104,12 +100,6 @@ vich_uploader:
       namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
       delete_on_remove: false
       delete_on_update: false
-    puppeteer_replay:
-      uri_prefix: /storage/puppeteer_replay
-      upload_destination: '%kernel.project_dir%/storage/puppeteer_replay'
-      namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
-      delete_on_remove: false
-      delete_on_update: false
 
 # ===============================
 # DOCTRINE CONFIGURATION
@@ -120,7 +110,6 @@ doctrine:
       enum: string
     types:
       notification_priority: App\Config\NotificationPriorityType
-      puppeteer_replay_status: App\Config\PuppeteerReplayStatusType
 
 # ===============================
 # TWIG COMPONENT CONFIGURATION
