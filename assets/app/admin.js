@@ -234,8 +234,17 @@ const adminPagesGlobalInitializer = function () {
                 // Check HeaderFixed
                 let headerIsFixed = responseData.options.fixedHeader;
 
+                // Add Redrawn Cells Function
+                function initComponentsAfterTableReDraw() {
+                    _initShowMoreSpan();
+                    _initSelect2();
+                    _initTooltips();
+                }
+
                 // Initialize Database
-                const myTable = $(tableDataTarget).DataTable(dtOpts);
+                const myTable = $(tableDataTarget).on('init.dt', function () {
+                    initComponentsAfterTableReDraw();
+                }).DataTable(dtOpts);
 
                 // Fixed Header
                 if (headerIsFixed) {
@@ -253,10 +262,8 @@ const adminPagesGlobalInitializer = function () {
                 });
 
                 // Add Datatable Drawn Event
-                myTable.on( 'draw.dt', function () {
-                    _initShowMoreSpan();
-                    _initSelect2();
-                    _initTooltips();
+                myTable.on('draw.dt', function () {
+                    initComponentsAfterTableReDraw();
                 });
 
                 // Add Datatable Error Event
@@ -277,9 +284,9 @@ const adminPagesGlobalInitializer = function () {
     }
 
     const _initShowMoreSpan = function () {
-        const staticOffCanvas = document.getElementById('showMoreSpanOffCanvas')
-        $(".showMoreSpan").on("click", function (index) {
-            $('#showMoreSpanOffCanvasBody').html($(this).attr('data-content'));
+        const staticOffCanvas = document.getElementById('showMoreSpanOffCanvas');
+        $(".showMoreSpan").parent().on("click", function (index) {
+            $('#showMoreSpanOffCanvasBody').html($(this).find('.showMoreSpan').attr('data-content'));
             const showMoreSpanOffCanvas = new bootstrap.Offcanvas(staticOffCanvas);
             showMoreSpanOffCanvas.show();
         });
