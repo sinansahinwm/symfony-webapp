@@ -236,7 +236,7 @@ class AuthController extends AbstractController
     public function authSendTeamInviteEmail(#[CurrentUser] User $loggedUser, TeamInvite $teamInvite, TeamRepository $teamRepository, TeamInviteService $teamInviteService): RedirectResponse
     {
         // Only team owners can invite other users.
-        if ($teamInvite->getTeam()->getOwner()->getId() === $loggedUser->getId()) {
+        if ($teamInvite->getTeam()->getOwnerId() === $loggedUser->getId()) {
             // Check collaborator already exist.
             $alreadyExist = $teamRepository->collaboratorExist($teamInvite->getTeam(), $teamInvite->getUser(), $teamInvite->getEmailAddress());
 

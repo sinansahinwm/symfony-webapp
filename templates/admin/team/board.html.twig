@@ -10,5 +10,114 @@
 {% endblock %}
 
 {% block body %}
-    team board
+    <div class="row">
+        <div class="col-12 col-xl-4 col-md-6">
+            <div class="card h-100">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                    <div class="card-title mb-0">
+                        <h5 class="m-0 me-2">Takım Üyeleri</h5>
+                    </div>
+                    <div class="dropdown">
+                        <button class="btn p-0"
+                                type="button"
+                                id="popularInstructors"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false">
+                            <i class="bx bx-dots-vertical-rounded"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="popularInstructors">
+                            <a class="dropdown-item" href="{{ path('app_admin_team_invite_member') }}">{{ 'Yeni Üye Ekle'|trans }}</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-borderless border-top">
+                        <thead class="border-bottom">
+                        <tr>
+                            <th>Instructors</th>
+                            <th class="text-end">courses</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for teamMember in usersTeam.users %}
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center mt-lg-4">
+                                    <div class="avatar me-3">
+                                        <img src="../../assets/img/avatars/1.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Maven Analytics</h6>
+                                        <small class="text-truncate text-muted">Business Intelligence</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress mt-lg-4">
+                                    <h6 class="mb-0">33</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="avatar me-3">
+                                        <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Zsazsa McCleverty</h6>
+                                        <small class="text-truncate text-muted">Digital Marketing</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress">
+                                    <h6 class="mb-0">52</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="avatar me-3">
+                                        <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Nathan Wagner</h6>
+                                        <small class="text-truncate text-muted">UI/UX Design</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress">
+                                    <h6 class="mb-0">12</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="d-flex justify-content-start align-items-center">
+                                    <div class="avatar me-3">
+                                        <img src="../../assets/img/avatars/4.png" alt="Avatar" class="rounded-circle" />
+                                    </div>
+                                    <div class="d-flex flex-column">
+                                        <h6 class="mb-1 text-truncate">Emma Bowen</h6>
+                                        <small class="text-truncate text-muted">React Native</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-end">
+                                <div class="user-progress">
+                                    <h6 class="mb-0">8</h6>
+                                </div>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
