@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Team;
 use App\Entity\User;
 use App\Form\TeamEditType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use function Symfony\Component\Translation\t;
 
 #[Route('/admin/team', name: 'app_admin_team_')]
@@ -26,8 +28,9 @@ class TeamController extends AbstractController
         return $this->render('admin/team/board.html.twig', ["usersTeam" => $usersTeam]);
     }
 
-    #[Route('/edit', name: 'edit', methods: ['GET', 'POST'])]
-    public function teamEdit(#[CurrentUser] User $loggedUser, Request $request, EntityManagerInterface $entityManager): Response
+    #[IsGranted('TEAM_EDIT', 'theTeam')]
+    #[Route('/edit/{theTeam}', name: 'edit', methods: ['GET', 'POST'])]
+    public function teamEdit(#[CurrentUser] User $loggedUser, Request $request, EntityManagerInterface $entityManager, Team $theTeam): Response
     {
         $usersTeam = $loggedUser->getTeam();
         if($usersTeam === NULL){
