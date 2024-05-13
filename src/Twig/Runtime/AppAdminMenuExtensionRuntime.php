@@ -3,6 +3,8 @@
 namespace App\Twig\Runtime;
 
 use App\Entity\User;
+use App\Repository\NotificationRepository;
+use App\Repository\UserRepository;
 use EasyCorp\Bundle\EasyAdminBundle\Config\MenuItem;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\UserMenuDto;
@@ -15,14 +17,23 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
 
     const DEFAULT_AVATAR_LETTER = '...';
 
+    public function __construct(private NotificationRepository $notificationRepository)
+    {
+    }
+
     public function appAdminMenu(User $user): iterable
     {
+        $userUnreadNotificationsCount = $this->getUserUnreadLatestNotificationsCount($user);
+
         $menuItems = [
             MenuItem::section(t('ÖZET')),
             MenuItem::linkToRoute(t('Genel Bakış'), 'bx bx-home-alt', 'app_admin_dashboard'),
             MenuItem::subMenu(t('Profilim'), 'bx bx-user')->setBadge("DE")->setSubItems([
-                MenuItem::linkToRoute(t('Profilim'), 'bx bx-home-circle', 'app_admin_dashboard')->setBadge("1"),
-                MenuItem::linkToRoute(t('Bildirimler'), 'bx bx-home-circle', 'app_admin_notification_index'),
+                // User Profile
+                MenuItem::linkToRoute(t('Profilim'), 'bx bx-home-circle', 'app_admin_profile_current'),
+                // Notifications
+                ($userUnreadNotificationsCount === 0) ? MenuItem::linkToRoute(t('Bildirimler'), 'bx bx-home-circle', 'app_admin_notification_index') : MenuItem::linkToRoute(t('Bildirimler'), 'bx bx-home-circle', 'app_admin_notification_index')->setBadge($userUnreadNotificationsCount),
+                // Team Board
                 MenuItem::linkToRoute(t('Takım Panosu'), 'bx bx-home-circle', 'app_admin_dashboard'),
             ]),
         ];
@@ -34,7 +45,7 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
         $menuItems = $this->convertMenuItemsToDto([
             MenuItem::section(),
             MenuItem::linkToRoute(t('Profilim'), 'bx bx-user', 'app_admin_profile_current'),
-            MenuItem::linkToRoute(t('Dokümantasyon'), 'bx bx-help-circle', 'app_admin_dashboard'),
+            MenuItem::linkToRoute(t('Dokümantasyon'), 'bx bx-help-circle', 'app_admin_documentation'),
             MenuItem::section(),
             MenuItem::linkToExitImpersonation(t("Taklit Modundan Çık"), 'bx bx-bomb'),
             MenuItem::linkToLogout(t('Güvenli Çıkış'), 'bx bx-power-off'),
@@ -75,6 +86,12 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
             }
         }
         return self::DEFAULT_AVATAR_LETTER;
+    }
+
+    private function getUserUnreadLatestNotificationsCount(User $theUser): int
+    {
+        $latestNotifications = $this->notificationRepository->getLatest($theUser);
+        return count($latestNotifications);
     }
 
 }
