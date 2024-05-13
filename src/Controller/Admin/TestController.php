@@ -17,11 +17,12 @@ class TestController extends AbstractController
     {
 
 
-        $theContent = $hookRecordRepository->find(24);
+        $theContent = $hookRecordRepository->find(659);
         $newHTML = $domContentFixerService
             ->setHtml($theContent->getContent())
             ->setUrlSchemeSource($theContent->getInitialPageUrl())
-            ->getFramedContent();
+            ->extractData();
+        exit(json_encode($newHTML));
         return new Response($newHTML);
     }
 

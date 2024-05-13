@@ -1,5 +1,6 @@
 <?php namespace App\Service;
 
+use App\Service\CrawlerExtractor\PageLinksCrawlerExtractor;
 use DOMNode;
 use Symfony\Component\DomCrawler\Crawler;
 
@@ -7,6 +8,7 @@ class DomContentFramerService
 {
 
     const NODE_XPATH_INJECT_ATTRIBUTE = "data-node-xpath";
+    const CRAWLER_EXTRACTOR_CLASS_POSTFIX = "CrawlerExtractor";
 
     private string $html;
     private ?string $urlSchemeSource = NULL;
@@ -99,6 +101,34 @@ class DomContentFramerService
         });
 
         return $myCrawler->html();
+    }
+
+    public function extractData(): array
+    {
+        // Get Crawler
+        $myCrawler = new Crawler($this->getHtml());
+        $extractedData = [];
+
+        // Get Crawler Extractor Classes
+        $extractorClasses = $this->getExtractorClasses();
+
+        // Loop All Extractors
+        foreach ($extractorClasses as $extractorClass) {
+            // Run Extractor
+            $extractedData[] = [
+                "name" => $extractorClass::name(),
+                "data" => $extractorClass::extract($myCrawler),
+            ];
+        }
+
+        return $extractedData;
+    }
+
+    private function getExtractorClasses(): array
+    {
+        return [
+            PageLinksCrawlerExtractor::class,
+        ];
     }
 
     private function canBePrefixed(string $rawUrl): bool
