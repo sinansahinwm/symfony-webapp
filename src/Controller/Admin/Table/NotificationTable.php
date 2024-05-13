@@ -51,10 +51,15 @@ class NotificationTable extends TableAbstractController implements DataTableType
             'label' => $this->t("İçerik"),
         ]);
         $dataTable->add('is_read', BoolIndicatorColumn::class);
-        $dataTable->add('url', ActionsColumn::class, [
+        $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    return new CrudTableAction($this->t("Bildirimi Görüntüle"), $value, 'bx bx-envelope');
+                    $gotoURL = $urlGenerator->generate('app_admin_notification_show', ['notification' => $value]);
+                    return new CrudTableAction($this->t("Bildirimi Görüntüle"), $gotoURL, 'bx bx-envelope');
+                },
+                function ($value, UrlGeneratorInterface $urlGenerator) {
+                    $removeURL = $urlGenerator->generate('app_admin_notification_remove', ['notification' => $value]);
+                    return new CrudTableAction($this->t("Sil"), $removeURL, 'bx bx-trash');
                 },
             ]
         ]);

@@ -60,4 +60,15 @@ class NotificationController extends AbstractController
         return $this->redirectToRoute('app_admin_notification_index');
     }
 
+    #[IsGranted("NOTIFICATION_MARK_AS_READ", 'notification')]
+    #[Route('/show/{notification}', name: 'show')]
+    public function showNotification(Notification $notification, #[CurrentUser] User $loggedUser, EntityManagerInterface $entityManager): Response
+    {
+        $notificationUrl = $notification->getUrl();
+        if($notificationUrl !== NULL){
+            return $this->redirect($notificationUrl);
+        }
+        return $this->redirectToRoute('app_admin_notification_index');
+    }
+
 }
