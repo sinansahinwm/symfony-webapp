@@ -25,11 +25,6 @@ class AppAdminMenuExtensionRuntime implements RuntimeExtensionInterface
                 MenuItem::linkToRoute(t('Bildirimler'), 'bx bx-home-circle', 'app_admin_notification_index'),
                 MenuItem::linkToRoute(t('Takım Panosu'), 'bx bx-home-circle', 'app_admin_dashboard'),
             ]),
-            MenuItem::section(t('OTOMASYON')),
-            MenuItem::subMenu(t('Servisler'), 'bx bx-import')->setSubItems([
-                MenuItem::linkToRoute(t('Chrome Aktarıcısı'), 'bx bx-chrome', 'app_admin_puppeteer_replay_index'),
-            ]),
-            MenuItem::section(t('Ayarlar')),
         ];
         return $this->convertMenuItemsToDto($menuItems);
     }
