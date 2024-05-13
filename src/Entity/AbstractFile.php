@@ -27,7 +27,8 @@ class AbstractFile
         'application/pdf', // PDF
         'application/text', // Plain Text
         'application/zip', // Zip File
-        'application/vnd.rar' // Rar File
+        'application/vnd.rar', // Rar File
+        'text/plain' // Plain Text
     ];
 
     #[ORM\Id]
