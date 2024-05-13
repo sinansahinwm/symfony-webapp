@@ -42,16 +42,11 @@ class TeamInviteService
 
     public function acceptTeamInviteMail(TeamInvite $teamInvite): void
     {
-        // Add team collaborator.
-        $userRepo = $this->entityManager->getRepository(User::class);
-        $theUser = $userRepo->findOneBy(["email" => $teamInvite->getEmailAddress()]);
-        $theTeam = $teamInvite->getTeam();
-        $theTeam->addCollaborator($teamInvite->getUser() ?? $theUser);
-        $this->entityManager->persist($theTeam);
-        $this->entityManager->flush();
-
-        // Remove Team Invite
-        $this->entityManager->remove($teamInvite);
-        $this->entityManager->flush();
+        $teamInviteUser = $teamInvite->getUser();
+        if ($teamInviteUser) {
+            $teamInviteUser->setTeam($teamInvite->getTeam());
+            $this->entityManager->persist($teamInviteUser);
+            $this->entityManager->flush();
+        }
     }
 }
