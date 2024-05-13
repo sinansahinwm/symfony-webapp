@@ -40,6 +40,14 @@ class TeamRepository extends ServiceEntityRepository
         return $queryBuilder->setMaxResults(1)->getQuery()->getOneOrNullResult();
     }
 
+    public function getTeamMembers(Team $team)
+    {
+        $queryBuilder = $this->createQueryBuilder("qb");
+        $queryBuilder->where('qb.id = :param1')->setParameter('param1', $team->getId());
+        $queryBuilder->innerJoin('qb.users', 'users');
+        return $queryBuilder->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Team[] Returns an array of Team objects
 //     */
