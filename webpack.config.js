@@ -16,7 +16,7 @@ Encore
     .addEntry('app-theme-light', './assets/app/theme/theme-light.js')
 
     // -- Stimulus Config
-    .enableStimulusBridge('./assets/app/controllers.json')
+    .enableStimulusBridge('./assets/controllers.json')
 
     // -- Other Stuff
     .splitEntryChunks()
