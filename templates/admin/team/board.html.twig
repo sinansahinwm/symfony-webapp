@@ -3,6 +3,12 @@
 {% block pageTitle %}{{ 'Takım Panosu'|trans }}{% endblock %}
 {% block contentTitle %}{{ 'Takım Panosu'|trans }}{% endblock %}
 
+{% block pageActions %}
+    {% if usersTeam.ownerId is same as(app.user.id) %}
+        <a class="btn btn-secondary" href="{{ path('app_admin_team_edit') }}">Düzenle</a>
+    {% endif %}
+{% endblock %}
+
 {% block body %}
     team board
 {% endblock %}
