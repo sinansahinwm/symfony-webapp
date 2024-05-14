@@ -12,8 +12,19 @@ Encore
 
     // -- Entry Config
     .addEntry('app', './assets/app.js')
-    .addEntry('app-theme-dark', './assets/app/theme/theme-dark.js')
-    .addEntry('app-theme-light', './assets/app/theme/theme-light.js')
+
+    // ---- Theme Modes
+    .addEntry('app-theme-bordered-dark', './assets/app/theme/modes/theme-bordered-dark.js')
+    .addEntry('app-theme-bordered-light', './assets/app/theme/modes/theme-bordered-light.js')
+
+    .addEntry('app-theme-default-dark', './assets/app/theme/modes/theme-default-dark.js')
+    .addEntry('app-theme-default-light', './assets/app/theme/modes/theme-default-light.js')
+
+    .addEntry('app-theme-raspberry-dark', './assets/app/theme/modes/theme-raspberry-dark.js')
+    .addEntry('app-theme-raspberry-light', './assets/app/theme/modes/theme-raspberry-light.js')
+
+    .addEntry('app-theme-semidark-dark', './assets/app/theme/modes/theme-semidark-dark.js')
+    .addEntry('app-theme-semidark-light', './assets/app/theme/modes/theme-semidark-light.js')
 
     // -- Stimulus Config
     .enableStimulusBridge('./assets/controllers.json')

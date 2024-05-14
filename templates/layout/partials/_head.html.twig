@@ -15,8 +15,8 @@
 {% block appStylesheets %}
     {{ encore_entry_link_tags('app') }}
     {% if isDarkModed is same as(true) %}
-        {{ encore_entry_link_tags('app-theme-dark') }}
+        {{ encore_entry_link_tags('app-theme-' ~ layout.uiTheme ~ '-dark') }}
     {% else %}
-        {{ encore_entry_link_tags('app-theme-light') }}
+        {{ encore_entry_link_tags('app-theme-' ~ layout.uiTheme ~ '-light') }}
     {% endif %}
 {% endblock %}
