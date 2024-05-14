@@ -16,7 +16,12 @@
                             </h4>
                             <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
                                 <li class="list-inline-item fw-medium">
-                                    <i class='bx bx-purchase-tag-alt'></i> {{ user.team is same as(null) ? 'Herhangi Bir Takımda Değil'|trans : user.team.name }}
+                                    <i class='bx bx-purchase-tag-alt'></i>
+                                    {% if user.team is same as(null) %}
+                                        {{ 'Herhangi Bir Takımda Değil'|trans }}
+                                        {% else %}
+                                            <a class="text-dark" href="{{ path('app_admin_team_board') }}">{{ user.team.name }}</a>
+                                    {% endif %}
                                 </li>
                                 <li class="list-inline-item fw-medium">
                                     <i class='bx bx-envelope'></i> {{ user.verified is same as(true) ? 'E-Posta Onaylandı'|trans : 'E-Posta Onaylanmadı'|trans }}
