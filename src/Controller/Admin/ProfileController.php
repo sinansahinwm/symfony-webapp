@@ -101,6 +101,17 @@ class ProfileController extends AbstractController
         return $this->render('admin/profile/make_passive.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
+    #[IsGranted('PROFILE_MAKE_PASSIVE', 'theUser')]
+    #[Route(path: '/{theUser}/make_active', name: 'make_active')]
+    public function userMakeActive(User $theUser, EntityManagerInterface $entityManager): Response
+    {
+        $theUser->setIsPassive(FALSE);
+        $entityManager->persist($theUser);
+        $entityManager->flush();
+        $this->addFlash('pageNotificationSuccess', t("Kullanıcı hesabı aktive edildi."));
+        return $this->redirectToRoute('app_admin_profile_edit', ["theUser" => $theUser->getId()]);
+    }
+
     #[IsGranted('PROFILE_KICK_TEAM', 'theUser')]
     #[Route(path: '/{theUser}/kick_team', name: 'kick_team')]
     public function userKickTeam(User $theUser, Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response

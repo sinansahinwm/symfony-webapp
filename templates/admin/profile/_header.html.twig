@@ -35,8 +35,12 @@
                                     <a href="{{ path('app_admin_profile_change_password', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Şifre Değiştir'|trans }}"><i class='bx bx-key'></i></a>
                                 {% endif %}
 
-                                {% if is_granted("PROFILE_MAKE_PASSIVE", user) %}
+                                {% if is_granted("PROFILE_MAKE_PASSIVE", user) and user.isPassive is not same as(true) %}
                                     <a href="{{ path('app_admin_profile_make_passive', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Pasife Al'|trans }}"><i class='bx bx-user-x'></i></a>
+                                {% endif %}
+
+                                {% if is_granted("PROFILE_MAKE_PASSIVE", user) and user.isPassive is same as(true) %}
+                                    <a href="{{ path('app_admin_profile_make_active', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Aktive Et'|trans }}"><i class='bx bxs-user-plus'></i></a>
                                 {% endif %}
 
                                 {% if is_granted("PROFILE_KICK_TEAM", user) %}
