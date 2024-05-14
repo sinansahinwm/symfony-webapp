@@ -104,7 +104,9 @@
                             {% if app.user.team %}
                                 <span class="text-muted fw-light">{{ app.user.team.name }} /</span>
                             {% endif %}
-                            {% block contentTitle %}{% endblock %}
+                            <span id="contentTitle">
+                                {% block contentTitle %}{% endblock %}
+                            </span>
                         </h4>
                         {% block pageActions %}{% endblock %}
                     </div>

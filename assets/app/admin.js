@@ -35,6 +35,25 @@ const adminPagesGlobalInitializer = function () {
         }
     }
 
+    const _initSidebarIndicator = function () {
+        const menuItemID = "#menu_item_" + $('#contentTitle').html()
+            .replaceAll(" ", '')
+            .replaceAll('\n', '')
+            .replaceAll('\t', '');
+        const myMenuItem = $(menuItemID);
+        if (myMenuItem) {
+            myMenuItem.addClass('active');
+            const parentSubMenu = myMenuItem.parent('.menu-sub');
+            if (parentSubMenu) {
+                const parentMenuItem = parentSubMenu.parent(".menu-item");
+                if (parentMenuItem) {
+                    parentMenuItem.addClass("active");
+                }
+            }
+
+        }
+    }
+
     const _initSelect2 = function () {
         const langCode = $('html')[0].lang ?? 'en';
         const langFile = require('select2/src/js/select2/i18n/' + langCode + '.js');
@@ -42,7 +61,6 @@ const adminPagesGlobalInitializer = function () {
             allowClear: true,
             language: langFile
         };
-        console.log(select2Defaults);
         $('.select2').select2(select2Defaults);
     }
 
@@ -317,6 +335,7 @@ const adminPagesGlobalInitializer = function () {
 
     return {
         init: function () {
+            _initSidebarIndicator();
             _initKeyboardSearch();
             _initPageNotifications();
             _initCheckboxModalInitializer();
