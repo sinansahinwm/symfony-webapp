@@ -15,7 +15,7 @@
             <div class="card h-100">
                 <div class="card-header d-flex align-items-center justify-content-between">
                     <div class="card-title mb-0">
-                        <h5 class="m-0 me-2">Takım Üyeleri</h5>
+                        <h5 class="m-0 me-2">{{ 'Takım Üyeleri'|trans }}</h5>
                     </div>
                     <div class="dropdown">
                         <button class="btn p-0"
@@ -35,8 +35,8 @@
                     <table class="table table-borderless border-top">
                         <thead class="border-bottom">
                         <tr>
-                            <th>Kullanıcı</th>
-                            <th class="text-end">Aktiflik</th>
+                            <th>{{ 'Kullanıcı'|trans }}</th>
+                            <th class="text-end">{{ 'Aktiflik'|trans }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -50,7 +50,19 @@
                                                 {{ teamMember.displayName ?? teamMember.email }}
                                             </a>
                                         </h6>
-                                        <small class="text-truncate text-muted">{{ teamMember.isVerified is same as(true) ? 'Email Onaylı' : '<span class="text-danger">Email Onaysız</span>' }}</small>
+                                        <small class="text-truncate text-muted">
+                                            {% if usersTeam.ownerId is same as(teamMember.id) %}
+                                                <span class="text-primary">{{ 'Kurucu'|trans }}</span>
+                                                {% else %}
+                                                {% if teamMember.isVerified is same as(true) %}
+                                                    {{ 'E-Posta Onaylı'|trans }}
+                                                    {% else %}
+                                                    <span class="text-danger">
+                                                        {{ 'E-Posta Onaysız'|trans }}
+                                                    </span>
+                                                    {% endif %}
+                                            {% endif %}
+                                        </small>
                                     </div>
                                 </div>
                             </td>
@@ -58,9 +70,9 @@
                                 <div class="user-progress mt-lg-4">
                                     <h6 class="mb-0">
                                         {% if teamMember.isPassive is same as(true) %}
-                                            <span class="text-danger">Pasif</span>
+                                            <span class="text-danger">{{ 'Pasif'|trans }}</span>
                                             {% else %}
-                                            Aktif
+                                            {{ 'Aktif'|trans }}
                                         {% endif %}
                                     </h6>
                                 </div>

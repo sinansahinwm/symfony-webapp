@@ -89,10 +89,14 @@ class ProfileController extends AbstractController
         $usersTeam = $theUser->getTeam();
         if ($myForm->isSubmitted() && $myForm->isValid()) {
             if (in_array("ROLE_ADMIN", $loggedUser->getRoles()) || ($usersTeam !== NULL && $usersTeam->getOwnerId() === $loggedUser->getId() && $theUser->getId() !== $loggedUser->getId())) {
-                $theUser->setIsPassive(TRUE);
-                $entityManager->persist($theUser);
-                $entityManager->flush();
-                $this->addFlash('pageNotificationSuccess', t("Kullanıcı hesabı pasife alındı."));
+                if ($usersTeam->getOwnerId() !== $theUser->getId()) {
+                    $theUser->setIsPassive(TRUE);
+                    $entityManager->persist($theUser);
+                    $entityManager->flush();
+                    $this->addFlash('pageNotificationSuccess', t("Kullanıcı hesabı pasife alındı."));
+                } else {
+                    $this->addFlash('pageNotificationError', t("Takım kurucusu hesabı pasife alınamaz."));
+                }
             } else {
                 $this->addFlash('pageNotificationError', t("Kullanıcı hesabı pasife alınamadı. Takımınızda olmayan bir kullanıcıyı pasife alamazsınız."));
             }
