@@ -5,9 +5,16 @@
 
 {% block body %}
 
+    <!-- Email Verification -->
+    {% if app.user.verified is not same as(true) %}
+        {{ include('admin/dashboard/_email_not_verified.html.twig') }}
+    {% endif %}
+
     {% if app.user.team %}
+        <!-- User With Team Dashboard -->
         {{ include('admin/dashboard/_team_dashboard.html.twig') }}
-        {% else %}
+    {% else %}
+        <!-- User Without Team Dashboard -->
         {{ include('admin/dashboard/_no_team.html.twig') }}
     {% endif %}
 

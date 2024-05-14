@@ -1,0 +1,7 @@
+<div class="row">
+    <div class="col-md-12">
+        {% set warnPath = path('app_admin_profile_edit', { theUser: app.user.id }) %}
+        {% set warnText = "E-Posta adresiniz onaylanmadı. Lütfen e-posta adresinize gönderilen e-postayı kontrol edin"|trans %}
+        {{ component('_alert', { text: warnText, type: "dark"}) }}
+    </div>
+</div>
