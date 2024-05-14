@@ -5,7 +5,7 @@
 
 {% block pageActions %}
     {% if usersTeam.ownerId is same as(app.user.id) %}
-        <a class="btn btn-secondary" href="{{ path('app_admin_team_edit', {theTeam: usersTeam.id}) }}">{{'Düzenle'|trans }}</a>
+            <a class="btn btn-secondary" href="{{ path('app_admin_team_edit', {theTeam: usersTeam.id}) }}">{{'Düzenle'|trans }}</a>
     {% endif %}
 {% endblock %}
 
