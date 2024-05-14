@@ -1,0 +1,47 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Ara'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Ara'|trans }}{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header ">
+                    <h5 class="card-action-title">Anahtar Kelimeyle Ara</h5>
+                </div>
+                <div class="card-body">
+                    {{ form_start(searchForm) }}
+                        <div class="input-group input-group-merge">
+                            {{ form_widget(searchForm.keyword) }}
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    {{ form_end(searchForm) }}
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header ">
+                    <h5 class="card-action-title">Sonuçlar</h5>
+                </div>
+                <div class="card-body">
+                    {% if searchResults|length > 0 %}
+                        <!-- Render Search Results -->
+                    {% else %}
+                        <div class="alert alert-secondary" role="alert">
+                            Sonuçları görmek için bir anahtar kelimeyle arayın.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
