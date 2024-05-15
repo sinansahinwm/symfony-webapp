@@ -3,6 +3,7 @@
 namespace App\Factory;
 
 use App\Config\UserActivityType;
+use App\DataFixtures\AppFixtures;
 use App\Entity\UserActivity;
 use App\Repository\UserActivityRepository;
 use DateTimeImmutable;
@@ -55,7 +56,7 @@ final class UserActivityFactory extends ModelFactory
         return [
             'user' => UserFactory::random(),
             'activity_type' => $randomActivityType,
-            'created_at' => DateTimeImmutable::createFromMutable(self::faker()->dateTime()),
+            'created_at' => self::faker()->dateTimeBetween(AppFixtures::DATETIME_SEED_BETWEEEN),
         ];
 
     }

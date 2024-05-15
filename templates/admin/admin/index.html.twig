@@ -1,0 +1,14 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli'|trans }}{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-8">
+            {{ component('_crud_table', { table: userTable, title: 'Kullanıcılar'|trans}) }}
+        </div>
+    </div>
+
+{% endblock %}
