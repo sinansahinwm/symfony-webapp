@@ -39,6 +39,7 @@ class UserTable extends TableAbstractController implements DataTableTypeInterfac
         ]);
         $dataTable->add('isPassive', BoolIndicatorColumn::class, [
             'label' => $this->t("Aktiflik"),
+            'reverse' => TRUE
         ]);
 
         $dataTable->add('id', ActionsColumn::class, [

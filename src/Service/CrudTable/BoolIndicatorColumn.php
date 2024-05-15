@@ -8,9 +8,19 @@ class BoolIndicatorColumn extends AbstractColumn
 {
     public function normalize(mixed $value): string
     {
+
+        $trueBadge = "success";
+        $defaultBadge = "danger";
+
+        // Check Reversed Option
+        if ($this->options["reverse"] === TRUE) {
+            $trueBadge = "danger";
+            $defaultBadge = "success";
+        }
+
         return match ($value) {
-            true => '<span class="badge badge-dot bg-success"></span>',
-            default => '<span class="badge badge-dot bg-danger"></span> ',
+            true => '<span class="badge badge-dot bg-' . $trueBadge . '"></span>',
+            default => '<span class="badge badge-dot bg-' . $defaultBadge . '"></span> ',
         };
     }
 
@@ -23,6 +33,10 @@ class BoolIndicatorColumn extends AbstractColumn
         $resolver->setDefault('globalSearchable', FALSE);
         $resolver->setDefault('orderable', FALSE);
         $resolver->setDefault('raw', FALSE);
+
+        $resolver->setDefault('reverse', FALSE);
+        $resolver->setAllowedTypes('reverse', ['null', 'bool']);
+
         return $this;
     }
 }
