@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Translation\LocaleSwitcher;
@@ -140,11 +141,10 @@ class ProfileController extends AbstractController
 
     #[IsGranted("ROLE_ADMIN")]
     #[Route(path: '/{theUser}/impersonate', name: 'impersonate')]
-    public function userImpersonate(User $theUser, Request $request, ContainerBagInterface $containerBag): Response
+    public function userImpersonate(User $theUser, UrlGeneratorInterface $urlGenerator): Response
     {
-        $theUrl = $request->getRequestUri();
-        $baseDomain = $containerBag->get("app.defaultDomain");
-        $impersonatePath = $baseDomain . $theUrl . "?impersonate_user=" . $theUser->getUserIdentifier();
+        $dashboardURL = $urlGenerator->generate('app_admin_dashboard', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $impersonatePath = $dashboardURL . "?_impersonate_user=" . $theUser->getUserIdentifier();
         return $this->redirect($impersonatePath);
     }
 
