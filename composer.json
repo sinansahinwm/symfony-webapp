@@ -6,6 +6,7 @@
   "require": {
     "php": ">=8.2",
     "ext-ctype": "*",
+    "ext-dom": "*",
     "ext-iconv": "*",
     "ext-intl": "*",
     "ext-pcre": "*",
@@ -69,8 +70,7 @@
     "twig/markdown-extra": "^3.8",
     "twig/string-extra": "^3.8",
     "twig/twig": "^2.12|^3.0",
-    "vich/uploader-bundle": "^2.3",
-    "ext-dom": "*"
+    "vich/uploader-bundle": "^2.3"
   },
   "config": {
     "allow-plugins": {
