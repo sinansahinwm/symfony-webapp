@@ -6,6 +6,7 @@ parameters:
   app.defaultDomain: '%env(APP_DOMAIN)%'
   app.fixtures.administrator.email: '%env(FIXTURES_ADMINISTRATOR_EMAIL)%'
   app.fixtures.administrator.password: '%env(FIXTURES_ADMINISTRATOR_PASSWORD)%'
+  app.api_keys.google.translate: '%env(GOOGLE_TRANSLATE_API_KEY)%'
 
 # ===============================
 # TWIG CONFIGURATION
