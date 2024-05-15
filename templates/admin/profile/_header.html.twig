@@ -48,7 +48,7 @@
                                     <a href="{{ path('app_admin_profile_make_active', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Aktive Et'|trans }}"><i class='bx bxs-user-plus'></i></a>
                                 {% endif %}
 
-                                {% if is_granted("PROFILE_KICK_TEAM", user) %}
+                                {% if is_granted("PROFILE_KICK_TEAM", user) and user.team is not null %}
                                     <a href="{{ path('app_admin_profile_kick_team', { theUser: user.id }) }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Takımdan Çıkar'|trans }}"><i class='bx bx-x'></i></a>
                                 {% endif %}
 
