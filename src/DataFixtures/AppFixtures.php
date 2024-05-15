@@ -9,6 +9,7 @@ use App\Factory\DistrictFactory;
 use App\Factory\NotificationFactory;
 use App\Factory\TeamFactory;
 use App\Factory\TeamInviteFactory;
+use App\Factory\UserActivityFactory;
 use App\Factory\UserFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,11 +23,12 @@ use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 
 class AppFixtures extends Fixture
 {
-    const USERS_COUNT = 50;
+    const USERS_COUNT = 100;
     const TEAMS_COUNT = 5;
     const TEAM_INVITES_COUNT = 3;
     const COLLABORATORS_PER_TEAM = 5;
     const NOTIFICATIONS_COUNT_PER_USER = 10;
+    const USER_ACTIVITIES_COUNT = 300;
     const ALLOWED_COUNTRIES = ["Turkey"];
     const DATETIME_SEED_BETWEEEN = '-100 days';
     const ADMINISTRATOR_ROLES = ["ROLE_USER", "ROLE_ADMIN", "ROLE_CAN_SWITCH"];
@@ -67,6 +69,8 @@ class AppFixtures extends Fixture
         // Create Notifications
         $myNotifications = NotificationFactory::createMany(self::NOTIFICATIONS_COUNT_PER_USER);
 
+        // Create User Activities
+        $myUserActivities = UserActivityFactory::createMany(self::USER_ACTIVITIES_COUNT);
 
     }
 

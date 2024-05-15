@@ -1,9 +1,11 @@
 <?php namespace App\EventListener;
 
+use App\Config\UserActivityType;
 use App\Entity\TeamInvite;
 use App\Repository\TeamInviteRepository;
 use App\Service\NotificationService;
 use App\Service\TeamInviteService;
+use App\Service\UserActivityService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -16,7 +18,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class LoginSuccessListener
 {
 
-    public function __construct(private TeamInviteRepository $teamInviteRepository, private EntityManagerInterface $entityManager, private TeamInviteService $teamInviteService, private NotificationService $notificationService, private TranslatorInterface $translator)
+    public function __construct(private TeamInviteRepository   $teamInviteRepository,
+                                private EntityManagerInterface $entityManager,
+                                private TeamInviteService      $teamInviteService,
+                                private NotificationService    $notificationService,
+                                private TranslatorInterface    $translator,
+                                private UserActivityService    $userActivityService)
     {
     }
 
@@ -37,7 +44,13 @@ class LoginSuccessListener
             $translatedNotificationMessage = $this->translator->trans("Bir takım daveti aldınız. Takım davetini kabul etmek için e-posta kutunuzu kontrol edin.");
             $this->notificationService->setMessage($translatedNotificationMessage)->release($eventUser);
 
+            // Add User Activity
+            $this->userActivityService->releaseActivity($eventUser, UserActivityType::RECEIVE_TEAM_INVITE);
+
         }
+
+        // Add User Activity
+        $this->userActivityService->releaseActivity($eventUser, UserActivityType::LOGIN);
 
     }
 

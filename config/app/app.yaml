@@ -111,6 +111,7 @@ doctrine:
       enum: string
     types:
       notification_priority: App\Config\NotificationPriorityType
+      user_activity: App\Config\UserActivityType
 
 # ===============================
 # TWIG COMPONENT CONFIGURATION

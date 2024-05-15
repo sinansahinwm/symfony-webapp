@@ -1,8 +1,10 @@
 <?php namespace App\Controller\Admin;
 
+use App\Config\UserActivityType;
 use App\Entity\Team;
 use App\Entity\User;
 use App\Form\TeamType;
+use App\Service\UserActivityService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -16,7 +18,7 @@ use function Symfony\Component\Translation\t;
 class DashboardController extends AbstractController
 {
     #[Route(path: '/dashboard', name: 'dashboard')]
-    public function index(Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser): Response
+    public function index(Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser, UserActivityService $userActivityService): Response
     {
         $myTeam = new Team();
         $teamForm = $this->createForm(TeamType::class, $myTeam);
@@ -36,6 +38,9 @@ class DashboardController extends AbstractController
                 $loggedUser->setTeam($myTeam);
                 $entityManager->persist($loggedUser);
                 $entityManager->flush();
+
+                // Release UserActivity
+                $userActivityService->releaseActivity($loggedUser, UserActivityType::CREATE_TEAM);
 
             }
         }
