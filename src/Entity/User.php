@@ -90,6 +90,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $last_login = null;
 
+    #[ORM\ManyToOne]
+    private ?SubscriptionPlan $subscription_plan = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $trial_period_used = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -427,6 +433,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastLogin(?\DateTimeImmutable $last_login): static
     {
         $this->last_login = $last_login;
+
+        return $this;
+    }
+
+    public function getSubscriptionPlan(): ?SubscriptionPlan
+    {
+        return $this->subscription_plan;
+    }
+
+    public function setSubscriptionPlan(?SubscriptionPlan $subscription_plan): static
+    {
+        $this->subscription_plan = $subscription_plan;
+
+        return $this;
+    }
+
+    public function isTrialPeriodUsed(): ?bool
+    {
+        return $this->trial_period_used;
+    }
+
+    public function setTrialPeriodUsed(?bool $trial_period_used): static
+    {
+        $this->trial_period_used = $trial_period_used;
 
         return $this;
     }

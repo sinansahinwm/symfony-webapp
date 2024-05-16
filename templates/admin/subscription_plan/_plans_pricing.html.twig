@@ -82,9 +82,9 @@
 
                     <!-- Subscription Plan Get Started Button -->
                     {% if plan.isPopular is same as(true) %}
-                        <a href="#" class="btn btn-primary d-grid w-100">{{ 'Hemen Başlayın'|trans }}</a>
+                        <a href="{{ path('app_admin_exclude_subscription_plan_subscribe_plan', { thePlan: plan.id }) }}" class="btn btn-primary d-grid w-100">{{ 'Hemen Başlayın'|trans }}</a>
                     {% else %}
-                        <a href="#" class="btn btn-label-primary d-grid w-100" >{{ 'Hemen Başlayın'|trans }}</a>
+                        <a href="{{ path('app_admin_exclude_subscription_plan_subscribe_plan', { thePlan: plan.id }) }}" class="btn btn-label-primary d-grid w-100" >{{ 'Hemen Başlayın'|trans }}</a>
                     {% endif %}
 
                 </div>

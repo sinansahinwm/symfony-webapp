@@ -1,0 +1,48 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Abonelik Planı Satın Al'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Abonelik Satın Al'|trans }}{% endblock %}
+
+{% block pageActions %}
+    <a href="{{ path('app_admin_exclude_subscription_plan_index') }}" class="btn btn-secondary">
+        {{ 'Diğer Planlara Gözat'|trans }}
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h5>
+                        Abonelik Detayları
+                    </h5>
+                </div>
+                <div class="card-body">
+                    TODO : SUBSCRIBE PLAN DETAILS AREA
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>
+                        Ödeme Yapın
+                    </h5>
+                </div>
+                <div class="card-body">
+                    TODO : CREDIT CARD AREA
+                </div>
+                <div class="card-footer d-flex justify-content-center">
+                    <button class="btn btn-success btn-block">
+                        <i class="bx bx-lock me-2"></i>
+                        Ödeme İşlemini Tamamla
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

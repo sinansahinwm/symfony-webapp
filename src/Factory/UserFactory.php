@@ -54,6 +54,7 @@ final class UserFactory extends ModelFactory
             'team' => NULL,
             'roles' => ["ROLE_USER"],
             'last_login' => self::faker()->dateTimeBetween(AppFixtures::DATETIME_SEED_BETWEEEN),
+            'trial_period_used' => self::faker()->boolean
         ];
     }
 
