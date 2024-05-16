@@ -7,6 +7,7 @@ use App\Factory\CityFactory;
 use App\Factory\CountryFactory;
 use App\Factory\DistrictFactory;
 use App\Factory\NotificationFactory;
+use App\Factory\SubscriptionPlanFactory;
 use App\Factory\TeamFactory;
 use App\Factory\TeamInviteFactory;
 use App\Factory\UserActivityFactory;
@@ -29,6 +30,10 @@ class AppFixtures extends Fixture
     const COLLABORATORS_PER_TEAM = 5;
     const NOTIFICATIONS_COUNT_PER_USER = 10;
     const USER_ACTIVITIES_COUNT = 300;
+
+    const SUBSCRIPTION_PLANS_COUNT = 3;
+    const PLAN_FEATURES_PER_PLAN = 4;
+
     const ALLOWED_COUNTRIES = ["Turkey"];
     const DATETIME_SEED_BETWEEEN = '-100 days';
     const ADMINISTRATOR_ROLES = ["ROLE_USER", "ROLE_ADMIN", "ROLE_CAN_SWITCH"];
@@ -71,6 +76,9 @@ class AppFixtures extends Fixture
 
         // Create User Activities
         $myUserActivities = UserActivityFactory::createMany(self::USER_ACTIVITIES_COUNT);
+
+        // Create Subscription Plans
+        $mySubscriptionPlans = SubscriptionPlanFactory::createMany(self::SUBSCRIPTION_PLANS_COUNT);
 
     }
 

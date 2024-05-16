@@ -1,0 +1,12 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Abonelik Planları'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Abonelik Planları'|trans }}{% endblock %}
+
+{% block body %}
+
+    <div class="mx-4">
+        {{ include('admin/subscription_plan/_plans_pricing.html.twig') }}
+    </div>
+
+{% endblock %}
