@@ -7,19 +7,19 @@
             </div>
             <div class="app-academy-md-50 card-body d-flex align-items-md-center flex-column text-md-center">
                 <h3 class="card-title mb-4 lh-sm px-md-5">
-                    Education, talents, and career opportunities.
-                    <span class="text-primary fw-medium text-nowrap">All in one place</span>.
+                    {{ 'Bir takım oluşturarak başlayın.'|trans }}
+                    <span class="text-primary fw-medium text-nowrap">
+                        {{ 'ekibinizle beraber çalışın'|trans }}
+                    </span>
                 </h3>
                 <p class="mb-4">
-                    Grow your skill with the most reliable online courses and certifications in marketing, information technology,
-                    programming, and data science.
+                    {{ 'Bir takım oluşturun ve diğer kullanıcıları davet edin.'|trans }}
+                    {{ 'Takım oluşturmak diğer kullanıcılarla beraber çalışmanıza olanak sağlar.'|trans }}
                 </p>
                 <div class="d-flex align-items-center justify-content-between app-academy-md-80">
-
                     {{ form_widget(teamForm.name, { attr: { class: 'me-2' } }) }}
                     <!--<input type="search" placeholder="{{ 'Bir takım adı belirleyin'|trans }}" class="form-control me-2" /> -->
                     <button type="submit" class="btn btn-primary btn-icon"><i class="bx bx-plus"></i></button>
-
                 </div>
             </div>
             <div class="app-academy-md-25 d-flex align-items-end justify-content-end">
