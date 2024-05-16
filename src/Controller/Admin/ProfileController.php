@@ -1,11 +1,13 @@
 <?php namespace App\Controller\Admin;
 
+use App\Config\UserActivityType;
 use App\Entity\User;
 use App\Form\Auth\Profile\ProfileChangePasswordType;
 use App\Form\Auth\Profile\ProfileEditType;
 use App\Form\Auth\Profile\ProfileKickTeamType;
 use App\Form\Auth\Profile\ProfileMakePassiveType;
 use App\Security\LoginFormAuthenticator;
+use App\Service\UserActivityService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
@@ -69,7 +71,7 @@ class ProfileController extends AbstractController
 
     #[IsGranted('PROFILE_CHANGE_PASSWORD', 'theUser')]
     #[Route(path: '/{theUser}/change_password', name: 'change_password')]
-    public function userChangePassword(User $theUser, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function userChangePassword(User $theUser, Request $request, UserActivityService $userActivityService, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
     {
         $myForm = $this->createForm(ProfileChangePasswordType::class, $theUser);
         $myForm->handleRequest($request);
@@ -83,6 +85,10 @@ class ProfileController extends AbstractController
                 $entityManager->persist($theUser);
                 $entityManager->flush();
                 $this->addFlash('pageNotificationSuccess', t("Şifreniz başarıyla değiştirildi."));
+
+                // Release User Activity
+                $userActivityService->releaseActivity($theUser, UserActivityType::USER_PASSWORD_CHANGED);
+
             } else {
                 $this->addFlash('pageNotificationError', t("Eski şifrenizi yanlış girdiniz."));
             }
