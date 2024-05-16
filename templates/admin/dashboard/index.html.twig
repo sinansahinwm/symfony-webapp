@@ -5,6 +5,7 @@
 
 {% block body %}
 
+
     <!-- Email Verification Alert -->
     {% if app.user.verified is not same as(true) %}
         {{ include('admin/dashboard/_email_not_verified.html.twig') }}

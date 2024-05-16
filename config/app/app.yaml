@@ -16,7 +16,7 @@ twig:
     - 'bootstrap_5_horizontal_layout.html.twig'
   globals:
     layout:
-      uiTheme: "raspberry" # It can be bordered, semidark, raspberry, default
+      uiTheme: "default" # It can be bordered, semidark, raspberry, default
       locales:
         - fallback: "tr"
           name: "Türkçe"

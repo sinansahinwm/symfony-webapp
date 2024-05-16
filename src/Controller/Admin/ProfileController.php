@@ -61,6 +61,7 @@ class ProfileController extends AbstractController
     public function userChangeTheme(User $theUser, EntityManagerInterface $entityManager, string $_theme): Response
     {
         $theUser->setPreferredTheme($_theme);
+        $theUser->setDarkMode(FALSE);
         $entityManager->persist($theUser);
         $entityManager->flush();
         return $this->redirectToRoute('app_admin_dashboard');

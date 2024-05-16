@@ -14,9 +14,10 @@
 {% set isDarkModed = (app.user is not same as(null)) and (app.user.darkMode is same as(true)) %}
 {% block appStylesheets %}
     {{ encore_entry_link_tags('app') }}
+    {% set selectedTheme = app.user.preferredTheme ?? layout.uiTheme %}
     {% if isDarkModed is same as(true) %}
-        {{ encore_entry_link_tags('app-theme-' ~ layout.uiTheme ~ '-dark') }}
+        {{ encore_entry_link_tags('app-theme-' ~ selectedTheme ~ '-dark') }}
     {% else %}
-        {{ encore_entry_link_tags('app-theme-' ~ layout.uiTheme ~ '-light') }}
+        {{ encore_entry_link_tags('app-theme-' ~ selectedTheme ~ '-light') }}
     {% endif %}
 {% endblock %}
