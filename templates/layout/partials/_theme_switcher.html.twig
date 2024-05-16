@@ -1,0 +1,52 @@
+<div class="row">
+
+    <!-- Default Theme -->
+    <div class="col-md-6 mt-2">
+        <div>
+            <div class="d-flex justify-content-center my-2">
+                <span class="text-muted small">{{ 'Varsayılan'|trans }}</span>
+            </div>
+            <a href="{{ path('app_admin_profile_change_theme', { theUser: app.user.id, theme: "default" }) }}">
+                <img class="card-img-top" src="{{ asset('build/media/layouts/default.svg') }}" alt="{{ 'Varsayılan Tema'|trans }}" />
+            </a>
+        </div>
+    </div>
+
+    <!-- Bordered Theme -->
+    <div class="col-md-6 mt-2">
+        <div>
+            <div class="d-flex justify-content-center my-2">
+                <span class="text-muted small">{{ 'Kenarlıklı'|trans }}</span>
+            </div>
+            <a href="{{ path('app_admin_profile_change_theme', { theUser: app.user.id, theme: "bordered" }) }}">
+                <img class="card-img-top" src="{{ asset('build/media/layouts/bordered.svg') }}" alt="{{ 'Kenarlıklı Tema'|trans }}" />
+            </a>
+        </div>
+    </div>
+
+    <!-- Raspberry Theme -->
+    <div class="col-md-6 mt-2">
+        <div>
+            <div class="d-flex justify-content-center my-2">
+                <span class="text-muted small">{{ 'Renkli'|trans }}</span>
+            </div>
+            <a href="{{ path('app_admin_profile_change_theme', { theUser: app.user.id, theme: "raspberry" }) }}">
+                <img class="card-img-top" src="{{ asset('build/media/layouts/raspberry.svg') }}" alt="{{ 'Renkli Tema'|trans }}" />
+            </a>
+        </div>
+    </div>
+
+    <!-- Semidark Theme -->
+    <div class="col-md-6 mt-2">
+        <div>
+            <div class="d-flex justify-content-center my-2">
+                <span class="text-muted small">{{ 'Karanlık'|trans }}</span>
+            </div>
+            <a href="{{ path('app_admin_profile_change_theme', { theUser: app.user.id, theme: "semidark" }) }}">
+                <img class="card-img-top" src="{{ asset('build/media/layouts/semidark.svg') }}" alt="{{ 'Karanlık Tema' }}" />
+            </a>
+        </div>
+    </div>
+
+
+</div>

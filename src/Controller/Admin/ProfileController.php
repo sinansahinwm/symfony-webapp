@@ -56,6 +56,16 @@ class ProfileController extends AbstractController
         return $this->render('admin/profile/edit.html.twig', ["user" => $theUser, "form" => $myForm]);
     }
 
+    #[IsGranted('PROFILE_EDIT', 'theUser')]
+    #[Route(path: '/{theUser}/change_theme/{_theme}', name: 'change_theme', requirements: ["_theme" => "default|raspberry|bordered|semidark"], defaults: ["_theme" => "default"])]
+    public function userChangeTheme(User $theUser, EntityManagerInterface $entityManager, string $_theme): Response
+    {
+        $theUser->setPreferredTheme($_theme);
+        $entityManager->persist($theUser);
+        $entityManager->flush();
+        return $this->redirectToRoute('app_admin_dashboard');
+    }
+
     #[IsGranted('PROFILE_CHANGE_PASSWORD', 'theUser')]
     #[Route(path: '/{theUser}/change_password', name: 'change_password')]
     public function userChangePassword(User $theUser, Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response

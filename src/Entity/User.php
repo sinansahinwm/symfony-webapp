@@ -83,6 +83,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: UserActivity::class, mappedBy: 'user')]
     private Collection $userActivities;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $preferred_theme = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -396,6 +399,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $userActivity->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPreferredTheme(): ?string
+    {
+        return $this->preferred_theme;
+    }
+
+    public function setPreferredTheme(?string $preferred_theme): static
+    {
+        $this->preferred_theme = $preferred_theme;
 
         return $this;
     }
