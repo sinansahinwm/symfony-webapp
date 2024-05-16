@@ -86,6 +86,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $preferred_theme = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $last_login = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -411,6 +414,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPreferredTheme(?string $preferred_theme): static
     {
         $this->preferred_theme = $preferred_theme;
+
+        return $this;
+    }
+
+    public function getLastLogin(): ?\DateTimeImmutable
+    {
+        return $this->last_login;
+    }
+
+    public function setLastLogin(?\DateTimeImmutable $last_login): static
+    {
+        $this->last_login = $last_login;
 
         return $this;
     }

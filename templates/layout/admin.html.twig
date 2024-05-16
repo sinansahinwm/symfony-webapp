@@ -1,8 +1,10 @@
 <!DOCTYPE html>
-<html lang="{{ app.request.locale }}" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr" data-theme="theme-default" data-assets-path="../../assets/" data-template="vertical-menu-template-no-customizer-starter">
+<html lang="{{ app.request.locale }}" class="light-style layout-navbar-fixed layout-menu-fixed layout-compact" dir="ltr"
+      data-theme="theme-default" data-assets-path="../../assets/"
+      data-template="vertical-menu-template-no-customizer-starter">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"/>
 
     <title>{% block pageTitle %}{% endblock %}</title>
 
@@ -10,132 +12,139 @@
 </head>
 
 <body>
-<!-- Layout wrapper -->
-<div class="layout-wrapper layout-content-navbar">
-    <div class="layout-container">
-        <!-- Menu -->
 
-        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
-            <div class="app-brand demo">
-                <a href="{{ path(layout.admin.logoPath) }}" class="app-brand-link">
-                    {% include 'layout/partials/_logo.html.twig' %}
-                </a>
-                <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
-                    <i class="bx menu-toggle-icon d-none d-xl-block fs-4 align-middle"></i>
-                    <i class="bx bx-x d-block d-xl-none bx-sm align-middle"></i>
-                </a>
-            </div>
+{% if misc.underMaintaince is not same as(true) %}
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <!-- Menu -->
 
-            <div class="menu-divider mt-0"></div>
-
-            <div class="menu-inner-shadow"></div>
-
-            <ul class="menu-inner py-1">
-                {{ include('layout/partials/_sidebar.html.twig')  }}
-            </ul>
-        </aside>
-        <!-- / Menu -->
-
-        <!-- Layout container -->
-        <div class="layout-page">
-            {% set userMenu = appUserMenu(app.user) %}
-            <!-- Navbar -->
-            <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme" id="layout-navbar">
-                <div class="container-xxl">
-                    <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
-                        <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
-                            <i class="bx bx-menu bx-sm"></i>
-                        </a>
-                    </div>
-
-                    <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
-
-                        <!-- Search -->
-                        {% include 'layout/partials/_search.html.twig' %}
-                        <!-- /Search -->
-
-                        <ul class="navbar-nav flex-row align-items-center ms-auto">
-
-                            <!-- Admin Bar -->
-                            {% include 'layout/partials/_admin_bar.html.twig' %}
-                            <!--/ AdminBar -->
-
-                            <!-- File Sharing -->
-                            {% include 'layout/partials/_file_sharing.html.twig' %}
-                            <!--/ File Sharing -->
-
-                            <!-- Language -->
-                            {% include 'layout/partials/_locale_switcher.html.twig' %}
-                            <!--/ Language -->
-
-                            <!-- Style Switcher -->
-                            {% include 'layout/partials/_style_switcher.html.twig' %}
-                            <!-- / Style Switcher-->
-
-                            <!-- Notification -->
-                            {% include 'layout/partials/_notifications.html.twig' %}
-                            <!--/ Notification -->
-
-                            <!-- User -->
-                            <li class="nav-item navbar-dropdown dropdown-user dropdown">
-                                <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
-                                    <div class="avatar avatar-online">
-                                        <img src="{{ userMenu.avatarUrl }}" alt class="rounded-circle" />
-                                    </div>
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    {{ include('layout/partials/_usermenu.html.twig') }}
-                                </ul>
-                            </li>
-                            <!--/ User -->
-                        </ul>
-                    </div>
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="{{ path(layout.admin.logoPath) }}" class="app-brand-link">
+                        {% include 'layout/partials/_logo.html.twig' %}
+                    </a>
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto">
+                        <i class="bx menu-toggle-icon d-none d-xl-block fs-4 align-middle"></i>
+                        <i class="bx bx-x d-block d-xl-none bx-sm align-middle"></i>
+                    </a>
                 </div>
-            </nav>
 
-            <!-- / Navbar -->
+                <div class="menu-divider mt-0"></div>
 
-            <!-- Content wrapper -->
-            <div class="content-wrapper">
-                <!-- Content -->
-                <div class="container-xxl flex-grow-1 container-p-y">
-                    <div class="d-flex align-items-center justify-content-between">
-                        <h4 class="py-3 breadcrumb-wrapper mb-4">
-                            {% if app.user.team %}
-                                <span class="text-muted fw-light">{{ app.user.team.name }} /</span>
-                            {% endif %}
-                            <span id="contentTitle">
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1">
+                    {{ include('layout/partials/_sidebar.html.twig') }}
+                </ul>
+            </aside>
+            <!-- / Menu -->
+
+            <!-- Layout container -->
+            <div class="layout-page">
+                {% set userMenu = appUserMenu(app.user) %}
+                <!-- Navbar -->
+                <nav class="layout-navbar navbar navbar-expand-xl align-items-center bg-navbar-theme"
+                     id="layout-navbar">
+                    <div class="container-xxl">
+                        <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+                            <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                                <i class="bx bx-menu bx-sm"></i>
+                            </a>
+                        </div>
+
+                        <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+
+                            <!-- Search -->
+                            {% include 'layout/partials/_search.html.twig' %}
+                            <!-- /Search -->
+
+                            <ul class="navbar-nav flex-row align-items-center ms-auto">
+
+                                <!-- Admin Bar -->
+                                {% include 'layout/partials/_admin_bar.html.twig' %}
+                                <!--/ AdminBar -->
+
+                                <!-- File Sharing -->
+                                {% include 'layout/partials/_file_sharing.html.twig' %}
+                                <!--/ File Sharing -->
+
+                                <!-- Language -->
+                                {% include 'layout/partials/_locale_switcher.html.twig' %}
+                                <!--/ Language -->
+
+                                <!-- Style Switcher -->
+                                {% include 'layout/partials/_style_switcher.html.twig' %}
+                                <!-- / Style Switcher-->
+
+                                <!-- Notification -->
+                                {% include 'layout/partials/_notifications.html.twig' %}
+                                <!--/ Notification -->
+
+                                <!-- User -->
+                                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                                    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);"
+                                       data-bs-toggle="dropdown">
+                                        <div class="avatar avatar-online">
+                                            <img src="{{ userMenu.avatarUrl }}" alt class="rounded-circle"/>
+                                        </div>
+                                    </a>
+                                    <ul class="dropdown-menu dropdown-menu-end">
+                                        {{ include('layout/partials/_usermenu.html.twig') }}
+                                    </ul>
+                                </li>
+                                <!--/ User -->
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- / Navbar -->
+
+                <!-- Content wrapper -->
+                <div class="content-wrapper">
+                    <!-- Content -->
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <h4 class="py-3 breadcrumb-wrapper mb-4">
+                                {% if app.user.team %}
+                                    <span class="text-muted fw-light">{{ app.user.team.name }} /</span>
+                                {% endif %}
+                                <span id="contentTitle">
                                 {% block contentTitle %}{% endblock %}
                             </span>
-                        </h4>
-                        {% block pageActions %}{% endblock %}
+                            </h4>
+                            {% block pageActions %}{% endblock %}
+                        </div>
+                        <div class="appContentBody">
+                            {% block body %}
+                            {% endblock %}
+                        </div>
                     </div>
-                    <div class="appContentBody">
-                        {% block body %}
-                        {% endblock %}
-                    </div>
+                    <!-- / Content -->
+                    <!-- Footer -->
+                    <footer class="content-footer footer bg-footer-theme">
+                        {{ include('layout/partials/_footer.html.twig') }}
+                    </footer>
+                    <!-- / Footer -->
+                    <div class="content-backdrop fade"></div>
                 </div>
-                <!-- / Content -->
-                <!-- Footer -->
-                <footer class="content-footer footer bg-footer-theme">
-                    {{ include('layout/partials/_footer.html.twig') }}
-                </footer>
-                <!-- / Footer -->
-                <div class="content-backdrop fade"></div>
+                <!-- Content wrapper -->
             </div>
-            <!-- Content wrapper -->
+            <!-- / Layout page -->
         </div>
-        <!-- / Layout page -->
+
+        <!-- Overlay -->
+        <div class="layout-overlay layout-menu-toggle"></div>
+
+        <!-- Drag Target Area To SlideIn Menu On Small Screens -->
+        <div class="drag-target"></div>
+
     </div>
-
-    <!-- Overlay -->
-    <div class="layout-overlay layout-menu-toggle"></div>
-
-    <!-- Drag Target Area To SlideIn Menu On Small Screens -->
-    <div class="drag-target"></div>
-
-</div>
-<!-- / Layout wrapper -->
+    <!-- / Layout wrapper -->
+{% else %}
+    {{ include('layout/partials/_under_maintaince.html.twig') }}
+{% endif %}
 
 <!-- / Admin OffCanvas -->
 {% if is_granted('ROLE_ADMIN') %}

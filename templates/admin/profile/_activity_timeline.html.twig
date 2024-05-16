@@ -32,6 +32,11 @@
                 {% endfor %}
                 <li class="timeline-end-indicator">
                     <i class="bx bx-user"></i>
+                    {% if user.lastLogin is not same as(null) %}
+                    <span class="ms-2">
+                        {{ 'Son Giriş Zamanı'|trans }}: {{ user.lastLogin|ago }}
+                    </span>
+                    {% endif %}
                 </li>
             </ul>
         </div>

@@ -53,6 +53,7 @@ final class UserFactory extends ModelFactory
             'locale' => strtolower(self::faker()->languageCode()),
             'team' => NULL,
             'roles' => ["ROLE_USER"],
+            'last_login' => self::faker()->dateTimeBetween(AppFixtures::DATETIME_SEED_BETWEEEN),
         ];
     }
 

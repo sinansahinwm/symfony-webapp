@@ -15,6 +15,7 @@
     <div class="offcanvas-body" id="showMoreSpanOffCanvasBody"></div>
 </div>
 
+{% if app.user %}
 <div class="offcanvas offcanvas-end" tabindex="-1" id="themeSwitcherOffCanvas" aria-labelledby="themeSwitcherOffCanvasLabel">
     <div class="offcanvas-header">
         <h5 class="offcanvas-title" id="themeSwitcherOffCanvasLabel">{{ 'Tema Değiştir'|trans }}</h5>
@@ -24,3 +25,4 @@
         {{ include('layout/partials/_theme_switcher.html.twig') }}
     </div>
 </div>
+{% endif %}

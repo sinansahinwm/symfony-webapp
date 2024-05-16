@@ -6,6 +6,7 @@ use App\Repository\TeamInviteRepository;
 use App\Service\NotificationService;
 use App\Service\TeamInviteService;
 use App\Service\UserActivityService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -51,6 +52,11 @@ class LoginSuccessListener
 
         // Add User Activity
         $this->userActivityService->releaseActivity($eventUser, UserActivityType::LOGIN);
+
+        // Set Last Login
+        $eventUser->setLastLogin(new DateTimeImmutable());
+        $this->entityManager->persist($eventUser);
+        $this->entityManager->flush();
 
     }
 
