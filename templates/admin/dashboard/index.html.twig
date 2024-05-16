@@ -5,11 +5,8 @@
 
 {% block body %}
 
-
-    <!-- Email Verification Alert -->
-    {% if app.user.verified is not same as(true) %}
-        {{ include('admin/dashboard/_email_not_verified.html.twig') }}
-    {% endif %}
+    <!-- Shared Dashboard -->
+    {{ include('admin/dashboard/_shared_dashboard.html.twig') }}
 
     {% if app.user.team %}
         <!-- User ( With Team Dashboard ) -->
