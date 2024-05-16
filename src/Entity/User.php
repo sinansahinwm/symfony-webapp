@@ -38,6 +38,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $display_name = null;
 
+    /* DEPRECED
     #[Assert\Expression(
         "!(this.getPhone() contains ' ')",
         message: 'Telefon numaranızı hiçbir boşluk karakteri olmadan giriniz. Örn; +905555555555',
@@ -49,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\Length(
         min: 10,
         max: 16,
-    )]
+    )]*/
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $phone = null;
 
