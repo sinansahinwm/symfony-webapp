@@ -3,6 +3,10 @@
 {% block pageTitle %}{{ 'Abonelik Planları'|trans }}{% endblock %}
 {% block contentTitle %}{{ 'Abonelik Planları'|trans }}{% endblock %}
 
+{% block pageActions %}
+    <a href="{{ path('app_admin_subscription_plans') }}" class="btn btn-secondary">{{ 'Düzenle'|trans }}</a>
+{% endblock %}
+
 {% block body %}
 
     <div class="mx-4">

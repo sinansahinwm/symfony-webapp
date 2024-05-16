@@ -1,0 +1,10 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Abonelik Planları'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Abonelik Planları'|trans }}{% endblock %}
+
+{% block body %}
+
+    {{ component('_crud_table', { table: subscriptionPlanTable, title: 'Abonelik Planları'|trans}) }}
+
+{% endblock %}

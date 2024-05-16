@@ -28,13 +28,13 @@
                     {% if plan.isPopular is same as(true) %}
                         <div class="d-flex justify-content-between flex-wrap mb-3">
                             <h5 class="text-start text-uppercase mb-0">
-                                {{ plan.name }}{% if plan.discountPercent is not same as(null) %} / %{{ plan.discountPercent}}{{ 'indirim'|trans }}{% endif%}
+                                {{ plan.name }}{% if plan.discountPercent is not same as(null) %} / %{{ plan.discountPercent}} {{ 'indirim'|trans }}{% endif%}
                             </h5>
                             <span class="badge bg-primary rounded-pill">{{ 'Popüler'|trans }}</span>
                         </div>
                     {% else %}
                         <h5 class="text-start text-uppercase">
-                            {{ plan.name }}{% if plan.discountPercent is not same as(null) %} / %{{ plan.discountPercent}}{{ 'indirim'|trans }}{% endif%}
+                            {{ plan.name }}{% if plan.discountPercent is not same as(null) %} / %{{ plan.discountPercent}} {{ 'indirim'|trans }}{% endif%}
                         </h5>
                     {% endif %}
 

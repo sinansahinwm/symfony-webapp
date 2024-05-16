@@ -3,7 +3,9 @@
 namespace App\Controller\Admin;
 
 use App\Controller\Admin\Table\NotificationTable;
+use App\Controller\Admin\Table\SubscriptionPlanTable;
 use App\Controller\Admin\Table\UserTable;
+use App\Entity\SubscriptionPlan;
 use App\Service\CrudTable\CrudTableService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,6 +24,16 @@ class AdminController extends AbstractController
 
         return $this->render('admin/admin/index.html.twig', [
             'userTable' => $userTable,
+        ]);
+    }
+
+    #[Route('/subscription_plans', name: 'subscription_plans')]
+    public function subscriptionPlans(Request $request, CrudTableService $crudTableService): Response
+    {
+        $subscriptionPlanTable = $crudTableService->createFromFQCN($request, SubscriptionPlanTable::class);
+
+        return $this->render('admin/admin/subscription_plans.html.twig', [
+            'subscriptionPlanTable' => $subscriptionPlanTable,
         ]);
     }
 }

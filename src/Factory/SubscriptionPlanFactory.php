@@ -60,7 +60,8 @@ final class SubscriptionPlanFactory extends ModelFactory
             'discount_percent' => self::faker()->numberBetween(0, 100),
             'plan_features' => $planFeatures,
             'plan_features_not_included' => $planFeaturesNotIncluded,
-            'is_popular' => self::faker()->boolean()
+            'is_popular' => self::faker()->boolean(),
+            'plan_order' => self::faker()->numberBetween(0, AppFixtures::SUBSCRIPTION_PLANS_COUNT),
         ];
     }
 

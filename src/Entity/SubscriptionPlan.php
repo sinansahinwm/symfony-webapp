@@ -47,6 +47,9 @@ class SubscriptionPlan
     #[ORM\Column(length: 10)]
     private ?string $currency_sign = null;
 
+    #[ORM\Column]
+    private ?int $plan_order = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -180,6 +183,18 @@ class SubscriptionPlan
     public function setCurrencySign(string $currency_sign): static
     {
         $this->currency_sign = $currency_sign;
+
+        return $this;
+    }
+
+    public function getPlanOrder(): ?int
+    {
+        return $this->plan_order;
+    }
+
+    public function setPlanOrder(int $plan_order): static
+    {
+        $this->plan_order = $plan_order;
 
         return $this;
     }
