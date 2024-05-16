@@ -1,0 +1,40 @@
+{% if is_granted('ROLE_ADMIN') %}
+    <!-- Activity Timeline -->
+    <div class="card card-action mb-4">
+        <div class="card-header align-items-center">
+            <h5 class="card-action-title mb-0">
+                <i class="bx bx-list-ul bx-sm me-2"></i>
+                {{ 'Kullanıcı Aktivitesi' }}
+            </h5>
+        </div>
+        <div class="card-body">
+            <ul class="timeline ms-2">
+                {% for timelineItem in user.userActivities %}
+                    <li class="timeline-item timeline-item-transparent">
+                        <span class="timeline-point timeline-point-warning"></span>
+                        <div class="timeline-event">
+                            <div class="timeline-header mb-1">
+                                <h6 class="mb-0">
+                                    {% if timelineItem.activityType is same as('LOGIN') %}
+                                        {{ 'Kullanıcı giriş yaptı.'|trans }}
+                                    {% elseif timelineItem.activityType is same as('CREATE_TEAM') %}
+                                        {{ 'Kullanıcı yeni bir takım oluşturdu.'|trans }}
+                                    {% elseif timelineItem.activityType is same as('RECEIVE_TEAM_INVITE') %}
+                                        {{ 'Kullanıcı yeni bir takım daveti aldı.'|trans }}
+                                    {% else %}
+                                        {{ timelineItem.activityType }}
+                                    {% endif %}
+                                </h6>
+                                <small class="text-muted">{{ timelineItem.createdAt|ago }}</small>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+                <li class="timeline-end-indicator">
+                    <i class="bx bx-user"></i>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--/ Activity Timeline -->
+{% endif %}

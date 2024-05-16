@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <html
@@ -13,7 +14,7 @@
             name="viewport"
             content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 
-    <title>Cards basic - UI elements | Frest - Bootstrap Admin Template</title>
+    <title>User Profile - Profile | Frest - Bootstrap Admin Template</title>
 
     <meta name="description" content="" />
 
@@ -40,8 +41,12 @@
     <!-- Vendors CSS -->
     <link rel="stylesheet" href="../../assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
     <link rel="stylesheet" href="../../assets/vendor/libs/typeahead-js/typeahead.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/datatables-bs5/datatables.bootstrap5.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/datatables-responsive-bs5/responsive.bootstrap5.css" />
+    <link rel="stylesheet" href="../../assets/vendor/libs/datatables-checkboxes-jquery/datatables.checkboxes.css" />
 
     <!-- Page CSS -->
+    <link rel="stylesheet" href="../../assets/vendor/css/pages/page-profile.css" />
 
     <!-- Helpers -->
     <script src="../../assets/vendor/js/helpers.js"></script>
@@ -547,18 +552,18 @@
                         </li>
                     </ul>
                 </li>
-                <li class="menu-item">
+                <li class="menu-item active open">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-dock-top"></i>
                         <div data-i18n="Pages">Pages</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item">
+                        <li class="menu-item active open">
                             <a href="javascript:void(0);" class="menu-link menu-toggle">
                                 <div data-i18n="User Profile">User Profile</div>
                             </a>
                             <ul class="menu-sub">
-                                <li class="menu-item">
+                                <li class="menu-item active">
                                     <a href="pages-profile-user.html" class="menu-link">
                                         <div data-i18n="Profile">Profile</div>
                                     </a>
@@ -801,14 +806,14 @@
                     <span class="menu-header-text" data-i18n="Components">Components</span>
                 </li>
                 <!-- Cards -->
-                <li class="menu-item active open">
+                <li class="menu-item">
                     <a href="javascript:void(0);" class="menu-link menu-toggle">
                         <i class="menu-icon tf-icons bx bx-collection"></i>
                         <div data-i18n="Cards">Cards</div>
                         <div class="badge bg-primary rounded-pill ms-auto">5</div>
                     </a>
                     <ul class="menu-sub">
-                        <li class="menu-item active">
+                        <li class="menu-item">
                             <a href="cards-basic.html" class="menu-link">
                                 <div data-i18n="Basic">Basic</div>
                             </a>
@@ -1766,736 +1771,535 @@
 
                 <div class="container-xxl flex-grow-1 container-p-y">
                     <h4 class="py-3 breadcrumb-wrapper mb-4">
-                        <span class="text-muted fw-light">UI Elements /</span> Cards Basic
+                        <span class="text-muted fw-light">User Profile /</span> Profile
                     </h4>
 
-                    <!-- Examples -->
-                    <div class="row mb-5">
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="../../assets/img/elements/2.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                                    </p>
-                                    <a href="javascript:void(0)" class="btn btn-outline-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-                                </div>
-                                <img class="img-fluid" src="../../assets/img/elements/13.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
-                                    <a href="javascript:void(0);" class="card-link">Card link</a>
-                                    <a href="javascript:void(0);" class="card-link">Another link</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card h-100">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <h6 class="card-subtitle text-muted">Support card subtitle</h6>
-                                    <img
-                                            class="img-fluid d-flex mx-auto my-4 rounded"
-                                            src="../../assets/img/elements/4.jpg"
-                                            alt="Card image cap" />
-                                    <p class="card-text">Bear claw sesame snaps gummies chocolate.</p>
-                                    <a href="javascript:void(0);" class="card-link">Card link</a>
-                                    <a href="javascript:void(0);" class="card-link">Another link</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Examples -->
-
-                    <!-- Content types -->
-                    <h5 class="pb-1 mb-4">Content types</h5>
-
-                    <div class="row mb-5">
-                        <div class="col-md-6 col-lg-4">
-                            <h6 class="mt-2 text-muted">Body</h6>
+                    <!-- Header -->
+                    <div class="row">
+                        <div class="col-12">
                             <div class="card mb-4">
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        This is some text within a card body. Jelly lemon drops tiramisu chocolate cake cotton candy
-                                        soufflé oat cake sweet roll. Sugar plum marzipan dragée topping cheesecake chocolate bar. Danish
-                                        muffin icing donut.
-                                    </p>
+                                <div class="user-profile-header-banner">
+                                    <img src="../../assets/img/pages/profile-banner.png" alt="Banner image" class="rounded-top" />
                                 </div>
-                            </div>
-                            <h6 class="mt-2 text-muted">Titles, text, and links</h6>
-                            <div class="card mb-4">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <div class="card-subtitle text-muted mb-3">Card subtitle</div>
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                                    </p>
-                                    <a href="javascript:void(0)" class="card-link">Card link</a>
-                                    <a href="javascript:void(0)" class="card-link">Another link</a>
-                                </div>
-                            </div>
-                            <h6 class="mt-2 text-muted">List groups</h6>
-                            <div class="card mb-4">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <h6 class="mt-2 text-muted">Images</h6>
-                            <div class="card mb-4">
-                                <img class="card-img-top" src="../../assets/img/elements/5.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <p class="card-text">
-                                        Some quick example text to build on the card title and make up the bulk of the card's content.
-                                    </p>
-                                    <p class="card-text">
-                                        Cookie topping caramels jujubes gingerbread. Lollipop apple pie cupcake candy canes cookie ice
-                                        cream. Wafer chocolate bar carrot cake jelly-o.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <h6 class="mt-2 text-muted">Kitchen sink</h6>
-                            <div class="card">
-                                <img class="card-img-top" src="../../assets/img/elements/7.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title.</p>
-                                </div>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Cras justo odio</li>
-                                    <li class="list-group-item">Vestibulum at eros</li>
-                                </ul>
-                                <div class="card-body">
-                                    <a href="javascript:void(0)" class="card-link">Card link</a>
-                                    <a href="javascript:void(0)" class="card-link">Another link</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <h6 class="pb-1 mb-4 text-muted">Header and footer</h6>
-                    <div class="row mb-5">
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card">
-                                <div class="card-header">Featured</div>
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">
-                                        With supporting text below as a natural lead-in to additional content natural lead-in to
-                                        additional content.
-                                    </p>
-                                    <a href="javascript:void(0)" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card">
-                                <h5 class="card-header">Quote</h5>
-                                <div class="card-body">
-                                    <blockquote class="blockquote mb-0">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.Lorem
-                                            ipsum dolor sit amet, consectetur.
-                                        </p>
-                                        <footer class="blockquote-footer">
-                                            Someone famous in
-                                            <cite title="Source Title">Source Title</cite>
-                                        </footer>
-                                    </blockquote>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4 mb-3">
-                            <div class="card text-center">
-                                <div class="card-header">Featured</div>
-                                <div class="card-body pb-0">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural.</p>
-                                    <a href="javascript:void(0)" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                                <div class="card-footer text-muted">2 days ago</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Content types -->
-
-                    <!-- Text alignment -->
-                    <h5 class="pb-1 mb-4">Text alignment</h5>
-                    <div class="row mb-5">
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="javascript:void(0)" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card text-center mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="javascript:void(0)" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card text-end mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Special title treatment</h5>
-                                    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                    <a href="javascript:void(0)" class="btn btn-primary">Go somewhere</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Text alignment -->
-
-                    <!-- Navigation -->
-                    <h5 class="pb-1 mb-4">Navigation</h5>
-                    <div class="row mb-5">
-                        <div class="col-md-6">
-                            <div class="card text-center mb-3">
-                                <div class="card-header border-bottom">
-                                    <ul class="nav nav-tabs card-header-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <button
-                                                    type="button"
-                                                    class="nav-link active"
-                                                    role="tab"
-                                                    data-bs-toggle="tab"
-                                                    data-bs-target="#navs-tab-home"
-                                                    aria-controls="navs-tab-home"
-                                                    aria-selected="true">
-                                                Home
-                                            </button>
-                                        </li>
-                                        <li class="nav-item">
-                                            <button
-                                                    type="button"
-                                                    class="nav-link"
-                                                    role="tab"
-                                                    data-bs-toggle="tab"
-                                                    data-bs-target="#navs-tab-profile"
-                                                    aria-controls="navs-tab-profile"
-                                                    aria-selected="false">
-                                                Profile
-                                            </button>
-                                        </li>
-                                        <li class="nav-item">
-                                            <button
-                                                    type="button"
-                                                    class="nav-link disabled"
-                                                    data-bs-toggle="tab"
-                                                    role="tab"
-                                                    aria-selected="false">
-                                                Disabled
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="navs-tab-home" role="tabpanel">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="javascript:void(0);" class="btn btn-primary">Go home</a>
+                                <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
+                                    <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
+                                        <img
+                                                src="../../assets/img/avatars/1.png"
+                                                alt="user image"
+                                                class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img" />
                                     </div>
-                                    <div class="tab-pane fade" id="navs-tab-profile" role="tabpanel">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="javascript:void(0);" class="btn btn-primary">Go profile</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="card text-center">
-                                <div class="card-header border-bottom py-2">
-                                    <ul class="nav nav-pills" role="tablist">
-                                        <li class="nav-item">
-                                            <button
-                                                    type="button"
-                                                    class="nav-link active"
-                                                    role="tab"
-                                                    data-bs-toggle="tab"
-                                                    data-bs-target="#navs-pills-tab-home"
-                                                    aria-controls="navs-pills-tab-home"
-                                                    aria-selected="true">
-                                                Home
-                                            </button>
-                                        </li>
-                                        <li class="nav-item">
-                                            <button
-                                                    type="button"
-                                                    class="nav-link"
-                                                    role="tab"
-                                                    data-bs-toggle="tab"
-                                                    data-bs-target="#navs-pills-tab-profile"
-                                                    aria-controls="navs-pills-tab-profile"
-                                                    aria-selected="false">
-                                                Profile
-                                            </button>
-                                        </li>
-                                        <li class="nav-item">
-                                            <button
-                                                    type="button"
-                                                    class="nav-link disabled"
-                                                    role="tab"
-                                                    data-bs-toggle="tab"
-                                                    aria-selected="false">
-                                                Disabled
-                                            </button>
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="tab-content">
-                                    <div class="tab-pane fade show active" id="navs-pills-tab-home" role="tabpanel">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="javascript:void(0);" class="btn btn-primary">Go home</a>
-                                    </div>
-                                    <div class="tab-pane fade" id="navs-pills-tab-profile" role="tabpanel">
-                                        <h5 class="card-title">Special title treatment</h5>
-                                        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                                        <a href="javascript:void(0);" class="btn btn-primary">Go profile</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Navigation -->
-
-                    <!-- Images -->
-                    <h5 class="pb-1 mb-4">Images caps & overlay</h5>
-                    <div class="row mb-5">
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card mb-3">
-                                <img class="card-img-top" src="../../assets/img/elements/18.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a wider card with supporting text below as a natural lead-in to additional content. This
-                                        content is a little bit longer.
-                                    </p>
-                                    <p class="card-text">
-                                        <small class="text-muted">Last updated 3 mins ago</small>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a wider card with supporting text below as a natural lead-in to additional content. This
-                                        content is a little bit longer.
-                                    </p>
-                                    <p class="card-text">
-                                        <small class="text-muted">Last updated 3 mins ago</small>
-                                    </p>
-                                </div>
-                                <img class="card-img-bottom" src="../../assets/img/elements/1.jpg" alt="Card image cap" />
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card bg-dark border-0 text-white">
-                                <img class="card-img" src="../../assets/img/elements/11.jpg" alt="Card image" />
-                                <div class="card-img-overlay">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a wider card with supporting text below as a natural lead-in to additional content. This
-                                        content is a little bit longer.
-                                    </p>
-                                    <p class="card-text">Last updated 3 mins ago</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Images -->
-
-                    <!-- Horizontal -->
-                    <h5 class="pb-1 mb-4">Horizontal</h5>
-                    <div class="row mb-5">
-                        <div class="col-md">
-                            <div class="card mb-3">
-                                <div class="row g-0">
-                                    <div class="col-md-4">
-                                        <img class="card-img card-img-left" src="../../assets/img/elements/12.jpg" alt="Card image" />
-                                    </div>
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">
-                                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                                This content is a little bit longer.
-                                            </p>
-                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                    <div class="flex-grow-1 mt-3 mt-sm-5">
+                                        <div
+                                                class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
+                                            <div class="user-profile-info">
+                                                <h4>John Doe</h4>
+                                                <ul
+                                                        class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
+                                                    <li class="list-inline-item fw-medium"><i class="bx bx-pen"></i> UX Designer</li>
+                                                    <li class="list-inline-item fw-medium"><i class="bx bx-map"></i> Vatican City</li>
+                                                    <li class="list-inline-item fw-medium">
+                                                        <i class="bx bx-calendar-alt"></i> Joined April 2021
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <a href="javascript:void(0)" class="btn btn-primary text-nowrap">
+                                                <i class="bx bx-user-check me-1"></i>Connected
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md">
-                            <div class="card mb-3">
-                                <div class="row g-0">
-                                    <div class="col-md-8">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Card title</h5>
-                                            <p class="card-text">
-                                                This is a wider card with supporting text below as a natural lead-in to additional content.
-                                                This content is a little bit longer.
-                                            </p>
-                                            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    </div>
+                    <!--/ Header -->
+
+                    <!-- Navbar pills -->
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-pills flex-column flex-sm-row mb-4">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-user me-1"></i> Profile</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="pages-profile-teams.html"><i class="bx bx-group me-1"></i> Teams</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="pages-profile-projects.html"
+                                    ><i class="bx bx-grid-alt me-1"></i> Projects</a
+                                    >
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="pages-profile-connections.html"
+                                    ><i class="bx bx-link-alt me-1"></i> Connections</a
+                                    >
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--/ Navbar pills -->
+
+                    <!-- User Profile Content -->
+                    <div class="row">
+                        <div class="col-xl-4 col-lg-5 col-md-5">
+                            <!-- About User -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <p class="card-text text-uppercase">About</p>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-user bx-xs"></i><span class="fw-medium mx-2">Full Name:</span>
+                                            <span>John Doe</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-check bx-xs"></i><span class="fw-medium mx-2">Status:</span>
+                                            <span>Active</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-star bx-xs"></i><span class="fw-medium mx-2">Role:</span>
+                                            <span>Developer</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-flag bx-xs"></i><span class="fw-medium mx-2">Country:</span> <span>USA</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-detail bx-xs"></i><span class="fw-medium mx-2">Languages:</span>
+                                            <span>English</span>
+                                        </li>
+                                    </ul>
+                                    <p class="card-text text-uppercase">Contacts</p>
+                                    <ul class="list-unstyled mb-4">
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-phone bx-xs"></i><span class="fw-medium mx-2">Contact:</span>
+                                            <span>(123) 456-7890</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-chat bx-xs"></i><span class="fw-medium mx-2">Skype:</span>
+                                            <span>john.doe</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-envelope bx-xs"></i><span class="fw-medium mx-2">Email:</span>
+                                            <span>john.doe@example.com</span>
+                                        </li>
+                                    </ul>
+                                    <small class="text-muted text-uppercase">Teams</small>
+                                    <ul class="list-unstyled mt-3 mb-0">
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bxl-github text-primary me-2"></i>
+                                            <div class="d-flex flex-wrap">
+                                                <span class="fw-medium me-2">Backend Developer</span><span>(126 Members)</span>
+                                            </div>
+                                        </li>
+                                        <li class="d-flex align-items-center">
+                                            <i class="bx bxl-react text-info me-2"></i>
+                                            <div class="d-flex flex-wrap">
+                                                <span class="fw-medium me-2">React Developer</span><span>(98 Members)</span>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--/ About User -->
+                            <!-- Profile Overview -->
+                            <div class="card mb-4">
+                                <div class="card-body">
+                                    <p class="card-text text-uppercase">Overview</p>
+                                    <ul class="list-unstyled mb-0">
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-check bx-xs"></i><span class="fw-medium mx-2">Task Compiled:</span>
+                                            <span>13.5k</span>
+                                        </li>
+                                        <li class="d-flex align-items-center mb-3">
+                                            <i class="bx bx-star bx-xs"></i><span class="fw-medium mx-2">Projects Compiled:</span>
+                                            <span>146</span>
+                                        </li>
+                                        <li class="d-flex align-items-center">
+                                            <i class="bx bx-user bx-xs"></i><span class="fw-medium mx-2">Connections:</span>
+                                            <span>897</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--/ Profile Overview -->
+                        </div>
+                        <div class="col-xl-8 col-lg-7 col-md-7">
+                            <!-- Activity Timeline -->
+                            <div class="card card-action mb-4">
+                                <div class="card-header align-items-center">
+                                    <h5 class="card-action-title mb-0"><i class="bx bx-list-ul bx-sm me-2"></i>Activity Timeline</h5>
+                                    <div class="card-action-element btn-pinned">
+                                        <div class="dropdown">
+                                            <button
+                                                    type="button"
+                                                    class="btn dropdown-toggle hide-arrow p-0"
+                                                    data-bs-toggle="dropdown"
+                                                    aria-expanded="false">
+                                                <i class="bx bx-dots-vertical-rounded"></i>
+                                            </button>
+                                            <ul class="dropdown-menu dropdown-menu-end">
+                                                <li><a class="dropdown-item" href="javascript:void(0);">Share timeline</a></li>
+                                                <li><a class="dropdown-item" href="javascript:void(0);">Suggest edits</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider" />
+                                                </li>
+                                                <li><a class="dropdown-item" href="javascript:void(0);">Report bug</a></li>
+                                            </ul>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
-                                        <img class="card-img card-img-right" src="../../assets/img/elements/17.jpg" alt="Card image" />
+                                </div>
+                                <div class="card-body">
+                                    <ul class="timeline ms-2">
+                                        <li class="timeline-item timeline-item-transparent">
+                                            <span class="timeline-point timeline-point-warning"></span>
+                                            <div class="timeline-event">
+                                                <div class="timeline-header mb-1">
+                                                    <h6 class="mb-0">Client Meeting</h6>
+                                                    <small class="text-muted">Today</small>
+                                                </div>
+                                                <p class="mb-2">Project meeting with john @10:15am</p>
+                                                <div class="d-flex flex-wrap">
+                                                    <div class="avatar me-3">
+                                                        <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
+                                                    </div>
+                                                    <div>
+                                                        <h6 class="mb-0">Lester McCarthy (Client)</h6>
+                                                        <span>CEO of Infibeam</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="timeline-item timeline-item-transparent">
+                                            <span class="timeline-point timeline-point-info"></span>
+                                            <div class="timeline-event">
+                                                <div class="timeline-header mb-1">
+                                                    <h6 class="mb-0">Create a new project for client</h6>
+                                                    <small class="text-muted">2 Day Ago</small>
+                                                </div>
+                                                <p class="mb-0">Add files to new design folder</p>
+                                            </div>
+                                        </li>
+                                        <li class="timeline-item timeline-item-transparent">
+                                            <span class="timeline-point timeline-point-primary"></span>
+                                            <div class="timeline-event">
+                                                <div class="timeline-header mb-1">
+                                                    <h6 class="mb-0">Shared 2 New Project Files</h6>
+                                                    <small class="text-muted">6 Day Ago</small>
+                                                </div>
+                                                <p class="mb-2">
+                                                    Sent by Mollie Dixon
+                                                    <img
+                                                            src="../../assets/img/avatars/4.png"
+                                                            class="rounded-circle ms-3"
+                                                            alt="avatar"
+                                                            height="20"
+                                                            width="20" />
+                                                </p>
+                                                <div class="d-flex flex-wrap gap-2">
+                                                    <a href="javascript:void(0)" class="me-3">
+                                                        <img
+                                                                src="../../assets/img/icons/misc/pdf.png"
+                                                                alt="Document image"
+                                                                width="20"
+                                                                class="me-2" />
+                                                        <span class="h6">App Guidelines</span>
+                                                    </a>
+                                                    <a href="javascript:void(0)">
+                                                        <img
+                                                                src="../../assets/img/icons/misc/doc.png"
+                                                                alt="Excel image"
+                                                                width="20"
+                                                                class="me-2" />
+                                                        <span class="h6">Testing Results</span>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="timeline-item timeline-item-transparent">
+                                            <span class="timeline-point timeline-point-success"></span>
+                                            <div class="timeline-event pb-0">
+                                                <div class="timeline-header mb-1">
+                                                    <h6 class="mb-0">Project status updated</h6>
+                                                    <small class="text-muted">10 Day Ago</small>
+                                                </div>
+                                                <p class="mb-0">Woocommerce iOS App Completed</p>
+                                            </div>
+                                        </li>
+                                        <li class="timeline-end-indicator">
+                                            <i class="bx bx-check-circle"></i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!--/ Activity Timeline -->
+                            <div class="row">
+                                <!-- Connections -->
+                                <div class="col-lg-12 col-xl-6">
+                                    <div class="card card-action mb-4">
+                                        <div class="card-header align-items-center">
+                                            <h5 class="card-action-title mb-0">Connections</h5>
+                                            <div class="card-action-element btn-pinned">
+                                                <div class="dropdown">
+                                                    <button
+                                                            type="button"
+                                                            class="btn dropdown-toggle hide-arrow p-0"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Share connections</a></li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Suggest edits</a></li>
+                                                        <li>
+                                                            <hr class="dropdown-divider" />
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Report bug</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img src="../../assets/img/avatars/2.png" alt="Avatar" class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">Cecilia Payne</h6>
+                                                                <small class="text-muted">45 Connections</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <button class="btn btn-label-primary p-1 btn-sm"><i class="bx bx-user"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img src="../../assets/img/avatars/3.png" alt="Avatar" class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">Curtis Fletcher</h6>
+                                                                <small class="text-muted">1.32k Connections</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <button class="btn btn-primary p-1 btn-sm"><i class="bx bx-user"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img src="../../assets/img/avatars/10.png" alt="Avatar" class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">Alice Stone</h6>
+                                                                <small class="text-muted">125 Connections</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <button class="btn btn-primary p-1 btn-sm"><i class="bx bx-user"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img src="../../assets/img/avatars/7.png" alt="Avatar" class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">Darrell Barnes</h6>
+                                                                <small class="text-muted">456 Connections</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <button class="btn btn-label-primary p-1 btn-sm"><i class="bx bx-user"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-start">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img src="../../assets/img/avatars/12.png" alt="Avatar" class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">Eugenia Moore</h6>
+                                                                <small class="text-muted">1.2k Connections</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <button class="btn btn-label-primary p-1 btn-sm"><i class="bx bx-user"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="text-center">
+                                                    <a href="javascript:;">View all connections</a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
+                                <!--/ Connections -->
+                                <!-- Teams -->
+                                <div class="col-lg-12 col-xl-6">
+                                    <div class="card card-action mb-4">
+                                        <div class="card-header align-items-center">
+                                            <h5 class="card-action-title mb-0">Teams</h5>
+                                            <div class="card-action-element btn-pinned">
+                                                <div class="dropdown">
+                                                    <button
+                                                            type="button"
+                                                            class="btn dropdown-toggle hide-arrow p-0"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false">
+                                                        <i class="bx bx-dots-vertical-rounded"></i>
+                                                    </button>
+                                                    <ul class="dropdown-menu dropdown-menu-end">
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Share teams</a></li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Suggest edits</a></li>
+                                                        <li>
+                                                            <hr class="dropdown-divider" />
+                                                        </li>
+                                                        <li><a class="dropdown-item" href="javascript:void(0);">Report bug</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-body">
+                                            <ul class="list-unstyled mb-0">
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img
+                                                                        src="../../assets/img/icons/brands/react-label.png"
+                                                                        alt="Avatar"
+                                                                        class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">React Developers</h6>
+                                                                <small class="text-muted">72 Members</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="javascript:;"><span class="badge bg-label-danger">Developer</span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img
+                                                                        src="../../assets/img/icons/brands/support-label.png"
+                                                                        alt="Avatar"
+                                                                        class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">Support Team</h6>
+                                                                <small class="text-muted">122 Members</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="javascript:;"><span class="badge bg-label-primary">Support</span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img
+                                                                        src="../../assets/img/icons/brands/figma-label.png"
+                                                                        alt="Avatar"
+                                                                        class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">UI Designers</h6>
+                                                                <small class="text-muted">7 Members</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="javascript:;"><span class="badge bg-label-info">Designer</span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img
+                                                                        src="../../assets/img/icons/brands/vue-label.png"
+                                                                        alt="Avatar"
+                                                                        class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-2">
+                                                                <h6 class="mb-0">Vue.js Developers</h6>
+                                                                <small class="text-muted">289 Members</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="javascript:;"><span class="badge bg-label-danger">Developer</span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="mb-3">
+                                                    <div class="d-flex align-items-center">
+                                                        <div class="d-flex align-items-start">
+                                                            <div class="avatar me-3">
+                                                                <img
+                                                                        src="../../assets/img/icons/brands/twitter-label.png"
+                                                                        alt="Avatar"
+                                                                        class="rounded-circle" />
+                                                            </div>
+                                                            <div class="me-w">
+                                                                <h6 class="mb-0">Digital Marketing</h6>
+                                                                <small class="text-muted">24 Members</small>
+                                                            </div>
+                                                        </div>
+                                                        <div class="ms-auto">
+                                                            <a href="javascript:;"><span class="badge bg-label-secondary">Marketing</span></a>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <li class="text-center">
+                                                    <a href="javascript:;">View all teams</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--/ Teams -->
                             </div>
+                            <!-- Projects table -->
+                            <div class="card mb-4">
+                                <h5 class="card-header">Projects List</h5>
+                                <div class="table-responsive mb-3">
+                                    <table class="table datatable-project">
+                                        <thead class="table-light">
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th>Project</th>
+                                            <th class="text-nowrap">Total Task</th>
+                                            <th>Progress</th>
+                                            <th>Hours</th>
+                                        </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                            <!--/ Projects table -->
                         </div>
                     </div>
-                    <!--/ Horizontal -->
-
-                    <!-- Style variation -->
-                    <h5 class="pb-1 mb-4">Style variation</h5>
-                    <div class="row">
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card bg-primary text-white mb-3">
-                                <div class="card-header">Header</div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-white">Primary card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card bg-secondary text-white mb-3">
-                                <div class="card-header">Header</div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-white">Secondary card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card bg-success text-white mb-3">
-                                <div class="card-header">Header</div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-white">Success card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card bg-danger text-white mb-3">
-                                <div class="card-header">Header</div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-white">Danger card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card bg-warning text-white mb-3">
-                                <div class="card-header">Header</div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-white">Warning card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card bg-info text-white mb-3">
-                                <div class="card-header">Header</div>
-                                <div class="card-body">
-                                    <h5 class="card-title text-white">Info card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Outline -->
-                    <div class="row">
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card shadow-none bg-transparent border border-primary mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Primary card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card shadow-none bg-transparent border border-secondary mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Secondary card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card shadow-none bg-transparent border border-success mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Success card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card shadow-none bg-transparent border border-danger mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Danger card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card shadow-none bg-transparent border border-warning mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Warning card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card shadow-none bg-transparent border border-info mb-3">
-                                <div class="card-body">
-                                    <h5 class="card-title">Info card title</h5>
-                                    <p class="card-text">Some quick example text to build on the card title and make up.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Style variation -->
-
-                    <!-- Card layout -->
-                    <h5 class="pb-1 my-5">Card layout</h5>
-
-                    <!-- Card Groups -->
-                    <h6 class="pb-1 mb-4 text-muted">Card Groups</h6>
-                    <div class="card-group mb-5">
-                        <div class="card">
-                            <img class="card-img-top" src="../../assets/img/elements/4.jpg" alt="Card image cap" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    This is a wider card with supporting text below as a natural lead-in to additional content. This
-                                    content is a little bit longer.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="../../assets/img/elements/5.jpg" alt="Card image cap" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    This card has supporting text below as a natural lead-in to additional content.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-                        <div class="card">
-                            <img class="card-img-top" src="../../assets/img/elements/1.jpg" alt="Card image cap" />
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                    This is a wider card with supporting text below as a natural lead-in to additional content. This
-                                    card has even longer content than the first to show that equal height action.
-                                </p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Last updated 3 mins ago</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Grid Card -->
-                    <h6 class="pb-1 mb-4 text-muted">Grid Card</h6>
-                    <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
-                        <div class="col">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="../../assets/img/elements/2.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                                        This content is a little bit longer.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="../../assets/img/elements/13.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                                        This content is a little bit longer.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="../../assets/img/elements/4.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="../../assets/img/elements/18.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                                        This content is a little bit longer.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="../../assets/img/elements/19.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                                        This content is a little bit longer.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="../../assets/img/elements/20.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                                        This content is a little bit longer.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Masonry -->
-                    <h6 class="pb-1 mb-4 text-muted">Masonry</h6>
-                    <div class="row gy-4" data-masonry='{"percentPosition": true }'>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card">
-                                <img class="card-img-top" src="../../assets/img/elements/5.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                                    <p class="card-text">
-                                        This is a longer card with supporting text below as a natural lead-in to additional content.
-                                        This content is a little bit longer.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card p-3">
-                                <figure class="p-3 mb-0">
-                                    <blockquote class="blockquote">
-                                        <p>A well-known quote, contained in a blockquote element.</p>
-                                    </blockquote>
-                                    <figcaption class="blockquote-footer mb-0 text-muted">
-                                        Someone famous in <cite title="Source Title">Source Title</cite>
-                                    </figcaption>
-                                </figure>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card">
-                                <img class="card-img-top" src="../../assets/img/elements/18.jpg" alt="Card image cap" />
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This card has supporting text below as a natural lead-in to additional content.
-                                    </p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card bg-primary text-white text-center p-3">
-                                <figure class="mb-0">
-                                    <blockquote class="blockquote">
-                                        <p>A well-known quote, contained in a blockquote element.</p>
-                                    </blockquote>
-                                    <figcaption class="blockquote-footer mb-0 text-white">
-                                        Someone famous in <cite title="Source Title">Source Title</cite>
-                                    </figcaption>
-                                </figure>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card text-center">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">This card has a regular title and short paragraph of text below it.</p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card">
-                                <img class="card-img-top" src="../../assets/img/elements/4.jpg" alt="Card image cap" />
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card p-3 text-end">
-                                <figure class="mb-0">
-                                    <blockquote class="blockquote">
-                                        <p>A well-known quote, contained in a blockquote element.</p>
-                                    </blockquote>
-                                    <figcaption class="blockquote-footer mb-0 text-muted">
-                                        Someone famous in <cite title="Source Title">Source Title</cite>
-                                    </figcaption>
-                                </figure>
-                            </div>
-                        </div>
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-                                    <p class="card-text">
-                                        This is another card with title and supporting text below. This card has some additional content
-                                        to make it slightly taller overall.
-                                    </p>
-                                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--/ Card layout -->
+                    <!--/ User Profile Content -->
                 </div>
                 <!-- / Content -->
 
@@ -2563,11 +2367,12 @@
 <!-- endbuild -->
 
 <!-- Vendors JS -->
-<script src="../../assets/vendor/libs/masonry/masonry.js"></script>
+<script src="../../assets/vendor/libs/datatables-bs5/datatables-bootstrap5.js"></script>
 
 <!-- Main JS -->
 <script src="../../assets/js/main.js"></script>
 
 <!-- Page JS -->
+<script src="../../assets/js/app-user-view-account.js"></script>
 </body>
 </html>
