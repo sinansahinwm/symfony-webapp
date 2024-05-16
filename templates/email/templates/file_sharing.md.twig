@@ -10,9 +10,10 @@
         {{ 'Davetiye Bağlantısı:'|trans }} {{ context.action.url|raw }}
 
         {{ 'Dosyaya erişebilmek için giriş yapılmalıdır.'|trans }}
-        {% if context.notes is not same as(null) %}
 
+        {% if context.publisherNotes is not same as(null) %}
             > Not: {{ context.publisherNotes }}
         {% endif %}
+
     {% endapply %}
 {% endblock %}
