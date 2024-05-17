@@ -7,6 +7,9 @@ parameters:
   app.fixtures.administrator.email: '%env(FIXTURES_ADMINISTRATOR_EMAIL)%'
   app.fixtures.administrator.password: '%env(FIXTURES_ADMINISTRATOR_PASSWORD)%'
   app.api_keys.google.translate: '%env(GOOGLE_TRANSLATE_API_KEY)%'
+  app.api_keys.iyzico.api_key: '%env(IYZICO_API_KEY)%'
+  app.api_keys.iyzico.api_secret: '%env(IYZICO_API_SECRET)%'
+  app.api_keys.iyzico.endpoint: '%env(IYZICO_API_ENDPOINT)%'
 
 # ===============================
 # TWIG CONFIGURATION

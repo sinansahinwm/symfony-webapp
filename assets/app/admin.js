@@ -19,11 +19,48 @@ import './theme/libs/spinkit/spinkit.scss';
 import './theme/libs/select2/select2';
 import './theme/libs/select2/select2.scss';
 
+// Cleave.JS
+import {Cleave} from "./theme/libs/cleavejs/cleave";
+
 // Perfect Scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 
+
 const adminPagesGlobalInitializer = function () {
 
+    const _initMaskedInputs = function () {
+        const creditCardMask = document.querySelector('.credit-card-mask');
+        const expiryDateMask = document.querySelector('.expiry-date-mask');
+        const cvvMask = document.querySelector('.cvv-code-mask');
+
+        // Credit Card
+        if (creditCardMask) {
+            new Cleave(creditCardMask, {
+                creditCard: true,
+                onCreditCardTypeChanged: function (type) {
+                    // TODO : Update UI
+                }
+            });
+        }
+
+        // Expiry Date Mask
+        if (expiryDateMask) {
+            new Cleave(expiryDateMask, {
+                date: true,
+                delimiter: '/',
+                datePattern: ['m', 'y']
+            });
+        }
+
+        // CVV
+        if (cvvMask) {
+            new Cleave(cvvMask, {
+                numeral: true,
+                numeralPositiveOnly: true
+            });
+        }
+
+    }
     const _initKeyboardSearch = function () {
         if ($('.search-toggler').length > 0) {
             $(document).on('keydown', function (event) {
@@ -348,6 +385,7 @@ const adminPagesGlobalInitializer = function () {
             _initShowMoreSpan();
             _initSymfonyToolbarBlock();
             _initPerfectScrollbars();
+            _initMaskedInputs();
         }
     }
 

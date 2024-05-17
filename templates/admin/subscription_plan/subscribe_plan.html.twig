@@ -1,7 +1,7 @@
 {% extends 'layout/admin.html.twig' %}
 
 {% block pageTitle %}{{ 'Abonelik Planı Satın Al'|trans }}{% endblock %}
-{% block contentTitle %}{{ 'Abonelik Satın Al'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Abonelik Planı Satın Al'|trans }}{% endblock %}
 
 {% block pageActions %}
     <a href="{{ path('app_admin_exclude_subscription_plan_index') }}" class="btn btn-secondary">
@@ -12,37 +12,58 @@
 {% block body %}
 
     <div class="row">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">
-                    <h5>
-                        Abonelik Detayları
-                    </h5>
-                </div>
-                <div class="card-body">
-                    TODO : SUBSCRIBE PLAN DETAILS AREA
-                </div>
-            </div>
+        <div class="col-md-6">
+            {{ component('_subscription_plan', { plan: thePlan, hideActions: true }) }}
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class="card">
                 <div class="card-header">
                     <h5>
-                        Ödeme Yapın
+                        {{ 'Ödeme Yapın'|trans }}
                     </h5>
                 </div>
                 <div class="card-body">
-                    TODO : CREDIT CARD AREA
-                </div>
-                <div class="card-footer d-flex justify-content-center">
-                    <button class="btn btn-success btn-block">
-                        <i class="bx bx-lock me-2"></i>
-                        Ödeme İşlemini Tamamla
-                    </button>
+
+                    {{ form_start(checkoutForm) }}
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label w-100" for="plan_checkout_card_number">{{ 'Kart Numarası'|trans }}</label>
+                            <div class="input-group input-group-merge">
+                                {{ form_widget(checkoutForm.card_number) }}
+                                <span class="input-group-text cursor-pointer p-1">
+                                    <span class="card-type"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label class="form-label" for="plan_checkout_name">{{ 'Kart Sahibinin Adı' }}</label>
+                            {{ form_widget(checkoutForm.name) }}
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label class="form-label" for="plan_checkout_exp_date">{{ 'Son Kullanım T.'|trans }}</label>
+                            {{ form_widget(checkoutForm.exp_date) }}
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <label class="form-label" for="plan_checkout_cvv">{{ 'CVV'|trans }}</label>
+                            <div class="input-group input-group-merge">
+                                {{ form_widget(checkoutForm.cvv) }}
+                                <span class="input-group-text cursor-pointer" id="paymentCardCvv2">
+                                    <i class="bx bx-help-circle text-muted" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Genellikle kredi kartınızın arkasında yer alan üç haneli kod.' }}"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <button type="submit" class="btn btn-success btn-block">
+                                <i class="bx bx-lock me-2"></i>
+                                {{ 'Ödeme İşlemini Tamamla'|trans }}
+                            </button>
+                        </div>
+                    </div>
+                    {{ form_end(checkoutForm) }}
+
                 </div>
             </div>
         </div>
     </div>
-
 
 {% endblock %}

@@ -2,6 +2,7 @@
   "devDependencies": {
     "@babel/core": "^7.17.0",
     "@babel/preset-env": "^7.16.0",
+    "@hotwired/turbo": "^7.1.1 || ^8.0",
     "@symfony/stimulus-bundle": "file:vendor/symfony/stimulus-bundle/assets",
     "@symfony/webpack-encore": "^4.6.1",
     "core-js": "^3.23.0",
@@ -53,7 +54,7 @@
     "boxicons": "2.1.4",
     "bs-stepper": "1.7.0",
     "chart.js": "4.3.0",
-    "cleave.js": "1.6.0",
+    "cleave.js": "^1.6.0",
     "clipboard": "2.0.11",
     "datatables.net": "2.0.1",
     "datatables.net-bs5": "2.0.1",

@@ -19,6 +19,7 @@
     "doctrine/doctrine-migrations-bundle": "^3.3",
     "doctrine/orm": "^3.0",
     "easycorp/easyadmin-bundle": "^4.9",
+    "iyzico/iyzipay-php": "^2.0",
     "knplabs/knp-time-bundle": "^2.2",
     "league/commonmark": "^2.4",
     "matecat/xliff-parser": "^2.1",
