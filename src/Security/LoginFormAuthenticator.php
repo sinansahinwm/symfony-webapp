@@ -25,6 +25,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     public const VERIFY_EMAIL_ROUTE = 'app_auth_verify_email';
     public const SIGNIN_REDIRECT_AFTER_ROUTE = 'app_admin_dashboard';
 
+    public const REDIRECT_ROUTE_AFTER_SUBSCRIPTION_COMPLETED = 'app_admin_dashboard';
+
     public function __construct(private UrlGeneratorInterface $urlGenerator)
     {
     }

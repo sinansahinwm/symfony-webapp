@@ -6,7 +6,10 @@ use App\Entity\SubscriptionPlan;
 use App\Entity\User;
 use App\Form\PlanCheckoutType;
 use App\Repository\SubscriptionPlanRepository;
+use App\Security\LoginFormAuthenticator;
 use App\Service\IyzicoPaymentService;
+use App\Service\SubscriptionPlanCheckoutService;
+use App\Service\UserSubscriptionService;
 use Doctrine\ORM\EntityManagerInterface;
 use Iyzipay\Model\BasketItemType;
 use Iyzipay\Model\Currency;
@@ -31,7 +34,7 @@ class SubscriptionPlanController extends AbstractController
     }
 
     #[Route('/subscribe/{thePlan}', name: 'subscribe_plan')]
-    public function subscribePlan(Request $request, SubscriptionPlan $thePlan, #[CurrentUser] User $loggedUser, EntityManagerInterface $entityManager, IyzicoPaymentService $iyzicoPaymentService): Response
+    public function subscribePlan(Request $request, SubscriptionPlan $thePlan, SubscriptionPlanCheckoutService $subscriptionPlanCheckoutService, #[CurrentUser] User $loggedUser, EntityManagerInterface $entityManager, UserSubscriptionService $userSubscriptionService): Response
     {
 
         // Select Plan & Start Trial Period
@@ -46,30 +49,25 @@ class SubscriptionPlanController extends AbstractController
             }
         }
 
-        // Handle Form
+        // Handle Checout Form
         $checkoutForm = $this->createForm(PlanCheckoutType::class);
         $checkoutForm->handleRequest($request);
 
         if ($checkoutForm->isSubmitted() && $checkoutForm->isValid()) {
 
-            // --- Checkout Start --- //
-            $iyzicoPayment = $iyzicoPaymentService
-                ->preparePaymentRequest(Locale::TR, Currency::TL, 110, 500, "23235235", "sdgsdgsdg")
-                ->setCreditCard("John Doe", "5528790000000008", "12", "2030", "123")
-                ->setBuyerUser($loggedUser)
-                ->setUserAddress($loggedUser)
-                ->addBasketItem("1234235", "sdgsdgsdg", BasketItemType::VIRTUAL, 500)
-                ->checkout();
+            $checkoutLocale = ($request->getLocale() === "tr") ? Locale::TR : Locale::EN;
 
-            if ($iyzicoPayment !== NULL) {
-                $paymentStatus = $iyzicoPayment->getStatus();
-                $paymentErrorMessage = $iyzicoPayment->getErrorMessage();
-                $paymentPhase = $iyzicoPayment->getPhase();
-                exit(serialize($paymentStatus));
-                exit("CHECK");
+            $myCheckout = $subscriptionPlanCheckoutService->checkoutWithForm($loggedUser, $thePlan, $checkoutForm, $checkoutLocale);
+            $checkoutIsSuccess = $myCheckout->isPaymentSuccess();
+            $lastCheckoutError = $myCheckout->getLastPaymentError();
+
+            if ($checkoutIsSuccess === TRUE) {
+                $userSubscriptionService->subscribeUser($loggedUser, $thePlan);
+                $this->addFlash('pageNotificationSuccess', t("Abonelik planı satın alındı."));
+                return $this->redirectToRoute(LoginFormAuthenticator::REDIRECT_ROUTE_AFTER_SUBSCRIPTION_COMPLETED);
+            } else {
+                $this->addFlash("pageNotificationError", t("Ödeme başarısız.") . $lastCheckoutError);
             }
-
-            // --- Checkout End --- //
 
         }
 
