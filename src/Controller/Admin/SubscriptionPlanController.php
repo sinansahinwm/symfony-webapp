@@ -10,6 +10,8 @@ use App\Security\LoginFormAuthenticator;
 use App\Service\IyzicoPaymentService;
 use App\Service\SubscriptionPlanCheckoutService;
 use App\Service\UserSubscriptionService;
+use DateTime;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Iyzipay\Model\BasketItemType;
 use Iyzipay\Model\Currency;
@@ -40,8 +42,19 @@ class SubscriptionPlanController extends AbstractController
         // Select Plan & Start Trial Period
         if ($loggedUser->getSubscriptionPlan() === NULL) {
             if ($loggedUser->isTrialPeriodUsed() !== TRUE) {
+
+                // Calculate Valid Until
+                $validUntilDT = new DateTime();
+                $trialPeriodDays = $thePlan->getTrialPeriodDays();
+                $validUntilDT->modify('+' . $trialPeriodDays . " day");
+                $trialPlanValidUntilAt = DateTimeImmutable::createFromMutable($validUntilDT);
+
+                // Set Plan Details
+                $loggedUser->setSubscriptionPlanValidUntil($trialPlanValidUntilAt);
                 $loggedUser->setTrialPeriodUsed(TRUE);
                 $loggedUser->setSubscriptionPlan($thePlan);
+
+                // Persist Plan
                 $entityManager->persist($loggedUser);
                 $entityManager->flush();
                 $this->addFlash('pageNotificationSuccess', $thePlan->getTrialPeriodDays() . t(" günlük deneme aboneliğiniz başladı."));
@@ -63,7 +76,7 @@ class SubscriptionPlanController extends AbstractController
 
             if ($checkoutIsSuccess === TRUE) {
                 $userPaymentProof = $myCheckout->getUserPaymentProof();
-                $userSubscriptionService->subscribeUser($loggedUser, $thePlan, $userPaymentProof);
+                $userSubscriptionService->subscribeUserAfterPayment($loggedUser, $thePlan, $userPaymentProof);
                 $this->addFlash('pageNotificationSuccess', t("Abonelik planı satın alındı."));
                 return $this->redirectToRoute(LoginFormAuthenticator::REDIRECT_ROUTE_AFTER_SUBSCRIPTION_COMPLETED);
             } else {

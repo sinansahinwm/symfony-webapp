@@ -13,7 +13,7 @@ class UserSubscriptionService
     {
     }
 
-    public function subscribeUser(User $user, SubscriptionPlan $subscriptionPlan, UserPayment $userPaymentProof): void
+    public function subscribeUserAfterPayment(User $user, SubscriptionPlan $subscriptionPlan, UserPayment $userPaymentProof): void
     {
         $dtNow = new DateTime();
         $subscriptionPlanUsableDays = $subscriptionPlan->getPaymentInterval();
@@ -38,11 +38,11 @@ class UserSubscriptionService
         $modifiedPlanDT = $dtNow->modify('+' . $subscriptionPlanUsableDays . ' day');
         $userPlanValidUntilAt = DateTimeImmutable::createFromMutable($modifiedPlanDT);
 
-        // Set User Plan Valid Until At
+        // Set User Plan Details
         $user->setSubscriptionPlanValidUntil($userPlanValidUntilAt);
-
-        // Set User's Subscription Plan
         $user->setSubscriptionPlan($subscriptionPlan);
+        $user->setTrialPeriodUsed(TRUE); // Trial is only usable before first payment.
+
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
