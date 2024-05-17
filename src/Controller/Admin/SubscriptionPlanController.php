@@ -62,7 +62,8 @@ class SubscriptionPlanController extends AbstractController
             $lastCheckoutError = $myCheckout->getLastPaymentError();
 
             if ($checkoutIsSuccess === TRUE) {
-                $userSubscriptionService->subscribeUser($loggedUser, $thePlan);
+                $userPaymentProof = $myCheckout->getUserPaymentProof();
+                $userSubscriptionService->subscribeUser($loggedUser, $thePlan, $userPaymentProof);
                 $this->addFlash('pageNotificationSuccess', t("Abonelik planı satın alındı."));
                 return $this->redirectToRoute(LoginFormAuthenticator::REDIRECT_ROUTE_AFTER_SUBSCRIPTION_COMPLETED);
             } else {

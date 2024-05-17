@@ -8,7 +8,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Iyzipay\Model\BasketItemType;
 use Iyzipay\Model\BinNumber;
-use Iyzipay\Model\Currency;
 use Iyzipay\Model\Locale;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Uid\Uuid;
@@ -19,6 +18,7 @@ class SubscriptionPlanCheckoutService
 
     private ?string $lastPaymentError = NULL;
     private bool $paymentSuccess = FALSE;
+    private ?UserPayment $userPaymentProof = NULL;
 
     public function isPaymentSuccess(): bool
     {
@@ -28,6 +28,16 @@ class SubscriptionPlanCheckoutService
     public function setPaymentSuccess(bool $paymentSuccess): void
     {
         $this->paymentSuccess = $paymentSuccess;
+    }
+
+    public function getUserPaymentProof(): ?UserPayment
+    {
+        return $this->userPaymentProof;
+    }
+
+    public function setUserPaymentProof(?UserPayment $userPaymentProof): void
+    {
+        $this->userPaymentProof = $userPaymentProof;
     }
 
 
@@ -73,7 +83,10 @@ class SubscriptionPlanCheckoutService
                         if ($paymentStatusBool === TRUE) {
 
                             // Log Payment
-                            $this->logUserPayment($theUser, $iyzicoPayment->getRawResult(), $binNumberCheck);
+                            $paymentProof = $this->logUserPayment($theUser, $iyzicoPayment->getRawResult(), $binNumberCheck);
+
+                            // Set Log Proof
+                            $this->userPaymentProof = $paymentProof;
 
                             // Set Payment Success
                             $this->setPaymentSuccess(TRUE);

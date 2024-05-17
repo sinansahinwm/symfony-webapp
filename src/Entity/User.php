@@ -96,6 +96,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?bool $trial_period_used = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $subscription_plan_valid_until = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -457,6 +460,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setTrialPeriodUsed(?bool $trial_period_used): static
     {
         $this->trial_period_used = $trial_period_used;
+
+        return $this;
+    }
+
+    public function getSubscriptionPlanValidUntil(): ?\DateTimeImmutable
+    {
+        return $this->subscription_plan_valid_until;
+    }
+
+    public function setSubscriptionPlanValidUntil(?\DateTimeImmutable $subscription_plan_valid_until): static
+    {
+        $this->subscription_plan_valid_until = $subscription_plan_valid_until;
 
         return $this;
     }
