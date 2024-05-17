@@ -7,6 +7,7 @@ use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Iyzipay\Model\BasketItemType;
+use Iyzipay\Model\BinNumber;
 use Iyzipay\Model\Currency;
 use Iyzipay\Model\Locale;
 use Symfony\Component\Form\FormInterface;
@@ -50,38 +51,45 @@ class SubscriptionPlanCheckoutService
 
                 [$myCardholderName, $myCardNumber, $expDateMonth, $expDateYear, $myCVV] = $selectedCardData;
 
+                $binNumberCheck = $this->iyzicoPaymentService->getBinNumberDetails($myCardNumber, $selectedLocale);
 
-                // --- Checkout Start --- //
-                $iyzicoPayment = $this->iyzicoPaymentService
-                    ->preparePaymentRequest($selectedLocale, $selectedCurrency, $selectedAmount, $selectedAmount, $selectedBasketID, $selectedConversationID)
-                    ->setCreditCard($myCardholderName, $myCardNumber, $expDateMonth, $expDateYear, $myCVV)
-                    ->setBuyerUser($theUser)
-                    ->setUserAddress($theUser)
-                    ->addBasketItem($subscriptionPlan->getId(), $subscriptionPlan->getName(), BasketItemType::VIRTUAL, $selectedAmount)
-                    ->checkout();
+                if ($binNumberCheck !== NULL) {
 
-                if ($iyzicoPayment !== NULL) {
-                    $paymentStatus = $iyzicoPayment->getStatus();
-                    $paymentErrorMessage = $iyzicoPayment->getErrorMessage();
-                    $paymentStatusBool = $paymentStatus === "success";
+                    // --- Checkout Start --- //
+                    $iyzicoPayment = $this->iyzicoPaymentService
+                        ->preparePaymentRequest($selectedLocale, $selectedCurrency, $selectedAmount, $selectedAmount, $selectedBasketID, $selectedConversationID)
+                        ->setCreditCard($myCardholderName, $myCardNumber, $expDateMonth, $expDateYear, $myCVV)
+                        ->setBuyerUser($theUser)
+                        ->setUserAddress($theUser)
+                        ->addBasketItem($subscriptionPlan->getId(), $subscriptionPlan->getName(), BasketItemType::VIRTUAL, $selectedAmount)
+                        ->checkout();
 
-                    if ($paymentStatusBool === TRUE) {
+                    if ($iyzicoPayment !== NULL) {
 
-                        // Log Payment
-                        $this->logUserPayment($theUser, $iyzicoPayment->getRawResult());
+                        $paymentStatus = $iyzicoPayment->getStatus();
+                        $paymentErrorMessage = $iyzicoPayment->getErrorMessage();
+                        $paymentStatusBool = $paymentStatus === "success";
 
-                        // Set Payment Success
-                        $this->setPaymentSuccess(TRUE);
+                        if ($paymentStatusBool === TRUE) {
+
+                            // Log Payment
+                            $this->logUserPayment($theUser, $iyzicoPayment->getRawResult(), $binNumberCheck);
+
+                            // Set Payment Success
+                            $this->setPaymentSuccess(TRUE);
+
+                        } else {
+                            $this->setLastPaymentError($paymentErrorMessage);
+                        }
 
                     } else {
-                        $this->setLastPaymentError($paymentErrorMessage);
+                        $this->setLastPaymentError($this->translator->trans("Girilen kart bilgileri ile ödeme yapılamıyor."));
                     }
+                    // --- Checkout End --- //
 
                 } else {
-                    $this->setLastPaymentError($this->translator->trans("Girilen kart bilgileri ile ödeme yapılamıyor."));
+                    $this->setLastPaymentError($this->translator->trans("Girilen kart bilgileri geçersiz veya bu ödeme bankanız tarafından kabul edilmiyor."));
                 }
-
-                // --- Checkout End --- //
 
             } else {
                 $this->setLastPaymentError($this->translator->trans("Girilen kart bilgileri geçersiz."));
@@ -94,12 +102,14 @@ class SubscriptionPlanCheckoutService
         return $this;
     }
 
-    private function logUserPayment(User $user, string $rawResult): UserPayment
+    private function logUserPayment(User $user, string $rawResult, BinNumber $binNumberDetails): UserPayment
     {
+        $binNumberRawResult = $binNumberDetails->getRawResult();
         $userPayment = new UserPayment();
         $userPayment->setUser($user);
         $userPayment->setRawResult($rawResult);
         $userPayment->setCreatedAt(new DateTimeImmutable());
+        $userPayment->setBinNumberDetails($binNumberRawResult);
         $this->entityManager->persist($userPayment);
         $this->entityManager->flush();
         return $userPayment;

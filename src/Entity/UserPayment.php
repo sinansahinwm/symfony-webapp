@@ -24,6 +24,9 @@ class UserPayment
     #[ORM\Column(type: Types::TEXT)]
     private ?string $raw_result = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $bin_number_details = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -61,6 +64,18 @@ class UserPayment
     public function setRawResult(string $raw_result): static
     {
         $this->raw_result = $raw_result;
+
+        return $this;
+    }
+
+    public function getBinNumberDetails(): ?string
+    {
+        return $this->bin_number_details;
+    }
+
+    public function setBinNumberDetails(?string $bin_number_details): static
+    {
+        $this->bin_number_details = $bin_number_details;
 
         return $this;
     }

@@ -32,7 +32,8 @@ class PlanCheckoutType extends AbstractFormType
             ->add('cvv', TextType::class, [
                 'attr' => [
                     'class' => "cvv-code-mask",
-                    "placeholder" => t("örn; 654")
+                    "placeholder" => t("örn; 654"),
+                    'maxlength' => "3"
                 ]
             ]);
     }

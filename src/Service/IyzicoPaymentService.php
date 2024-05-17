@@ -4,6 +4,7 @@ use App\Entity\User;
 use Iyzipay\Model\Address;
 use Iyzipay\Model\BasketItem;
 use Iyzipay\Model\BasketItemType;
+use Iyzipay\Model\BinNumber;
 use Iyzipay\Model\Buyer;
 use Iyzipay\Model\Currency;
 use Iyzipay\Model\Locale;
@@ -13,6 +14,7 @@ use Iyzipay\Model\PaymentChannel;
 use Iyzipay\Model\PaymentGroup;
 use Iyzipay\Options;
 use Iyzipay\Request\CreatePaymentRequest;
+use Iyzipay\Request\RetrieveBinNumberRequest;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 
 class IyzicoPaymentService
@@ -63,6 +65,24 @@ class IyzicoPaymentService
         $myAddress->setZipCode("34742");
         $this->buyerAddress = $myAddress;
         return $this;
+    }
+
+    public function getBinNumberDetails(string $cardNumber, Locale|string $locale = Locale::TR): null|BinNumber
+    {
+        $iyzicoOptions = $this->getIyzipayOptions();
+        $cardBinNumber = substr($cardNumber, 0, 8);
+        $myBinNumberRequest = new RetrieveBinNumberRequest();
+        $myBinNumberRequest->setBinNumber($cardBinNumber);
+        $myBinNumberRequest->setLocale(Locale::TR);
+        $retrievedBinNumber = BinNumber::retrieve($myBinNumberRequest, $iyzicoOptions);
+
+        $binNumberStatus = $retrievedBinNumber->getStatus();
+        $binNumberStatusSuccess = ($binNumberStatus === "success");
+
+        if ($binNumberStatusSuccess === TRUE) {
+            return $retrievedBinNumber;
+        }
+        return NULL;
     }
 
     public function setBuyerUser(User $user): self
@@ -129,7 +149,6 @@ class IyzicoPaymentService
             $myPaymentRequest->setBasketItems($this->baskedItems);
             $myPaymentRequest->setShippingAddress($myBuyerAddress);
             $myPaymentRequest->setBillingAddress($myBuyerAddress);
-
 
             // Make Payment & Return
             return Payment::create($myPaymentRequest, $myOptions);
