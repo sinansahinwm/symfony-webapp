@@ -1,0 +1,17 @@
+{% extends 'layout/email.html.twig' %}
+
+{% block body %}
+{% apply markdown_to_html %}
+
+    # {{ context.theSubscriptionPlan.name }} {{ 'abonelik planına geçildi.'|trans }}
+
+    {{ 'Bu abonelik planına ait özellikler aşağıda sıralanmıştır.'|trans }}
+
+    {% for planFeature in context.theSubscriptionPlan.planFeatures %}
+    - {{ planFeature }}
+    {% endfor %}
+
+    {{ 'Ödemenize ait fatura, bu e-posta adresine otomatik olarak gönderilecektir.'|trans }}
+
+{% endapply %}
+{% endblock %}

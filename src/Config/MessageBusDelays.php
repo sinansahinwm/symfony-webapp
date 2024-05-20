@@ -9,4 +9,6 @@ class MessageBusDelays
     public const SEND_INVITE_EMAIL_AFTER_PERSISTED = 5000;
     public const SEND_FILE_SHARING_EMAIL_AFTER_PERSISTED = 5000;
 
+    public const SEND_SUBSCRIBED_EMAIL_AFTER_USER_SUBSCRIBED = 5000;
+
 }

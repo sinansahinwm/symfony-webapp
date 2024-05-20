@@ -1,15 +1,21 @@
 <?php namespace App\Service;
 
+use App\Config\MessageBusDelays;
 use App\Entity\SubscriptionPlan;
 use App\Entity\User;
 use App\Entity\UserPayment;
+use App\Message\AppEmailMessage;
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Messenger\Stamp\DelayStamp;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserSubscriptionService
 {
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private EntityManagerInterface $entityManager, private MessageBusInterface $messageBus, private TranslatorInterface $translator, private UrlGeneratorInterface $urlGenerator)
     {
     }
 
@@ -45,6 +51,34 @@ class UserSubscriptionService
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
+
+        // Send Email After Checkout & Subscribing
+        $this->releaseEmailAfterSubscribing($user);
+
+    }
+
+    private function releaseEmailAfterSubscribing(User $user): void
+    {
+
+        $emailContext = [
+            'theUser' => $user,
+            'theSubscriptionPlan' => $user->getSubscriptionPlan()
+        ];
+
+        $emailCTA = [
+            'title' => $this->translator->trans("Profilime Git"),
+            'url' => $this->urlGenerator->generate('app_admin_dashboard', [],UrlGeneratorInterface::ABSOLUTE_URL),
+        ];
+
+        $myEmail = new AppEmailMessage(
+            'user_subscribed',
+            $user->getEmail(),
+            $this->translator->trans('Abonelik Planı Satın Alındı'),
+            $emailContext,
+            $emailCTA
+        );
+
+        $this->messageBus->dispatch($myEmail, [new DelayStamp(MessageBusDelays::SEND_SUBSCRIBED_EMAIL_AFTER_USER_SUBSCRIBED)]);
 
     }
 
