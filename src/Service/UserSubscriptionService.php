@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserSubscriptionService
 {
-    public function __construct(private EntityManagerInterface $entityManager, private MessageBusInterface $messageBus, private TranslatorInterface $translator, private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private EntityManagerInterface $entityManager, private MessageBusInterface $messageBus, private TranslatorInterface $translator, private UrlGeneratorInterface $urlGenerator, private NotificationService $notificationService)
     {
     }
 
@@ -52,9 +52,17 @@ class UserSubscriptionService
         $this->entityManager->persist($user);
         $this->entityManager->flush();
 
-        // Send Email After Checkout & Subscribing
+        // Send Email and Notification After Checkout & Subscribing
         $this->releaseEmailAfterSubscribing($user);
+        $this->releaseNotificationAfterSubscribing($user);
 
+    }
+
+    private function releaseNotificationAfterSubscribing(User $user): void
+    {
+        $actionUrl = $this->urlGenerator->generate('app_admin_profile_show', ['theUser' => $user->getId()]);
+        $translatedNotificationMessage = $user->getSubscriptionPlan()->getName() . " " . $this->translator->trans("abonelik planına geçildi.");
+        $this->notificationService->setMessage($translatedNotificationMessage)->release($user, $actionUrl);
     }
 
     private function releaseEmailAfterSubscribing(User $user): void
@@ -67,7 +75,7 @@ class UserSubscriptionService
 
         $emailCTA = [
             'title' => $this->translator->trans("Profilime Git"),
-            'url' => $this->urlGenerator->generate('app_admin_dashboard', [],UrlGeneratorInterface::ABSOLUTE_URL),
+            'url' => $this->urlGenerator->generate('app_admin_dashboard', [], UrlGeneratorInterface::ABSOLUTE_URL),
         ];
 
         $myEmail = new AppEmailMessage(
