@@ -5,9 +5,18 @@
 
 {% block body %}
 
-    <!-- Header -->
-    {{ include('admin/profile/_header.html.twig') }}
-    <!--/ Header -->
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Profile -->
+            {{ include('admin/profile/_header.html.twig') }}
+            <!--/ Profile -->
+        </div>
+        <div class="col-md-4">
+            <!-- Subscription -->
+            {{ include('admin/profile/_subscription_plan.html.twig') }}
+            <!--/ Subscription -->
+        </div>
+    </div>
 
     <!-- Activity -->
     {{ include('admin/profile/_activity_timeline.html.twig') }}

@@ -1,62 +1,58 @@
-<div class="row">
-    <div class="col-12">
-        <div class="card mb-4">
-            <div class="user-profile-header-banner">
-                <img src="{{ asset('build/media/misc/profileBanner.png') }}" alt="{{ 'Profil'|trans }}" class="rounded-top">
-            </div>
-            <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
-                <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
-                    <img src="{{ userMenu.avatarUrl }}" alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img">
+<div class="card mb-4">
+    <div class="user-profile-header-banner">
+        <img src="{{ asset('build/media/misc/profileBanner.png') }}" alt="{{ 'Profil'|trans }}" class="rounded-top">
+    </div>
+    <div class="user-profile-header d-flex flex-column flex-sm-row text-sm-start text-center mb-4">
+        <div class="flex-shrink-0 mt-n2 mx-sm-0 mx-auto">
+            <img src="{{ userMenu.avatarUrl }}" alt="user image" class="d-block h-auto ms-0 ms-sm-4 rounded-3 user-profile-img">
+        </div>
+        <div class="flex-grow-1 mt-3 mt-sm-5">
+            <div class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
+                <div class="user-profile-info">
+                    <h4>
+                        {{ user.displayName ?? user.email }}
+                    </h4>
+                    <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
+                        <li class="list-inline-item fw-medium">
+                            <i class='bx bx-purchase-tag-alt'></i>
+                            {% if user.team is same as(null) %}
+                                {{ 'Herhangi Bir Takımda Değil'|trans }}
+                            {% else %}
+                                <a class="text-dark" href="{{ path('app_admin_team_board') }}">{{ user.team.name }}</a>
+                            {% endif %}
+                        </li>
+                        <li class="list-inline-item fw-medium">
+                            <i class='bx bx-envelope'></i> {{ user.verified is same as(true) ? 'E-Posta Onaylandı'|trans : 'E-Posta Onaylanmadı'|trans }}
+                        </li>
+                        <li class="list-inline-item fw-medium">
+                            <i class='bx bx-calendar-alt'></i> {{ user.createdAt|ago}} {{ 'katıldı'|trans }}
+                        </li>
+                    </ul>
                 </div>
-                <div class="flex-grow-1 mt-3 mt-sm-5">
-                    <div class="d-flex align-items-md-end align-items-sm-start align-items-center justify-content-md-between justify-content-start mx-4 flex-md-row flex-column gap-4">
-                        <div class="user-profile-info">
-                            <h4>
-                                {{ user.displayName ?? user.email }}
-                            </h4>
-                            <ul class="list-inline mb-0 d-flex align-items-center flex-wrap justify-content-sm-start justify-content-center gap-2">
-                                <li class="list-inline-item fw-medium">
-                                    <i class='bx bx-purchase-tag-alt'></i>
-                                    {% if user.team is same as(null) %}
-                                        {{ 'Herhangi Bir Takımda Değil'|trans }}
-                                        {% else %}
-                                            <a class="text-dark" href="{{ path('app_admin_team_board') }}">{{ user.team.name }}</a>
-                                    {% endif %}
-                                </li>
-                                <li class="list-inline-item fw-medium">
-                                    <i class='bx bx-envelope'></i> {{ user.verified is same as(true) ? 'E-Posta Onaylandı'|trans : 'E-Posta Onaylanmadı'|trans }}
-                                </li>
-                                <li class="list-inline-item fw-medium">
-                                    <i class='bx bx-calendar-alt'></i> {{ user.createdAt|ago}} {{ 'katıldı'|trans }}
-                                </li>
-                            </ul>
-                        </div>
-                            <div class="btn-group" role="group" aria-label="{{ 'Profil İşlemleri'|trans }}">
-                                {% if is_granted('PROFILE_EDIT', user) %}
-                                    <a href="{{ path('app_admin_profile_edit', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Düzenle'|trans }}"><i class='bx bx-edit-alt'></i></a>
-                                {% endif %}
+                <div class="btn-group" role="group" aria-label="{{ 'Profil İşlemleri'|trans }}">
+                    {% if is_granted('PROFILE_EDIT', user) %}
+                        <a href="{{ path('app_admin_profile_edit', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Düzenle'|trans }}"><i class='bx bx-edit-alt'></i></a>
+                    {% endif %}
 
-                                {% if is_granted("PROFILE_CHANGE_PASSWORD", user) %}
-                                    <a href="{{ path('app_admin_profile_change_password', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Şifre Değiştir'|trans }}"><i class='bx bx-key'></i></a>
-                                {% endif %}
+                    {% if is_granted("PROFILE_CHANGE_PASSWORD", user) %}
+                        <a href="{{ path('app_admin_profile_change_password', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Şifre Değiştir'|trans }}"><i class='bx bx-key'></i></a>
+                    {% endif %}
 
-                                {% if is_granted("PROFILE_MAKE_PASSIVE", user) and user.isPassive is not same as(true) %}
-                                    <a href="{{ path('app_admin_profile_make_passive', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Pasife Al'|trans }}"><i class='bx bx-user-x'></i></a>
-                                {% endif %}
+                    {% if is_granted("PROFILE_MAKE_PASSIVE", user) and user.isPassive is not same as(true) %}
+                        <a href="{{ path('app_admin_profile_make_passive', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Pasife Al'|trans }}"><i class='bx bx-user-x'></i></a>
+                    {% endif %}
 
-                                {% if is_granted("PROFILE_MAKE_PASSIVE", user) and user.isPassive is same as(true) %}
-                                    <a href="{{ path('app_admin_profile_make_active', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Aktive Et'|trans }}"><i class='bx bxs-user-plus'></i></a>
-                                {% endif %}
+                    {% if is_granted("PROFILE_MAKE_PASSIVE", user) and user.isPassive is same as(true) %}
+                        <a href="{{ path('app_admin_profile_make_active', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Aktive Et'|trans }}"><i class='bx bxs-user-plus'></i></a>
+                    {% endif %}
 
-                                {% if is_granted("PROFILE_KICK_TEAM", user) and user.team is not null %}
-                                    <a href="{{ path('app_admin_profile_kick_team', { theUser: user.id }) }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Takımdan Çıkar'|trans }}"><i class='bx bx-x'></i></a>
-                                {% endif %}
+                    {% if is_granted("PROFILE_KICK_TEAM", user) and user.team is not null %}
+                        <a href="{{ path('app_admin_profile_kick_team', { theUser: user.id }) }}" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Takımdan Çıkar'|trans }}"><i class='bx bx-x'></i></a>
+                    {% endif %}
 
-                                {% if is_granted('ROLE_CAN_SWITCH', user) %}
-                                    <a href="{{ path('app_admin_profile_impersonate', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Taklit Moduna Geç'|trans }}"><i class='bx bx-user-pin'></i></a>
-                                {% endif %}
-                            </div>
-                    </div>
+                    {% if is_granted('ROLE_CAN_SWITCH', user) %}
+                        <a href="{{ path('app_admin_profile_impersonate', { theUser: user.id }) }}" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Taklit Moduna Geç'|trans }}"><i class='bx bx-user-pin'></i></a>
+                    {% endif %}
                 </div>
             </div>
         </div>

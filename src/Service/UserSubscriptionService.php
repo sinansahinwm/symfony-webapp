@@ -48,4 +48,21 @@ class UserSubscriptionService
 
     }
 
+    public static function planDaysRemaining(User $user): int
+    {
+        $daysRemaining = 0;
+        $subscriptionPlan = $user->getSubscriptionPlan();
+        if ($subscriptionPlan instanceof SubscriptionPlan) {
+
+            $timeNow = new DateTime();
+            $planValidUntilAt = $user->getSubscriptionPlanValidUntil();
+            $timeDiffSeconds = $planValidUntilAt->getTimestamp() - $timeNow->getTimestamp();
+            $timeDiffDays = ceil(($timeDiffSeconds / 3600) / 24);
+            if ($timeDiffDays >= 0) {
+                $daysRemaining = $timeDiffDays;
+            }
+        }
+        return $daysRemaining;
+    }
+
 }
