@@ -20,6 +20,7 @@ twig:
   globals:
     misc:
       underMaintaince: false
+      supportEmail: 'test@bla.com'
     layout:
       uiTheme: "default" # It can be bordered, semidark, raspberry, default
       locales:
