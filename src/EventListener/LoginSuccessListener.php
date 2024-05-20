@@ -6,6 +6,7 @@ use App\Repository\TeamInviteRepository;
 use App\Service\NotificationService;
 use App\Service\TeamInviteService;
 use App\Service\UserActivityService;
+use App\Service\UserSubscriptionService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
@@ -55,9 +56,16 @@ class LoginSuccessListener
 
         // Set Last Login
         $eventUser->setLastLogin(new DateTimeImmutable());
+
+        // Set Subscription Plan Reaches
+        $planDaysRemaining = UserSubscriptionService::planDaysRemaining($eventUser);
+        if ($planDaysRemaining === 0) {
+            $eventUser->setSubscriptionPlan(NULL); // Remove subscription plan if needed
+        }
+
+        // Persist User
         $this->entityManager->persist($eventUser);
         $this->entityManager->flush();
-
     }
 
 }
