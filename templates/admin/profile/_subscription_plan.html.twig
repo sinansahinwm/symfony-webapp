@@ -35,7 +35,7 @@
                     {{ 'Abonelik Süresi'|trans }}
                 </h6>
                 <h6 class="mb-0">
-                    {{ planPercent }}%
+                    {{ (planPercent > 100) ? 100 : planPercent }}%
                 </h6>
             </div>
             <div class="progress mb-1" style="height: 8px">
