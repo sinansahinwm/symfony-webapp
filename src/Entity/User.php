@@ -99,6 +99,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $subscription_plan_valid_until = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $last_ip_address = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -472,6 +475,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setSubscriptionPlanValidUntil(?\DateTimeImmutable $subscription_plan_valid_until): static
     {
         $this->subscription_plan_valid_until = $subscription_plan_valid_until;
+
+        return $this;
+    }
+
+    public function getLastIpAddress(): ?string
+    {
+        return $this->last_ip_address;
+    }
+
+    public function setLastIpAddress(?string $last_ip_address): static
+    {
+        $this->last_ip_address = $last_ip_address;
 
         return $this;
     }

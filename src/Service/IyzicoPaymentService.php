@@ -1,6 +1,8 @@
 <?php namespace App\Service;
 
+use App\Config\IyzicoDefaultConfig;
 use App\Entity\User;
+use Exception;
 use Iyzipay\Model\Address;
 use Iyzipay\Model\BasketItem;
 use Iyzipay\Model\BasketItemType;
@@ -59,10 +61,10 @@ class IyzicoPaymentService
     {
         $myAddress = new Address();
         $myAddress->setContactName($theUser->getDisplayName() ?? $theUser->getEmail());
-        $myAddress->setCity("Istanbul");
-        $myAddress->setCountry("Turkey");
-        $myAddress->setAddress("Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1");
-        $myAddress->setZipCode("34742");
+        $myAddress->setCity(IyzicoDefaultConfig::DEFAULT_USER_ADDRESS_CITY);
+        $myAddress->setCountry(IyzicoDefaultConfig::DEFAULT_USER_ADDRESS_COUNTRY);
+        $myAddress->setAddress(IyzicoDefaultConfig::DEFAULT_USER_ADDRESS_ADDRESS);
+        $myAddress->setZipCode(IyzicoDefaultConfig::DEFAULT_USER_ADDRESS_ZIPCODE);
         $this->buyerAddress = $myAddress;
         return $this;
     }
@@ -89,20 +91,25 @@ class IyzicoPaymentService
     {
         $myBuyer = new Buyer();
         $myBuyer->setId($user->getId());
-        $myBuyer->setName("John");
-        $myBuyer->setSurname("Doe");
-        $myBuyer->setGsmNumber("+905350000000");
+        $myBuyer->setName($this->getUserDisplayNamePartsOrNull($user) ?? IyzicoDefaultConfig::DEFAULT_USER_FULLNAME_NAME);
+        $myBuyer->setSurname($this->getUserDisplayNamePartsOrNull($user, TRUE) ?? IyzicoDefaultConfig::DEFAULT_USER_FULLNAME_LASTNAME);
+        $myBuyer->setGsmNumber($user->getPhone() ?? IyzicoDefaultConfig::DEFAULT_USER_PHONE);
         $myBuyer->setEmail($user->getEmail());
-        $myBuyer->setIdentityNumber("74300864791");
-        $myBuyer->setLastLoginDate("2015-10-05 12:43:35");
-        $myBuyer->setRegistrationDate("2013-04-21 15:12:09");
-        $myBuyer->setRegistrationAddress("Nidakule Göztepe, Merdivenköy Mah. Bora Sok. No:1");
-        $myBuyer->setIp("85.34.78.112");
-        $myBuyer->setCity("Istanbul");
-        $myBuyer->setCountry("Turkey");
-        $myBuyer->setZipCode("34732");
+        $myBuyer->setIdentityNumber(IyzicoDefaultConfig::DEFAULT_USER_IDENTITY_NUMBER);
+        $myBuyer->setLastLoginDate(IyzicoDefaultConfig::DEFAULT_USER_LAST_LOGIN_DATE);
+        $myBuyer->setRegistrationDate(IyzicoDefaultConfig::DEFAULT_USER_REGISTRATION_DATE);
+        $myBuyer->setRegistrationAddress(IyzicoDefaultConfig::DEFAULT_USER_REGISTRATION_ADDRESS);
+        $myBuyer->setIp($user->getLastIpAddress() ?? IyzicoDefaultConfig::DEFAULT_USER_IP);
+        $myBuyer->setCity(IyzicoDefaultConfig::DEFAULT_USER_CITY);
+        $myBuyer->setCountry(IyzicoDefaultConfig::DEFAULT_USER_COUNTRY);
+        $myBuyer->setZipCode(IyzicoDefaultConfig::DEFAULT_USER_ZIPCODE);
         $this->basketBuyer = $myBuyer;
         return $this;
+    }
+
+    private function getUserDisplayNamePartsOrNull(User $user, $lastName = FALSE): null|string
+    {
+        return NULL; // TODO : return fullname to name lastname
     }
 
     private function getIyzipayOptions(): Options
@@ -153,7 +160,7 @@ class IyzicoPaymentService
             // Make Payment & Return
             return Payment::create($myPaymentRequest, $myOptions);
 
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return NULL;
         }
     }

@@ -63,9 +63,17 @@ class LoginSuccessListener
             $eventUser->setSubscriptionPlan(NULL); // Remove subscription plan if needed
         }
 
+        // Set Last IP Address
+        $userIPAddress = $event->getRequest()->getClientIp();
+        if($userIPAddress !== NULL){
+            $eventUser->setLastIpAddress($userIPAddress);
+        }
+
         // Persist User
         $this->entityManager->persist($eventUser);
         $this->entityManager->flush();
+
+
     }
 
 }
