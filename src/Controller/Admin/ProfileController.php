@@ -204,14 +204,20 @@ class ProfileController extends AbstractController
     }
 
     #[Route('/current/switch_locale_to/{fallback}', name: 'switch_locale_to')]
-    public function switchLocaleTo(#[CurrentUser] User $loggedUser, ?string $fallback, EntityManagerInterface $entityManager, Environment $twig): Response
+    public function switchLocaleTo(#[CurrentUser] User $loggedUser, ?string $fallback, Request $request, Environment $twig, EntityManagerInterface $entityManager): Response
     {
         $validFallbacks = $twig->getGlobals()["layout"]["locales"];
         foreach ($validFallbacks as $validFallback) {
             if ($validFallback["fallback"] === $fallback) {
+
+                // Update Session Locale
+                $request->getSession()->set('_locale', $fallback);
+
+                // Set Locale & Persist User
                 $loggedUser->setLocale($fallback);
                 $entityManager->persist($loggedUser);
                 $entityManager->flush();
+
             }
         }
         return $this->redirectToRoute(LoginFormAuthenticator::SIGNIN_REDIRECT_AFTER_ROUTE);
