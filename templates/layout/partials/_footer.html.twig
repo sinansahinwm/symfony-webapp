@@ -7,5 +7,8 @@
         <a href="{{ path(layout.admin.developer.helpCenterPath) }}" class="footer-link me-4">
             {{ 'Yardım Merkezi'|trans }}
         </a>
+        <span class="badge rounded-pill bg-label-secondary">
+            {{ app.request.locale|upper }}
+        </span>
     </div>
 </div>
