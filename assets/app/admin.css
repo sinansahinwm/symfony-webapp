@@ -543,3 +543,13 @@ html:not([dir=rtl]) .faq-header:after {
 .dark-style .bg-faq-section {
     background-color: rgba(99, 123, 169, 0.08);
 }
+
+/* Fullscreen */
+.misc-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 1.875rem * 2);
+    text-align: center;
+}
