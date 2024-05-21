@@ -1,6 +1,4 @@
-<?php
-
-namespace App\Controller;
+<?php namespace App\Controller;
 
 use App\Config\MessageBusDelays;
 use App\Entity\TeamInvite;
@@ -106,6 +104,11 @@ class AuthController extends AbstractController
             ];
             $myEmailNotification = new AppEmailMessage("verify_email", $user->getEmail(), t('E-Posta Adresinizi Doğrulayın'), $myEmailContext, $myCallToAction);
             $messageBus->dispatch($myEmailNotification, [new DelayStamp(MessageBusDelays::SEND_VERIFY_EMAIL_AFTER_REGISTRATION)]);
+
+            // Send Support E-Mail
+            $userSupportEmail = new AppEmailMessage("need_more_help", $user->getEmail(), t('Merhaba, yardıma ihtiyacınız var mı?'), []);
+            $messageBus->dispatch($userSupportEmail, [new DelayStamp(MessageBusDelays::SEND_SUPPORT_EMAIL_AFTER_REGISTRATION)]);
+
 
             $this->addFlash('pageNotificationSuccess', t('Kullanıcı kaydı başarılı, lütfen e-posta adresinize gönderilen doğrulama mailini onaylayın.'));
 

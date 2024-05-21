@@ -1,0 +1,22 @@
+{% extends 'layout/email.html.twig' %}
+
+{% block body %}
+    {% apply markdown_to_html %}
+
+    {{ 'Merhaba'|trans }}
+
+
+    {{ 'Ben müşteri deneyim ekibinden %humanName%. Umarım her şey yolundadır.'|trans({'%humanName%': misc.supportHumanName}) }}
+
+
+
+    {{ 'Bir sorunuz varsa bu e-postayı yanıtlayabilirisiniz.'|trans }}{{ 'Sizlere yardımcı olmaktan memnuniyet duyarız.'|trans }}
+
+
+    {{ 'Saygılarımla'|trans }},
+
+
+    {{ misc.supportHumanName }}
+
+    {% endapply %}
+{% endblock %}

@@ -20,6 +20,7 @@ twig:
   globals:
     misc:
       underMaintaince: false
+      supportHumanName: "Ahmet"
       supportEmail: 'test@bla.com'
       supportPhone: '+905444444444'
     layout:
