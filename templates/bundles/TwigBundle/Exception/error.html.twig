@@ -1,0 +1,21 @@
+{% extends 'layout/fullscreen.html.twig' %}
+
+{% block pageTitle %}{{ 'Hata'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Hata'|trans }}{% endblock %}
+
+{% block body %}
+
+    <div class="misc-wrapper">
+        <h1 class="mb-2 mx-2">{{ 'Bir Şeyler Yanlış Oldu' }} :(</h1>
+        <p class="mb-4 mx-2">
+            {{ 'Bu işlemi yaparken bir hatayla karşılaşıldı.'|trans }}
+        </p>
+        <a href="{{ path('app_admin_dashboard') }}" class="btn btn-primary">
+            {{ 'Ana Sayfaya Dön'|trans }}
+        </a>
+        <div class="mt-3">
+            <img src="{{ asset('build/media/misc/errorPageDark.png') }}" alt="{{ 'Hata Sayfası'|trans }}" width="500" class="img-fluid"/>
+        </div>
+    </div>
+
+{% endblock %}
