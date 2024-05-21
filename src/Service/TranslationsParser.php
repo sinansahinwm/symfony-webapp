@@ -22,7 +22,6 @@ class TranslationsParser
         return $this;
     }
 
-
     public function __construct(private ContainerBagInterface $containerBag, private LoggerInterface $logger)
     {
     }

@@ -12,11 +12,8 @@ class TextTranslatorService
 {
 
     const TRANSLATION_ENDPOINT = "https://translation.googleapis.com/language/translate/v2";
-
     private ?string $sourceLanguage = NULL;
-
     private ?string $targetLanguage = NULL;
-
     private ?string $query = NULL;
 
     public function __construct(private HttpClientInterface $httpClient, private ContainerBagInterface $containerBag)
