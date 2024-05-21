@@ -2,7 +2,9 @@
 
 namespace App\MessageHandler;
 
+use App\Entity\User;
 use App\Message\AppEmailMessage;
+use App\Repository\UserRepository;
 use Exception;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBag;
@@ -32,12 +34,21 @@ final class AppEmailMessageHandler
         'http://127.0.0.1',
     ];
 
-    public function __construct(private Environment $twig, private MailerInterface $mailer, private LoggerInterface $logger, private ContainerBagInterface $containerBag)
+    public function __construct(private Environment $twig, private MailerInterface $mailer, private LoggerInterface $logger, private ContainerBagInterface $containerBag, private UserRepository $userRepository)
     {
     }
 
     public function __invoke(AppEmailMessage $message)
     {
+
+        // Check Email Receiving Blocked
+        $emailUser = $this->userRepository->findBy(["email" => $message->getEmailTo()]);
+        if ($emailUser instanceof User) {
+            $userPreferences = $emailUser->getUserPreferences();
+            if ($userPreferences->isReceiveEmails() !== TRUE) {
+                return;
+            }
+        }
 
         // Prepare email foundation.
         $myEmail = new Email();

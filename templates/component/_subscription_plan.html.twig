@@ -21,7 +21,16 @@
             <div class="text-center position-relative mb-4 pb-1">
                 <div class="mb-2 d-flex">
                     <h1 class="price-toggle text-primary price-yearly mb-0">
-                        {{ plan.currencySign}} {{ plan.amount }}
+                        {% if trialUsed is defined and trialUsed is not same as(true) %}
+                            <small>
+                                <del class="text-muted">
+                                    {{ plan.currencySign}} {{ plan.amount }}
+                                </del>
+                            </small>
+                            {{ plan.currencySign}} 0
+                        {% else %}
+                            {{ plan.currencySign}} {{ plan.amount }}
+                        {% endif %}
                     </h1>
                     <sub class="h5 text-muted pricing-duration mt-auto mb-2">
                         /{% if plan.paymentInterval == 30 %}{{ 'ay'|trans }}{% else %}{{ plan.paymentInterval }}{{ 'gün'|trans }}{% endif %}
@@ -62,9 +71,20 @@
             {% if hideActions is not defined %}
                 <!-- Subscription Plan Get Started Button -->
                 {% if plan.isPopular is same as(true) %}
-                    <a href="{{ path('app_admin_exclude_subscription_plan_subscribe_plan', { thePlan: plan.id }) }}" class="btn btn-primary d-grid w-100">{{ 'Hemen Başlayın'|trans }}</a>
+                    <a href="{{ path('app_admin_exclude_subscription_plan_subscribe_plan', { thePlan: plan.id }) }}" class="btn btn-primary d-grid w-100">
+                        {% if trialUsed is defined and trialUsed is not same as(true) %}
+                            {{ 'Hemen Ücretsiz Deneyin'|trans }}
+                        {% else %}
+                            {{ 'Hemen Başlayın'|trans }}
+                        {% endif %}
+                    </a>
                 {% else %}
-                    <a href="{{ path('app_admin_exclude_subscription_plan_subscribe_plan', { thePlan: plan.id }) }}" class="btn btn-label-primary d-grid w-100" >{{ 'Hemen Başlayın'|trans }}</a>
+                    <a href="{{ path('app_admin_exclude_subscription_plan_subscribe_plan', { thePlan: plan.id }) }}" class="btn btn-label-primary d-grid w-100" >
+                        {% if trialUsed is defined and trialUsed is not same as(true) %}
+                            {{ 'Hemen Ücretsiz Deneyin'|trans }}
+                        {% else %}
+                            {{ 'Hemen Başlayın'|trans }}
+                        {% endif %}</a>
                 {% endif %}
             {% endif %}
 

@@ -23,10 +23,6 @@ class AbstractFileListener
             $object->setUploadedBy($this->security->getUser());
         }
 
-        if ($object instanceof PuppeteerReplay) {
-            $object->setStatus(PuppeteerReplayStatusType::UPLOAD);
-        }
-
     }
 
 }

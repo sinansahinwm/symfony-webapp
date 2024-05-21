@@ -102,6 +102,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $last_ip_address = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?UserPreferences $userPreferences = null;
+
     public function __construct()
     {
         $this->teamInvites = new ArrayCollection();
@@ -487,6 +490,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setLastIpAddress(?string $last_ip_address): static
     {
         $this->last_ip_address = $last_ip_address;
+
+        return $this;
+    }
+
+    public function getUserPreferences(): ?UserPreferences
+    {
+        return $this->userPreferences;
+    }
+
+    public function setUserPreferences(UserPreferences $userPreferences): static
+    {
+        // set the owning side of the relation if necessary
+        if ($userPreferences->getUser() !== $this) {
+            $userPreferences->setUser($this);
+        }
+
+        $this->userPreferences = $userPreferences;
 
         return $this;
     }
