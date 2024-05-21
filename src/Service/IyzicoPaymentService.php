@@ -109,7 +109,20 @@ class IyzicoPaymentService
 
     private function getUserDisplayNamePartsOrNull(User $user, $lastName = FALSE): null|string
     {
-        return NULL; // TODO : return fullname to name lastname
+        $userDisplayName = $user->getDisplayName();
+        if ($userDisplayName !== NULL) {
+            $explodedDisplayName = explode(" ", $user->getDisplayName());
+            if (count($explodedDisplayName) > 1) {
+                $userFirstname = $explodedDisplayName[array_key_first($explodedDisplayName)];
+                $userLastname = $explodedDisplayName[array_key_last($explodedDisplayName)];
+                if ($lastName === TRUE) {
+                    return $userLastname;
+                } else {
+                    return $userFirstname;
+                }
+            }
+        }
+        return NULL;
     }
 
     private function getIyzipayOptions(): Options
