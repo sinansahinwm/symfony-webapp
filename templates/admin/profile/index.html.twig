@@ -3,6 +3,12 @@
 {% block pageTitle %}{{ 'Kullanıcı Profili'|trans }}{% endblock %}
 {% block contentTitle %}{{ 'Kullanıcı Profili'|trans }}{% endblock %}
 
+{% block pageActions %}
+    <a href="{{ path('app_admin_profile_preferences', { theUser: user.id }) }}" class="btn btn-icon btn-facebook">
+        <i class="tf-icons bx bx-cog"></i>
+    </a>
+{% endblock %}
+
 {% block body %}
 
     <div class="row">

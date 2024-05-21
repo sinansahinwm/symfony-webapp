@@ -2,10 +2,12 @@
 
 use App\Config\UserActivityType;
 use App\Entity\User;
+use App\Entity\UserPreferences;
 use App\Form\Auth\Profile\ProfileChangePasswordType;
 use App\Form\Auth\Profile\ProfileEditType;
 use App\Form\Auth\Profile\ProfileKickTeamType;
 use App\Form\Auth\Profile\ProfileMakePassiveType;
+use App\Form\UserPreferencesType;
 use App\Security\LoginFormAuthenticator;
 use App\Service\UserActivityService;
 use Doctrine\ORM\EntityManagerInterface;
@@ -56,6 +58,23 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('admin/profile/edit.html.twig', ["user" => $theUser, "form" => $myForm]);
+    }
+
+    #[IsGranted('PROFILE_EDIT', 'theUser')]
+    #[Route(path: '/{theUser}/preferences', name: 'preferences')]
+    public function userPreferences(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $myUserPreferences = $theUser->getUserPreferences();
+        $myForm = $this->createForm(UserPreferencesType::class, $myUserPreferences);
+        $myForm->handleRequest($request);
+
+        if ($myForm->isSubmitted() && $myForm->isValid()) {
+            $entityManager->persist($myUserPreferences);
+            $entityManager->flush();
+            $this->addFlash('pageNotificationSuccess', t("Profil tercihleriniz başarıyla kaydedildi."));
+        }
+
+        return $this->render('admin/profile/preferences.html.twig', ["user" => $theUser, "theForm" => $myForm]);
     }
 
     #[IsGranted('PROFILE_EDIT', 'theUser')]

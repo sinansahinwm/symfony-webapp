@@ -1,0 +1,33 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Kullanıcı Tercihleri'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Kullanıcı Tercihleri'|trans }}{% endblock %}
+
+{% form_theme theForm with [
+    'bootstrap_5_horizontal_layout.html.twig',
+    'layout/form/checkboxtype.html.twig'
+] %}
+
+{% block body %}
+
+    <!-- Header -->
+    {{ include('admin/profile/_header.html.twig') }}
+    <!--/ Header -->
+
+    <!-- Content -->
+    <div class="col-12">
+        {{ form_start(theForm) }}
+        <div class="card mb-4">
+            <h5 class="card-header">{{ 'Kullanıcı Tercihlerini Düzenle'|trans }}</h5>
+            <hr class="m-0"/>
+            <div class="card-body">
+                {{ form_widget(theForm) }}
+                {{ form_rest(theForm) }}
+            </div>
+            {{ component('_card_action_footer', { label: 'Değişiklikleri Kaydet'|trans }) }}
+        </div>
+        {{ form_end(theForm) }}
+    </div>
+    <!--/ Content -->
+
+{% endblock %}
