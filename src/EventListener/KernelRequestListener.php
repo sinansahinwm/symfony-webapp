@@ -10,7 +10,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 #[AsEventListener(event: KernelEvents::REQUEST, method: "onKernelRequest")]
 class KernelRequestListener
 {
-
     public function __construct(private Security $security, private UrlGeneratorInterface $urlGenerator)
     {
     }
@@ -18,22 +17,18 @@ class KernelRequestListener
     public function onKernelRequest(RequestEvent $requestEvent): void
     {
 
-        // Check First : Route Is Not Excluded
+        // Handle Subscription Plan
         if (!str_contains($requestEvent->getRequest()->getPathInfo(), 'admin/exclude')) {
-
-            // Check : Is Must Be Logged
             $loggedUser = $this->security->getUser();
             if ($loggedUser !== NULL) {
-
                 // Check : If User's Subscription Plan Is NULL
                 if ($loggedUser->getSubscriptionPlan() === NULL) {
                     $redirectURL = $this->urlGenerator->generate('app_admin_exclude_subscription_plan_index');
                     $requestEvent->setResponse(new RedirectResponse($redirectURL));
                 }
-
             }
-
         }
+
     }
 
 }
