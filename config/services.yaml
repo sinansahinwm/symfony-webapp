@@ -25,3 +25,6 @@ services:
     App\EventListener\AbstractFileListener:
         tags:
             - { name: kernel.event_listener, event: vich_uploader.pre_upload }
+
+    App\EventSubscriber\LocaleSubscriber:
+        arguments: [ '%kernel.default_locale%' ]
