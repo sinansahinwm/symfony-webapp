@@ -21,6 +21,7 @@ twig:
     misc:
       underMaintaince: false
       supportEmail: 'test@bla.com'
+      supportPhone: '+905444444444'
     layout:
       uiTheme: "default" # It can be bordered, semidark, raspberry, default
       locales:
@@ -34,7 +35,7 @@ twig:
         developer:
           name: "S.S"
           url: '#'
-          documentationPath: 'app_admin_documentation'
+          helpCenterPath: 'app_admin_help_center_index'
         favicon: 'build/media/favicon.ico'
         meta:
           - name: "description"

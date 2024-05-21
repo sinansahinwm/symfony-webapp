@@ -1,0 +1,137 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yardım Merkezi'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yardım Merkezi'|trans }}{% endblock %}
+
+{% block body %}
+
+    <!-- Top Search Area -->
+    <div class="faq-header d-flex flex-column justify-content-center align-items-center">
+        <h3 class="text-center z-1">
+            {{ 'Merhaba, size nasıl yardımcı olabiliriz?'|trans }}
+        </h3>
+        <p class="text-center text-body z-1 mb-0 px-3">
+            {{ 'Sorununuz ile ilgili yardım merkezi sayfalarına gözatın.'|trans }}
+        </p>
+    </div>
+
+    <div class="row mt-4">
+
+        <!-- Categories -->
+        <div class="col-lg-3 col-md-4 col-12 mb-md-0 mb-3">
+            <div class="d-flex justify-content-between flex-column mb-2 mb-md-0">
+                <ul class="nav nav-align-left nav-pills flex-column">
+                    {% for cat in helpCenterCategories %}
+                    <li class="nav-item">
+                        <button class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab" data-bs-target="#{{ cat.categoryId }}">
+                            <i class="{{ cat.icon}} faq-nav-icon me-1"></i>
+                            <span class="align-middle">{{ cat.name }}</span>
+                        </button>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="d-none d-md-block">
+                    <div class="mt-5">
+                        {% if app.user.darkMode is same as(true) %}
+                            <img src="{{ asset('build/media/misc/helpCenterImageDark.png') }}" class="img-fluid scaleX-n1" alt="{{ 'Yardım Merkezi'|trans }}"/>
+                        {% else %}
+                            <img src="{{ asset('build/media/misc/helpCenterImageLight.png') }}" class="img-fluid scaleX-n1" alt="{{ 'Yardım Merkezi'|trans }}"/>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FAQ's -->
+        <div class="col-lg-9 col-md-8 col-12">
+            <div class="tab-content py-0">
+                {% for cat in helpCenterCategories %}
+                    <div class="tab-pane fade {% if loop.first %} show active {% endif %}" id="{{ cat.categoryId }}" role="tabpanel">
+                        <div class="d-flex mb-3 gap-3">
+                            <div>
+                              <span class="badge bg-label-primary rounded-2 p-2">
+                                <i class="{{ cat.icon}} fs-3 lh-1"></i>
+                              </span>
+                            </div>
+                            <div>
+                                <h5 class="mb-0">
+                                    <span class="align-middle">{{ cat.name }}</span>
+                                </h5>
+                                <span>{{ 'Bu kategori için yardım alın'|trans }}</span>
+                            </div>
+                        </div>
+
+                        <div id="accordion{{ cat.categoryId }}" class="accordion accordion-header-primary">
+                            {% for art in cat.helpCenterArticles %}
+                                <div class="card accordion-item {% if loop.first %}active{% endif %}">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" aria-expanded="{% if loop.first %}true{% endif %}"
+                                            data-bs-target="#accordion{{ cat.categoryId }}-{{ art.id }}"
+                                            aria-controls="#accordion{{ cat.categoryId }}-{{ art.id }}">
+                                        {{ art.title }}
+                                    </button>
+                                </h2>
+
+                                <div id="accordion{{ cat.categoryId }}-{{ art.id }}" class="accordion-collapse collapse {% if loop.first %}show{% endif %}">
+                                    <div class="accordion-body">
+                                        {% apply markdown_to_html %}
+                                            {{ art.markdownContent }}
+                                        {% endapply %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Help Center Contact -->
+    <div class="row mt-5">
+        <div class="col-12 text-center mb-4">
+            <div class="badge bg-label-primary">
+                {{ 'Maalesef Bulamadım'|trans }}
+            </div>
+            <h4 class="my-2">
+                {{ 'Aradığınız soruna cevap bulamadınız mı?'|trans }}
+            </h4>
+            <p>
+                {{ 'Eğer kategori içeriklerinde aradığınız soruya cevap bulamadıysanız, bizimle iletişime geçebilirsiniz'|trans }}
+                {{ 'Destek ekibimiz kısa sürede sizinle iletişime geçecektir.'|trans }}
+            </p>
+        </div>
+    </div>
+    <div class="row text-center justify-content-center gap-sm-0 gap-3">
+        <div class="col-sm-6">
+            <div class="py-3 rounded bg-faq-section text-center">
+                    <span class="badge bg-label-primary rounded-3 p-2 my-3">
+                      <i class="bx bx-phone bx-sm"></i>
+                    </span>
+                <h4 class="mb-2">
+                    <a class="h4" href="tel:{{ misc.supportPhone }}">{{ misc.supportPhone }}</a>
+                </h4>
+                <p>
+                    {{ 'Telefon araması ile bize ulaşın'|trans }}
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="py-3 rounded bg-faq-section text-center">
+                    <span class="badge bg-label-primary rounded-3 p-2 my-3">
+                      <i class="bx bx-envelope bx-sm"></i>
+                    </span>
+                <h4 class="mb-2">
+                    <a class="h4" href="mailto:{{ misc.supportEmail }}">{{ misc.supportEmail }}</a>
+                </h4>
+                <p>
+                    {{ 'E-Posta göndererek bize ulaşın'|trans }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

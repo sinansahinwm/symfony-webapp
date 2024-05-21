@@ -6,6 +6,8 @@ use App\Entity\User;
 use App\Factory\CityFactory;
 use App\Factory\CountryFactory;
 use App\Factory\DistrictFactory;
+use App\Factory\HelpCenterArticleFactory;
+use App\Factory\HelpCenterCategoryFactory;
 use App\Factory\NotificationFactory;
 use App\Factory\SubscriptionPlanFactory;
 use App\Factory\TeamFactory;
@@ -33,6 +35,9 @@ class AppFixtures extends Fixture
 
     const SUBSCRIPTION_PLANS_COUNT = 3;
     const PLAN_FEATURES_PER_PLAN = 4;
+
+    const HELP_CENTER_CATEGORIES_COUNT = 5;
+    const HELP_CENTER_ARTICLES_COUNT = 50;
 
     const ALLOWED_COUNTRIES = ["Turkey"];
     const DATETIME_SEED_BETWEEEN = '-100 days';
@@ -79,6 +84,12 @@ class AppFixtures extends Fixture
 
         // Create Subscription Plans
         $mySubscriptionPlans = SubscriptionPlanFactory::createMany(self::SUBSCRIPTION_PLANS_COUNT);
+
+        // Create Help Center Categories
+        $helpCenterCategories = HelpCenterCategoryFactory::createMany(self::HELP_CENTER_CATEGORIES_COUNT);
+
+        // Create Help Center Articles
+        $helpCenterArticles = HelpCenterArticleFactory::createMany(self::HELP_CENTER_ARTICLES_COUNT);
 
     }
 
