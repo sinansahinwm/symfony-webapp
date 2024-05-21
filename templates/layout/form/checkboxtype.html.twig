@@ -3,7 +3,7 @@
 {% block checkbox_row -%}
 
     <div{% with {attr: row_attr|merge({class: (row_attr.class|default('mb-3') ~ ' row')|trim})} %}{{ block('attributes') }}{% endwith %}>{#--#}
-        <label class="switch switch-success">
+        <label class="switch switch-success switch-lg">
             <input type="checkbox" class="switch-input" {{ block('widget_attributes') }}{% if value is defined %} value="{{ value }}"{% endif %}{% if checked %} checked="checked"{% endif %} />
             <span class="switch-toggle-slider">
                 <span class="switch-on"><i class="bx bx-check"></i></span>

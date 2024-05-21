@@ -45,8 +45,9 @@ class ProfileController extends AbstractController
     #[Route(path: '/{theUser}/edit', name: 'edit')]
     public function userEdit(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
     {
+
         $myForm = $this->createForm(ProfileEditType::class, $theUser, [
-            'readonlyValue' => $theUser->getEmail()
+            'readonlyValue' => $theUser->getEmail(),
         ]);
 
         $myForm->handleRequest($request);
@@ -64,7 +65,7 @@ class ProfileController extends AbstractController
     #[Route(path: '/{theUser}/preferences', name: 'preferences')]
     public function userPreferences(User $theUser, Request $request, EntityManagerInterface $entityManager): Response
     {
-        $myUserPreferences = $theUser->getUserPreferences();
+        $myUserPreferences = $theUser->getPreferences();
         $myForm = $this->createForm(UserPreferencesType::class, $myUserPreferences);
         $myForm->handleRequest($request);
 

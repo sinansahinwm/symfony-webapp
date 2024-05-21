@@ -11,6 +11,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use function Symfony\Component\Translation\t;
 
 #[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -18,6 +20,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[UniqueEntity(fields: ['email'], message: 'Bu e-posta adresiyle zaten daha önce kayıt yapılmış')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -102,8 +105,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $last_ip_address = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?UserPreferences $userPreferences = null;
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?UserPreferences $preferences = null;
 
     public function __construct()
     {
@@ -494,20 +497,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUserPreferences(): ?UserPreferences
+    public function getPreferences(): ?UserPreferences
     {
-        return $this->userPreferences;
+        return $this->preferences;
     }
 
-    public function setUserPreferences(UserPreferences $userPreferences): static
+    public function setPreferences(?UserPreferences $preferences): static
     {
-        // set the owning side of the relation if necessary
-        if ($userPreferences->getUser() !== $this) {
-            $userPreferences->setUser($this);
-        }
-
-        $this->userPreferences = $userPreferences;
+        $this->preferences = $preferences;
 
         return $this;
+    }
+
+    public static function getUserPhoneConstraints(): array
+    {
+        return [
+            new Assert\Callback(function (mixed $value, ExecutionContextInterface $context, mixed $payload) {
+                if (str_contains($value, " ")) {
+                    $context->buildViolation(t("Telefon numaranızı hiçbir boşluk karakteri olmadan giriniz. Örn; +905555555555"))
+                        ->atPath('phone')
+                        ->addViolation();
+                }
+            }),
+            new Assert\Callback(function (mixed $value, ExecutionContextInterface $context, mixed $payload) {
+                if (!str_starts_with($value, "+")) {
+                    $context->buildViolation(t("Telefon numarası + işaretiyle başlamalıdır. Lütfen telefon numaranızı ülke koduyla beraber yazın. Örn; +905555555555"))
+                        ->atPath('phone')
+                        ->addViolation();
+                }
+            }),
+            new Assert\Length(min: 10, max: 16),
+        ];
     }
 }

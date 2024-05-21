@@ -13,8 +13,8 @@ class UserPreferencesListener
 
     public function insertUserPreferencesIfNeeded(User $persistedUsed, PrePersistEventArgs $myEvent): void
     {
-        if ($persistedUsed->getUserPreferences() === NULL) {
-            $persistedUsed->setUserPreferences(self::getDefaultUserPreferences($persistedUsed));
+        if ($persistedUsed->getPreferences() === NULL) {
+            $persistedUsed->setPreferences(self::getDefaultUserPreferences($persistedUsed));
         }
     }
 
@@ -22,7 +22,6 @@ class UserPreferencesListener
     {
         // Create Preferences
         $myPreferences = new UserPreferences();
-        $myPreferences->setUser($theUser);
 
         // Set Defaults
         $myPreferences->setReceiveEmails(TRUE);

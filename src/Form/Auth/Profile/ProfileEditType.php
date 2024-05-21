@@ -10,6 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use function Symfony\Component\Translation\t;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class ProfileEditType extends AbstractFormType
 {
@@ -36,7 +37,8 @@ class ProfileEditType extends AbstractFormType
             'required' => TRUE,
             'attr' => [
                 'placeholder' => t("Örn; +904461736675"),
-            ]
+            ],
+            'constraints' => User::getUserPhoneConstraints()
         ]);
     }
 
