@@ -17,10 +17,10 @@
             <hr class="m-0"/>
             <div class="card-body">
                 {% set warnText = 'Bu kullanıcıyı pasife alırsanız bir daha giriş yapamayacaktır. Buna rağmen yine de pasife almak istiyor musunuz?'|trans %}
-                {{ component('_alert', { type: 'danger', text: warnText }) }}
+                {{ component('_alert_component', { type: 'danger', text: warnText }) }}
                 {{ form_widget(form) }}
             </div>
-            {{ component('_card_action_footer', { label: 'Eminim, Pasife Al!'|trans, type: 'danger' }) }}
+            {{ component('_card_action_footer_component', { label: 'Eminim, Pasife Al!'|trans, type: 'danger' }) }}
         </div>
         {{ form_end(form) }}
     </div>

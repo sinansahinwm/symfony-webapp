@@ -18,7 +18,7 @@
     </div>
     <div class="row mx-0 gy-3">
         {% for plan in plans %}
-            {{ component('_subscription_plan', { plan: plan, trialUsed: app.user.trialPeriodUsed }) }}
+            {{ component('_subscription_plan_component', { plan: plan, trialUsed: app.user.trialPeriodUsed }) }}
         {% endfor %}
     </div>
 </div>

@@ -19,6 +19,7 @@ class NotificationController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(Request $request, CrudTableService $crudTableService): Response
     {
+
         $notificationTable = $crudTableService->createFromFQCN($request, NotificationTable::class);
         return $this->render('admin/notification/index.html.twig', ['notificationTable' => $notificationTable]);
     }

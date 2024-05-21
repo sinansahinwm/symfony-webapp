@@ -1,6 +1,6 @@
 {% if debug is defined %}
-    {% if debug is same as(true) and is_granted('ROLE_ADMIN') %}
-        {{ dump(table) }}
+    {% if debug is same as(true) and is_granted('ROLE_ADMIN') and app.environment is same as("dev") %}
+        {# DEPRECED dump(table) #}
     {% endif %}
 {% endif %}
 

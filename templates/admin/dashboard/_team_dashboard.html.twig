@@ -3,7 +3,7 @@
         <div class="col-md-12">
             {% set warnPath = path('app_admin_profile_edit', { theUser: app.user.id }) %}
             {% set warnText = "Kullanıcı adı veya telefon numaranız boş görünüyor. Her şeyin doğru çalışabilmesi için profilinizi tamamlayın."|trans ~ ' <a class="alert-link" href="' ~ warnPath ~ '">' ~ 'Profilini Tamamla'|trans ~ '</a>' %}
-            {{ component('_alert', { text: warnText, type: "danger"}) }}
+            {{ component('_alert_component', { text: warnText, type: "danger"}) }}
         </div>
     {% endif %}
 </div>

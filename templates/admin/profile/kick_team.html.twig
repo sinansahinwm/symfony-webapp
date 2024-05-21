@@ -17,10 +17,10 @@
             <hr class="m-0"/>
             <div class="card-body">
                 {% set warnText = 'Bu kullanıcıyı takımdan çıkarırsanız hiçbir takım ögesine erişimi olmayacaktır. Buna rağmen yine de kullanıcıyı takımdan çıkarmak istediğinizden emin misiniz?'|trans %}
-                {{ component('_alert', { type: 'danger', text: warnText }) }}
+                {{ component('_alert_component', { type: 'danger', text: warnText }) }}
                 {{ form_widget(form) }}
             </div>
-            {{ component('_card_action_footer', { label: 'Eminim, Takımdan Çıkar!'|trans, type: 'danger' }) }}
+            {{ component('_card_action_footer_component', { label: 'Eminim, Takımdan Çıkar!'|trans, type: 'danger' }) }}
         </div>
         {{ form_end(form) }}
     </div>
