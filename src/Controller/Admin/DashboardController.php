@@ -20,7 +20,6 @@ class DashboardController extends AbstractController
     #[Route(path: '/dashboard', name: 'dashboard')]
     public function index(Request $request, EntityManagerInterface $entityManager, #[CurrentUser] User $loggedUser, UserActivityService $userActivityService): Response
     {
-        throw new \Exception("sdgsdg");
         $myTeam = new Team();
         $teamForm = $this->createForm(TeamType::class, $myTeam);
         $teamForm->handleRequest($request);

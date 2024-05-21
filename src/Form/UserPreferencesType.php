@@ -2,12 +2,9 @@
 
 namespace App\Form;
 
-use App\Entity\User;
 use App\Entity\UserPreferences;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use function Symfony\Component\Translation\t;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -17,7 +14,7 @@ class UserPreferencesType extends AbstractFormType
     {
         $builder
             ->add('receive_emails', CheckboxType::class, [
-                'label' => "E-Posta bildirimlerini almak istiyorum.",
+                'label' => t("E-Posta bildirimlerini almak istiyorum."),
                 'required' => FALSE,
             ]);
     }
