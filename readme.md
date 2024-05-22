@@ -40,3 +40,21 @@ php bin/console cache:clear
 php bin/console doctrine:fixtures:load --append
 
 ~~~
+
+## Running Crawler Agent
+
+1. Install node dependencies
+
+~~~
+cd firebase/functions && npm install
+~~~
+
+2. Start emulator
+
+~~~
+5001 port is default firebase functions port for localhost emulator
+
+http://127.0.0.1:5001/functions
+
+cd firebase && firebase emulators:start --only functions
+~~~
