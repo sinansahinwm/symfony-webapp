@@ -75,6 +75,7 @@ exports.domContentCrawler = onRequest(async (request, response) => {
 
     // Check - Mandatory Params
     const requestBody = request.body;
+    const instanceID = requestBody.instanceID;
     const navigateURL = requestBody.navigateURL;
     const webhookURL = requestBody.webhookURL;
     if ((typeof navigateURL === "undefined") || (typeof webhookURL === "undefined")) {
@@ -139,8 +140,9 @@ exports.domContentCrawler = onRequest(async (request, response) => {
 
         // Prepare Webhook Data
         const webhookData = {
+            instanceID: instanceID,
             screenshot: pageScreenshot,
-            content: pageContent,
+            content: Buffer.from(pageContent).toString('base64'),
             url: initialPageUrl,
             status: (myResponse !== null) ? myResponse.status() : 500,
         };
@@ -151,7 +153,7 @@ exports.domContentCrawler = onRequest(async (request, response) => {
         });
 
         // Log Result
-        logger.info("Webhook: " + webhookURL + " Navigate: " + navigateURL);
+        logger.info(instanceID + " instance completed. Status: " + myResponse.status().toString());
 
         // Dispose Browser
         await myBrowser.close();
