@@ -29,6 +29,18 @@ class WebScrapingRequest
     #[ORM\Column(type: 'web_scraping_request_status')]
     private $status = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $consumed_screenshot = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $consumed_content = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $consumed_url = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $consumed_remote_status = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,5 +103,53 @@ class WebScrapingRequest
         if ($this->created_at === NULL) {
             $this->setCreatedAt(new DateTimeImmutable());
         }
+    }
+
+    public function getConsumedScreenshot(): ?string
+    {
+        return $this->consumed_screenshot;
+    }
+
+    public function setConsumedScreenshot(?string $consumed_screenshot): static
+    {
+        $this->consumed_screenshot = $consumed_screenshot;
+
+        return $this;
+    }
+
+    public function getConsumedContent(): ?string
+    {
+        return $this->consumed_content;
+    }
+
+    public function setConsumedContent(string $consumed_content): static
+    {
+        $this->consumed_content = $consumed_content;
+
+        return $this;
+    }
+
+    public function getConsumedUrl(): ?string
+    {
+        return $this->consumed_url;
+    }
+
+    public function setConsumedUrl(string $consumed_url): static
+    {
+        $this->consumed_url = $consumed_url;
+
+        return $this;
+    }
+
+    public function getConsumedRemoteStatus(): ?string
+    {
+        return $this->consumed_remote_status;
+    }
+
+    public function setConsumedRemoteStatus(string $consumed_remote_status): static
+    {
+        $this->consumed_remote_status = $consumed_remote_status;
+
+        return $this;
     }
 }
