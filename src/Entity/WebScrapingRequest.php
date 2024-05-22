@@ -97,10 +97,10 @@ class WebScrapingRequest
     #[ORM\PrePersist]
     private function prePersist(): void
     {
-        if ($this->status === NULL) {
-            $this->setStatus(WebScrapingRequestStatusType::CREATED);
+        if ($this->getStatus() === NULL) {
+            $this->setStatus(WebScrapingRequestStatusType::NEWLY_CREATED);
         }
-        if ($this->created_at === NULL) {
+        if ($this->getCreatedAt() === NULL) {
             $this->setCreatedAt(new DateTimeImmutable());
         }
     }

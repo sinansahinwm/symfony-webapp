@@ -9,7 +9,6 @@ class WebScrapingRequestStatusType extends EnumType
     public const CONSUME_ERROR = "CONSUME_ERROR";
     public const REMOTE_STATUS_FAILED_WHEN_CONSUMING = "REMOTE_STATUS_FAILED_WHEN_CONSUMING";
     public const COMPLETED = "COMPLETED";
-
     protected static string $name = 'web_scraping_request_status';
 
 }
