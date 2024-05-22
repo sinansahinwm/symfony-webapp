@@ -58,3 +58,9 @@ http://127.0.0.1:5001/functions
 
 cd firebase && firebase emulators:start --only functions
 ~~~
+
+3. Deploy firebase functions
+
+~~~
+ TODO : ads
+~~~
