@@ -22,6 +22,7 @@ class WebScrapingRequestListener
 
     public function webScrapingRequestPostPersist(WebScrapingRequest $webScrapingRequest, PostPersistEventArgs $myEvent): void
     {
+
         // If Newly Created -> Send To Proccess
         if ($webScrapingRequest->getStatus() === WebScrapingRequestStatusType::NEWLY_CREATED) {
 
@@ -34,6 +35,7 @@ class WebScrapingRequestListener
             $myMessage = new ProccessWebScrapingRequestMessage($webScrapingRequest->getId());
             $this->messageBus->dispatch($myMessage);
         }
+
     }
 
     private function prepareWebhookUrlForWebScrapingRequest(): string

@@ -23,7 +23,7 @@ class WebScrapingRequest
     #[ORM\Column(type: Types::TEXT)]
     private ?string $navigate_url = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $webhook_url = null;
 
     #[ORM\Column(type: 'web_scraping_request_status')]
@@ -152,4 +152,5 @@ class WebScrapingRequest
 
         return $this;
     }
+
 }

@@ -8,6 +8,8 @@ use App\Repository\WebScrapingRequestRepository;
 use App\Service\WebScrapingRequestRemoteJobService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
 use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -15,7 +17,7 @@ use Symfony\Component\RemoteEvent\RemoteEvent;
 #[AsRemoteEventConsumer('firebase_scraper')]
 final class FirebaseScraperWebhookConsumer implements ConsumerInterface
 {
-    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository, private EntityManagerInterface $entityManager)
+    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository, private EntityManagerInterface $entityManager, private ContainerBagInterface $containerBag)
     {
     }
 
@@ -70,12 +72,20 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
                 $webScrapingRequest->setStatus(WebScrapingRequestStatusType::REMOTE_STATUS_FAILED_WHEN_CONSUMING);
             }
 
-            // Push Consumed Data
+            // Put Content To File
             $decodedContent = base64_decode($myPayloadContent);
+
+            if ($decodedContent === FALSE) {
+                $webScrapingRequest->setStatus(WebScrapingRequestStatusType::FAILED_TO_PUT_CONTENT_WHEN_CONSUMING);
+            } else {
+                $webScrapingRequest->setConsumedContent($decodedContent);
+            }
+
+            // Push Other
             $webScrapingRequest->setConsumedRemoteStatus($myPayloadStatus);
             $webScrapingRequest->setConsumedScreenshot($myPayloadScreenshot);
             $webScrapingRequest->setConsumedUrl($myPayloadUrl);
-            $webScrapingRequest->setConsumedContent($decodedContent);
+
 
             return $webScrapingRequest;
 
@@ -83,6 +93,5 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             return NULL;
         }
     }
-
 
 }
