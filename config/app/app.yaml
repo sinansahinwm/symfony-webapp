@@ -122,6 +122,7 @@ doctrine:
     types:
       notification_priority: App\Config\NotificationPriorityType
       user_activity: App\Config\UserActivityType
+      web_scraping_request_status: App\Config\WebScrapingRequestStatusType
 
 # ===============================
 # TWIG COMPONENT CONFIGURATION
