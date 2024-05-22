@@ -59,6 +59,12 @@ twig:
 framework:
   router:
     default_uri: '%env(APP_DOMAIN)%'
+  webhook:
+    routing:
+      firebase_scraper:
+        service: App\Webhook\FirebaseScraperRequestParser
+        secret: '%env(APP_SECRET)%'
+
   default_locale: tr
   translator:
     default_path: '%kernel.project_dir%/translations'
