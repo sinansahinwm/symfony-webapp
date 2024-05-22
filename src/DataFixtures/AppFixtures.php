@@ -14,6 +14,7 @@ use App\Factory\TeamFactory;
 use App\Factory\TeamInviteFactory;
 use App\Factory\UserActivityFactory;
 use App\Factory\UserFactory;
+use App\Factory\WebScrapingRequestFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
@@ -38,6 +39,7 @@ class AppFixtures extends Fixture
 
     const HELP_CENTER_CATEGORIES_COUNT = 5;
     const HELP_CENTER_ARTICLES_COUNT = 50;
+    const WEB_SCRAPING_REQUESTS = 10;
 
     const ALLOWED_COUNTRIES = ["Turkey"];
     const DATETIME_SEED_BETWEEEN = '-100 days';
@@ -91,6 +93,8 @@ class AppFixtures extends Fixture
         // Create Help Center Articles
         $helpCenterArticles = HelpCenterArticleFactory::createMany(self::HELP_CENTER_ARTICLES_COUNT);
 
+        // Web Scraping Request
+        $myWebScrapingRequests = WebScrapingRequestFactory::createMany(self::WEB_SCRAPING_REQUESTS);
     }
 
     private function createAdministrator(): void
