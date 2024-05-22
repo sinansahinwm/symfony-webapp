@@ -215,6 +215,15 @@
             "config/packages/notifier.yaml"
         ]
     },
+    "symfony/panther": {
+        "version": "2.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "673836afb0eac2b0ec36c44f2ff0379e5a4b2177"
+        }
+    },
     "symfony/phpunit-bridge": {
         "version": "7.0",
         "recipe": {
@@ -319,9 +328,6 @@
         "files": [
             "config/routes/ux_live_component.yaml"
         ]
-    },
-    "symfony/ux-turbo": {
-        "version": "v2.15.0"
     },
     "symfony/ux-twig-component": {
         "version": "2.15",
