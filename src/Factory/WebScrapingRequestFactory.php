@@ -2,6 +2,7 @@
 
 namespace App\Factory;
 
+use App\Config\WebScrapingRequestStatusType;
 use App\DataFixtures\AppFixtures;
 use App\Entity\WebScrapingRequest;
 use App\Repository\WebScrapingRequestRepository;
@@ -43,14 +44,14 @@ final class WebScrapingRequestFactory extends ModelFactory
             'created_at' => self::faker()->dateTimeBetween(AppFixtures::DATETIME_SEED_BETWEEEN),
             'navigate_url' => self::faker()->url(),
             'webhook_url' => self::faker()->url(),
+            'status' => WebScrapingRequestStatusType::NEWLY_CREATED,
         ];
     }
 
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(WebScrapingRequest $webScrapingRequest): void {})
-        ;
+        return $this// ->afterInstantiate(function(WebScrapingRequest $webScrapingRequest): void {})
+            ;
     }
 
     protected static function getClass(): string
