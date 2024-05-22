@@ -44,7 +44,7 @@ exports.pingPong = onRequest((request, response) => {
 });
 
 // [ FUNCTION ]: Dom Content Crawler
-exports.domContentCrawler = onRequest(async (request, response) => {
+exports.firebaseScraper = onRequest(async (request, response) => {
 
     // Authorization - Check Params Exist
     if ((!request.headers.authorization || !request.headers.authorization.startsWith('Bearer '))) {
