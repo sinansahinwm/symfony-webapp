@@ -1,0 +1,9 @@
+# ===============================
+# WEBHOOK CONFIGURATION
+# ===============================
+framework:
+  webhook:
+    routing:
+      firebase_scraper:
+        service: App\Webhook\FirebaseScraperRequestParser
+        secret: '%env(APP_SECRET)%'
