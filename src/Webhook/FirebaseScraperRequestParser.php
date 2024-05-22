@@ -52,6 +52,15 @@ final class FirebaseScraperRequestParser extends AbstractRequestParser
             }
         }
 
+        // Validate Payload Params
+        $payloadScreenshotDecoded = base64_decode($requestPayload->get("screenshot"));
+        $payloadContentDecoded = base64_decode($requestPayload->get("content"));
+        $payloadStatusCodeIsValid = is_int($requestPayload->get("status"));
+
+        if (($payloadScreenshotDecoded === FALSE) || ($payloadContentDecoded === FALSE) || ($payloadStatusCodeIsValid !== TRUE)) {
+            throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, t('Veriler kabul edilmedi.'));
+        }
+
         // Parse Payload
         $myPayload = $request->getPayload()->all();
 
