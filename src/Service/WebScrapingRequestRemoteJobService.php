@@ -9,16 +9,13 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class WebScrapingRequestRemoteJobService
 {
 
-    const PING_PONG_PATH = '/pingPong';
-    const SCRAPER_PATH = '/firebaseScraper';
-
     public function __construct(private ContainerBagInterface $containerBag, private HttpClientInterface $httpClient)
     {
     }
 
     public function sendPingPong(): bool
     {
-        $pingpongEndpoint = $this->getServerEndpoint() . self::PING_PONG_PATH;
+        $pingpongEndpoint = $this->getServerEndpoint(TRUE);
         $myHttpClient = $this->prepareClient();
         try {
             $myPingPongResponse = $myHttpClient->request(
@@ -34,7 +31,7 @@ class WebScrapingRequestRemoteJobService
 
     public function sendToRemoteServer(WebScrapingRequest $webScrapingRequest): bool
     {
-        $scraperEndpoint = $this->getServerEndpoint() . self::SCRAPER_PATH;
+        $scraperEndpoint = $this->getServerEndpoint();
         $myHttpClient = $this->prepareClient();
 
         try {
@@ -67,8 +64,11 @@ class WebScrapingRequestRemoteJobService
         ];
     }
 
-    private function getServerEndpoint(): string
+    private function getServerEndpoint($pingPong = FALSE): string
     {
+        if ($pingPong === TRUE) {
+            return $this->containerBag->get("app.api_keys.firebase_scraper.pingpong_endpoint");
+        }
         return $this->containerBag->get("app.api_keys.firebase_scraper.endpoint");
     }
 
@@ -80,7 +80,6 @@ class WebScrapingRequestRemoteJobService
     private function prepareClient(): HttpClientInterface
     {
         $theClient = $this->httpClient;
-
         return $theClient->withOptions([
             'headers' => [
                 'Authorization' => 'Bearer ' . $this->getServerSecret(),
