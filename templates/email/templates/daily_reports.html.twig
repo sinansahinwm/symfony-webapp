@@ -1,0 +1,9 @@
+{% extends 'layout/email.html.twig' %}
+
+{% block body %}
+    {% apply markdown_to_html %}
+
+        {{ "now"|date("d.m.Y") }} {{ 'tarihine ait günlük rapor iletilmiştir.' }}
+
+    {% endapply %}
+{% endblock %}

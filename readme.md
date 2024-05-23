@@ -41,6 +41,13 @@ php bin/console doctrine:fixtures:load --append
 
 ~~~
 
+## Consuming Async Messages
+
+~~~
+php bin/console messenger:consume async
+php bin/console messenger:consume scheduler_default
+~~~
+
 ## Running Crawler Agent
 
 1. Install node dependencies

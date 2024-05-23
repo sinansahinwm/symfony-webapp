@@ -18,6 +18,7 @@
     "doctrine/doctrine-bundle": "^2.11",
     "doctrine/doctrine-migrations-bundle": "^3.3",
     "doctrine/orm": "^3.0",
+    "dragonmantank/cron-expression": "*",
     "easycorp/easyadmin-bundle": "^4.9",
     "iyzico/iyzipay-php": "^2.0",
     "knplabs/knp-time-bundle": "^2.2",
@@ -50,6 +51,7 @@
     "symfony/property-info": "7.0.*",
     "symfony/rate-limiter": "7.0.*",
     "symfony/runtime": "7.0.*",
+    "symfony/scheduler": "7.0.*",
     "symfony/security-bundle": "7.0.*",
     "symfony/serializer": "7.0.*",
     "symfony/stimulus-bundle": "^2.15",
@@ -107,8 +109,7 @@
   "scripts": {
     "auto-scripts": {
       "cache:clear": "symfony-cmd",
-      "assets:install %PUBLIC_DIR%": "symfony-cmd",
-      "importmap:install": "symfony-cmd"
+      "assets:install %PUBLIC_DIR%": "symfony-cmd"
     },
     "post-install-cmd": [
       "@auto-scripts"
