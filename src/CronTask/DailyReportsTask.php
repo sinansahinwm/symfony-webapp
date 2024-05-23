@@ -14,7 +14,7 @@ class DailyReportsTask
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         $adminEmail = $this->getAdministratorEmail();
 
@@ -30,6 +30,6 @@ class DailyReportsTask
 
     private function getDailyReportsContext(): array
     {
-        return [];
+        return []; // TODO : prepare daily tasks context
     }
 }
