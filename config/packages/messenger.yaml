@@ -23,6 +23,7 @@ framework:
             # App Async Transports
             App\Message\AppEmailMessage: async
             App\Message\ProccessWebScrapingRequestMessage: async
+            App\Message\HandleWebScrapingRequestAfterCompletedMessage: async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
