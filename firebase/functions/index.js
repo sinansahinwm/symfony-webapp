@@ -1,16 +1,20 @@
 /*
     ---- IMPORTS ----
 */
-const {onRequest} = require("firebase-functions/v2/https");
-const {defineSecret} = require('firebase-functions/params');
-const logger = require("firebase-functions/logger");
 const puppeteer = require('puppeteer');
 const axios = require('axios');
-
+const {onRequest} = require("firebase-functions/v2/https");
+const {setGlobalOptions, logger} = require("firebase-functions/v2");
 
 /*
     ---- CONFIGURATION ----
 */
+const scraperFunctionGlobalOptions = {
+    memory: '4GiB',
+    timeoutSeconds: 60,
+    cpu: 4
+}
+const webhookDataSaveMode = true;
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
     headless: true,
@@ -18,25 +22,28 @@ const puppeteerLaunchOptions = {
         '--no-sandbox',
         '--disable-setuid--sandbox',
         '--enable-chrome-browser-cloud-management',
-        '--disable-features=site-per-process,'
+        '--disable-features=site-per-process,',
+        '--mute-audio'
     ],
-    // DEPRECED userDataDir: './tmp/user_' + userID,
 };
 const puppeteerOptions = {
-    defaultUserAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    defaultUserAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36',
     defaultGeoLocation: {
         latitude: 39,
         longitude: 32,
     },
-    waitUntil: ['domcontentloaded', 'networkidle2'],
+    waitUntil: 'networkidle0',
     timeout: 30000,
-    viewPortWidth: 1360,
-    viewPortHeight: 768,
+    viewPortWidth: 393, // iPhone 15 ViewPort
+    viewPortHeight: 852, // iPhone 15 ViewPort
 };
 
 /*
     ---- FUNCTIONS ----
 */
+
+// Set Global Options
+setGlobalOptions(scraperFunctionGlobalOptions);
 
 // [ FUNCTION ]: Ping & Pong
 exports.pingPong = onRequest((request, response) => {
@@ -92,16 +99,15 @@ exports.firebaseScraper = onRequest(async (request, response) => {
     // Try To Launch Puppeteer
     try {
 
-        // Send 200 Code If Page Opened
-        response.status(200).send("OK");
-
         // Get Remote Launch Options
-        const puppeteerLaunchOptionsRequested = requestBody.puppeteerLaunchOptions;
+        const puppeteerLaunchOptionsRequested = requestBody.puppeteerLaunchOptions ?? {};
 
         // Open Browser
         const myBrowser = await puppeteer.launch({
             ...puppeteerLaunchOptions,
             ...puppeteerLaunchOptionsRequested
+        }).catch((err) => {
+            logger.error("Browser launch error." + err.toString());
         });
 
         // Create New Page
@@ -115,8 +121,8 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             width: puppeteerOptions.viewPortWidth,
             height: puppeteerOptions.viewPortHeight,
             deviceScaleFactor: 1,
-            isMobile: false,
-            hasTouch: false,
+            isMobile: true,
+            hasTouch: true,
             isLandscape: false
         });
 
@@ -131,7 +137,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
         // Get Data
         const pageContent = await myPage.content();
-        const pageScreenshot = await myPage.screenshot({encoding: "base64"});
+        const pageScreenshot = (webhookDataSaveMode === true) ? '' : await myPage.screenshot({encoding: "base64"});
         const initialPageUrl = myPage.url();
 
         // Set Axios Auth Defaults
@@ -152,22 +158,21 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             logger.error(error);
         });
 
-        // Log Result
-        logger.info(instanceID + " instance completed. Status: " + myResponse.status().toString());
-
         // Dispose Browser
         await myBrowser.close();
 
-        return;
+        // Log Scraper
+        logger.info("Scraper completed successfully.")
 
+        // Send 200 Code After Navigating & Webhook
+        response.status(200).send("OK");
 
     } catch (e) {
 
         // Add Firebase Error & Return 500
         logger.error(e);
+        response.status(500).send();
 
     }
-
-    response.status(204).send();
 
 });
