@@ -41,6 +41,9 @@ class WebScrapingRequest
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $consumed_remote_status = null;
 
+    #[ORM\Column(type: 'web_scraping_request_completed_handle', nullable: true)]
+    private $completed_handle = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -149,6 +152,18 @@ class WebScrapingRequest
     public function setConsumedRemoteStatus(string $consumed_remote_status): static
     {
         $this->consumed_remote_status = $consumed_remote_status;
+
+        return $this;
+    }
+
+    public function getCompletedHandle()
+    {
+        return $this->completed_handle;
+    }
+
+    public function setCompletedHandle($completed_handle): static
+    {
+        $this->completed_handle = $completed_handle;
 
         return $this;
     }

@@ -4,12 +4,14 @@ namespace App\RemoteEvent;
 
 use App\Config\WebScrapingRequestStatusType;
 use App\Entity\WebScrapingRequest;
+use App\Message\HandleWebScrapingRequestAfterCompletedMessage;
 use App\Repository\WebScrapingRequestRepository;
 use App\Service\WebScrapingRequestRemoteJobService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
 use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -17,7 +19,7 @@ use Symfony\Component\RemoteEvent\RemoteEvent;
 #[AsRemoteEventConsumer('firebase_scraper')]
 final class FirebaseScraperWebhookConsumer implements ConsumerInterface
 {
-    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository, private EntityManagerInterface $entityManager, private ContainerBagInterface $containerBag)
+    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository, private EntityManagerInterface $entityManager, private MessageBusInterface $messageBus)
     {
     }
 
@@ -53,8 +55,21 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
             $this->entityManager->persist($myWebScrapingRequest);
             $this->entityManager->flush();
+
+            // Handle
+            $this->handleWebScrapingRequestIfCompleted($myWebScrapingRequest);
+
         }
 
+    }
+
+    private function handleWebScrapingRequestIfCompleted(WebScrapingRequest $webScrapingRequest): void
+    {
+        // Handle After Completed
+        if ($webScrapingRequest->getStatus() === WebScrapingRequestStatusType::COMPLETED) {
+            $myHandleMessage = new HandleWebScrapingRequestAfterCompletedMessage($webScrapingRequest->getId());
+            $this->messageBus->dispatch($myHandleMessage);
+        }
     }
 
     private function consumePayload(array $remoteEventPayload, WebScrapingRequest $webScrapingRequest): WebScrapingRequest|null

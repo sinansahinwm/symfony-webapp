@@ -2,6 +2,7 @@
 
 namespace App\Factory;
 
+use App\Config\WebScrapingRequestCompletedHandleType;
 use App\Config\WebScrapingRequestStatusType;
 use App\DataFixtures\AppFixtures;
 use App\Entity\WebScrapingRequest;
@@ -45,6 +46,7 @@ final class WebScrapingRequestFactory extends ModelFactory
             'navigate_url' => self::faker()->url(),
             'webhook_url' => self::faker()->url(),
             'status' => WebScrapingRequestStatusType::NEWLY_CREATED,
+            'completed_handle' => WebScrapingRequestCompletedHandleType::HANDLE_NULL,
         ];
     }
 
