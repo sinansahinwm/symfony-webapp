@@ -1,6 +1,5 @@
 <?php namespace App\Controller\Admin;
 
-use App\Service\WebScrapingRequestService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -9,10 +8,9 @@ use Symfony\Component\Routing\Attribute\Route;
 class TestController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(WebScrapingRequestService $webScrapingRequestService): Response
+    public function index(): Response
     {
-        $webScrapingRequestService->createRequest('https://example.com');
-        exit("s");
+        exit("TEST");
     }
 
 }
