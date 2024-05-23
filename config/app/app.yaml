@@ -11,6 +11,7 @@ parameters:
   app.api_keys.iyzico.api_secret: '%env(IYZICO_API_SECRET)%'
   app.api_keys.iyzico.endpoint: '%env(IYZICO_API_ENDPOINT)%'
   app.api_keys.firebase_scraper.endpoint: '%env(FIREBASE_SCRAPER_ENDPOINT)%'
+  app.api_keys.firebase_scraper.pingpong_endpoint: '%env(FIREBASE_SCRAPER_PING_PONG_ENDPOINT)%'
   app.api_keys.firebase_scraper.secret: '%env(APP_SECRET)%'
 
 # ===============================
