@@ -6,11 +6,8 @@ use App\Config\WebScrapingRequestStatusType;
 use App\Entity\WebScrapingRequest;
 use App\Message\HandleWebScrapingRequestAfterCompletedMessage;
 use App\Repository\WebScrapingRequestRepository;
-use App\Service\WebScrapingRequestRemoteJobService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\RemoteEvent\Attribute\AsRemoteEventConsumer;
 use Symfony\Component\RemoteEvent\Consumer\ConsumerInterface;
@@ -63,7 +60,7 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
 
     }
 
-    private function handleWebScrapingRequestIfCompleted(WebScrapingRequest $webScrapingRequest): void
+    public function handleWebScrapingRequestIfCompleted(WebScrapingRequest $webScrapingRequest): void
     {
         // Handle After Completed
         if ($webScrapingRequest->getStatus() === WebScrapingRequestStatusType::COMPLETED) {
