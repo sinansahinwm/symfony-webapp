@@ -17,7 +17,7 @@ class WebScrapingRequestRemoteJobService
 
     public function sendPingPong(): bool
     {
-        $pingpongEndpoint = $this->getServerEndpoint(TRUE);
+        $pingpongEndpoint = $this->getPingPongEndpoint();
         $myHttpClient = $this->prepareClient();
         try {
             $myPingPongResponse = $myHttpClient->request(
@@ -64,15 +64,23 @@ class WebScrapingRequestRemoteJobService
             'instanceID' => $webScrapingRequest->getId(),
             'webhookURL' => $webScrapingRequest->getWebhookUrl(),
             'navigateURL' => $webScrapingRequest->getNavigateUrl(),
+            'workerURL' => $this->getWorkerEndpoint(),
         ];
     }
 
-    private function getServerEndpoint($pingPong = FALSE): string
+    private function getServerEndpoint(): string
     {
-        if ($pingPong === TRUE) {
-            return $this->containerBag->get("app.api_keys.firebase_scraper.pingpong_endpoint");
-        }
         return $this->containerBag->get("app.api_keys.firebase_scraper.endpoint");
+    }
+
+    private function getWorkerEndpoint(): string
+    {
+        return $this->containerBag->get("app.api_keys.firebase_scraper.worker_endpoint");
+    }
+
+    private function getPingPongEndpoint(): string
+    {
+        return $this->containerBag->get("app.api_keys.firebase_scraper.pingpong_endpoint");
     }
 
     private function getServerSecret(): string
