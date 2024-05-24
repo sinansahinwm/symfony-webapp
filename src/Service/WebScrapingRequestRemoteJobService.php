@@ -2,14 +2,16 @@
 
 use App\Entity\WebScrapingRequest;
 use App\EventListener\WebScrapingRequestListener;
+use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WebScrapingRequestRemoteJobService
 {
 
-    public function __construct(private ContainerBagInterface $containerBag, private HttpClientInterface $httpClient)
+    public function __construct(private ContainerBagInterface $containerBag, private HttpClientInterface $httpClient, private TranslatorInterface $translator)
     {
     }
 
@@ -28,6 +30,7 @@ class WebScrapingRequestRemoteJobService
             return FALSE;
         }
     }
+
 
     public function sendToRemoteServer(WebScrapingRequest $webScrapingRequest): bool
     {

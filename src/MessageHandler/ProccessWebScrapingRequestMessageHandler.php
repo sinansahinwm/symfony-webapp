@@ -26,6 +26,8 @@ final class ProccessWebScrapingRequestMessageHandler
     public function __invoke(ProccessWebScrapingRequestMessage $myMessage)
     {
 
+        $throwMessageError = NULL;
+
         // Get Message Object
         $myWebScrapingRequest = $this->webScrapingRequestRepository->find($myMessage->getWebScrapingRequestID());
 
@@ -42,7 +44,12 @@ final class ProccessWebScrapingRequestMessageHandler
                 $this->entityManager->persist($myWebScrapingRequest);
 
                 // Send Scraping Request to Remote Server
-                $this->webScrapingRequestRemoteJobService->sendToRemoteServer($myWebScrapingRequest);
+                $sendToRemoteServerResult = $this->webScrapingRequestRemoteJobService->sendToRemoteServer($myWebScrapingRequest);
+
+                // If Sending Failed Throw Error & Retry Message
+                if ($sendToRemoteServerResult === FALSE) {
+                    $throwMessageError = TRUE;
+                }
 
             } else {
 
@@ -50,12 +57,19 @@ final class ProccessWebScrapingRequestMessageHandler
                 $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::PING_PONG_FAILED);
                 $this->entityManager->persist($myWebScrapingRequest);
 
-                throw new Exception($this->translator->trans("Uzak sunucuya bağlanılamıyor."));
+                // Throw Error When PingPong Failed
+                $throwMessageError = TRUE;
+
             }
 
 
             // Flush Object
             $this->entityManager->flush();
+
+            // Throw Error If Needed
+            if ($throwMessageError === TRUE) {
+                throw new Exception($this->translator->trans("Veri çekme isteği başarısız oldu."));
+            }
 
         }
 
