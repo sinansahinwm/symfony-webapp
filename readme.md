@@ -70,7 +70,16 @@ cd firebase && firebase emulators:start --only functions
 3. Deploy firebase functions
 
 ~~~
- TODO : ads
+ firebase login
+ 
+ firebase deploy --only functions
 ~~~
 
 ## Deploying on Digital Ocean
+
+To deploy application via digital ocean, this is your app spec file.
+
+~~~
+ TODO : add app spec file
+~~~
+
