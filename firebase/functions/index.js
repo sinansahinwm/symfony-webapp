@@ -129,8 +129,6 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         // Get Remote Launch Options
         const puppeteerLaunchOptionsRequested = requestBody.puppeteerLaunchOptions ?? {};
 
-        logger.error("Worker started processing.");
-
         // Open Browser
         const myBrowser = await puppeteer.launch({
             ...puppeteerLaunchOptions,
@@ -203,8 +201,6 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
         // Dispose Browser
         await myBrowser.close();
-
-        logger.error("Worker finished processing.");
 
         response.status(200).send("OK");
 
