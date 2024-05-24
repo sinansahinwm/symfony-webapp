@@ -71,3 +71,5 @@ cd firebase && firebase emulators:start --only functions
 ~~~
  TODO : ads
 ~~~
+
+## Deploying on Digital Ocean
