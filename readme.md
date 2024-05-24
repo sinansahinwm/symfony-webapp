@@ -45,6 +45,7 @@ php bin/console doctrine:fixtures:load --append
 
 ~~~
 php bin/console messenger:consume async
+php bin/console messenger:consume scraper_request
 php bin/console messenger:consume scheduler_default
 ~~~
 
