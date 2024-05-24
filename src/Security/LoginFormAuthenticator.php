@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public const REDIRECT_ROUTE_AFTER_SUBSCRIPTION_COMPLETED = 'app_admin_dashboard';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(private UrlGeneratorInterface $urlGenerator, private LoggerInterface $logger)
     {
     }
 
@@ -69,6 +70,8 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             '/', // Its needed to login by index route
         ];
         $signinPath = $request->getBaseUrl() . $request->getPathInfo();
+        $this->logger->error(json_encode($possibleLoginUrls));
+        $this->logger->error($signinPath);
         return $request->isMethod('POST') && in_array($signinPath, $possibleLoginUrls);
     }
 
