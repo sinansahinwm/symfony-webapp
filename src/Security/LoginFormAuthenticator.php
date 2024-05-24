@@ -70,7 +70,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             '/', // Its needed to login by index route
         ];
         $signinPath = $request->getBaseUrl() . $request->getPathInfo();
-        $this->logger->error('#' + $signinPath + '#' . json_encode($possibleLoginUrls));
+        $this->logger->error('#' . $signinPath . '#' . json_encode($possibleLoginUrls));
         return $request->isMethod('POST') && in_array($signinPath, $possibleLoginUrls);
     }
 
