@@ -11,11 +11,11 @@ class TestController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(WebScrapingRequestService $webScrapingRequestService): Response
     {
-        foreach (range(100, 1000, 100) as $index => $item) {
-            $webScrapingRequestService->createRequest('https://placehold.co/100x' . $index . '/png');
+        foreach (range(100, 1000, 100) as $item) {
+            $webScrapingRequestService->createRequest('https://github.com');
         }
 
-        exit("s");
+        exit("TT");
     }
 
 }
