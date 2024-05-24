@@ -1,14 +1,10 @@
-/*
-    ---- IMPORTS ----
-*/
+// IMPORTS
 const puppeteer = require('puppeteer');
 const axios = require('axios');
 const {onRequest} = require("firebase-functions/v2/https");
 const {setGlobalOptions, logger} = require("firebase-functions/v2");
 
-/*
-    ---- CONFIGURATION ----
-*/
+// CONFIGURATION
 const scraperFunctionGlobalOptions = {
     memory: '4GiB',
     timeoutSeconds: 60,
@@ -42,19 +38,17 @@ const puppeteerOptions = {
     // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
 };
 
-/*
-    ---- FUNCTIONS ----
-*/
-
-// Set Global Options
+// SETTING GLOBAL OPTIONS
 setGlobalOptions(scraperFunctionGlobalOptions);
 
-// [ FUNCTION ]: Ping & Pong
+// FUNCTIONS
+
+// Ping & Pong
 exports.pingPong = onRequest((request, response) => {
     response.status(200).send();
 });
 
-// [ FUNCTION ]: Firebase Scraper
+// Firebase Scraper
 exports.firebaseScraper = onRequest(async (request, response) => {
 
     // Authorization - Check Params Exist
