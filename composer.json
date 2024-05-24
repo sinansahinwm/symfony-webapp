@@ -106,17 +106,7 @@
     "symfony/polyfill-php81": "*",
     "symfony/polyfill-php82": "*"
   },
-  "scripts": {
-    "auto-scripts": {
-
-    },
-    "post-install-cmd": [
-      "@auto-scripts"
-    ],
-    "post-update-cmd": [
-      "@auto-scripts"
-    ]
-  },
+  "scripts": {},
   "conflict": {
     "symfony/symfony": "*"
   },
