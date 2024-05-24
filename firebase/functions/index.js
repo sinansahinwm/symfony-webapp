@@ -14,7 +14,7 @@ const scraperFunctionGlobalOptions = {
     timeoutSeconds: 60,
     cpu: 4
 }
-const webhookDataSaveMode = true;
+
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
     headless: true,
@@ -34,8 +34,12 @@ const puppeteerOptions = {
     },
     waitUntil: 'networkidle0',
     timeout: 30000,
-    viewPortWidth: 393, // iPhone 15 ViewPort
-    viewPortHeight: 852, // iPhone 15 ViewPort
+    viewPortWidth: 1366,
+    viewPortHeight: 768,
+    dataSaverMode: true,
+    dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket']
+    // These are available content types
+    // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
 };
 
 /*
@@ -121,13 +125,31 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             width: puppeteerOptions.viewPortWidth,
             height: puppeteerOptions.viewPortHeight,
             deviceScaleFactor: 1,
-            isMobile: true,
-            hasTouch: true,
+            isMobile: false,
+            hasTouch: false,
             isLandscape: false
         });
 
         // Set Page User Agent
         await myPage.setUserAgent(puppeteerOptions.defaultUserAgent);
+
+        // Activate Data Saver Mode If Needed
+        if (puppeteerOptions.dataSaverMode === true) {
+
+            // Set Request Interception
+            await myPage.setRequestInterception(true);
+
+            // Block to Load Other Assets
+            myPage.on('request', (request) => {
+                if (puppeteerOptions.dataSaverModeBlockContents.indexOf(request.resourceType()) !== -1) {
+                    request.abort();
+                } else {
+                    request.continue();
+                }
+            });
+
+        }
+
 
         // Navigate
         const myResponse = await myPage.goto(navigateURL, {
@@ -137,7 +159,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
         // Get Data
         const pageContent = await myPage.content();
-        const pageScreenshot = (webhookDataSaveMode === true) ? '' : await myPage.screenshot({encoding: "base64"});
+        const pageScreenshot = (puppeteerOptions.dataSaverMode === true) ? '' : await myPage.screenshot({encoding: "base64"});
         const initialPageUrl = myPage.url();
 
         // Set Axios Auth Defaults
@@ -160,9 +182,6 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
         // Dispose Browser
         await myBrowser.close();
-
-        // Log Scraper
-        logger.info("Scraper completed successfully.")
 
         // Send 200 Code After Navigating & Webhook
         response.status(200).send("OK");
