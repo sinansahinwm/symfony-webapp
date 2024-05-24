@@ -65,12 +65,11 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function supports(Request $request): bool
     {
-        $possibleLoginUrls = [
+        $validSigninPaths = [
             $this->getLoginUrl($request),
             '/', // Its needed to login by index route
         ];
-        $signinPath = $request->getBaseUrl() . $request->getPathInfo();
-        return $request->isMethod('POST') && in_array($signinPath, $possibleLoginUrls);
+        return $request->isMethod('POST') && in_array($request->getPathInfo(), $validSigninPaths);
     }
 
 }
