@@ -54,7 +54,7 @@ exports.pingPong = onRequest((request, response) => {
     response.status(200).send();
 });
 
-// [ FUNCTION ]: Dom Content Crawler
+// [ FUNCTION ]: Firebase Scraper
 exports.firebaseScraper = onRequest(async (request, response) => {
 
     // Authorization - Check Params Exist
@@ -100,11 +100,36 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         return;
     }
 
+    // Set Axios Auth Defaults
+    axios.defaults.headers.post['Authorization'] = 'Bearer ' + authorizationSecret;
+    axios.defaults.headers.post['Content-Type'] = 'application/json';
+
     // Try To Launch Puppeteer
     try {
 
+        // Check Proccess Immediately
+        const proccessImmediately = requestBody.proccessImmediately;
+
+        if (proccessImmediately !== true) {
+
+            // Create Axios Worker Request
+            const workerRequestConfig = {
+                ...requestBody,
+                proccessImmediately: true
+            }
+
+            axios.post(requestBody.workerURL, workerRequestConfig).catch(function (error) {
+                logger.error(error);
+            });
+
+            response.status(200).send("OK");
+            return;
+        }
+
         // Get Remote Launch Options
         const puppeteerLaunchOptionsRequested = requestBody.puppeteerLaunchOptions ?? {};
+
+        logger.error("Worker started processing.");
 
         // Open Browser
         const myBrowser = await puppeteer.launch({
@@ -162,10 +187,6 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         const pageScreenshot = (puppeteerOptions.dataSaverMode === true) ? '' : await myPage.screenshot({encoding: "base64"});
         const initialPageUrl = myPage.url();
 
-        // Set Axios Auth Defaults
-        axios.defaults.headers.post['Authorization'] = 'Bearer ' + authorizationSecret;
-        axios.defaults.headers.post['Content-Type'] = 'application/json';
-
         // Prepare Webhook Data
         const webhookData = {
             instanceID: instanceID,
@@ -183,7 +204,8 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         // Dispose Browser
         await myBrowser.close();
 
-        // Send 200 Code After Navigating & Webhook
+        logger.error("Worker finished processing.");
+
         response.status(200).send("OK");
 
     } catch (e) {
