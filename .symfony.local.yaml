@@ -1,0 +1,20 @@
+# Local Environment Starter
+workers:
+  # Start MySQL Server
+  mysql:
+    cmd: [ 'mysqld' ]
+
+  # Watch NPM
+  npm_watch:
+    cmd: [ 'npm', 'run', 'watch' ]
+
+  # Start Async Workers
+  messenger_consume_async:
+    cmd: [ 'symfony', 'console', 'messenger:consume', 'async' ]
+    watch: [ 'config/packages/messenger.yaml', 'src/Message', 'src/MessageHandler', 'src/CronTask', 'src/RemoteEvent', 'src/WebHook' ]
+  messenger_consume_scheduler_default:
+    cmd: [ 'symfony', 'console', 'messenger:consume', 'scheduler_default' ]
+    watch: [ 'config/packages/messenger.yaml', 'src/Message', 'src/MessageHandler', 'src/CronTask', 'src/RemoteEvent', 'src/WebHook' ]
+  messenger_consume_scraper_request:
+    cmd: [ 'symfony', 'console', 'messenger:consume', 'scraper_request' ]
+    watch: [ 'config/packages/messenger.yaml', 'src/Message', 'src/MessageHandler', 'src/CronTask', 'src/RemoteEvent', 'src/WebHook' ]
