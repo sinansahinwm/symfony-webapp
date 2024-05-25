@@ -35,20 +35,20 @@ class SubscriptionPlan
     #[ORM\Column(nullable: true)]
     private ?int $discount_percent = null;
 
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $plan_features = [];
-
     #[ORM\Column(nullable: true)]
     private ?bool $is_popular = null;
-
-    #[ORM\Column(type: Types::ARRAY)]
-    private array $plan_features_not_included = [];
 
     #[ORM\Column(length: 10)]
     private ?string $currency_sign = null;
 
     #[ORM\Column]
     private ?int $plan_order = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $included_features = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $not_included_features = null;
 
     public function getId(): ?int
     {
@@ -139,18 +139,6 @@ class SubscriptionPlan
         return $this;
     }
 
-    public function getPlanFeatures(): array
-    {
-        return $this->plan_features;
-    }
-
-    public function setPlanFeatures(array $plan_features): static
-    {
-        $this->plan_features = $plan_features;
-
-        return $this;
-    }
-
     public function isIsPopular(): ?bool
     {
         return $this->is_popular;
@@ -163,17 +151,6 @@ class SubscriptionPlan
         return $this;
     }
 
-    public function getPlanFeaturesNotIncluded(): array
-    {
-        return $this->plan_features_not_included;
-    }
-
-    public function setPlanFeaturesNotIncluded(array $plan_features_not_included): static
-    {
-        $this->plan_features_not_included = $plan_features_not_included;
-
-        return $this;
-    }
 
     public function getCurrencySign(): ?string
     {
@@ -198,4 +175,29 @@ class SubscriptionPlan
 
         return $this;
     }
+
+    public function getIncludedFeatures(): ?string
+    {
+        return $this->included_features;
+    }
+
+    public function setIncludedFeatures(string $included_features): static
+    {
+        $this->included_features = $included_features;
+
+        return $this;
+    }
+
+    public function getNotIncludedFeatures(): ?string
+    {
+        return $this->not_included_features;
+    }
+
+    public function setNotIncludedFeatures(?string $not_included_features): static
+    {
+        $this->not_included_features = $not_included_features;
+
+        return $this;
+    }
+
 }

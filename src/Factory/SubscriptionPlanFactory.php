@@ -58,8 +58,8 @@ final class SubscriptionPlanFactory extends ModelFactory
             'trial_period_days' => 14, // self::faker()->numberBetween(7, 15),
             'amount' => self::faker()->randomFloat(2, 500, 999),
             'discount_percent' => self::faker()->numberBetween(0, 100),
-            'plan_features' => $planFeatures,
-            'plan_features_not_included' => $planFeaturesNotIncluded,
+            'included_features' => implode(',', $planFeatures),
+            'not_included_features' => implode(',', $planFeaturesNotIncluded),
             'is_popular' => self::faker()->boolean(),
             'plan_order' => self::faker()->numberBetween(0, AppFixtures::SUBSCRIPTION_PLANS_COUNT),
         ];
