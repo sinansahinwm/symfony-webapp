@@ -5,8 +5,6 @@ use App\Entity\Notification;
 use App\Entity\SubscriptionPlan;
 use App\Entity\User;
 use App\Service\CrudTable\ActionsColumn;
-use App\Service\CrudTable\BadgeColumn;
-use App\Service\CrudTable\BoolIndicatorColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use Doctrine\ORM\QueryBuilder;
@@ -51,8 +49,8 @@ class SubscriptionPlanTable extends TableAbstractController implements DataTable
         $dataTable->add('id', ActionsColumn::class, [
             'actions' => [
                 function ($value, UrlGeneratorInterface $urlGenerator) {
-                    $gotoURL = $urlGenerator->generate('app_admin_subscription_plans');
-                    return new CrudTableAction($this->t("Sayfayı Yenile"), $gotoURL, 'bx bx-refresh');
+                    $gotoURL = $urlGenerator->generate('app_administrator_subscription_plan_delete', ['subscriptionPlan' => $value]);
+                    return new CrudTableAction($this->t("Sil"), $gotoURL, 'bx bx-trash');
                 },
             ]
         ]);
