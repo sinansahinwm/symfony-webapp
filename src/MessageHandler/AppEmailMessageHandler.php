@@ -35,6 +35,8 @@ final class AppEmailMessageHandler
     ];
 
     const EMAIL_BLOCKED_KEYWORDS = [
+        // This feature was added to send SMTP connection errors via e-mail.
+        // When this situation occurs, the messenger component breaks down.
         'Connection could not be established with host'
     ];
 
