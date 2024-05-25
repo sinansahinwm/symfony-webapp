@@ -5,7 +5,7 @@
 
 {% block pageActions %}
     {% if is_granted("ROLE_ADMIN") %}
-        <a href="{{ path('app_admin_subscription_plans') }}" class="btn btn-secondary">{{ 'Düzenle'|trans }}</a>
+        <a href="{{ path('app_administrator_subscription_plan_index') }}" class="btn btn-secondary">{{ 'Düzenle'|trans }}</a>
     {% else %}
         <a href="mailto:{{ misc.supportEmail }}" class="me-2">
             <i class="bx bx-help-circle"></i>
