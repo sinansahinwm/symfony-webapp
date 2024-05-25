@@ -1,0 +1,22 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Yeni Abonelik Planı'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Yeni Abonelik Planı'|trans }}{% endblock %}
+
+{% block pageActions %}
+    <a href="{{ path('app_administrator_subscription_plan_index') }}" class="btn btn-secondary">
+        {{ 'Listeye Geri Dön'|trans }}
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                {{ include('administrator/subscription_plan/_form.html.twig') }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
