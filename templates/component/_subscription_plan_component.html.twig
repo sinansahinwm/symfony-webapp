@@ -48,7 +48,7 @@
             <ul class="list-unstyled pt-2 pb-1">
 
                 <!-- Subscription Plan Included Features -->
-                {% for planFeature in plan.planFeatures %}
+                {% for planFeature in plan.includedFeatures|split(',') %}
                     <li class="mb-2">
                             <span class="badge badge-center w-px-20 h-px-20 rounded-pill bg-label-primary me-2">
                                 <i class="bx bx-check bx-xs"></i>
@@ -58,7 +58,7 @@
                 {% endfor %}
 
                 <!-- Subscription Plan Not Included Features -->
-                {% for planFeature in plan.planFeaturesNotIncluded %}
+                {% for planFeature in plan.notIncludedFeatures|split(",") %}
                     <li class="mb-2">
                                 <span class="badge badge-center w-px-20 h-px-20 rounded-pill bg-label-secondary me-2">
                                     <i class="bx bx-x fs-5 lh-1"></i>
