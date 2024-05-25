@@ -8,6 +8,10 @@ workers:
   npm_watch:
     cmd: [ 'npm', 'run', 'watch' ]
 
+  # Start Firebase Emulator
+  firebase_emulators:
+    cmd: [ 'cd', 'firebase', '&&','firebase', 'emulators:start', '--only', 'functions' ]
+
   # Start Async Workers
   messenger_consume_async:
     cmd: [ 'symfony', 'console', 'messenger:consume', 'async' ]
