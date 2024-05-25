@@ -75,21 +75,26 @@ const adminPagesGlobalInitializer = function () {
     const _initSidebarIndicator = function () {
         const contentTitleEl = $('#contentTitle');
         if (contentTitleEl) {
-            const menuItemID = "#menu_item_" + contentTitleEl.html()
-                .replaceAll(" ", '')
-                .replaceAll('\n', '')
-                .replaceAll('\t', '');
-            const myMenuItem = $(menuItemID);
-            if (myMenuItem) {
-                myMenuItem.addClass('active');
-                const parentSubMenu = myMenuItem.parent('.menu-sub');
-                if (parentSubMenu) {
-                    const parentMenuItem = parentSubMenu.parent(".menu-item");
-                    if (parentMenuItem) {
-                        parentMenuItem.addClass("active");
+            try {
+                const menuItemID = "#menu_item_" + contentTitleEl.html()
+                    .replaceAll(" ", '')
+                    .replaceAll('\n', '')
+                    .replaceAll('\t', '');
+                const myMenuItem = $(menuItemID);
+                if (myMenuItem) {
+                    myMenuItem.addClass('active');
+                    const parentSubMenu = myMenuItem.parent('.menu-sub');
+                    if (parentSubMenu) {
+                        const parentMenuItem = parentSubMenu.parent(".menu-item");
+                        if (parentMenuItem) {
+                            parentMenuItem.addClass("active");
+                        }
                     }
                 }
+            } catch (err) {
+                console.log("An error occured when initializing sidebar indicator." + err);
             }
+
         }
     }
 

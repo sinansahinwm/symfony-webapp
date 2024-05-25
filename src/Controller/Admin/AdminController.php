@@ -18,11 +18,16 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class AdminController extends AbstractController
 {
     #[Route('/', name: 'index')]
-    public function index(Request $request, CrudTableService $crudTableService): Response
+    public function index(Request $request): Response
+    {
+        return $this->render('admin/admin/index.html.twig');
+    }
+
+    #[Route('/users', name: 'users')]
+    public function adminUsers(Request $request, CrudTableService $crudTableService): Response
     {
         $userTable = $crudTableService->createFromFQCN($request, UserTable::class);
-
-        return $this->render('admin/admin/index.html.twig', [
+        return $this->render('admin/admin/users.html.twig', [
             'userTable' => $userTable,
         ]);
     }
@@ -31,7 +36,6 @@ class AdminController extends AbstractController
     public function subscriptionPlans(Request $request, CrudTableService $crudTableService): Response
     {
         $subscriptionPlanTable = $crudTableService->createFromFQCN($request, SubscriptionPlanTable::class);
-
         return $this->render('admin/admin/subscription_plans.html.twig', [
             'subscriptionPlanTable' => $subscriptionPlanTable,
         ]);

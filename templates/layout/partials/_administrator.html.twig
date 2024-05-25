@@ -1,26 +1,89 @@
-<div class="offcanvas offcanvas-end" tabindex="-1" id="adminOffCanvas" aria-labelledby="adminOffCanvasLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="adminOffCanvasLabel">{{ 'Yönetici Paneli'|trans }}</h5>
-        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="{{ 'Close'|trans }}"></button>
-    </div>
-    <div class="offcanvas-body">
-
-        <!-- Impersonate -->
-        <form action="{{ path('app_admin_dashboard') }}" method="GET">
-            <div class="mb-3">
-                <label for="_impersonate_user" class="form-label">{{ 'Kullanıcıyı Taklit Et'|trans }}</label>
-                <div class="input-group">
-                    <input type="text" class="form-control" id="_impersonate_user" name="_impersonate_user" placeholder="{{ 'E-Posta adresi'|trans }}">
-                    <button class="btn btn-secondary" type="submit">{{ 'Taklit Et'|trans }}</button>
+<!-- Administrator Bar  -->
+<li class="nav-item dropdown-shortcuts navbar-dropdown dropdown me-2 me-xl-0">
+    <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">
+        <i class="bx bx-code-alt bx-sm text-danger"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-end py-0">
+        <div class="dropdown-menu-header border-bottom">
+            <div class="dropdown-header d-flex align-items-center py-3">
+                <h5 class="text-body mb-0 me-auto">{{ 'Yönetim Paneli'|trans }}</h5>
+                <a href="{{ path('app_admin_index') }}" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Genel Bakış'|trans }}"><i class="bx bx-sm bx-line-chart-down"></i></a>
+            </div>
+        </div>
+        <div class="dropdown-shortcuts-list scrollable-container">
+            <div class="row row-bordered overflow-visible g-0">
+                <div class="dropdown-shortcuts-item col">
+                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-user fs-4"></i>
+                    </span>
+                    <a href="{{ path('app_admin_users') }}" class="stretched-link">
+                        {{ 'Kullanıcılar'|trans }}
+                    </a>
+                    <small class="text-muted mb-0">
+                        {{ 'Tablo'|trans }}
+                    </small>
+                </div>
+                <div class="dropdown-shortcuts-item col">
+                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-rocket fs-4"></i>
+                    </span>
+                    <a href="{{ path('app_admin_subscription_plans') }}" class="stretched-link">
+                        {{ 'Abonelik Planları'|trans }}
+                    </a>
+                    <small class="text-muted mb-0">
+                        {{ 'Tablo'|trans }}
+                    </small>
                 </div>
             </div>
-        </form>
-        <!-- Impersonate -->
-
-        <!-- Go To Admin -->
-        <div class="d-flex justify-content-center">
-            <a href="{{ path('app_admin_index') }}" class="btn btn-primary">{{ 'Yönetici Paneline Git'|trans }}</a>
+            <div class="row row-bordered overflow-visible g-0">
+                <div class="dropdown-shortcuts-item col">
+                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-credit-card fs-4"></i>
+                    </span>
+                    <a href="#" class="stretched-link">
+                        {{ 'Ödeme Kayıtları'|trans }}
+                    </a>
+                    <small class="text-muted mb-0">
+                        {{ 'Tablo'|trans }}
+                    </small>
+                </div>
+                <div class="dropdown-shortcuts-item col">
+                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-help-circle fs-4"></i>
+                    </span>
+                    <a href="#" class="stretched-link">
+                        {{ 'Yardım Merkezi'|trans }}
+                    </a>
+                    <small class="text-muted mb-0">
+                        {{ 'Tablo'|trans }}
+                    </small>
+                </div>
+            </div>
+            <div class="row row-bordered overflow-visible g-0">
+                <div class="dropdown-shortcuts-item col">
+                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-globe fs-4"></i>
+                    </span>
+                    <a href="#" class="stretched-link">
+                        {{ 'Yerelleştirme'|trans }}
+                    </a>
+                    <small class="text-muted mb-0">
+                        {{ 'Tablo'|trans }}
+                    </small>
+                </div>
+                <div class="dropdown-shortcuts-item col">
+                    <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
+                        <i class="bx bx-list-check fs-4"></i>
+                    </span>
+                    <a href="#" class="stretched-link">
+                        {{ 'Durum'|trans }}
+                    </a>
+                    <small class="text-muted mb-0">
+                        {{ 'Tablo'|trans }}
+                    </small>
+                </div>
+            </div>
         </div>
-
     </div>
-</div>
+</li>
+<!-- Administrator Bar -->

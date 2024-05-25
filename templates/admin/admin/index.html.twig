@@ -1,14 +1,10 @@
 {% extends 'layout/admin.html.twig' %}
 
-{% block pageTitle %}{{ 'Yönetici Paneli'|trans }}{% endblock %}
-{% block contentTitle %}{{ 'Yönetici Paneli'|trans }}{% endblock %}
+{% block pageTitle %}{{ 'Yönetici Paneli | Genel Bakış'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli | Genel Bakış'|trans }}{% endblock %}
 
 {% block body %}
 
-    <div class="row">
-        <div class="col-md-8">
-            {{ component('_crud_table_component', { table: userTable, title: 'Kullanıcılar'|trans}) }}
-        </div>
-    </div>
+    admin dashboard
 
 {% endblock %}

@@ -1,9 +1,3 @@
 {% if is_granted('ROLE_ADMIN') %}
-<li class="nav-item dropdown-style-switcher dropdown me-2 me-xl-0">
-    <a class="nav-link hide-arrow" data-bs-toggle="offcanvas" href="#adminOffCanvas" role="button" aria-controls="adminOffCanvas">
-        <i class="bx bx-sm bx-chevron-left text-danger"></i>
-           {{ app.user.displayName ?? app.user.email }}
-        <i class="bx bx-sm bx-chevron-right text-danger"></i>
-    </a>
-</li>
+    {{ include('layout/partials/_administrator.html.twig') }}
 {% endif %}
