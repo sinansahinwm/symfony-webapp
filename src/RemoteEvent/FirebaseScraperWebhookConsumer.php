@@ -90,7 +90,7 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             if ($decodedContent === FALSE) {
                 $webScrapingRequest->setStatus(WebScrapingRequestStatusType::FAILED_TO_PUT_CONTENT_WHEN_CONSUMING);
             } else {
-                $webScrapingRequest->setConsumedContent($decodedContent);
+                $webScrapingRequest->setConsumedContent($myPayloadContent);
             }
 
             // Push Other
