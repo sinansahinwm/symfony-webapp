@@ -23,8 +23,10 @@ class KernelRequestListener
             if ($loggedUser !== NULL) {
                 // Check : If User's Subscription Plan Is NULL
                 if ($loggedUser->getSubscriptionPlan() === NULL) {
-                    $redirectURL = $this->urlGenerator->generate('app_admin_exclude_subscription_plan_index');
-                    $requestEvent->setResponse(new RedirectResponse($redirectURL));
+                    if (!in_array('ROLE_ADMIN', $loggedUser->getRoles())) {
+                        $redirectURL = $this->urlGenerator->generate('app_admin_exclude_subscription_plan_index');
+                        $requestEvent->setResponse(new RedirectResponse($redirectURL));
+                    }
                 }
             }
         }
