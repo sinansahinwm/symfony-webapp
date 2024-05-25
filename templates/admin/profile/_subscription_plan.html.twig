@@ -25,7 +25,7 @@
                 </div>
             </div>
             <ul class="ps-3 g-2 mb-3">
-                {% for planFeature in app.user.subscriptionPlan.planFeatures %}
+                {% for planFeature in app.user.subscriptionPlan.includedFeatures|split(',') %}
                     <li {% if loop.last is not same as(true) %}class="mb-2"{% endif %}>{{ planFeature }}</li>
                 {% endfor %}
             </ul>
