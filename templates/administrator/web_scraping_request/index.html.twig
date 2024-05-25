@@ -1,0 +1,14 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Web Kazıma İstekleri'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Web Kazıma İstekleri'|trans }}{% endblock %}
+
+{% block pageActions %}
+    <a href="{{ path('app_administrator_web_scraping_request_new') }}" class="btn btn-secondary">{{ 'Rastgele Ekle'|trans }}</a>
+{% endblock %}
+
+{% block body %}
+
+    {{ component('_crud_table_component', { table: webScrapingRequestTable, title: 'Web Kazıma İstekleri'|trans}) }}
+
+{% endblock %}
