@@ -34,6 +34,10 @@ final class AppEmailMessageHandler
         'http://127.0.0.1',
     ];
 
+    const EMAIL_BLOCKED_KEYWORDS = [
+        'Connection could not be established with host'
+    ];
+
     public function __construct(private Environment $twig, private MailerInterface $mailer, private LoggerInterface $logger, private ContainerBagInterface $containerBag, private UserRepository $userRepository)
     {
     }
@@ -66,13 +70,29 @@ final class AppEmailMessageHandler
 
             // Set mail html content & send via symfony's mailer.
             $myEmail->html($fixedMailHTML);
-            $this->mailer->send($myEmail);
+
+            // Check Rendered Context
+            $renderedContextCheck = $this->renderedContextIsNotBlocked($fixedMailHTML);
+            if ($renderedContextCheck === TRUE) {
+                $this->mailer->send($myEmail);
+            }
+
+
         } catch (TransportExceptionInterface|LoaderError|RuntimeError|SyntaxError $e) {
             $this->logger->error($e);
         }
 
     }
 
+    private function renderedContextIsNotBlocked(string $renderedContext): bool
+    {
+        foreach (self::EMAIL_BLOCKED_KEYWORDS as $blockedKeyword) {
+            if (str_contains($renderedContext, $blockedKeyword)) {
+                return FALSE;
+            }
+        }
+        return TRUE;
+    }
 
     /**
      * @throws RuntimeError
