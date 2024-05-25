@@ -1,0 +1,16 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Abonelik Planları'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Abonelik Planları'|trans }}{% endblock %}
+
+{% block pageActions %}
+    <a href="{{ path('app_administrator_subscription_plan_new') }}" class="btn btn-secondary">
+        {{ 'Yeni Ekle'|trans }}
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    {{ component('_crud_table_component', { table: subscriptionPlanTable, title: 'Abonelik Planları'|trans}) }}
+
+{% endblock %}
