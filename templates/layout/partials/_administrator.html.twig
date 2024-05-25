@@ -7,7 +7,7 @@
         <div class="dropdown-menu-header border-bottom">
             <div class="dropdown-header d-flex align-items-center py-3">
                 <h5 class="text-body mb-0 me-auto">{{ 'Yönetim Paneli'|trans }}</h5>
-                <a href="{{ path('app_admin_index') }}" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Genel Bakış'|trans }}"><i class="bx bx-sm bx-line-chart-down"></i></a>
+                <a href="{{ path('app_administrator_index') }}" class="dropdown-shortcuts-add text-body" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ 'Genel Bakış'|trans }}"><i class="bx bx-sm bx-line-chart-down"></i></a>
             </div>
         </div>
         <div class="dropdown-shortcuts-list scrollable-container">
@@ -16,7 +16,7 @@
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                         <i class="bx bx-user fs-4"></i>
                     </span>
-                    <a href="{{ path('app_admin_users') }}" class="stretched-link">
+                    <a href="{{ path('app_administrator_user_index') }}" class="stretched-link">
                         {{ 'Kullanıcılar'|trans }}
                     </a>
                     <small class="text-muted mb-0">
@@ -27,7 +27,7 @@
                     <span class="dropdown-shortcuts-icon bg-label-secondary rounded-circle mb-2">
                         <i class="bx bx-rocket fs-4"></i>
                     </span>
-                    <a href="{{ path('app_admin_subscription_plans') }}" class="stretched-link">
+                    <a href="{{ path('app_administrator_subscription_plan_index') }}" class="stretched-link">
                         {{ 'Abonelik Planları'|trans }}
                     </a>
                     <small class="text-muted mb-0">
