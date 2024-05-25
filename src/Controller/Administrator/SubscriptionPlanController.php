@@ -26,7 +26,7 @@ class SubscriptionPlanController extends AbstractController
         ]);
     }
 
-    #[Route('/{subscriptionPlan}', name: 'delete')]
+    #[Route('/delete/{subscriptionPlan}', name: 'delete')]
     public function delete(SubscriptionPlan $subscriptionPlan, EntityManagerInterface $entityManager, UserRepository $userRepository): Response
     {
         $planUserExist = $userRepository->findOneBy(["subscription_plan" => $subscriptionPlan]);
