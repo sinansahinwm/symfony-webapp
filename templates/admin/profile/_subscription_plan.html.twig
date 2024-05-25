@@ -56,6 +56,7 @@
         {% else %}
             <div class="alert alert-secondary" role="alert">
                 {{ 'Herhangi bir abonelik planına sahip değilsiniz.'|trans }}
+                {{ 'Abonelik planı satın almak için'|trans }} <a href="{{ path('app_admin_exclude_subscription_plan_index') }}">{{ 'tıklayın'|trans }}.</a>
             </div>
         {% endif %}
         <!-- Subscription Plan Exist -->
