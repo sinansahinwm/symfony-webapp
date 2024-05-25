@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use function Symfony\Component\Translation\t;
 
 #[IsGranted('ROLE_ADMIN')]
 #[Route('/administrator/web/scraping/request', name: 'app_administrator_web_scraping_request_')]
@@ -28,7 +29,10 @@ class WebScraingRequestController extends AbstractController
     #[Route('/new', name: 'new')]
     public function new(WebScrapingRequestService $webScrapingRequestService): Response
     {
-        $webScrapingRequestService->createRequest('https://example.com');
+        $randomInt = random_int(1000, 2000);
+        $randomNavigateURL = "https://placehold.co/1000x$randomInt/jpg";
+        $webScrapingRequestService->createRequest($randomNavigateURL);
+        $this->addFlash('pageNotificationSuccess', t('Rastgele URL kuyruğa eklendi.'));
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
     }
 
