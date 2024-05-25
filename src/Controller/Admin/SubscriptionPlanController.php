@@ -29,7 +29,7 @@ class SubscriptionPlanController extends AbstractController
     #[Route('/', name: 'index')]
     public function index(SubscriptionPlanRepository $subscriptionPlanRepository): Response
     {
-        $thePlans = $subscriptionPlanRepository->getAllSubscriotionPlansByOrder();
+        $thePlans = $subscriptionPlanRepository->getAllSubscriptionPlansByOrder();
         return $this->render('admin/subscription_plan/index.html.twig', [
             'plans' => $thePlans,
         ]);

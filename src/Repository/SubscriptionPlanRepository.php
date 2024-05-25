@@ -21,7 +21,7 @@ class SubscriptionPlanRepository extends ServiceEntityRepository
         parent::__construct($registry, SubscriptionPlan::class);
     }
 
-    public function getAllSubscriotionPlansByOrder(string $orderDirection = 'DESC'): mixed
+    public function getAllSubscriptionPlansByOrder(string $orderDirection = 'ASC'): mixed
     {
         $queryBuilder = $this->createQueryBuilder("qb");
         $queryBuilder->orderBy('qb.plan_order', $orderDirection);
