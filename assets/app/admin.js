@@ -388,9 +388,9 @@ const adminPagesGlobalInitializer = function () {
             _initTooltips();
             _initSelect2();
             _initShowMoreSpan();
-            _initSymfonyToolbarBlock();
             _initPerfectScrollbars();
             _initMaskedInputs();
+            // DEPRECED _initSymfonyToolbarBlock();
         }
     }
 
