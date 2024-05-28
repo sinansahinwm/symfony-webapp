@@ -14,6 +14,7 @@ use App\Security\LoginFormAuthenticator;
 use App\Service\TeamInviteService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,7 @@ use Symfony\Component\Messenger\Stamp\DelayStamp;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
@@ -127,8 +129,15 @@ class AuthController extends AbstractController
     }
 
     #[Route('/verify_email', name: 'verify_email')]
-    public function authVerifyEmail(Request $request, #[CurrentUser] User $loggedUser, MessageBusInterface $messageBus): Response
+    public function authVerifyEmail(Request $request, MessageBusInterface $messageBus, Security $security): Response
     {
+
+        $loggedUser = $security->getUser();
+
+        if ($loggedUser === NULL) {
+            $this->addFlash('pageNotificationError', t("E-Posta adresiniz onaylamak için öncelikle giriş yapınız."));
+            return $this->redirectToRoute(LoginFormAuthenticator::SIGNIN_ROUTE);
+        }
 
         // If user is not logged in, verify email doesn't work properly.
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
