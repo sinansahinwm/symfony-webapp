@@ -129,6 +129,7 @@ class AuthController extends AbstractController
     #[Route('/verify_email', name: 'verify_email')]
     public function authVerifyEmail(Request $request, #[CurrentUser] User $loggedUser, MessageBusInterface $messageBus): Response
     {
+
         // If user is not logged in, verify email doesn't work properly.
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
