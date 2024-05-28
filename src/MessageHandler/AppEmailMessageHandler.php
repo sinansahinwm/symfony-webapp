@@ -34,12 +34,6 @@ final class AppEmailMessageHandler
         'http://127.0.0.1',
     ];
 
-    const EMAIL_BLOCKED_KEYWORDS = [
-        // This feature was added to send SMTP connection errors via e-mail.
-        // When this situation occurs, the messenger component breaks down.
-        'Connection could not be established with host'
-    ];
-
     public function __construct(private Environment $twig, private MailerInterface $mailer, private LoggerInterface $logger, private ContainerBagInterface $containerBag, private UserRepository $userRepository)
     {
     }
@@ -73,9 +67,10 @@ final class AppEmailMessageHandler
             // Set mail html content & send via symfony's mailer.
             $myEmail->html($fixedMailHTML);
 
-            // Check Rendered Context
-            $renderedContextCheck = $this->renderedContextIsNotBlocked($fixedMailHTML);
-            if ($renderedContextCheck === TRUE) {
+            // This feature was added to send SMTP connection errors via e-mail.
+            // When this situation occurs, the messenger component breaks down.
+            $renderedContextCheck = $this->isEmailErrorAlready($fixedMailHTML);
+            if ($renderedContextCheck !== TRUE) {
                 $this->mailer->send($myEmail);
             }
 
@@ -86,14 +81,12 @@ final class AppEmailMessageHandler
 
     }
 
-    private function renderedContextIsNotBlocked(string $renderedContext): bool
+    private function isEmailErrorAlready(string $renderedContext): bool
     {
-        foreach (self::EMAIL_BLOCKED_KEYWORDS as $blockedKeyword) {
-            if (str_contains($renderedContext, $blockedKeyword)) {
-                return FALSE;
-            }
+        if (str_contains($renderedContext, 'SendEmailMessage')) {
+            return TRUE;
         }
-        return TRUE;
+        return FALSE;
     }
 
     /**
