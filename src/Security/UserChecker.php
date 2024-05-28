@@ -55,7 +55,7 @@ class UserChecker implements UserCheckerInterface
                         $this->sendEmailVerification($user);
                         return TRUE;
                     });
-                } catch (InvalidArgumentException $e) {
+                } catch (InvalidArgumentException) {
                     return;
                 }
 
