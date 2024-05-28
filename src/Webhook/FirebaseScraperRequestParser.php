@@ -48,7 +48,8 @@ final class FirebaseScraperRequestParser extends AbstractRequestParser
         foreach (self::REQUIRED_PAYLOAD_PARAMS as $payloadParamNameRequired) {
             $payloadParameterValue = $requestPayload->get($payloadParamNameRequired);
             if ($payloadParameterValue === NULL) {
-                throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, t('Tüm zorunlu parametreler gönderilmelidir. Şu parametre gönderilmedi: ') . $payloadParamNameRequired);
+                $rejectException = t("Tüm zorunlu parametreler gönderilmelidir.") . " " . t("Şu parametre gönderilmedi: ") . $payloadParamNameRequired . json_encode($requestPayload->keys());
+                throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, $rejectException);
             }
         }
 
