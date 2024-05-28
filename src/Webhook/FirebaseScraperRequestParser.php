@@ -5,6 +5,8 @@ namespace App\Webhook;
 use Symfony\Component\HttpFoundation\ChainRequestMatcher;
 use Symfony\Component\HttpFoundation\Exception\JsonException;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestMatcher\IsJsonRequestMatcher;
+use Symfony\Component\HttpFoundation\RequestMatcher\MethodRequestMatcher;
 use Symfony\Component\HttpFoundation\RequestMatcherInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\RemoteEvent\RemoteEvent;
@@ -21,6 +23,9 @@ final class FirebaseScraperRequestParser extends AbstractRequestParser
     {
         return new ChainRequestMatcher([
             // Add RequestMatchers to fit your needs
+            // new HostRequestMatcher('github.com'),
+            new IsJsonRequestMatcher(),
+            new MethodRequestMatcher('POST'),
         ]);
     }
 
@@ -48,8 +53,8 @@ final class FirebaseScraperRequestParser extends AbstractRequestParser
         foreach (self::REQUIRED_PAYLOAD_PARAMS as $payloadParamNameRequired) {
             $payloadParameterValue = $requestPayload->get($payloadParamNameRequired);
             if ($payloadParameterValue === NULL) {
-                $rejectException = t("Tüm zorunlu parametreler gönderilmelidir.") . " " . t("Şu parametre gönderilmedi: ") . $payloadParamNameRequired . json_encode($requestPayload->keys());
-                throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, $rejectException . "#" . $request->getContent() . '#' . $request->getContentTypeFormat() . '#' . $request->getRequestFormat());
+                $rejectException = t("Tüm zorunlu parametreler gönderilmelidir.") . " " . t("Şu parametre gönderilmedi: ") . $payloadParamNameRequired;
+                throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, $rejectException . "#" . $request->getContent() . '#' . $request->getHost() . '$');
             }
         }
 
