@@ -3,11 +3,15 @@
 use App\Config\MessageBusDelays;
 use App\Entity\User;
 use App\Message\AppEmailMessage;
+use Exception;
+use Psr\Cache\InvalidArgumentException;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Messenger\Stamp\DelayStamp;
 use Symfony\Component\Security\Core\Exception\CustomUserMessageAccountStatusException;
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Contracts\Cache\CacheInterface;
+use Symfony\Contracts\Cache\ItemInterface;
 use function Symfony\Component\Translation\t;
 
 class UserChecker implements UserCheckerInterface
@@ -15,7 +19,7 @@ class UserChecker implements UserCheckerInterface
 
     const EMAIL_VERIFICATION_LIMIT = 72;
 
-    public function __construct(private MessageBusInterface $messageBus, private EmailVerifier $emailVerifier,)
+    public function __construct(private MessageBusInterface $messageBus, private EmailVerifier $emailVerifier, private CacheInterface $cache)
     {
     }
 
@@ -41,11 +45,25 @@ class UserChecker implements UserCheckerInterface
             $userCreatedAt = $user->getCreatedAt()->getTimestamp();
             $timeDiffHour = ceil(((time() - $userCreatedAt) / 60) / 60);
             if ($timeDiffHour > self::EMAIL_VERIFICATION_LIMIT) {
-                $this->sendEmailVerification($user);
+
+                $cacheKey = "CACHE_SEND_VERIFY_EMAIL_" . $user->getEmail();
+
+                try {
+                    $this->cache->get($cacheKey, function (ItemInterface $item) use ($user): string {
+                        $item->expiresAfter(self::EMAIL_VERIFICATION_LIMIT * 60 * 60);
+                        // Send Verification Email If User Is Not Verified
+                        $this->sendEmailVerification($user);
+                        return TRUE;
+                    });
+                } catch (InvalidArgumentException $e) {
+                    return;
+                }
+
                 // DEPRECED
                 // DEPRECED This feature has been disabled because it is required to log in for email confirmation.
                 // DEPRECED $emailVerificationErrorMessage = t("E-posta adresinizi onaylanamadınız. Hesabınıza giriş yapabilmek için e-posta adresinizi onaylamalısınız.");
                 // DEPRECED throw new CustomUserMessageAccountStatusException($emailVerificationErrorMessage);
+
             }
         }
     }
