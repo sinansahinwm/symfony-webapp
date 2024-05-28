@@ -41,9 +41,11 @@ class UserChecker implements UserCheckerInterface
             $userCreatedAt = $user->getCreatedAt()->getTimestamp();
             $timeDiffHour = ceil(((time() - $userCreatedAt) / 60) / 60);
             if ($timeDiffHour > self::EMAIL_VERIFICATION_LIMIT) {
-                $emailVerificationErrorMessage = t("E-posta adresinizi onaylanamadınız. Hesabınıza giriş yapabilmek için e-posta adresinizi onaylamalısınız.");
                 $this->sendEmailVerification($user);
-                throw new CustomUserMessageAccountStatusException($emailVerificationErrorMessage);
+                // DEPRECED
+                // DEPRECED This feature has been disabled because it is required to log in for email confirmation.
+                // DEPRECED $emailVerificationErrorMessage = t("E-posta adresinizi onaylanamadınız. Hesabınıza giriş yapabilmek için e-posta adresinizi onaylamalısınız.");
+                // DEPRECED throw new CustomUserMessageAccountStatusException($emailVerificationErrorMessage);
             }
         }
     }
