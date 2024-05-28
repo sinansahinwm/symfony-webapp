@@ -83,7 +83,7 @@ final class AppEmailMessageHandler
 
     private function isEmailErrorAlready(string $renderedContext): bool
     {
-        if (str_contains($renderedContext, 'SendEmailMessage')) {
+        if (str_contains($renderedContext, 'Unable to connect to ssl') === TRUE) {
             return TRUE;
         }
         return FALSE;
