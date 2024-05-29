@@ -22,10 +22,8 @@ final class FirebaseScraperRequestParser extends AbstractRequestParser
     protected function getRequestMatcher(): RequestMatcherInterface
     {
         return new ChainRequestMatcher([
-            // Add RequestMatchers to fit your needs
-            // new HostRequestMatcher('github.com'),
-            new IsJsonRequestMatcher(),
-            new MethodRequestMatcher('POST'),
+            // new IsJsonRequestMatcher(),
+            // new MethodRequestMatcher('POST'),
         ]);
     }
 
@@ -54,7 +52,7 @@ final class FirebaseScraperRequestParser extends AbstractRequestParser
             $payloadParameterValue = $requestPayload->get($payloadParamNameRequired);
             if ($payloadParameterValue === NULL) {
                 $rejectException = t("Tüm zorunlu parametreler gönderilmelidir.") . " " . t("Şu parametre gönderilmedi: ") . $payloadParamNameRequired;
-                throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, $rejectException . "#" . $request->getContent() . '#' . $request->getHost() . '$');
+                throw new RejectWebhookException(Response::HTTP_BAD_REQUEST, $rejectException . "#" . $request->getContent() . '#' . $request->getQueryString() . $request->getRealMethod() .json_encode( $request->getPayload()));
             }
         }
 

@@ -180,7 +180,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         const initialPageUrl = myPage.url();
 
         // Prepare Webhook Data
-        const webhookData = {
+        const myWebhookPayload = {
             instanceID: instanceID,
             screenshot: pageScreenshot,
             content: Buffer.from(pageContent).toString('base64'),
@@ -189,7 +189,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         };
 
         // Send Webhook Post
-        await axios.post(webhookURL, webhookData).catch(function (error) {
+        await axios.post(webhookURL, myWebhookPayload).catch(function (error) {
             logger.error(error);
         });
 
