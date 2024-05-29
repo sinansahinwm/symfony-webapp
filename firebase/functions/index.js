@@ -13,7 +13,7 @@ const scraperFunctionGlobalOptions = {
 
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
-    headless: false,
+    headless: true,
     args: [
         '--no-sandbox',
         '--disable-setuid--sandbox',
@@ -33,7 +33,7 @@ const puppeteerOptions = {
     viewPortWidth: 1366,
     viewPortHeight: 768,
     dataSaverMode: true,
-    dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket', 'ping']
+    dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket', 'manifest', 'ping']
     // These are available content types
     // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
 };
