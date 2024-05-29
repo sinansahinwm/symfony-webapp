@@ -1,3 +1,6 @@
+# ===============================
+# ACCESS CONTROL CONFIGURATION
+# ===============================
 security:
   access_control:
     - { path: ^/admin, roles: ROLE_USER, requires_channel: '%env(REQUIRED_REQUEST_SCHEME)%' }

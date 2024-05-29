@@ -53,6 +53,10 @@ class WebScrapingRequestTable extends TableAbstractController implements DataTab
                     $gotoURL = $urlGenerator->generate('app_administrator_web_scraping_request_delete', ['webScrapingRequest' => $value]);
                     return new CrudTableAction($this->t("Sil"), $gotoURL, 'bx bx-trash');
                 },
+                function ($value, UrlGeneratorInterface $urlGenerator) {
+                    $gotoURL = $urlGenerator->generate('app_administrator_web_scraping_request_show_html', ['webScrapingRequest' => $value]);
+                    return new CrudTableAction($this->t("İçeriği Görüntüle"), $gotoURL, 'bx bxs-file-html');
+                },
             ]
         ]);
 

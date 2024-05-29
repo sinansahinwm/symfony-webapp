@@ -6,6 +6,8 @@ use App\Entity\WebScrapingRequest;
 use App\Service\CrudTable\CrudTableService;
 use App\Service\WebScrapingRequestService;
 use Doctrine\ORM\EntityManagerInterface;
+use Faker\Factory;
+use Faker\Generator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -38,11 +40,26 @@ class WebScraingRequestController extends AbstractController
 
 
     #[Route('/delete/{webScrapingRequest}', name: 'delete')]
-    public function delete(Request $request, WebScrapingRequest $webScrapingRequest, EntityManagerInterface $entityManager): Response
+    public function delete(WebScrapingRequest $webScrapingRequest, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($webScrapingRequest);
         $entityManager->flush();
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
+    }
+
+    #[Route('/show_html/{webScrapingRequest}', name: 'show_html')]
+    public function showHtml(WebScrapingRequest $webScrapingRequest, EntityManagerInterface $entityManager): Response
+    {
+        return $this->render('administrator/web_scraping_request/show_html.html.twig', [
+            'webScrapingRequest' => $webScrapingRequest,
+            'decodedContent' => base64_decode($webScrapingRequest->getConsumedContent()),
+        ]);
+    }
+
+    #[Route('/content_iframe/{webScrapingRequest}', name: 'content_iframe')]
+    public function contentIFrame(WebScrapingRequest $webScrapingRequest, EntityManagerInterface $entityManager): Response
+    {
+        return new Response(base64_decode($webScrapingRequest->getConsumedContent()), 200);
     }
 
 }
