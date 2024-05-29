@@ -36,8 +36,8 @@ Encore
     // -- Feature Config
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
-    .enableSourceMaps(!Encore.isProduction())
-    .enableVersioning(Encore.isProduction())
+    // TODO : DEPRECED FOR DIGITAL OCEAN CACHING .enableSourceMaps(!Encore.isProduction())
+    // TODO : DEPRECED FOR DIGITAL OCEAN CACHING .enableVersioning(Encore.isProduction())
 
     // -- Babel Config
     // .configureBabel((config) => {
