@@ -189,9 +189,15 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         };
 
         // Send Webhook Post
-        await axios.post(webhookURL, myWebhookPayload).catch(function (error) {
+        const myWebhookResponse = await axios({
+            method: 'post',
+            url: webhookURL,
+            data: myWebhookPayload,
+        }).catch(function (error) {
             logger.error(error);
         });
+
+        logger.error(myWebhookResponse.method);
 
         // Dispose Browser
         await myBrowser.close();
