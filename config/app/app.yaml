@@ -188,7 +188,7 @@ datatables:
 # WEBPACK CONFIGURATION
 # ===============================
 
-# This blocks webpack cache for digital ocean(prod) webpack caching.
+# TODO : This blocks webpack cache for digital ocean(prod) webpack caching. Remove this line.
 when@prod:
   webpack_encore:
     cache: false
