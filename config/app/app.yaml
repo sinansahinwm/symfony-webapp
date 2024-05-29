@@ -183,3 +183,13 @@ datatables:
 
   # Default translation domain to be used
   translation_domain: datatables
+
+# ===============================
+# WEBPACK CONFIGURATION
+# ===============================
+
+# This blocks webpack cache for digital ocean(prod) webpack caching.
+when@prod:
+  webpack_encore:
+    cache: false
+
