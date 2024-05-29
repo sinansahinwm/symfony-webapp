@@ -1,13 +1,11 @@
 <?php namespace App\Controller\Administrator;
 
-use App\Controller\Admin\Table\SubscriptionPlanTable;
 use App\Controller\Admin\Table\WebScrapingRequestTable;
 use App\Entity\WebScrapingRequest;
+use App\Form\Administrator\WebScrapingRequestType;
 use App\Service\CrudTable\CrudTableService;
 use App\Service\WebScrapingRequestService;
 use Doctrine\ORM\EntityManagerInterface;
-use Faker\Factory;
-use Faker\Generator;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,6 +34,25 @@ class WebScraingRequestController extends AbstractController
         $webScrapingRequestService->createRequest($randomNavigateURL);
         $this->addFlash('pageNotificationSuccess', t('Rastgele URL kuyruğa eklendi.'));
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
+    }
+
+    #[Route('/new_by_url', name: 'new_by_url', methods: ['GET', 'POST'])]
+    public function newByUrl(Request $request, WebScrapingRequestService $webScrapingRequestService): Response
+    {
+        $webScrapingRequest = new WebScrapingRequest();
+        $form = $this->createForm(WebScrapingRequestType::class, $webScrapingRequest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->addFlash('pageNotificationSuccess', t("URL kuyruğa eklendi."));
+            $webScrapingRequestService->createRequest($webScrapingRequest->getNavigateUrl());
+            return $this->redirectToRoute('app_administrator_web_scraping_request_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('administrator/web_scraping_request/new.html.twig', [
+            'web_scraping_request' => $webScrapingRequest,
+            'form' => $form,
+        ]);
     }
 
 

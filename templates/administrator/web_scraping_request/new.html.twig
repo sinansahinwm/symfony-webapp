@@ -1,0 +1,18 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Web Kazıma İstekleri'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Web Kazıma İstekleri'|trans }}{% endblock %}
+
+{% block pageActions %}
+    <a href="{{ path('app_administrator_web_scraping_request_index') }}" class="btn btn-secondary">{{ 'Listeye Geri Dön'|trans }}</a>
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+            {{ include('administrator/web_scraping_request/_form.html.twig') }}
+        </div>
+    </div>
+
+{% endblock %}
