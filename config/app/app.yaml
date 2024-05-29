@@ -61,6 +61,7 @@ twig:
 # FRAMEWORK CONFIGURATION
 # ===============================
 framework:
+  trusted_proxies: '127.0.0.1,REMOTE_ADDR'
   router:
     default_uri: '%env(APP_DOMAIN)%'
 
