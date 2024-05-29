@@ -13,7 +13,7 @@ const scraperFunctionGlobalOptions = {
 
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
-    headless: false,
+    headless: true,
     args: [
         '--no-sandbox',
         '--disable-setuid--sandbox',
