@@ -197,6 +197,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             logger.error(error);
         });
 
+        logger.error(webhookURL);
         logger.error(myWebhookResponse.method);
 
         // Dispose Browser
