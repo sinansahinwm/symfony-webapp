@@ -13,7 +13,7 @@ const scraperFunctionGlobalOptions = {
 
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
-    headless: true,
+    headless: false,
     args: [
         '--no-sandbox',
         '--disable-setuid--sandbox',
@@ -33,7 +33,7 @@ const puppeteerOptions = {
     viewPortWidth: 1366,
     viewPortHeight: 768,
     dataSaverMode: true,
-    dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket', 'manifest', 'ping']
+    dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket', 'manifest', 'ping'],
     // These are available content types
     // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
 };
@@ -157,16 +157,16 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             await myPage.setRequestInterception(true);
 
             // Block to Load Other Assets
-            myPage.on('request', (request) => {
-                if (puppeteerOptions.dataSaverModeBlockContents.indexOf(request.resourceType()) !== -1) {
-                    request.abort();
+            myPage.on('request', (interceptedRequest) => {
+                if (interceptedRequest.isInterceptResolutionHandled()) return;
+                if (puppeteerOptions.dataSaverModeBlockContents.indexOf(interceptedRequest.resourceType()) !== -1) {
+                    interceptedRequest.abort();
                 } else {
-                    request.continue();
+                    interceptedRequest.continue();
                 }
             });
 
         }
-
 
         // Navigate
         const myResponse = await myPage.goto(navigateURL, {
