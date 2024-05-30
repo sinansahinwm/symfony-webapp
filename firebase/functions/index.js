@@ -15,7 +15,7 @@ const scraperFunctionGlobalOptions = {
 
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
-    headless: true,
+    headless: false,
     args: [
         '--no-sandbox',
         '--disable-setuid--sandbox',
@@ -38,6 +38,10 @@ const puppeteerOptions = {
     dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket', 'manifest', 'ping'],
     // These are available content types
     // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
+    waitUntilAfterRunningSteps: {
+        idleTime: 500,
+        concurrency: 2
+    }
 };
 
 // SETTING GLOBAL OPTIONS
@@ -205,6 +209,9 @@ exports.firebaseScraper = onRequest(async (request, response) => {
                 new PuppeteerRunnerExtension(myBrowser, myPage, {timeout: puppeteerOptions.timeout})
             );
             await myStepsRunner.run();
+
+            // Wait For Network Idle 2
+            await myPage.waitForNetworkIdle(puppeteerOptions.waitUntilAfterRunningSteps);
         }
 
         // Get Data

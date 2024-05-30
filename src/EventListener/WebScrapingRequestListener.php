@@ -73,6 +73,7 @@ class WebScrapingRequestListener
         $requestedObject->setConsumedUrl($cachedObject->getConsumedUrl());
         $requestedObject->setConsumedRemoteStatus($cachedObject->getConsumedRemoteStatus());
         $requestedObject->setCompletedHandle($cachedObject->getCompletedHandle());
+        $requestedObject->setSteps($cachedObject->getSteps());
 
         // Persist Requested Object
         $this->entityManager->persist($requestedObject);
