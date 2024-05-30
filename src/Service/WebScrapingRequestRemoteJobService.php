@@ -3,6 +3,7 @@
 use App\Entity\WebScrapingRequest;
 use App\EventListener\WebScrapingRequestListener;
 use Exception;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -11,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class WebScrapingRequestRemoteJobService
 {
 
-    public function __construct(private ContainerBagInterface $containerBag, private HttpClientInterface $httpClient, private TranslatorInterface $translator)
+    public function __construct(private ContainerBagInterface $containerBag, private HttpClientInterface $httpClient, private Security $security)
     {
     }
 
@@ -65,6 +66,7 @@ class WebScrapingRequestRemoteJobService
             'webhookURL' => $webScrapingRequest->getWebhookUrl(),
             'navigateURL' => $webScrapingRequest->getNavigateUrl(),
             'workerURL' => $this->getWorkerEndpoint(),
+            'puppeteerLaunchOptions' => $this->getLaunchOptions($webScrapingRequest)
         ];
 
         // Add Steps If Exist
@@ -73,6 +75,15 @@ class WebScrapingRequestRemoteJobService
         }
 
         return $payloadData;
+    }
+
+    private function getLaunchOptions(WebScrapingRequest $webScrapingRequest): array
+    {
+        $browserLaunchOptions = [];
+        if ($this->security->getUser() !== NULL) {
+            $browserLaunchOptions["userDataDir"] = "./session/" . $this->security->getUser()->getUserIdentifier();
+        }
+        return $browserLaunchOptions;
     }
 
     private function getServerEndpoint(): string
