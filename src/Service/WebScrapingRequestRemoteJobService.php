@@ -60,12 +60,19 @@ class WebScrapingRequestRemoteJobService
 
     private function getJsonBody(WebScrapingRequest $webScrapingRequest): array
     {
-        return [
+        $payloadData = [
             'instanceID' => $webScrapingRequest->getId(),
             'webhookURL' => $webScrapingRequest->getWebhookUrl(),
             'navigateURL' => $webScrapingRequest->getNavigateUrl(),
             'workerURL' => $this->getWorkerEndpoint(),
         ];
+
+        // Add Steps If Exist
+        if ($webScrapingRequest->getSteps() !== NULL) {
+            $payloadData['steps'] = json_decode($webScrapingRequest->getSteps());
+        }
+
+        return $payloadData;
     }
 
     private function getServerEndpoint(): string

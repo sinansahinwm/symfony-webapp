@@ -5,6 +5,9 @@ use App\Entity\WebScrapingRequest;
 use App\Form\Administrator\WebScrapingRequestType;
 use App\Service\CrudTable\CrudTableService;
 use App\Service\WebScrapingRequestService;
+use App\Service\WebScrapingRequestStep\ChangeStep;
+use App\Service\WebScrapingRequestStep\KeyDownStep;
+use App\Service\WebScrapingRequestStep\KeyUpStep;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,9 +32,10 @@ class WebScraingRequestController extends AbstractController
     #[Route('/new', name: 'new')]
     public function new(WebScrapingRequestService $webScrapingRequestService): Response
     {
-        $randomInt = random_int(1000, 2000);
-        $randomNavigateURL = "https://placehold.co/1000x$randomInt/jpg";
-        $webScrapingRequestService->createRequest($randomNavigateURL);
+        $myStep1 = new ChangeStep("united arab emirates", ["xpath///*[@id='searchInput']"]);
+        $myStep2 = new KeyDownStep("Enter");
+        $myStep3 = new KeyUpStep("Enter");
+        $webScrapingRequestService->addStep($myStep1)->addStep($myStep2)->addStep($myStep3)->createRequest("https://wikipedia.org");
         $this->addFlash('pageNotificationSuccess', t('Rastgele URL kuyruğa eklendi.'));
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
     }

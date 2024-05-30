@@ -44,6 +44,9 @@ class WebScrapingRequest
     #[ORM\Column(type: 'web_scraping_request_completed_handle', nullable: true)]
     private $completed_handle = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $steps = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -164,6 +167,18 @@ class WebScrapingRequest
     public function setCompletedHandle($completed_handle): static
     {
         $this->completed_handle = $completed_handle;
+
+        return $this;
+    }
+
+    public function getSteps(): ?string
+    {
+        return $this->steps;
+    }
+
+    public function setSteps(?string $steps): static
+    {
+        $this->steps = $steps;
 
         return $this;
     }
