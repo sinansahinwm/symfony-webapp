@@ -1,8 +1,10 @@
 // IMPORTS
-const puppeteer = require('puppeteer');
+const puppeteer = require('puppeteer-extra');
 const axios = require('axios');
 const {onRequest} = require("firebase-functions/v2/https");
 const {setGlobalOptions, logger} = require("firebase-functions/v2");
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const {createRunner, PuppeteerRunnerExtension} = require('@puppeteer/replay');
 
 // CONFIGURATION
 const scraperFunctionGlobalOptions = {
@@ -13,7 +15,7 @@ const scraperFunctionGlobalOptions = {
 
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
-    headless: true,
+    headless: false,
     args: [
         '--no-sandbox',
         '--disable-setuid--sandbox',
@@ -28,7 +30,7 @@ const puppeteerOptions = {
         latitude: 39,
         longitude: 32,
     },
-    waitUntil: 'networkidle0',
+    waitUntil: ['domcontentloaded', 'networkidle2'],
     timeout: 450000,
     viewPortWidth: 1366,
     viewPortHeight: 768,
@@ -83,7 +85,23 @@ exports.firebaseScraper = onRequest(async (request, response) => {
     const instanceID = requestBody.instanceID;
     const navigateURL = requestBody.navigateURL;
     const webhookURL = requestBody.webhookURL;
+    const workerURL = requestBody.workerURL;
+    const mySteps = requestBody.steps;
+
+    // Check Navigate URL
     if ((typeof navigateURL === "undefined") || (typeof webhookURL === "undefined")) {
+        response.status(400).send("Bad Request");
+        return;
+    }
+
+    // Check Webhook URL
+    if ((typeof webhookURL === "undefined") || (typeof webhookURL === "undefined")) {
+        response.status(400).send("Bad Request");
+        return;
+    }
+
+    // Check Worker URL
+    if ((typeof workerURL === "undefined") || (typeof workerURL === "undefined")) {
         response.status(400).send("Bad Request");
         return;
     }
@@ -123,6 +141,9 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         // Get Remote Launch Options
         const puppeteerLaunchOptionsRequested = requestBody.puppeteerLaunchOptions ?? {};
 
+        // Use Stealth Plugin for Avoid Detections
+        puppeteer.use(StealthPlugin());
+
         // Open Browser
         const myBrowser = await puppeteer.launch({
             ...puppeteerLaunchOptions,
@@ -157,12 +178,12 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             await myPage.setRequestInterception(true);
 
             // Block to Load Other Assets
-            myPage.on('request', (interceptedRequest) => {
+            myPage.on('request', async (interceptedRequest) => {
                 if (interceptedRequest.isInterceptResolutionHandled()) return;
                 if (puppeteerOptions.dataSaverModeBlockContents.indexOf(interceptedRequest.resourceType()) !== -1) {
-                    interceptedRequest.abort();
+                    await interceptedRequest.abort();
                 } else {
-                    interceptedRequest.continue();
+                    await interceptedRequest.continue();
                 }
             });
 
@@ -173,6 +194,18 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             waitUntil: puppeteerOptions.waitUntil,
             timeout: puppeteerOptions.timeout,
         });
+
+        // Run Steps After Navigation If Steps Exist
+        if (typeof mySteps !== "undefined") {
+            const myStepsRunner = await createRunner(
+                {
+                    title: 'Firebase Scraper',
+                    steps: mySteps,
+                },
+                new PuppeteerRunnerExtension(myBrowser, myPage, {timeout: puppeteerOptions.timeout})
+            );
+            await myStepsRunner.run();
+        }
 
         // Get Data
         const pageContent = await myPage.content();
