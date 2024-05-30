@@ -9,6 +9,7 @@ use App\Service\WebScrapingRequestStep\ChangeStep;
 use App\Service\WebScrapingRequestStep\KeyDownStep;
 use App\Service\WebScrapingRequestStep\KeyUpStep;
 use Doctrine\ORM\EntityManagerInterface;
+use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,10 +33,28 @@ class WebScraingRequestController extends AbstractController
     #[Route('/new', name: 'new')]
     public function new(WebScrapingRequestService $webScrapingRequestService): Response
     {
-        $myStep1 = new ChangeStep("gözlük", ["xpath///*[@id='twotabsearchtextbox']"]);
-        $myStep2 = new KeyDownStep("Enter");
-        $myStep3 = new KeyUpStep("Enter");
-        $webScrapingRequestService->addStep($myStep1)->addStep($myStep2)->addStep($myStep3)->createRequest("https://amazon.com.tr");
+        $myFaker = Factory::create("tr_TR");
+
+        for ($x = 0; $x <= 5; $x++) {
+
+            // Create Random Keyword
+            $fakerRandomKeyword = $myFaker->city();
+
+            // Add Steps
+            $myStep1 = new ChangeStep($fakerRandomKeyword, ["xpath///*[@id='twotabsearchtextbox']"]);
+            $myStep2 = new KeyDownStep("Enter");
+            $myStep3 = new KeyUpStep("Enter");
+
+            // Create Web Scraping Requests
+            $webScrapingRequestService->clearSteps()
+                ->addStep($myStep1)
+                ->addStep($myStep2)
+                ->addStep($myStep3)
+                ->createRequest("https://amazon.com.tr");
+
+        }
+
+
         $this->addFlash('pageNotificationSuccess', t('Rastgele URL kuyruğa eklendi.'));
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
     }

@@ -54,4 +54,10 @@ class WebScrapingRequestService
         return $this;
     }
 
+    public function clearSteps(): self
+    {
+        $this->mySteps = [];
+        return $this;
+    }
+
 }

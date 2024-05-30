@@ -93,7 +93,8 @@ class WebScrapingRequestListener
     {
         $myCachedRequest = $this->webScrapingRequestRepository->findOneBy([
             'navigate_url' => $webScrapingRequest->getNavigateUrl(),
-            'status' => WebScrapingRequestStatusType::COMPLETED
+            'status' => WebScrapingRequestStatusType::COMPLETED,
+            'steps' => $webScrapingRequest->getSteps(),
         ]);
 
         if ($myCachedRequest instanceof WebScrapingRequest) {
