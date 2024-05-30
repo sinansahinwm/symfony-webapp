@@ -79,10 +79,8 @@ class WebScrapingRequestRemoteJobService
 
     private function getLaunchOptions(WebScrapingRequest $webScrapingRequest): array
     {
-        $browserLaunchOptions = [];
-        if ($this->security->getUser() !== NULL) {
-            $browserLaunchOptions["userDataDir"] = "./session/" . $this->security->getUser()->getUserIdentifier();
-        }
+        $dataFolderName = $this->security->getUser() !== NULL ? $this->security->getUser()->getUserIdentifier() : 'local';
+        $browserLaunchOptions["userDataDir"] = "./session/$dataFolderName";
         return $browserLaunchOptions;
     }
 
