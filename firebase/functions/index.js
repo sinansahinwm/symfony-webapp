@@ -9,13 +9,13 @@ const {createRunner, PuppeteerRunnerExtension} = require('@puppeteer/replay');
 // CONFIGURATION
 const scraperFunctionGlobalOptions = {
     memory: '4GiB',
-    timeoutSeconds: 60,
+    timeoutSeconds: 75,
     cpu: 4
 }
 
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
 const puppeteerLaunchOptions = {
-    headless: true,
+    headless: false,
     args: [
         '--no-sandbox',
         '--disable-setuid--sandbox',
@@ -31,17 +31,14 @@ const puppeteerOptions = {
         longitude: 32,
     },
     waitUntil: ['domcontentloaded', 'networkidle2'],
-    timeout: 450000,
+    timeout: 60000,
     viewPortWidth: 1366,
     viewPortHeight: 768,
     dataSaverMode: true,
     dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket', 'manifest', 'ping'],
+    sleepAfterSteps: 3000
     // These are available content types
     // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
-    waitUntilAfterRunningSteps: {
-        idleTime: 500,
-        concurrency: 2
-    }
 };
 
 // SETTING GLOBAL OPTIONS
@@ -199,6 +196,9 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             timeout: puppeteerOptions.timeout,
         });
 
+        // Add Sleep
+        await new Promise(r => setTimeout(r, puppeteerOptions.sleepAfterSteps));
+
         // Run Steps After Navigation If Steps Exist
         if (typeof mySteps !== "undefined") {
             const myStepsRunner = await createRunner(
@@ -206,12 +206,9 @@ exports.firebaseScraper = onRequest(async (request, response) => {
                     title: 'Firebase Scraper',
                     steps: mySteps,
                 },
-                new PuppeteerRunnerExtension(myBrowser, myPage, {timeout: puppeteerOptions.timeout})
+                new StepperExtension(myBrowser, myPage, {timeout: puppeteerOptions.timeout})
             );
             await myStepsRunner.run();
-
-            // Wait For Network Idle 2
-            await myPage.waitForNetworkIdle(puppeteerOptions.waitUntilAfterRunningSteps);
         }
 
         // Get Data
@@ -251,3 +248,23 @@ exports.firebaseScraper = onRequest(async (request, response) => {
     }
 
 });
+
+class StepperExtension extends PuppeteerRunnerExtension {
+    async beforeAllSteps(flow) {
+        await super.beforeAllSteps(flow);
+    }
+
+    async beforeEachStep(step, flow) {
+        await super.beforeEachStep(step, flow);
+    }
+
+    async afterEachStep(step, flow) {
+        await super.afterEachStep(step, flow);
+        // Add Sleep
+        await new Promise(r => setTimeout(r, puppeteerOptions.sleepAfterSteps));
+    }
+
+    async afterAllSteps(flow) {
+        await super.afterAllSteps(flow);
+    }
+}
