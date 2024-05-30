@@ -10,7 +10,7 @@ const {createRunner, PuppeteerRunnerExtension} = require('@puppeteer/replay');
 const scraperFunctionGlobalOptions = {
     memory: '4GiB',
     timeoutSeconds: 75,
-    cpu: 4
+    cpu: 4,
 }
 
 const authorizationSecret = "8c9db0e6d88f9190ac9a001fadaf1e8d";
@@ -132,7 +132,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             }
 
             axios.post(requestBody.workerURL, workerRequestConfig).catch(function (error) {
-                logger.error(error);
+                // logger.error(error);
             });
 
             response.status(200).send("OK");

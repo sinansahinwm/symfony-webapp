@@ -1,13 +1,10 @@
 <?php namespace App\Service;
 
 use App\Entity\WebScrapingRequest;
-use App\EventListener\WebScrapingRequestListener;
-use Exception;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class WebScrapingRequestRemoteJobService
 {
@@ -66,7 +63,7 @@ class WebScrapingRequestRemoteJobService
             'webhookURL' => $webScrapingRequest->getWebhookUrl(),
             'navigateURL' => $webScrapingRequest->getNavigateUrl(),
             'workerURL' => $this->getWorkerEndpoint(),
-            'puppeteerLaunchOptions' => $this->getLaunchOptions($webScrapingRequest)
+            'puppeteerLaunchOptions' => $this->getLaunchOptions($webScrapingRequest),
         ];
 
         // Add Steps If Exist
