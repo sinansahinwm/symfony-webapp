@@ -32,10 +32,10 @@ class WebScraingRequestController extends AbstractController
     #[Route('/new', name: 'new')]
     public function new(WebScrapingRequestService $webScrapingRequestService): Response
     {
-        $myStep1 = new ChangeStep("united arab emirates", ["xpath///*[@id='searchInput']"]);
+        $myStep1 = new ChangeStep("gözlük", ["xpath///*[@id='twotabsearchtextbox']"]);
         $myStep2 = new KeyDownStep("Enter");
         $myStep3 = new KeyUpStep("Enter");
-        $webScrapingRequestService->addStep($myStep1)->addStep($myStep2)->addStep($myStep3)->createRequest("https://wikipedia.org");
+        $webScrapingRequestService->addStep($myStep1)->addStep($myStep2)->addStep($myStep3)->createRequest("https://amazon.com.tr");
         $this->addFlash('pageNotificationSuccess', t('Rastgele URL kuyruğa eklendi.'));
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
     }
