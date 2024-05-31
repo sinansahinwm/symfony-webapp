@@ -170,6 +170,15 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             timeout: puppeteerOptions.timeout,
         });
 
+        // Catch Navigate Errors
+        if (myResponse === null) {
+            response.status(500).send("BROWSER FAILED");
+        } else {
+            if (myResponse.status() !== 200) {
+                response.status(myResponse.status()).send("NAVIGATION FAILED");
+            }
+        }
+
         // Add Sleep
         await new Promise(r => setTimeout(r, puppeteerOptions.sleepAfterSteps));
 
