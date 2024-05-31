@@ -211,7 +211,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             url: initialPageUrl,
             status: (myResponse !== null) ? myResponse.status() : 500,
         };
-        logger.error("HOOK SEND");
+
         // Send Webhook Post
         await axios({
             method: 'post',

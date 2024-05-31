@@ -40,16 +40,15 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
 
             // Consume Payload
             $consumedWebScrapingRequest = $this->consumePayload($remoteEventPayload, $myWebScrapingRequest);
-            if ($consumedWebScrapingRequest === NULL) {
-                $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::CONSUME_ERROR);
-                $this->entityManager->persist($myWebScrapingRequest);
-                $this->entityManager->flush();
-            } else {
+
+            if ($consumedWebScrapingRequest instanceof WebScrapingRequest) {
                 $myWebScrapingRequest = $consumedWebScrapingRequest;
+                $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
+            } else {
+                $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::CONSUME_ERROR);
             }
 
-            // Set Status To Completed
-            $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
+            // Persist WebScrapingRequest
             $this->entityManager->persist($myWebScrapingRequest);
             $this->entityManager->flush();
 
