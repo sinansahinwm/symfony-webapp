@@ -86,7 +86,6 @@ exports.firebaseScraper = onRequest(async (request, response) => {
     const instanceID = requestBody.instanceID;
     const navigateURL = requestBody.navigateURL;
     const webhookURL = requestBody.webhookURL;
-    const workerURL = requestBody.workerURL;
     const mySteps = requestBody.steps;
 
     // Check Navigate URL
@@ -97,12 +96,6 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
     // Check Webhook URL
     if ((typeof webhookURL === "undefined") || (typeof webhookURL === "undefined")) {
-        response.status(400).send("Bad Request");
-        return;
-    }
-
-    // Check Worker URL
-    if ((typeof workerURL === "undefined") || (typeof workerURL === "undefined")) {
         response.status(400).send("Bad Request");
         return;
     }
