@@ -12,7 +12,7 @@ parameters:
   app.api_keys.iyzico.endpoint: '%env(IYZICO_API_ENDPOINT)%'
   app.api_keys.firebase_scraper.endpoint: '%env(FIREBASE_SCRAPER_ENDPOINT)%'
   app.api_keys.firebase_scraper.pingpong_endpoint: '%env(FIREBASE_SCRAPER_PING_PONG_ENDPOINT)%'
-  app.api_keys.firebase_scraper.worker_endpoint: '%env(FIREBASE_SCRAPER_WORKER_ENDPOINT)%'
+  app.api_keys.firebase_scraper.timeout: '%env(FIREBASE_SCRAPER_TIMEOUT)%'
   app.api_keys.firebase_scraper.secret: '%env(APP_SECRET)%'
 
 # ===============================

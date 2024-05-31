@@ -39,8 +39,6 @@ final class ProccessWebScrapingRequestMessageHandler
 
             if ($pingPongSuccess === TRUE) {
 
-                exit("HANDLING");
-
                 // Set New Status
                 $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::FORWARDED_TO_REMOTE_SERVER);
                 $this->entityManager->persist($myWebScrapingRequest);

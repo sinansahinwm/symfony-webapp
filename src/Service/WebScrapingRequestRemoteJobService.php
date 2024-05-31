@@ -39,7 +39,8 @@ class WebScrapingRequestRemoteJobService
 
             // Send Request
             $myRequest = $myHttpClient->request('POST', $scraperEndpoint, [
-                'json' => $this->getJsonBody($webScrapingRequest)
+                'json' => $this->getJsonBody($webScrapingRequest),
+                'timeout' => $this->getAllowedTimeout()
             ]);
 
             // Get Request Status Code
@@ -79,6 +80,11 @@ class WebScrapingRequestRemoteJobService
         $dataFolderName = $this->security->getUser() !== NULL ? $this->security->getUser()->getUserIdentifier() : 'local';
         $browserLaunchOptions["userDataDir"] = "./session/$dataFolderName";
         return $browserLaunchOptions;
+    }
+
+    private function getAllowedTimeout(): string
+    {
+        return (int)$this->containerBag->get("app.api_keys.firebase_scraper.timeout");
     }
 
     private function getServerEndpoint(): string
