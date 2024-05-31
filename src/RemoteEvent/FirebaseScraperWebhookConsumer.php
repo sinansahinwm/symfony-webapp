@@ -94,7 +94,7 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
                 $webScrapingRequest->setConsumedContent($myPayloadContent);
             }
 
-            // Push Other
+            // Push Other Data To Scraping Request
             $webScrapingRequest->setConsumedRemoteStatus($myPayloadStatus);
             $webScrapingRequest->setConsumedScreenshot($myPayloadScreenshot);
             $webScrapingRequest->setConsumedUrl($myPayloadUrl);
@@ -104,6 +104,7 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
         } catch (Exception $exception) {
             return NULL;
         }
+
     }
 
 }
