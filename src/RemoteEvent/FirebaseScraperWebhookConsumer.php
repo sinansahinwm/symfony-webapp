@@ -43,7 +43,6 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
 
             if ($consumedWebScrapingRequest instanceof WebScrapingRequest) {
                 $myWebScrapingRequest = $consumedWebScrapingRequest;
-                $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
             } else {
                 $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::CONSUME_ERROR);
             }
@@ -72,11 +71,15 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
     {
         try {
 
+            // Get Payload Data
             $myPayloadInstanceID = $remoteEventPayload["instanceID"];
             $myPayloadScreenshot = $remoteEventPayload["screenshot"];
             $myPayloadContent = $remoteEventPayload["content"];
             $myPayloadUrl = $remoteEventPayload["url"];
             $myPayloadStatus = $remoteEventPayload["status"];
+
+            // Set Status Success
+            $webScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
 
             // Check Remote Status
             if ($myPayloadStatus !== 200) {
