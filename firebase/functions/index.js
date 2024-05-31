@@ -5,6 +5,7 @@ const {onRequest} = require("firebase-functions/v2/https");
 const {setGlobalOptions, logger} = require("firebase-functions/v2");
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const {createRunner, PuppeteerRunnerExtension} = require('@puppeteer/replay');
+const {GoToOptions} = require("puppeteer");
 
 // CONFIGURATION
 const scraperFunctionGlobalOptions = {
@@ -56,28 +57,28 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
     // Authorization - Check Params Exist
     if ((!request.headers.authorization || !request.headers.authorization.startsWith('Bearer '))) {
-        response.status(403).send('Unauthorized');
+        response.status(403).send('Unauthorized').end();
         return;
     }
 
     // Authorization - Check Token
     const bearerToken = request.headers.authorization.replaceAll("Bearer", "").replaceAll(" ", "");
     if (bearerToken !== authorizationSecret) {
-        response.status(401).send('Unauthorized');
+        response.status(401).send('Unauthorized').end();
         return;
     }
 
     // Check - Method
     const requestMethod = request.method.toLowerCase();
     if (requestMethod !== "post") {
-        response.status(405).send('Method Not Allowed');
+        response.status(405).send('Method Not Allowed').end();
         return;
     }
 
     // Check - Content Type
     const requestContentType = request.get('Content-Type');
     if (requestContentType !== "application/json") {
-        response.status(400).send('Bad Request');
+        response.status(400).send('Bad Request').end();
         return;
     }
 
@@ -90,19 +91,19 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
     // Check Navigate URL
     if ((typeof navigateURL === "undefined") || (typeof webhookURL === "undefined")) {
-        response.status(400).send("Bad Request");
+        response.status(400).send("Bad Request").end();
         return;
     }
 
     // Check Webhook URL
     if ((typeof webhookURL === "undefined") || (typeof webhookURL === "undefined")) {
-        response.status(400).send("Bad Request");
+        response.status(400).send("Bad Request").end();
         return;
     }
 
     // Check - URL Must HTTPS
     if (!(navigateURL.startsWith("https")) || !(navigateURL.startsWith("https"))) {
-        response.status(400).send("HTTPS Required");
+        response.status(400).send("HTTPS Required").end();
         return;
     }
 
@@ -124,13 +125,9 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             ...puppeteerLaunchOptions,
             ...puppeteerLaunchOptionsRequested
         }).catch((err) => {
-            logger.error("Browser launch error." + err.toString());
+            logger.error("BROWSER FAILED: " + err.toString());
+            response.status(500).send("BROWSER FAILED").end();
         });
-
-        // Catch Browser Launch Errors
-        if (typeof myBrowser === "undefined") {
-            response.status(500).send("BROWSER FAILED");
-        }
 
         // Create New Page
         const myPage = await myBrowser.newPage();
@@ -177,7 +174,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
         // Catch Navigate Errors
         if (myResponse === null) {
-            response.status(500).send("NAVIGATION FAILED");
+            response.status(500).send("NAVIGATION FAILED").end();
         }
 
         // Add Sleep
@@ -216,18 +213,19 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             data: myWebhookPayload,
         }).catch(function (error) {
             logger.error(error);
+            response.status(500).send("WEBHOOK FAILED").end();
         });
 
         // Dispose Browser
         await myBrowser.close();
 
-        response.status(200).send("OK");
+        response.status(200).send("OK").end();
 
     } catch (e) {
 
         // Add Firebase Error & Return 500
         logger.error(e);
-        response.status(500).send();
+        response.status(500).send("ERROR").end();
 
     }
 
