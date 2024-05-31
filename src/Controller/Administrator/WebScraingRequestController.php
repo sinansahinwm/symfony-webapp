@@ -54,7 +54,6 @@ class WebScraingRequestController extends AbstractController
 
         }
 
-
         $this->addFlash('pageNotificationSuccess', t('Rastgele URL kuyruğa eklendi.'));
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
     }
