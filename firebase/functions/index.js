@@ -129,6 +129,11 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             response.status(500).send("BROWSER FAILED").end();
         });
 
+        // Handle Browser Error
+        if (typeof myBrowser === "undefined") {
+            response.status(500).send("BROWSER FAILED").end();
+        }
+
         // Create New Page
         const myPage = await myBrowser.newPage();
 

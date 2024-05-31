@@ -76,9 +76,9 @@ class WebScrapingRequestRemoteJobService
 
     private function getLaunchOptions(WebScrapingRequest $webScrapingRequest): array
     {
-        $dataFolderName = $this->security->getUser() !== NULL ? $this->security->getUser()->getUserIdentifier() : 'local';
-        $browserLaunchOptions["userDataDir"] = "./session/$dataFolderName";
-        return $browserLaunchOptions;
+        $myLaunchOptions = [];
+        // TODO : Add Launch Options If Needed
+        return $myLaunchOptions;
     }
 
     private function getAllowedTimeout(): string
