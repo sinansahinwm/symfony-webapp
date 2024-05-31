@@ -47,6 +47,9 @@ class WebScrapingRequest
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $steps = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $last_error_message = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -179,6 +182,18 @@ class WebScrapingRequest
     public function setSteps(?string $steps): static
     {
         $this->steps = $steps;
+
+        return $this;
+    }
+
+    public function getLastErrorMessage(): ?string
+    {
+        return $this->last_error_message;
+    }
+
+    public function setLastErrorMessage(?string $last_error_message): static
+    {
+        $this->last_error_message = $last_error_message;
 
         return $this;
     }

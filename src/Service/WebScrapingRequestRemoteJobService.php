@@ -1,6 +1,7 @@
 <?php namespace App\Service;
 
 use App\Entity\WebScrapingRequest;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\DependencyInjection\ParameterBag\ContainerBagInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
@@ -9,7 +10,7 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class WebScrapingRequestRemoteJobService
 {
 
-    public function __construct(private ContainerBagInterface $containerBag, private HttpClientInterface $httpClient, private Security $security)
+    public function __construct(private ContainerBagInterface $containerBag, private HttpClientInterface $httpClient, private EntityManagerInterface $entityManager)
     {
     }
 
@@ -45,16 +46,26 @@ class WebScrapingRequestRemoteJobService
 
             // Get Request Status Code
             $myRequestStatusCode = $myRequest->getStatusCode();
-
             if ($myRequestStatusCode === 200) {
                 return TRUE;
+            } else {
+                $this->setLastErrorMessage($webScrapingRequest, "INVALID STATUS CODE " . $myRequestStatusCode);
             }
 
         } catch (TransportExceptionInterface $e) {
+            $this->setLastErrorMessage($webScrapingRequest, $e->getMessage());
             return FALSE;
         }
 
         return FALSE;
+    }
+
+
+    private function setLastErrorMessage(WebScrapingRequest $webScrapingRequest, string $errorMessage): void
+    {
+        $webScrapingRequest->setLastErrorMessage($errorMessage);
+        $this->entityManager->persist($webScrapingRequest);
+        $this->entityManager->flush();
     }
 
     private function getJsonBody(WebScrapingRequest $webScrapingRequest): array

@@ -125,12 +125,13 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             ...puppeteerLaunchOptions,
             ...puppeteerLaunchOptionsRequested
         }).catch((err) => {
-            logger.error("BROWSER FAILED: " + err.toString());
-            response.status(500).send("BROWSER FAILED").end();
+            logger.error("BROWSER LAUNCH FAILED");
+            response.status(500).send("BROWSER LAUNCH FAILED").end();
         });
 
         // Handle Browser Error
         if (typeof myBrowser === "undefined") {
+            logger.error("BROWSER FAILED");
             response.status(500).send("BROWSER FAILED").end();
         }
 
@@ -210,7 +211,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             url: initialPageUrl,
             status: (myResponse !== null) ? myResponse.status() : 500,
         };
-
+        logger.error("HOOK SEND");
         // Send Webhook Post
         await axios({
             method: 'post',
