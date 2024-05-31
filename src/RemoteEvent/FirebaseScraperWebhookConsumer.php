@@ -97,7 +97,6 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             $webScrapingRequest->setConsumedScreenshot($myPayloadScreenshot);
             $webScrapingRequest->setConsumedUrl($myPayloadUrl);
 
-
             return $webScrapingRequest;
 
         } catch (Exception $exception) {
