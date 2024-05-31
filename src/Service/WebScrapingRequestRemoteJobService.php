@@ -63,7 +63,6 @@ class WebScrapingRequestRemoteJobService
             'instanceID' => $webScrapingRequest->getId(),
             'webhookURL' => $webScrapingRequest->getWebhookUrl(),
             'navigateURL' => $webScrapingRequest->getNavigateUrl(),
-            'workerURL' => $this->getWorkerEndpoint(),
             'puppeteerLaunchOptions' => $this->getLaunchOptions($webScrapingRequest),
         ];
 
@@ -90,11 +89,6 @@ class WebScrapingRequestRemoteJobService
     private function getServerEndpoint(): string
     {
         return $this->containerBag->get("app.api_keys.firebase_scraper.endpoint");
-    }
-
-    private function getWorkerEndpoint(): string
-    {
-        return $this->containerBag->get("app.api_keys.firebase_scraper.worker_endpoint");
     }
 
     private function getPingPongEndpoint(): string
