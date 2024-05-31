@@ -12,14 +12,6 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
-            scraper_request:
-                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
-                options:
-                    use_notify: true
-                    check_delayed_interval: 60000
-                retry_strategy:
-                    max_retries: 3
-                    multiplier: 2
             failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
@@ -30,8 +22,8 @@ framework:
 
             # App Async Transports
             App\Message\AppEmailMessage: async
-            App\Message\ProccessWebScrapingRequestMessage: scraper_request
-            App\Message\HandleWebScrapingRequestAfterCompletedMessage: scraper_request
+            App\Message\ProccessWebScrapingRequestMessage: async
+            App\Message\HandleWebScrapingRequestAfterCompletedMessage: async
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
