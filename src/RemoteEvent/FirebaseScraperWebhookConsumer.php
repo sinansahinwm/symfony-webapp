@@ -81,17 +81,16 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             // Set Status Success
             $webScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
 
+            // Try To Decode Payload Content
+            $decodedPayloadContent = base64_decode($myPayloadContent);
+
             // Check Remote Status
-            if ($myPayloadStatus !== 200) {
+            if (($myPayloadStatus !== 200) || ($decodedPayloadContent === FALSE)) {
                 $webScrapingRequest->setStatus(WebScrapingRequestStatusType::REMOTE_STATUS_FAILED_WHEN_CONSUMING);
             }
 
-            // Put Content To File
-            $decodedContent = base64_decode($myPayloadContent);
-
-            if ($decodedContent === FALSE) {
-                $webScrapingRequest->setStatus(WebScrapingRequestStatusType::FAILED_TO_PUT_CONTENT_WHEN_CONSUMING);
-            } else {
+            // Set Decoded Content
+            if ($decodedPayloadContent !== FALSE) {
                 $webScrapingRequest->setConsumedContent($myPayloadContent);
             }
 
