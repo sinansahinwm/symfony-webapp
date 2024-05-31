@@ -120,25 +120,6 @@ exports.firebaseScraper = onRequest(async (request, response) => {
     // Try To Launch Puppeteer
     try {
 
-        // Check Proccess Immediately
-        const proccessImmediately = requestBody.proccessImmediately;
-
-        if (proccessImmediately !== true) {
-
-            // Create Axios Worker Request
-            const workerRequestConfig = {
-                ...requestBody,
-                proccessImmediately: true
-            }
-
-            axios.post(requestBody.workerURL, workerRequestConfig).catch(function (error) {
-                // logger.error(error);
-            });
-
-            response.status(200).send("OK");
-            return;
-        }
-
         // Get Remote Launch Options
         const puppeteerLaunchOptionsRequested = requestBody.puppeteerLaunchOptions ?? {};
 
