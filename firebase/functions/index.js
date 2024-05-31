@@ -127,6 +127,11 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             logger.error("Browser launch error." + err.toString());
         });
 
+        // Catch Browser Launch Errors
+        if (typeof myBrowser === "undefined") {
+            response.status(500).send("BROWSER FAILED");
+        }
+
         // Create New Page
         const myPage = await myBrowser.newPage();
 
@@ -172,11 +177,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
 
         // Catch Navigate Errors
         if (myResponse === null) {
-            response.status(500).send("BROWSER FAILED");
-        } else {
-            if (myResponse.status() !== 200) {
-                response.status(myResponse.status()).send("NAVIGATION FAILED");
-            }
+            response.status(500).send("NAVIGATION FAILED");
         }
 
         // Add Sleep
