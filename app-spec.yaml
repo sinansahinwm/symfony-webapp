@@ -1,0 +1,39 @@
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+features:
+  - buildpack-stack=ubuntu-22
+ingress:
+  rules:
+    - component:
+        name: symfony-webapp
+      match:
+        path:
+          prefix: /
+name: symfony-webapp
+region: fra
+services:
+  - autoscaling:
+      max_instance_count: 4
+      metrics:
+        cpu:
+          percent: 80
+      min_instance_count: 2
+    build_command: |-
+      composer install
+      npm install
+      npm run build
+      php bin/console assets:install public
+      php bin/console doctrine:migrations:migrate --dry-run
+      php bin/console cache:clear
+    environment_slug: php
+    github:
+      branch: main
+      deploy_on_push: true
+      repo: sinansahinwm/symfony-webapp
+    http_port: 8080
+    instance_size_slug: apps-d-1vcpu-0.5gb
+    name: symfony-webapp
+    run_command: heroku-php-apache2 & php bin/console messenger:consume async & php
+      bin/console messenger:consume scheduler_default
+    source_dir: /
