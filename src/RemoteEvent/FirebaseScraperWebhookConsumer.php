@@ -79,7 +79,7 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             $myPayloadStatus = $remoteEventPayload["status"];
 
             // Set Status Success
-            // $webScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
+            $webScrapingRequest->setStatus(WebScrapingRequestStatusType::COMPLETED);
 
             // Try To Decode Payload Content
             $decodedPayloadContent = base64_decode($myPayloadContent);
