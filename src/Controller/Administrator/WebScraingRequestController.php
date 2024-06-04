@@ -4,6 +4,7 @@ use App\Controller\Admin\Table\WebScrapingRequestTable;
 use App\Entity\WebScrapingRequest;
 use App\Form\Administrator\WebScrapingRequestType;
 use App\Service\CrudTable\CrudTableService;
+use App\Service\DomContentFramerService;
 use App\Service\WebScrapingRequestService;
 use App\Service\WebScrapingRequestStep\ChangeStep;
 use App\Service\WebScrapingRequestStep\KeyDownStep;
@@ -87,7 +88,7 @@ class WebScraingRequestController extends AbstractController
     }
 
     #[Route('/show_html/{webScrapingRequest}', name: 'show_html')]
-    public function showHtml(WebScrapingRequest $webScrapingRequest, EntityManagerInterface $entityManager): Response
+    public function showHtml(WebScrapingRequest $webScrapingRequest): Response
     {
         return $this->render('administrator/web_scraping_request/show_html.html.twig', [
             'webScrapingRequest' => $webScrapingRequest,
