@@ -50,6 +50,9 @@ class WebScrapingRequest
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $last_error_message = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $consumed_at = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -194,6 +197,18 @@ class WebScrapingRequest
     public function setLastErrorMessage(?string $last_error_message): static
     {
         $this->last_error_message = $last_error_message;
+
+        return $this;
+    }
+
+    public function getConsumedAt(): ?\DateTimeImmutable
+    {
+        return $this->consumed_at;
+    }
+
+    public function setConsumedAt(?\DateTimeImmutable $consumed_at): static
+    {
+        $this->consumed_at = $consumed_at;
 
         return $this;
     }

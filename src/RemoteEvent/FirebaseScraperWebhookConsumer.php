@@ -6,6 +6,7 @@ use App\Config\WebScrapingRequestStatusType;
 use App\Entity\WebScrapingRequest;
 use App\Message\HandleWebScrapingRequestAfterCompletedMessage;
 use App\Repository\WebScrapingRequestRepository;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\Messenger\MessageBusInterface;
@@ -92,6 +93,7 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             // Set Decoded Content
             if ($decodedPayloadContent !== FALSE) {
                 $webScrapingRequest->setConsumedContent($myPayloadContent);
+                $webScrapingRequest->setConsumedAt(new DateTimeImmutable());
             }
 
             // Push Other Data To Scraping Request

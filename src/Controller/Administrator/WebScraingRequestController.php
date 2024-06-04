@@ -50,7 +50,7 @@ class WebScraingRequestController extends AbstractController
                 ->addStep($myStep1)
                 ->addStep($myStep2)
                 ->addStep($myStep3)
-                ->createRequest("https://amazon.com.tr");
+                ->createRequest("https://www.amazon.com.tr");
 
         }
 

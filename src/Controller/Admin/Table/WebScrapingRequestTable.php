@@ -12,6 +12,7 @@ use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use App\Service\CrudTable\FormattedDateTimeColumn;
 use App\Service\CrudTable\ShowMoreTextColumn;
+use DateTime;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -32,6 +33,35 @@ class WebScrapingRequestTable extends TableAbstractController implements DataTab
         $dataTable->add('navigate_url', ShowMoreTextColumn::class, [
             'label' => $this->t("URL"),
             'orderable' => FALSE
+        ]);
+        $dataTable->add('steps', BadgeColumn::class, [
+            'label' => $this->t("Adımlar"),
+            'className' => "text-center",
+            'orderable' => FALSE,
+            'type' => function ($theValue) {
+                return $theValue === NULL ? 'light' : 'primary';
+            },
+            'content' => function ($theValue) {
+                $badgeText = "--";
+                $decodedJSON = json_decode($theValue);
+                if (is_array($decodedJSON)) {
+                    $stepsCount = count($decodedJSON);
+                    $badgeText = $stepsCount . " " . $this->t("adet");
+                }
+                return $badgeText;
+            }
+        ]);
+        $dataTable->add('consumed_at', FormattedDateTimeColumn::class, [
+            'label' => $this->t("Süre"),
+            'className' => "text-center",
+            'orderable' => FALSE,
+            'render' => function ($theValue, $theContext) {
+                if ($theContext->getConsumedAt() !== NULL && $theContext->getCreatedAt() !== NULL) {
+                    $timeDiffSec = $theContext->getConsumedAt()->getTimestamp() - $theContext->getCreatedAt()->getTimestamp();
+                    return '<i class="bx bxs-watch"></i> <sup>' . $timeDiffSec . $this->t("sn") . "</sup>";
+                }
+                return 0;
+            }
         ]);
         $dataTable->add('status', BadgeColumn::class, [
             'label' => $this->t("Durum"),

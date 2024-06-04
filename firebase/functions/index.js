@@ -36,7 +36,7 @@ const puppeteerOptions = {
     viewPortWidth: 1366,
     viewPortHeight: 768,
     dataSaverMode: true,
-    dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', 'eventsource', 'manifest', 'websocket', 'manifest', 'ping'],
+    dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', /* 'eventsource', 'manifest', 'websocket', 'manifest', 'ping' */],
     sleepAfterSteps: 1000
     // These are available content types
     // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
