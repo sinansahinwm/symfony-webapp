@@ -42,6 +42,7 @@ final class ProccessWebScrapingRequestMessageHandler
                 // Set New Status
                 $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::FORWARDED_TO_REMOTE_SERVER);
                 $this->entityManager->persist($myWebScrapingRequest);
+                $this->entityManager->flush();
 
                 // Send Scraping Request to Remote Server
                 $sendToRemoteServerResult = $this->webScrapingRequestRemoteJobService->sendToRemoteServer($myWebScrapingRequest);
@@ -56,15 +57,13 @@ final class ProccessWebScrapingRequestMessageHandler
                 // Set New Status
                 $myWebScrapingRequest->setStatus(WebScrapingRequestStatusType::PING_PONG_FAILED);
                 $this->entityManager->persist($myWebScrapingRequest);
+                $this->entityManager->flush();
 
                 // Throw Error When PingPong Failed
                 $throwMessageError = TRUE;
 
             }
 
-
-            // Flush Object
-            $this->entityManager->flush();
 
             // Throw Error If Needed
             if ($throwMessageError === TRUE) {
