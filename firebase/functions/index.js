@@ -35,7 +35,7 @@ const puppeteerOptions = {
     timeout: 60000,
     viewPortWidth: 1366,
     viewPortHeight: 768,
-    dataSaverMode: true,
+    dataSaverMode: false,
     dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', /* 'eventsource', 'manifest', 'websocket', 'manifest', 'ping' */],
     sleepAfterSteps: 1000
     // These are available content types
