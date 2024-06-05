@@ -53,6 +53,9 @@ class WebScrapingRequest
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $consumed_at = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $xhrlog = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -209,6 +212,18 @@ class WebScrapingRequest
     public function setConsumedAt(?\DateTimeImmutable $consumed_at): static
     {
         $this->consumed_at = $consumed_at;
+
+        return $this;
+    }
+
+    public function getXhrlog(): ?string
+    {
+        return $this->xhrlog;
+    }
+
+    public function setXhrlog(?string $xhrlog): static
+    {
+        $this->xhrlog = $xhrlog;
 
         return $this;
     }

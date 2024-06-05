@@ -42,7 +42,7 @@ class WebScraingRequestController extends AbstractController
 
     private function addRandomWebScrapingRequests(WebScrapingRequestService $webScrapingRequestService): void
     {
-        $randomKeywords = ["us polo gömlek", "armani gözlük", "seiko saat", "saka su", "grissini", "epson yazıcı", "kupa bardak"];
+        $randomKeywords = ["185 65 15 araç lastiği", "michelin araba lastiği","askılık","abaküs", "şarap kadehi", "ruj", "samsung telefon kılıfı", "pensan mavi tükenmez kalem", "scricks dolma kalem", "dimes meyve suyu", "koroplast alüminyum folyo", "saat", "bilgisayar", "kablosuz klavye", "cam damacana", "elektrikli bisiklet", "prada gözlük", "mentos", "amd işlemci", "grissini", "protein tozu", "bahs"];
         $randomMarketplaces = [
             [
                 "navigateURL" => "https://amazon.com.tr",
@@ -55,6 +55,34 @@ class WebScraingRequestController extends AbstractController
             [
                 "navigateURL" => "https://www.decathlon.com.tr",
                 'searchSelector' => 'xpath///*[@data-anly="global-search-input"]'
+            ],
+            [
+                "navigateURL" => "https://www.n11.com",
+                'searchSelector' => 'xpath///*[@id="searchData"]'
+            ],
+            [
+                "navigateURL" => "https://www.ciceksepeti.com",
+                'searchSelector' => 'xpath///*[@data-actual-select-input="true"]'
+            ],
+            [
+                "navigateURL" => "https://www.migros.com.tr",
+                'searchSelector' => 'xpath///*[@id="product-search-combobox--trigger"]'
+            ],
+            [
+                "navigateURL" => "https://www.pttavm.com",
+                'searchSelector' => 'xpath///*[@placeholder="Arama yap"]'
+            ],
+            [
+                "navigateURL" => "https://www.rossmann.com.tr",
+                'searchSelector' => 'xpath///*[@id="search"]'
+            ],
+            [
+                "navigateURL" => "https://www.koctas.com.tr",
+                'searchSelector' => 'xpath///*[@type="search"]'
+            ],
+            [
+                "navigateURL" => "https://www.lastikborsasi.com",
+                'searchSelector' => 'xpath///*[@id="desktop-q"]'
             ]
         ];
 
@@ -65,7 +93,6 @@ class WebScraingRequestController extends AbstractController
                 $navigateURL = $randomMarketplace["navigateURL"];
                 $searchSelector = $randomMarketplace["searchSelector"];
 
-                // Add Steps
                 $myStep1 = new ChangeStep($randomKeyword, [$searchSelector]);
                 $myStep2 = new KeyDownStep("Enter");
                 $myStep3 = new KeyUpStep("Enter");

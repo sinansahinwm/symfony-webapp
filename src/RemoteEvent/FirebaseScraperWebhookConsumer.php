@@ -93,13 +93,28 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             // Set Decoded Content
             if ($decodedPayloadContent !== FALSE) {
                 $webScrapingRequest->setConsumedContent($myPayloadContent);
-                $webScrapingRequest->setConsumedAt(new DateTimeImmutable());
+            }
+
+            // Set XHR Content If Needed
+            $xhrContent = NULL;
+            if (isset($remoteEventPayload["xhrLog"])) {
+                $xhrLogsPayload = $remoteEventPayload["xhrLog"];
+                if (is_array($xhrLogsPayload)) {
+                    if (count($xhrLogsPayload) > 0) {
+                        $encodedJSON = json_encode($xhrLogsPayload);
+                        if (is_string($encodedJSON)) {
+                            $xhrContent = $encodedJSON;
+                        }
+                    }
+                }
             }
 
             // Push Other Data To Scraping Request
             $webScrapingRequest->setConsumedRemoteStatus($myPayloadStatus);
             $webScrapingRequest->setConsumedScreenshot($myPayloadScreenshot);
             $webScrapingRequest->setConsumedUrl($myPayloadUrl);
+            $webScrapingRequest->setXhrlog($xhrContent);
+            $webScrapingRequest->setConsumedAt(new DateTimeImmutable());
 
             return $webScrapingRequest;
 

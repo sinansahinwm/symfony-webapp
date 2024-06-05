@@ -153,6 +153,25 @@ exports.firebaseScraper = onRequest(async (request, response) => {
         // Set Page User Agent
         await myPage.setUserAgent(puppeteerOptions.defaultUserAgent);
 
+        // Log Page Responses
+        let loggedXHRResponses = [];
+        myPage.on('response', async (interceptedResponse) => {
+            try {
+                // Validate Response Is XHR
+                if (interceptedResponse !== null && interceptedResponse.ok() && interceptedResponse.request().resourceType() === 'xhr' && interceptedResponse.status() === 200) {
+                    const responseJSON = await interceptedResponse.json();
+                    if (typeof responseJSON === "object") {
+                        loggedXHRResponses.push({
+                            url: interceptedResponse.url(),
+                            data: responseJSON
+                        });
+                    }
+                }
+            } catch (err) {
+                // Debugger Depreced
+            }
+        });
+
         // Activate Data Saver Mode If Needed
         if (puppeteerOptions.dataSaverMode === true) {
 
@@ -209,6 +228,7 @@ exports.firebaseScraper = onRequest(async (request, response) => {
             content: Buffer.from(pageContent).toString('base64'),
             url: initialPageUrl,
             status: (myResponse !== null) ? myResponse.status() : 500,
+            xhrLog: loggedXHRResponses
         };
 
         // Send Webhook Post
