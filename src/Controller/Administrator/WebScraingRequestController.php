@@ -7,6 +7,7 @@ use App\Service\CrudTable\CrudTableService;
 use App\Service\DomContentFramerService;
 use App\Service\WebScrapingRequestService;
 use App\Service\WebScrapingRequestStep\ChangeStep;
+use App\Service\WebScrapingRequestStep\ClickStep;
 use App\Service\WebScrapingRequestStep\KeyDownStep;
 use App\Service\WebScrapingRequestStep\KeyUpStep;
 use Doctrine\ORM\EntityManagerInterface;
@@ -34,29 +35,50 @@ class WebScraingRequestController extends AbstractController
     #[Route('/new', name: 'new')]
     public function new(WebScrapingRequestService $webScrapingRequestService): Response
     {
-        $myFaker = Factory::create("tr_TR");
-
-        for ($x = 0; $x <= 5; $x++) {
-
-            // Create Random Keyword
-            $fakerRandomKeyword = $myFaker->city();
-
-            // Add Steps
-            $myStep1 = new ChangeStep($fakerRandomKeyword, ["xpath///*[@id='twotabsearchtextbox']"]);
-            $myStep2 = new KeyDownStep("Enter");
-            $myStep3 = new KeyUpStep("Enter");
-
-            // Create Web Scraping Requests
-            $webScrapingRequestService->clearSteps()
-                ->addStep($myStep1)
-                ->addStep($myStep2)
-                ->addStep($myStep3)
-                ->createRequest("https://www.amazon.com.tr");
-
-        }
-
+        $this->addRandomWebScrapingRequests($webScrapingRequestService);
         $this->addFlash('pageNotificationSuccess', t('Rastgele URL kuyruğa eklendi.'));
         return $this->redirectToRoute('app_administrator_web_scraping_request_index');
+    }
+
+    private function addRandomWebScrapingRequests(WebScrapingRequestService $webScrapingRequestService): void
+    {
+        $randomKeywords = ["us polo gömlek", "armani gözlük", "seiko saat", "saka su", "grissini", "epson yazıcı", "kupa bardak"];
+        $randomMarketplaces = [
+            [
+                "navigateURL" => "https://amazon.com.tr",
+                'searchSelector' => "xpath///*[@id='twotabsearchtextbox']"
+            ],
+            [
+                "navigateURL" => "https://www.trendyol.com",
+                'searchSelector' => "xpath///*[@class='V8wbcUhU']"
+            ],
+            [
+                "navigateURL" => "https://www.decathlon.com.tr",
+                'searchSelector' => 'xpath///*[@data-anly="global-search-input"]'
+            ]
+        ];
+
+        foreach ($randomKeywords as $randomKeyword) {
+            foreach ($randomMarketplaces as $randomMarketplace) {
+
+                // Get Data
+                $navigateURL = $randomMarketplace["navigateURL"];
+                $searchSelector = $randomMarketplace["searchSelector"];
+
+                // Add Steps
+                $myStep1 = new ChangeStep($randomKeyword, [$searchSelector]);
+                $myStep2 = new KeyDownStep("Enter");
+                $myStep3 = new KeyUpStep("Enter");
+
+                // Create Web Scraping Requests
+                $webScrapingRequestService->clearSteps()
+                    ->addStep($myStep1)
+                    ->addStep($myStep2)
+                    ->addStep($myStep3)
+                    ->createRequest($navigateURL);
+
+            }
+        }
     }
 
     #[Route('/new_by_url', name: 'new_by_url', methods: ['GET', 'POST'])]

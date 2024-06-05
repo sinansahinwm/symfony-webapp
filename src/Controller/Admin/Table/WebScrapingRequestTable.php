@@ -28,7 +28,7 @@ class WebScrapingRequestTable extends TableAbstractController implements DataTab
     {
         $dataTable->add('created_at', FormattedDateTimeColumn::class, [
             'label' => $this->t("Zaman Damgası"),
-            'orderable' => FALSE
+            'orderable' => TRUE
         ]);
         $dataTable->add('navigate_url', ShowMoreTextColumn::class, [
             'label' => $this->t("URL"),
@@ -60,7 +60,7 @@ class WebScrapingRequestTable extends TableAbstractController implements DataTab
                     $timeDiffSec = $theContext->getConsumedAt()->getTimestamp() - $theContext->getCreatedAt()->getTimestamp();
                     return '<i class="bx bxs-watch"></i> <sup>' . $timeDiffSec . $this->t("sn") . "</sup>";
                 }
-                return 0;
+                return '<div class="spinner-border spinner-border-sm text-secondary" role="status"><span class="visually-hidden">Loading...</span></div>';
             }
         ]);
         $dataTable->add('status', BadgeColumn::class, [

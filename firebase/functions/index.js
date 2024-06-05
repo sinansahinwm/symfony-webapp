@@ -5,7 +5,6 @@ const {onRequest} = require("firebase-functions/v2/https");
 const {setGlobalOptions, logger} = require("firebase-functions/v2");
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const {createRunner, PuppeteerRunnerExtension} = require('@puppeteer/replay');
-const {GoToOptions} = require("puppeteer");
 
 // CONFIGURATION
 const scraperFunctionGlobalOptions = {
@@ -37,7 +36,7 @@ const puppeteerOptions = {
     viewPortHeight: 768,
     dataSaverMode: false,
     dataSaverModeBlockContents: ['stylesheet', 'image', 'media', 'font', /* 'eventsource', 'manifest', 'websocket', 'manifest', 'ping' */],
-    sleepAfterSteps: 1000
+    sleepAfterSteps: 600
     // These are available content types
     // ('Document' | 'Stylesheet' | 'Image' | 'Media' | 'Font' | 'Script' | 'TextTrack' | 'XHR' | 'Fetch' | 'Prefetch' | 'EventSource' | 'WebSocket' | 'Manifest' | 'SignedExchange' | 'Ping' | 'CSPViolationReport' | 'Preflight' | 'Other');
 };
