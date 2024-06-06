@@ -42,12 +42,14 @@ class WebScraingRequestController extends AbstractController
 
     private function addRandomWebScrapingRequests(WebScrapingRequestService $webScrapingRequestService): void
     {
-        $randomKeywords = ["185 65 15 araç lastiği", "michelin araba lastiği","askılık","abaküs", "şarap kadehi", "ruj", "samsung telefon kılıfı", "pensan mavi tükenmez kalem", "scricks dolma kalem", "dimes meyve suyu", "koroplast alüminyum folyo", "saat", "bilgisayar", "kablosuz klavye", "cam damacana", "elektrikli bisiklet", "prada gözlük", "mentos", "amd işlemci", "grissini", "protein tozu", "bahs"];
+        $randomKeywords = ["iphone şarj aleti"];
+        // $randomKeywords = ["185 65 15 araç lastiği", "michelin araba lastiği","askılık","abaküs", "şarap kadehi", "ruj", "samsung telefon kılıfı", "pensan mavi tükenmez kalem", "scricks dolma kalem", "dimes meyve suyu", "koroplast alüminyum folyo", "saat", "bilgisayar", "kablosuz klavye", "cam damacana", "elektrikli bisiklet", "prada gözlük", "mentos", "amd işlemci", "grissini", "protein tozu", "bahs"];
         $randomMarketplaces = [
             [
                 "navigateURL" => "https://amazon.com.tr",
                 'searchSelector' => "xpath///*[@id='twotabsearchtextbox']"
             ],
+            /*
             [
                 "navigateURL" => "https://www.trendyol.com",
                 'searchSelector' => "xpath///*[@class='V8wbcUhU']"
@@ -84,6 +86,7 @@ class WebScraingRequestController extends AbstractController
                 "navigateURL" => "https://www.lastikborsasi.com",
                 'searchSelector' => 'xpath///*[@id="desktop-q"]'
             ]
+            */
         ];
 
         foreach ($randomKeywords as $randomKeyword) {

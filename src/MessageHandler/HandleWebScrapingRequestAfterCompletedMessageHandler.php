@@ -1,16 +1,16 @@
 <?php namespace App\MessageHandler;
 
-use App\Config\WebScrapingRequestCompletedHandleType;
 use App\Entity\WebScrapingRequest;
 use App\Message\HandleWebScrapingRequestAfterCompletedMessage;
 use App\Repository\WebScrapingRequestRepository;
+use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
 class HandleWebScrapingRequestAfterCompletedMessageHandler
 {
 
-    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository)
+    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository, private EventDispatcherInterface $eventDispatcher)
     {
     }
 
@@ -20,14 +20,10 @@ class HandleWebScrapingRequestAfterCompletedMessageHandler
 
         if ($myWebScrapingRequest instanceof WebScrapingRequest) {
 
+
             $myHandle = $myWebScrapingRequest->getCompletedHandle();
+            $this->eventDispatcher->dispatch($myWebScrapingRequest, 'scraper.' . strtolower($myHandle));
 
-            // If Handle Is Null, No Action Required
-            if ($myHandle === WebScrapingRequestCompletedHandleType::HANDLE_NULL) {
-                return;
-            }
-
-            // TODO : Handle Completed Requests
         }
 
     }
