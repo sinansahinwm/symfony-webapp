@@ -27,6 +27,7 @@ final class ProccessWebScrapingRequestMessageHandler
     {
 
         $throwMessageError = NULL;
+        $throwReasons = [];
 
         // Get Message Object
         $myWebScrapingRequest = $this->webScrapingRequestRepository->find($myMessage->getWebScrapingRequestID());
@@ -50,6 +51,7 @@ final class ProccessWebScrapingRequestMessageHandler
                 // If Sending Failed Throw Error & Retry Message
                 if ($sendToRemoteServerResult === FALSE) {
                     $throwMessageError = TRUE;
+                    $throwReasons[] = $this->translator->trans("Veri çekme isteği uzak sunucuya gönderilemedi.");
                 }
 
             } else {
@@ -61,13 +63,15 @@ final class ProccessWebScrapingRequestMessageHandler
 
                 // Throw Error When PingPong Failed
                 $throwMessageError = TRUE;
+                $throwReasons[] = $this->translator->trans("Uzak sunucuya bağlanılamıyor.");
 
             }
 
 
             // Throw Error If Needed
             if ($throwMessageError === TRUE) {
-                throw new Exception($this->translator->trans("Veri çekme isteği başarısız oldu."));
+                $exceptionMessage = $this->translator->trans("Veri çekme isteği başarısız oldu.") . PHP_EOL . implode(PHP_EOL, $throwReasons);
+                throw new Exception($exceptionMessage);
             }
 
         }

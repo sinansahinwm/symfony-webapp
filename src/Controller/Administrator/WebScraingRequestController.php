@@ -7,11 +7,9 @@ use App\Service\CrudTable\CrudTableService;
 use App\Service\DomContentFramerService;
 use App\Service\WebScrapingRequestService;
 use App\Service\WebScrapingRequestStep\ChangeStep;
-use App\Service\WebScrapingRequestStep\ClickStep;
 use App\Service\WebScrapingRequestStep\KeyDownStep;
 use App\Service\WebScrapingRequestStep\KeyUpStep;
 use Doctrine\ORM\EntityManagerInterface;
-use Faker\Factory;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,14 +40,12 @@ class WebScraingRequestController extends AbstractController
 
     private function addRandomWebScrapingRequests(WebScrapingRequestService $webScrapingRequestService): void
     {
-        $randomKeywords = ["iphone şarj aleti"];
-        // $randomKeywords = ["185 65 15 araç lastiği", "michelin araba lastiği","askılık","abaküs", "şarap kadehi", "ruj", "samsung telefon kılıfı", "pensan mavi tükenmez kalem", "scricks dolma kalem", "dimes meyve suyu", "koroplast alüminyum folyo", "saat", "bilgisayar", "kablosuz klavye", "cam damacana", "elektrikli bisiklet", "prada gözlük", "mentos", "amd işlemci", "grissini", "protein tozu", "bahs"];
+        $randomKeywords = ["altın", "magsafe kılıf", "araç içi disko topu", "avize", "lamba", "185 65 15 araç lastiği", "michelin araba lastiği", "askılık", "abaküs", "şarap kadehi", "ruj", "samsung telefon kılıfı", "pensan mavi tükenmez kalem", "scricks dolma kalem", "dimes meyve suyu", "koroplast alüminyum folyo", "saat", "bilgisayar", "kablosuz klavye", "cam damacana", "elektrikli bisiklet", "prada gözlük", "mentos", "amd işlemci", "grissini", "protein tozu", "bahs"];
         $randomMarketplaces = [
             [
                 "navigateURL" => "https://amazon.com.tr",
                 'searchSelector' => "xpath///*[@id='twotabsearchtextbox']"
             ],
-            /*
             [
                 "navigateURL" => "https://www.trendyol.com",
                 'searchSelector' => "xpath///*[@class='V8wbcUhU']"
@@ -86,7 +82,7 @@ class WebScraingRequestController extends AbstractController
                 "navigateURL" => "https://www.lastikborsasi.com",
                 'searchSelector' => 'xpath///*[@id="desktop-q"]'
             ]
-            */
+
         ];
 
         foreach ($randomKeywords as $randomKeyword) {
@@ -149,9 +145,10 @@ class WebScraingRequestController extends AbstractController
     }
 
     #[Route('/content_iframe/{webScrapingRequest}', name: 'content_iframe')]
-    public function contentIFrame(WebScrapingRequest $webScrapingRequest, EntityManagerInterface $entityManager): Response
+    public function contentIFrame(WebScrapingRequest $webScrapingRequest, DomContentFramerService $domContentFramerService): Response
     {
-        return new Response(base64_decode($webScrapingRequest->getConsumedContent()), 200);
+        $framedContent = $domContentFramerService->setHtml($webScrapingRequest->getConsumedContent())->setBaseURL($webScrapingRequest->getNavigateUrl());
+        return new Response($framedContent->getFramedContent(FALSE, FALSE, FALSE), 200);
     }
 
 }

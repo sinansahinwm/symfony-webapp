@@ -39,25 +39,30 @@ class DomContentFramerService
         return $this;
     }
 
-    public function getFramedContent(): string
+    public function getFramedContent($clearScripts = TRUE, $clearStyles = TRUE, $addNodeXPathAttributes = TRUE): string
     {
 
         // Create Crawler
         $myCrawler = new Crawler($this->getHtml());
 
         // Remove Script Nodes
-        $myCrawler->filterXPath('//script')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });
+        if ($clearScripts === TRUE) {
+            $myCrawler->filterXPath('//script')->each(function (Crawler $crawler) {
+                foreach ($crawler as $node) {
+                    $node->parentNode->removeChild($node);
+                }
+            });
+        }
+
 
         // Remove Inline Styles
-        $myCrawler->filterXPath('//style')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });
+        if ($clearStyles === TRUE) {
+            $myCrawler->filterXPath('//style')->each(function (Crawler $crawler) {
+                foreach ($crawler as $node) {
+                    $node->parentNode->removeChild($node);
+                }
+            });
+        }
 
         // Convert Stylesheets To Absolute URL
         $myCrawler->filterXPath('//link[@rel="stylesheet"]')->each(function (Crawler $crawler) {
@@ -92,24 +97,25 @@ class DomContentFramerService
         });
 
         // Set Area Highlighters
-        $myCrawler->filterXPath('//*')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                if ($node->getNodePath() !== NULL) {
-                    if ($node instanceof DOMNode) {
+        if ($addNodeXPathAttributes === TRUE) {
+            $myCrawler->filterXPath('//*')->each(function (Crawler $crawler) {
+                foreach ($crawler as $node) {
+                    if ($node->getNodePath() !== NULL) {
+                        if ($node instanceof DOMNode) {
 
-                        // Get Node XPath String
-                        $nodeXPath = $this->getNodeXPathStr($node);
+                            // Get Node XPath String
+                            $nodeXPath = $this->getNodeXPathStr($node);
 
-                        // Set Path Attribute
-                        if ($nodeXPath !== NULL) {
-                            $node->setAttribute(self::NODE_XPATH_INJECT_ATTRIBUTE, $nodeXPath);
+                            // Set Path Attribute
+                            if ($nodeXPath !== NULL) {
+                                $node->setAttribute(self::NODE_XPATH_INJECT_ATTRIBUTE, $nodeXPath);
+                            }
+
                         }
-
                     }
                 }
-            }
-        });
-
+            });
+        }
         return $myCrawler->html();
 
     }
