@@ -20,7 +20,6 @@ class HandleWebScrapingRequestAfterCompletedMessageHandler
 
         if ($myWebScrapingRequest instanceof WebScrapingRequest) {
 
-
             $myHandle = $myWebScrapingRequest->getCompletedHandle();
             $this->eventDispatcher->dispatch($myWebScrapingRequest, 'scraper.' . strtolower($myHandle));
 
