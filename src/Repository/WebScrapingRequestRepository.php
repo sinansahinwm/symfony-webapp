@@ -16,6 +16,13 @@ class WebScrapingRequestRepository extends ServiceEntityRepository
         parent::__construct($registry, WebScrapingRequest::class);
     }
 
+    public function deleteAll(): void
+    {
+        $queryBuilder = $this->createQueryBuilder("qb");
+        $queryBuilder->delete()->getQuery()->getResult();
+    }
+
+
     //    /**
     //     * @return WebScrapingRequest[] Returns an array of WebScrapingRequest objects
     //     */

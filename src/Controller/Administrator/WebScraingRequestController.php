@@ -3,6 +3,7 @@
 use App\Controller\Admin\Table\WebScrapingRequestTable;
 use App\Entity\WebScrapingRequest;
 use App\Form\Administrator\WebScrapingRequestType;
+use App\Repository\WebScrapingRequestRepository;
 use App\Service\CrudTable\CrudTableService;
 use App\Service\DomContentFramerService;
 use App\Service\WebScrapingRequestService;
@@ -40,7 +41,7 @@ class WebScraingRequestController extends AbstractController
 
     private function addRandomWebScrapingRequests(WebScrapingRequestService $webScrapingRequestService): void
     {
-        $randomKeywords = ["altın", "magsafe kılıf", "araç içi disko topu", "avize", "lamba", "185 65 15 araç lastiği", "michelin araba lastiği", "askılık", "abaküs", "şarap kadehi", "ruj", "samsung telefon kılıfı", "pensan mavi tükenmez kalem", "scricks dolma kalem", "dimes meyve suyu", "koroplast alüminyum folyo", "saat", "bilgisayar", "kablosuz klavye", "cam damacana", "elektrikli bisiklet", "prada gözlük", "mentos", "amd işlemci", "grissini", "protein tozu", "bahs"];
+        $randomKeywords = ["kışlık mont", "atkı", "bere", "altın", "magsafe kılıf", "araç içi disko topu", "avize", "lamba", "185 65 15 araç lastiği", "michelin araba lastiği", "askılık", "abaküs", "şarap kadehi", "ruj", "samsung telefon kılıfı", "pensan mavi tükenmez kalem", "scricks dolma kalem", "dimes meyve suyu", "koroplast alüminyum folyo", "saat", "bilgisayar", "kablosuz klavye", "cam damacana", "elektrikli bisiklet", "prada gözlük", "mentos", "amd işlemci", "grissini", "protein tozu", "bahs"];
         $randomMarketplaces = [
             [
                 "navigateURL" => "https://amazon.com.tr",
@@ -81,6 +82,14 @@ class WebScraingRequestController extends AbstractController
             [
                 "navigateURL" => "https://www.lastikborsasi.com",
                 'searchSelector' => 'xpath///*[@id="desktop-q"]'
+            ],
+            [
+                "navigateURL" => "https://www.idefix.com",
+                'searchSelector' => 'xpath///*[@id="headerSearch-d"]'
+            ],
+            [
+                "navigateURL" => "https://www.kigili.com/",
+                'searchSelector' => 'xpath///*[@name="q"]'
             ]
 
         ];
@@ -149,6 +158,15 @@ class WebScraingRequestController extends AbstractController
     {
         $framedContent = $domContentFramerService->setHtml($webScrapingRequest->getConsumedContent())->setBaseURL($webScrapingRequest->getNavigateUrl());
         return new Response($framedContent->getFramedContent(FALSE, FALSE, FALSE), 200);
+    }
+
+
+    #[Route('/delete_all', name: 'delete_all')]
+    public function deleteAll(WebScrapingRequestRepository $webScrapingRequestRepository, EntityManagerInterface $entityManager): Response
+    {
+        $webScrapingRequestRepository->deleteAll();
+        $this->addFlash('pageNotificationSuccess', t("Tüm ögeler silindi"));
+        return $this->redirectToRoute('app_administrator_web_scraping_request_index');
     }
 
 }
