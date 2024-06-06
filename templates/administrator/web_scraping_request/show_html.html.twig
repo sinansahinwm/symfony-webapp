@@ -15,26 +15,111 @@
 
 {% block body %}
 
-    <div class="row">
-        {% if webScrapingRequest.consumedScreenshot is not same as(null) %}
-            <div class="col-md-6">
-                <div class="card bg-dark border-0 text-white">
-                    <img class="card-img" src="data:image/png;base64, {{ webScrapingRequest.consumedScreenshot|raw }}" alt="{{ 'Ekran Görüntüsü'|trans }}">
-                </div>
-            </div>
-        {% endif %}
-        <div class="col-md-6">
-            <div class="card bg-dark">
-                {% if decodedContent is not same as(false) and webScrapingRequest.status is same as("COMPLETED") %}
-                    <iframe src="{{ path('app_administrator_web_scraping_request_content_iframe', { webScrapingRequest: webScrapingRequest.id }) }}" style="width: 100%; height: 600px;" class="chat-history-body"></iframe>
-                {% else %}
-                    <div class="alert alert-danger" role="alert">
-                        {{ 'Bu içerik çözümlenemedi ya da henüz tamamlanmadı.' }}
+    {% if webScrapingRequest.status is same as('COMPLETED') %}
+
+        <div class="nav-align-top">
+            <ul class="nav nav-tabs" role="tablist">
+
+                <!-- Status -->
+                {% if webScrapingRequest.consumedScreenshot is not same as(null) %}
+                    <li class="nav-item" >
+                        <button type="button" class="nav-link disabled" role="tab" data-bs-toggle="tab" data-bs-target="#navs-screenshot" aria-controls="navs-screenshot" aria-selected="true">
+                           <i class="bx bx-hash"></i> {{ webScrapingRequest.id }}
+                        </button>
+                    </li>
+                {% endif %}
+
+                <!-- Screenshot -->
+                {% if webScrapingRequest.consumedScreenshot is not same as(null) %}
+                    <li class="nav-item">
+                        <button type="button" class="nav-link active" role="tab" data-bs-toggle="tab" data-bs-target="#navs-screenshot" aria-controls="navs-screenshot" aria-selected="true">
+                            {{ 'Ekran Görüntüsü'|trans }}
+                        </button>
+                    </li>
+                {% endif %}
+
+                <!-- Consumed Content Frame -->
+                {% if webScrapingRequest.consumedContent is not same as(null) %}
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-content" aria-controls="navs-content" aria-selected="false">
+                            {{ 'Sayfa İçeriği'|trans }}
+                        </button>
+                    </li>
+                {% endif %}
+
+                <!-- XHR Log -->
+                {% if webScrapingRequest.xhrlog is not same as(null) %}
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-xhrlog" aria-controls="navs-xhrlog" aria-selected="false">
+                            {{ 'XHR Kayıtları'|trans }}
+                        </button>
+                    </li>
+                {% endif %}
+
+                <!-- Steps -->
+                {% if webScrapingRequest.xhrlog is not same as(null) %}
+                    <li class="nav-item">
+                        <button type="button" class="nav-link" role="tab" data-bs-toggle="tab" data-bs-target="#navs-steps" aria-controls="navs-steps" aria-selected="false">
+                            {{ 'Adımlar'|trans }}
+                        </button>
+                    </li>
+                {% endif %}
+
+            </ul>
+            <div class="tab-content">
+
+                <!-- Screenshot -->
+                {% if webScrapingRequest.consumedScreenshot is not same as(null) %}
+                    <div class="tab-pane fade show active" id="navs-screenshot" role="tabpanel">
+                        <img class="card-img" src="data:image/png;base64, {{ webScrapingRequest.consumedScreenshot|raw }}" alt="{{ 'Ekran Görüntüsü'|trans }}">
                     </div>
                 {% endif %}
+
+                <!-- Consumed Content Frame -->
+                {% if webScrapingRequest.consumedContent is not same as(null) %}
+                    <div class="tab-pane fade" id="navs-content" role="tabpanel">
+                        {% if decodedContent is not same as(false) and webScrapingRequest.status is same as("COMPLETED") %}
+                            <iframe src="{{ path('app_administrator_web_scraping_request_content_iframe', { webScrapingRequest: webScrapingRequest.id }) }}" style="width: 100%; height: 600px;" class="chat-history-body"></iframe>
+                        {% else %}
+                            <div class="alert alert-danger" role="alert">
+                                {{ 'Bu içerik çözümlenemedi ya da henüz tamamlanmadı.' }}
+                            </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <!-- XHR Log -->
+                {% if webScrapingRequest.xhrlog is not same as(null) %}
+                    <div class="tab-pane fade" id="navs-xhrlog" role="tabpanel">
+                        <code>
+                            {{ webScrapingRequest.xhrlog|raw }}
+                        </code>
+                    </div>
+                {% endif %}
+
+                <!-- Steps -->
+                {% if webScrapingRequest.steps is not same as(null) %}
+                    <div class="tab-pane fade" id="navs-steps" role="tabpanel">
+                        <code>
+                            {{ webScrapingRequest.steps|raw }}
+                        </code>
+                    </div>
+                {% endif %}
+
             </div>
         </div>
-    </div>
 
+        {% else %}
+        <div class="row">
+            <div class="alert alert-danger" role="alert">
+                {{ 'Bu veri çekme isteği henüz tamamlanmadı.'|trans }}
+            </div>
+            {% if webScrapingRequest.lastErrorMessage is not same as(null) %}
+                <div class="alert alert-danger" role="alert">
+                    {{ webScrapingRequest.lastErrorMessage|trans }}
+                </div>
+            {% endif %}
+        </div>
+    {% endif %}
 
 {% endblock %}
