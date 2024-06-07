@@ -1,9 +1,17 @@
 <?php namespace App\Controller\Administrator;
 
+use App\Config\MarketplaceSearchHandlerType;
 use App\Controller\Admin\Table\MarketplaceTable;
 use App\Entity\Marketplace;
+use App\Form\Administrator\MarketplaceSearchKeywordType;
 use App\Form\Administrator\MarketplaceType;
 use App\Service\CrudTable\CrudTableService;
+use App\Service\MarketplaceSearchService;
+use App\Service\WebScrapingRequestService;
+use App\Service\WebScrapingRequestStep\ChangeStep;
+use App\Service\WebScrapingRequestStep\KeyDownStep;
+use App\Service\WebScrapingRequestStep\KeyUpStep;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -77,12 +85,47 @@ class MarketplaceController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'delete')]
+    #[Route('/search_keyword', name: 'search_keyword')]
+    public function searchKeyword(Request $request, MarketplaceSearchService $marketplaceSearchService): Response
+    {
+        $searchKeywordForm = $this->createForm(MarketplaceSearchKeywordType::class);
+        $searchKeywordForm->handleRequest($request);
+
+        if ($searchKeywordForm->isSubmitted() && $searchKeywordForm->isValid()) {
+
+            // Get Unmapped Form Data
+            $formKeyword = $searchKeywordForm->get("keyword")->getData();
+            $formMarketplaces = $searchKeywordForm->get("marketplaces")->getData();
+
+            // Proccess Search Keyword Form
+            $this->proccessSearchKeywordForm($formKeyword, $formMarketplaces, $marketplaceSearchService);
+
+            $this->addFlash('pageNotificationSuccess', t("Arama işlemi başlatıldı."));
+            return $this->redirectToRoute('app_administrator_web_scraping_request_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('administrator/marketplace/search_keyword.html.twig', [
+            'form' => $searchKeywordForm
+        ]);
+    }
+
+    #[Route('/delete/{id}', name: 'delete')]
     public function delete(Marketplace $marketplace, EntityManagerInterface $entityManager): Response
     {
         $this->addFlash('pageNotificationSuccess', t("Pazaryeri başarıyla silindi."));
         $entityManager->remove($marketplace);
         $entityManager->flush();
         return $this->redirectToRoute('app_administrator_marketplace_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    private function proccessSearchKeywordForm(string $searchKeyword, ArrayCollection $marketplaces, MarketplaceSearchService $marketplaceSearchService): void
+    {
+        foreach ($marketplaces as $marketplace) {
+            if ($marketplace instanceof Marketplace) {
+                if (strlen($searchKeyword) > 0) {
+                    $marketplaceSearchService->searchKeyword($searchKeyword, $marketplace);
+                }
+            }
+        }
     }
 }
