@@ -1,0 +1,26 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Anahtar Kelime Araması'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Anahtar Kelime Araması'|trans }}{% endblock %}
+
+{% block pageActions %}
+
+    <a href="{{ path('app_administrator_marketplace_index') }}" class="btn btn-secondary">
+        {{ 'Listeye Geri Dön'|trans }}
+    </a>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        {{ form_start(form) }}
+        <div class="card-body">
+            {{ form_widget(form) }}
+            {{ form_rest(form) }}
+        </div>
+        {{ component('_card_action_footer_component', { label: "Ara", "type": "primary" }) }}
+        {{ form_end(form) }}
+    </div>
+
+{% endblock %}
