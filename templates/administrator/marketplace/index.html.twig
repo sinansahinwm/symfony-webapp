@@ -1,0 +1,16 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Pazaryeri'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Pazaryeri'|trans }}{% endblock %}
+
+{% block pageActions %}
+    <a href="{{ path('app_administrator_marketplace_new') }}" class="btn btn-secondary">
+        {{ 'Yeni Oluştur'|trans }}
+    </a>
+{% endblock %}
+
+{% block body %}
+
+    {{ component('_crud_table_component', { table: marketplaceTable, title: 'Pazaryerleri'|trans}) }}
+
+{% endblock %}
