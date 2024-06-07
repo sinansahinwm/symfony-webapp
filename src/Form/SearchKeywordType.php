@@ -12,6 +12,7 @@ class SearchKeywordType extends AbstractFormType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
         $builder
             ->add('keyword', TextType::class, [
                 'label' => FALSE,
