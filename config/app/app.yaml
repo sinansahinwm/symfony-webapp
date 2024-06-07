@@ -129,6 +129,7 @@ doctrine:
       user_activity: App\Config\UserActivityType
       web_scraping_request_status: App\Config\WebScrapingRequestStatusType
       web_scraping_request_completed_handle: App\Config\WebScrapingRequestCompletedHandleType
+      marketplace_search_handler: App\Config\MarketplaceSearchHandlerType
 
 # ===============================
 # TWIG COMPONENT CONFIGURATION
