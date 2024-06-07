@@ -25,6 +25,10 @@ import {Cleave} from "./theme/libs/cleavejs/cleave";
 // Perfect Scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 
+// Highlight JS
+import hljs from "highlight.js";
+import "highlight.js/scss/googlecode.scss";
+
 
 const adminPagesGlobalInitializer = function () {
 
@@ -110,6 +114,11 @@ const adminPagesGlobalInitializer = function () {
 
     const _initTooltips = function () {
         //$('[data-toggle="tooltip"]').tooltip();
+    }
+
+    const _initHighlightJS = function () {
+        hljs.registerLanguage('json', require('highlight.js/lib/languages/json'));
+        hljs.highlightAll();
     }
 
     const _initCardActions = function () {
@@ -391,6 +400,7 @@ const adminPagesGlobalInitializer = function () {
             _initPerfectScrollbars();
             _initMaskedInputs();
             // DEPRECED _initSymfonyToolbarBlock();
+            _initHighlightJS();
         }
     }
 
