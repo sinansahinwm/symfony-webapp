@@ -4,9 +4,16 @@
 {% block contentTitle %}{{ 'Yönetici Paneli / Pazaryeri'|trans }}{% endblock %}
 
 {% block pageActions %}
-    <a href="{{ path('app_administrator_marketplace_new') }}" class="btn btn-secondary">
-        {{ 'Yeni Oluştur'|trans }}
-    </a>
+
+    <div class="btn-group" role="group">
+        <a href="{{ path('app_administrator_marketplace_search_keyword') }}" class="btn btn-secondary">
+            {{ 'Anahtar Kelime Ara'|trans }}
+        </a>
+        <a href="{{ path('app_administrator_marketplace_new') }}" class="btn btn-secondary">
+            {{ 'Yeni Oluştur'|trans }}
+        </a>
+    </div>
+
 {% endblock %}
 
 {% block body %}
