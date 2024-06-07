@@ -8,6 +8,7 @@ use App\Factory\CountryFactory;
 use App\Factory\DistrictFactory;
 use App\Factory\HelpCenterArticleFactory;
 use App\Factory\HelpCenterCategoryFactory;
+use App\Factory\MarketplaceFactory;
 use App\Factory\NotificationFactory;
 use App\Factory\SubscriptionPlanFactory;
 use App\Factory\TeamFactory;
@@ -33,6 +34,7 @@ class AppFixtures extends Fixture
     const COLLABORATORS_PER_TEAM = 5;
     const NOTIFICATIONS_COUNT_PER_USER = 10;
     const USER_ACTIVITIES_COUNT = 300;
+    const MARKETPLACE_COUNT = 10;
 
     const SUBSCRIPTION_PLANS_COUNT = 3;
     const PLAN_FEATURES_PER_PLAN = 4;
@@ -95,6 +97,9 @@ class AppFixtures extends Fixture
 
         // Web Scraping Request
         $myWebScrapingRequests = WebScrapingRequestFactory::createMany(self::WEB_SCRAPING_REQUESTS);
+
+        // Create Marketplaces
+        $myMarketplaces = MarketplaceFactory::createMany(self::MARKETPLACE_COUNT);
     }
 
     private function createAdministrator(): void
