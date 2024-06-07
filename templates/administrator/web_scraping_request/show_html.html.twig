@@ -91,9 +91,7 @@
                 {% if webScrapingRequest.xhrlog is not same as(null) %}
                     <div class="tab-pane fade" id="navs-xhrlog" role="tabpanel">
                        <pre>
-                            <code class="language-json">
-                                {{ webScrapingRequest.xhrlog|json_pretty_print|escape }}
-                            </code>
+                            <code class="language-json">{{ webScrapingRequest.xhrlog|json_pretty_print|escape }}</code>
                        </pre>
                     </div>
                 {% endif %}
@@ -102,9 +100,7 @@
                 {% if webScrapingRequest.steps is not same as(null) %}
                     <div class="tab-pane fade" id="navs-steps" role="tabpanel">
                         <pre>
-                            <code class="language-json">
-                                {{ webScrapingRequest.steps|json_pretty_print|escape }}
-                            </code>
+                            <code class="language-json">{{ webScrapingRequest.steps|json_pretty_print|escape }}</code>
                         </pre>
                     </div>
                 {% endif %}
