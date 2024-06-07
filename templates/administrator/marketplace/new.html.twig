@@ -1,0 +1,24 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Yeni Pazaryeri'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Yeni Pazaryeri'|trans }}{% endblock %}
+
+{% block pageActions %}
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a href="{{ path('app_administrator_marketplace_index') }}" class="btn btn-secondary">
+            {{ 'Listeye Geri Dön'|trans }}
+        </a>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+
+    <div class="card">
+        <div class="card-body">
+            {{ include('administrator/marketplace/_form.html.twig') }}
+        </div>
+    </div>
+
+{% endblock %}

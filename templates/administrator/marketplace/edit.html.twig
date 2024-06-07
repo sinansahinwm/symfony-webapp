@@ -1,0 +1,27 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Pazaryeri Düzenle'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Pazaryeri Düzenle'|trans }}{% endblock %}
+
+{% block pageActions %}
+
+    <div class="btn-group" role="group" aria-label="Basic example">
+        <a href="{{ path('app_administrator_marketplace_index') }}" class="btn btn-secondary">
+            {{ 'Listeye Geri Dön'|trans }}
+        </a>
+        <a href="{{ path('app_administrator_marketplace_delete', {'id': marketplace.id}) }}" class="btn btn-danger">
+            {{ 'Sil'|trans }}
+        </a>
+    </div>
+
+{% endblock %}
+
+{% block body %}
+
+     <div class="card">
+         <div class="card-body">
+             {{ include('administrator/marketplace/_form.html.twig', {'button_label': 'Değişiklikleri Kaydet'|trans }) }}
+         </div>
+     </div>
+
+{% endblock %}
