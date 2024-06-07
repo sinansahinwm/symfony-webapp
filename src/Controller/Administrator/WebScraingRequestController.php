@@ -157,7 +157,7 @@ class WebScraingRequestController extends AbstractController
     public function contentIFrame(WebScrapingRequest $webScrapingRequest, DomContentFramerService $domContentFramerService): Response
     {
         $framedContent = $domContentFramerService->setHtml($webScrapingRequest->getConsumedContent())->setBaseURL($webScrapingRequest->getNavigateUrl());
-        return new Response($framedContent->getFramedContent(TRUE, FALSE, FALSE), 200);
+        return new Response($framedContent->getFramedContent(FALSE, FALSE, TRUE), 200);
     }
 
 
