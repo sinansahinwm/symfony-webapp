@@ -5,7 +5,7 @@
 
 {% block pageActions %}
 
-    <div class="btn-group" role="group" aria-label="Basic example">
+    <div class="btn-group" role="group">
         <a href="{{ path('app_administrator_marketplace_index') }}" class="btn btn-secondary">
             {{ 'Listeye Geri Dön'|trans }}
         </a>
@@ -26,19 +26,19 @@
             <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <th>Id</th>
+                    <th>{{ 'ID'|trans }}</th>
                     <td>{{ marketplace.id }}</td>
                 </tr>
                 <tr>
-                    <th>Name</th>
+                    <th>{{ 'Ad'|trans }}</th>
                     <td>{{ marketplace.name }}</td>
                 </tr>
                 <tr>
-                    <th>Url</th>
+                    <th>{{ 'URL'|trans }}</th>
                     <td>{{ marketplace.url }}</td>
                 </tr>
                 <tr>
-                    <th>Logo</th>
+                    <th>{{ 'Logo'|trans }}</th>
                     <td>{{ marketplace.logo }}</td>
                 </tr>
                 </tbody>
