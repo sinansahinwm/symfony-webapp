@@ -2,6 +2,7 @@
 
 namespace App\Factory;
 
+use App\Config\MarketplaceSearchHandlerType;
 use App\Entity\Marketplace;
 use App\Repository\MarketplaceRepository;
 use Zenstruck\Foundry\ModelFactory;
@@ -41,15 +42,17 @@ final class MarketplaceFactory extends ModelFactory
             'logo' => self::faker()->imageUrl(),
             'name' => self::faker()->text(10),
             'url' => self::faker()->url,
+            'search_url' => self::faker()->url,
+            'search_selectors' => '//div',
+            'search_handler_type' => MarketplaceSearchHandlerType::STEPS,
         ];
     }
 
 
     protected function initialize(): self
     {
-        return $this
-            // ->afterInstantiate(function(Marketplace $marketplace): void {})
-        ;
+        return $this// ->afterInstantiate(function(Marketplace $marketplace): void {})
+            ;
     }
 
     protected static function getClass(): string
