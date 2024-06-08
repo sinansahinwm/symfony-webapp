@@ -33,6 +33,10 @@ class MarketplaceSearchService
             $myScrapingService->addStep($myStep1)->addStep($myStep2)->addStep($myStep3);
         }
 
+        if ($marketplace->getSearchHandlerType() === MarketplaceSearchHandlerType::NAVIGATION) {
+            // TODO : No Needs
+        }
+
         // Make Request
         $myScrapingService->createRequest($navigateURL);
     }
