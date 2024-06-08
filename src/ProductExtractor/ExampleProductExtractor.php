@@ -1,6 +1,5 @@
 <?php namespace App\ProductExtractor;
 
-use App\EventListener\Custom\WebScrapingRequestExtractorHelper;
 use App\MessageHandler\Event\WebScrapingRequestExtractProductsEvent;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
