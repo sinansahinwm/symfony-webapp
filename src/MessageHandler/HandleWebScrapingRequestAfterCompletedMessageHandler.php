@@ -19,12 +19,14 @@ class HandleWebScrapingRequestAfterCompletedMessageHandler
         $myWebScrapingRequest = $this->webScrapingRequestRepository->find($myMessage->getWebScrapingRequestID());
 
         if ($myWebScrapingRequest instanceof WebScrapingRequest) {
-
-            $myHandle = $myWebScrapingRequest->getCompletedHandle();
-            $this->eventDispatcher->dispatch($myWebScrapingRequest, 'scraper.' . strtolower($myHandle));
-
+            $this->eventDispatcher->dispatch($myWebScrapingRequest, self::getEventDispatcherEventName($myWebScrapingRequest));
         }
 
+    }
+
+    public static function getEventDispatcherEventName(WebScrapingRequest $webScrapingRequest): string
+    {
+        return 'scraper.' . strtolower($webScrapingRequest->getCompletedHandle());
     }
 
 }

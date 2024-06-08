@@ -1,6 +1,7 @@
 <?php namespace App\Service;
 
 use App\Config\MarketplaceSearchHandlerType;
+use App\Config\WebScrapingRequestCompletedHandleType;
 use App\Entity\Marketplace;
 use App\Service\WebScrapingRequestStep\ChangeStep;
 use App\Service\WebScrapingRequestStep\KeyDownStep;
@@ -38,7 +39,7 @@ class MarketplaceSearchService
         }
 
         // Make Request
-        $myScrapingService->createRequest($navigateURL);
+        $myScrapingService->createRequest($navigateURL, WebScrapingRequestCompletedHandleType::HANDLE_EXTRACT_PRODUCTS);
     }
 
 }

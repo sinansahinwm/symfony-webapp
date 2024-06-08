@@ -10,7 +10,7 @@ class WebScrapingRequestCompletedEventListener
 
     public function __invoke(WebScrapingRequest $myWebScrapingRequest)
     {
-
+        // TODO : Handle Null
     }
 
 }
