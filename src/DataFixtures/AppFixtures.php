@@ -10,6 +10,7 @@ use App\Factory\HelpCenterArticleFactory;
 use App\Factory\HelpCenterCategoryFactory;
 use App\Factory\MarketplaceFactory;
 use App\Factory\NotificationFactory;
+use App\Factory\ProductFactory;
 use App\Factory\SubscriptionPlanFactory;
 use App\Factory\TeamFactory;
 use App\Factory\TeamInviteFactory;
@@ -35,6 +36,7 @@ class AppFixtures extends Fixture
     const NOTIFICATIONS_COUNT_PER_USER = 10;
     const USER_ACTIVITIES_COUNT = 300;
     const MARKETPLACE_COUNT = 10;
+    const PRODUCT_COUNT = 100;
 
     const SUBSCRIPTION_PLANS_COUNT = 3;
     const PLAN_FEATURES_PER_PLAN = 4;
@@ -100,6 +102,10 @@ class AppFixtures extends Fixture
 
         // Create Marketplaces
         $myMarketplaces = MarketplaceFactory::createMany(self::MARKETPLACE_COUNT);
+
+        // Create Products
+        $myProducts = ProductFactory::createMany(self::PRODUCT_COUNT);
+
     }
 
     private function createAdministrator(): void
