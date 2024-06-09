@@ -1,13 +1,12 @@
 <?php namespace App\ProductExtractor;
 
+use App\Entity\Product;
 use App\MessageHandler\Event\WebScrapingRequestExtractProductsEvent;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
 #[AsEventListener(event: 'scraper.handle_extract_products.example.com.tr')]
 class ExampleProductExtractor
 {
-    private ArrayCollection $extractedProducts;
 
     public function __construct(private WebScrapingRequestExtractorHelper $extractorHelper)
     {
@@ -16,23 +15,20 @@ class ExampleProductExtractor
     public function __invoke(WebScrapingRequestExtractProductsEvent $myEvent): void
     {
 
-        // Run Product Extractors
-        $this->extractProductsWithDOM($myEvent);
-        $this->extractProductsWithXhrLog($myEvent);
+        // Get Crawler & XHR Logs
+        $myCrawler = $this->extractorHelper->getCrawler($myEvent->getWebScrapingRequest(), $myEvent->getMarketplace());
+        $myXHRLog = $this->extractorHelper->getXHRLog($myEvent->getWebScrapingRequest(), $myEvent->getMarketplace());
 
-        // Add Extracted Products If Exist
-        $this->extractorHelper->flushExtractedProducts($this->extractedProducts, $myEvent->getMarketplace());
+        // User Crawler And Create Product
+        $myProduct = new Product();
+        $myProduct->setIdentity("EXAMPLE_PRODUCT");
+        $myProduct->setName("Example Product");
+        $myProduct->setImage("https://placehold.co/400x400/jpg");
+        $myProduct->setUrl("https://example.com");
 
-    }
+        // Push Created Product
+        $pushedProductOrFalse = $this->extractorHelper->pushProduct($myProduct, $myEvent->getMarketplace());
 
-    private function extractProductsWithDOM(WebScrapingRequestExtractProductsEvent $extractEvent): void
-    {
-        // TODO : Extract Products Using DOM Content
-    }
-
-    private function extractProductsWithXhrLog(WebScrapingRequestExtractProductsEvent $extractEvent): void
-    {
-        // TODO : Extract Products Using XHR Logs
     }
 
 }
