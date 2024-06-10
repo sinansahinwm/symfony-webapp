@@ -48,6 +48,16 @@ php bin/console messenger:consume async
 php bin/console messenger:consume scheduler_default
 ~~~
 
+## Errors And Solutions
+
+1. Data truncated column error. Its causing because enum types. you can fix this error via add this enums manually. For example;
+
+~~~
+
+ALTER TABLE web_scraping_request MODIFY `completed_handle` ENUM('HANDLE_NULL', 'HANDLE_EXTRACT_PRODUCTS');
+
+~~~
+
 ## Running Crawler Agent
 
 1. Install node dependencies
