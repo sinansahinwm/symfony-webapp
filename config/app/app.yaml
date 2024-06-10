@@ -122,6 +122,7 @@ vich_uploader:
 # ===============================
 doctrine:
   dbal:
+    server_version: '%env(DATABASE_SERVER_VERSION))%'
     mapping_types:
       enum: string
     types:
