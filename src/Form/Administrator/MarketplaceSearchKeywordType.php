@@ -17,6 +17,10 @@ class MarketplaceSearchKeywordType extends AbstractFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $preferredData = array_map(function ($theMarketplace) {
+            return $theMarketplace->getId();
+        }, $this->marketplaceRepository->findAll());
+
         $builder
             ->add('keyword', TextType::class, [
                 'label' => t("Arama Kelimesi"),
@@ -30,7 +34,7 @@ class MarketplaceSearchKeywordType extends AbstractFormType
                 'attr' => [
                     'class' => "select2",
                 ],
-                'data' => $this->marketplaceRepository->findAll(),
+                'data' => $preferredData,
             ]);
     }
 
