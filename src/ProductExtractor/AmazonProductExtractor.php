@@ -32,7 +32,7 @@ class AmazonProductExtractor
 
         // User Crawler And Create Product
         $myProduct = new Product();
-        $myProduct->setIdentity("EXAMPLE_PRODUCT");
+        $myProduct->setIdentity("EXAMPLE_AMAZON_PRODUCT");
         $myProduct->setName("Example Product");
         $myProduct->setImage("https://placehold.co/400x400/jpg");
         $myProduct->setUrl("https://example.com");
