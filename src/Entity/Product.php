@@ -26,7 +26,7 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 5000)]
     private ?string $url = null;
 
     public function getId(): ?int
