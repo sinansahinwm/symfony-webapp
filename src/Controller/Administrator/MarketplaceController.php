@@ -125,7 +125,8 @@ class MarketplaceController extends AbstractController
                 if (strlen($searchKeyword) > 0) {
                     $explodedSearchKeywords = explode(',', $searchKeyword);
                     foreach ($explodedSearchKeywords as $explodedSearchKeyword) {
-                        $marketplaceSearchService->searchKeyword($explodedSearchKeyword, $marketplace);
+                        $trimmedSearchKeyword = trim($explodedSearchKeyword);
+                        $marketplaceSearchService->searchKeyword($trimmedSearchKeyword, $marketplace);
                     }
                 }
             }
