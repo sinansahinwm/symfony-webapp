@@ -101,7 +101,7 @@ class MarketplaceController extends AbstractController
             $this->proccessSearchKeywordForm($formKeyword, $formMarketplaces, $marketplaceSearchService);
 
             $this->addFlash('pageNotificationSuccess', t("Arama işlemi başlatıldı."));
-            return $this->redirectToRoute('app_administrator_web_scraping_request_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_administrator_marketplace_search_keyword', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('administrator/marketplace/search_keyword.html.twig', [

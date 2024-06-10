@@ -88,6 +88,7 @@ final class FirebaseScraperWebhookConsumer implements ConsumerInterface
             // Check Remote Status
             if (($myPayloadStatus !== 200) || ($decodedPayloadContent === FALSE)) {
                 $webScrapingRequest->setStatus(WebScrapingRequestStatusType::REMOTE_STATUS_FAILED_WHEN_CONSUMING);
+                $webScrapingRequest->setLastErrorMessage("INVALID REMOTE STATUS CODE " . $myPayloadStatus);
             }
 
             // Set Decoded Content
