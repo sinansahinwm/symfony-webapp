@@ -118,7 +118,7 @@ class MarketplaceController extends AbstractController
         return $this->redirectToRoute('app_administrator_marketplace_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    private function proccessSearchKeywordForm(string $searchKeyword, ArrayCollection $marketplaces, MarketplaceSearchService $marketplaceSearchService): void
+    private function proccessSearchKeywordForm(string $searchKeyword, iterable $marketplaces, MarketplaceSearchService $marketplaceSearchService): void
     {
         foreach ($marketplaces as $marketplace) {
             if ($marketplace instanceof Marketplace) {
