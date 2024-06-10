@@ -21,17 +21,20 @@ class MarketplaceSearchService
             'keyword' => $searchKeyword
         ]);
 
-        $searchSelectors = explode(Marketplace::SEARCH_SELECTORS_SPLITTER, $marketplace->getSearchSelectors());
 
         // Create Web Scraping Requests
         $myScrapingService = $this->webScrapingRequestService->clearSteps();
 
         // Add Steps If Needed
         if ($marketplace->getSearchHandlerType() === MarketplaceSearchHandlerType::STEPS) {
+
+            // Get Search Selectors & Add Steps
+            $searchSelectors = explode(Marketplace::SEARCH_SELECTORS_SPLITTER, $marketplace->getSearchSelectors());
             $myStep1 = new ChangeStep($searchKeyword, $searchSelectors);
             $myStep2 = new KeyDownStep("Enter");
             $myStep3 = new KeyUpStep("Enter");
             $myScrapingService->addStep($myStep1)->addStep($myStep2)->addStep($myStep3);
+
         }
 
         if ($marketplace->getSearchHandlerType() === MarketplaceSearchHandlerType::NAVIGATION) {
