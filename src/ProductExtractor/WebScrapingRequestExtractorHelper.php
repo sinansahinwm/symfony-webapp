@@ -95,9 +95,13 @@ class WebScrapingRequestExtractorHelper
         return $this->validator->validate($myProduct->getIdentity(), $validationAsserts)->count() === 0;
     }
 
-    public function getCrawler(WebScrapingRequest $webScrapingRequest, Marketplace $marketplace): Crawler
+    public function getCrawler(WebScrapingRequest $webScrapingRequest, Marketplace $marketplace): Crawler|null
     {
         $rawHTML = base64_decode($webScrapingRequest->getConsumedContent());
+        if ($rawHTML === FALSE) {
+            return NULL;
+        }
+
         $framedContent = $this->domContentFramerService->setHtml($rawHTML)->setBaseURL($marketplace->getUrl())->getFramedContent(FALSE, FALSE, FALSE);
         return new Crawler($framedContent);
     }
