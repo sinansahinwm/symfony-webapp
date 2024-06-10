@@ -21,7 +21,8 @@ class MarketplaceSearchKeywordType extends AbstractFormType
         $builder
             ->add('keyword', TextType::class, [
                 'label' => t("Arama Kelimesi"),
-                'mapped' => FALSE
+                'mapped' => FALSE,
+                'help' => t("Arama kelimelerini virgülle ayırabilirsiniz.")
             ])
             ->add('marketplaces', EntityType::class, [
                 'label' => t("Pazaryerleri"),

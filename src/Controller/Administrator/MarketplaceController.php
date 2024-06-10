@@ -123,7 +123,10 @@ class MarketplaceController extends AbstractController
         foreach ($marketplaces as $marketplace) {
             if ($marketplace instanceof Marketplace) {
                 if (strlen($searchKeyword) > 0) {
-                    $marketplaceSearchService->searchKeyword($searchKeyword, $marketplace);
+                    $explodedSearchKeywords = explode(',', $searchKeyword);
+                    foreach ($explodedSearchKeywords as $explodedSearchKeyword) {
+                        $marketplaceSearchService->searchKeyword($explodedSearchKeyword, $marketplace);
+                    }
                 }
             }
         }
