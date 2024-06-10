@@ -58,6 +58,8 @@ ALTER TABLE web_scraping_request MODIFY `completed_handle` ENUM('HANDLE_NULL', '
 
 ~~~
 
+2. "manifest.json" does not exist. It causes digital ocean's cache. If build manually without cache, this problem will fixed.
+
 ## Running Crawler Agent
 
 1. Install node dependencies
