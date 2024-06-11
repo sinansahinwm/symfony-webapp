@@ -50,7 +50,6 @@ class AmazonTurkeyProductExtractor
 
                 }
 
-
             });
 
             // Flush Extracted Products
