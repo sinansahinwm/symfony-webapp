@@ -20,13 +20,11 @@
             <ul class="nav nav-tabs" role="tablist">
 
                 <!-- Status -->
-                {% if webScrapingRequest.consumedScreenshot is not same as(null) %}
-                    <li class="nav-item" >
-                        <button type="button" class="nav-link disabled" role="tab" data-bs-toggle="tab" data-bs-target="#navs-screenshot" aria-controls="navs-screenshot" aria-selected="true">
-                           <i class="bx bx-hash"></i> {{ webScrapingRequest.id }}
-                        </button>
-                    </li>
-                {% endif %}
+                <li class="nav-item" >
+                    <button type="button" class="nav-link disabled" role="tab" data-bs-toggle="tab" data-bs-target="#navs-screenshot" aria-controls="navs-screenshot" aria-selected="true">
+                        <i class="bx bx-hash"></i> {{ webScrapingRequest.id }}
+                    </button>
+                </li>
 
                 <!-- Screenshot -->
                 {% if webScrapingRequest.consumedScreenshot is not same as(null) %}
