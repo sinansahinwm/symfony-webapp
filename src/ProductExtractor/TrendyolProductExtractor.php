@@ -6,8 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
-#[AsEventListener(event: 'scraper.handle_extract_products.amazon.com.tr')]
-class AmazonProductExtractor
+#[AsEventListener(event: 'scraper.handle_extract_products.trendyol.com')]
+class TrendyolProductExtractor
 {
 
     public function __construct(private WebScrapingRequestExtractorHelper $extractorHelper)
@@ -27,13 +27,16 @@ class AmazonProductExtractor
             $extractedProducts = new ArrayCollection();
 
             // Focus Products
-            $myCrawler->filterXPath('//div[@data-component-type="s-search-result"][@data-asin]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
+            $myCrawler->filterXPath('//div[@class="prdct-cntnr-wrppr"]//div[contains(@class,"p-card-wrppr")][@data-id]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Get Product Data
-                $productIdentity = $crawler->attr('data-asin');
-                $productImage = $crawler->filterXPath('//span[@data-component-type="s-product-image"]//img[contains(@class,"s-image")]')->attr('src');
-                $productName = $crawler->filterXPath('//div[contains(@class,"a-section")]//div[@data-cy="title-recipe"]//h2//a//span')->innerText();
-                $productURL = $crawler->filterXPath('//div[contains(@class,"a-section")]//div[@data-cy="title-recipe"]//h2//a')->attr('href');
+                $productIdentity = $crawler->attr('data-id');
+                $productImage = $crawler->filterXPath('//img[contains(@class,"p-card-img")]')->attr('src');
+                $_productBrand = $crawler->filterXPath('//div[contains(@class,"prdct-desc-cntnr")]//h3//span[contains(@class,"prdct-desc-cntnr-ttl")]')->innerText();
+                $_productName = $crawler->filterXPath('//div[contains(@class,"prdct-desc-cntnr")]//h3//span[contains(@class,"prdct-desc-cntnr-name")]')->innerText();
+                $_productDesc = $crawler->filterXPath('//div[contains(@class,"prdct-desc-cntnr")]//h3//div[contains(@class,"product-desc-sub-container")]//div[contains(@class,"product-desc-sub-text")]')->innerText();
+                $productName = implode(' ', [trim($_productBrand), trim($_productName), trim($_productDesc)]);
+                $productURL = $crawler->filterXPath('//a')->attr('href');
 
                 // Check Product Data
                 if ($productIdentity !== NULL && $productImage !== NULL && strlen($productName) > 0 && $productURL !== NULL) {
