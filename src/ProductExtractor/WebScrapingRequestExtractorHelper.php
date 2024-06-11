@@ -102,7 +102,7 @@ class WebScrapingRequestExtractorHelper
             return NULL;
         }
 
-        $framedContent = $this->domContentFramerService->setHtml($rawHTML)->setBaseURL($marketplace->getUrl())->getFramedContent(FALSE, FALSE, FALSE);
+        $framedContent = $this->domContentFramerService->setHtml($rawHTML, FALSE)->setBaseURL($marketplace->getUrl())->getFramedContent(FALSE, FALSE, FALSE);
         return new Crawler($framedContent);
     }
 
