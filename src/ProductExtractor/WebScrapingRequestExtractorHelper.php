@@ -66,13 +66,13 @@ class WebScrapingRequestExtractorHelper
                     // Add Error If Validation Fails
                     $errorTextParts = [
                         t("Sayfadan çıkarılan ürün eklenemedi. Validasyon başarısız."),
-                        t("Ürün Kimliği:" . " " . json_encode($myProduct->getIdentity())),
+                        t("Ürün Kimliği:" . " " . serialize($myProduct->getIdentity())),
                         t("Ürün Kimliği Hataları:") . " " . $validateProductIdentity,
-                        t("Ürün Adı:" . " " . json_encode($myProduct->getName())),
+                        t("Ürün Adı:" . " " . serialize($myProduct->getName())),
                         t("Ürün Adı Hatası:") . " " . $validateProductName,
-                        t("Ürün Görseli:" . " " . json_encode($myProduct->getImage())),
+                        t("Ürün Görseli:" . " " . serialize($myProduct->getImage())),
                         t("Ürün Görseli Hatası:") . " " . $validateProductImage,
-                        t("Ürün URL:" . " " . json_encode($myProduct->getUrl())),
+                        t("Ürün URL:" . " " . serialize($myProduct->getUrl())),
                         t("Ürün URL Hatası:") . " " . $validateProductURL,
                     ];
                     $this->logger->warning(implode(PHP_EOL, $errorTextParts));
