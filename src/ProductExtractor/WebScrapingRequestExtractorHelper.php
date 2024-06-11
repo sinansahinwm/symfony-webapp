@@ -27,41 +27,63 @@ class WebScrapingRequestExtractorHelper
     {
     }
 
-    public function pushProduct(Product $myProduct, Marketplace $marketplace): false|Product
+    public function pushProducts(ArrayCollection $myProducts, Marketplace $marketplace): false|ArrayCollection
     {
-        // Set Product Marketplace
-        $myProduct->setMarketplace($marketplace);
+        // Return NULL If No Products Extracted
+        if ($myProducts->count() === 0) {
+            return FALSE;
+        }
 
-        // Check Product Already Exist
-        $productAlreadyExist = $this->productRepository->findOneBy(["marketplace" => $marketplace, "identity" => $myProduct->getIdentity()]);
+        // Create Array Collection For Pushed Products
+        $flushedProducts = new ArrayCollection();
 
-        if ($productAlreadyExist === NULL) {
+        // Loop Extracted Products
+        foreach ($myProducts as $myProduct) {
 
-            // Validate Product Data
-            $validateProductIdentity = $this->validateProductIdentity($myProduct, $marketplace);
-            $validateProductName = $this->validateProductName($myProduct, $marketplace);
-            $validateProductImage = $this->validateProductImage($myProduct, $marketplace);
-            $validateProductURL = $this->validateProductURL($myProduct, $marketplace);
+            // Set Product Marketplace
+            $myProduct->setMarketplace($marketplace);
 
-            // If Validation Success -> Add Product
-            if ($validateProductIdentity->count() === 0 && $validateProductName->count() === 0 && $validateProductImage->count() === 0 && $validateProductURL->count() === 0) {
-                $this->entityManager->persist($myProduct);
-                $this->entityManager->flush();
-                return $myProduct;
-            } else {
-                $errorTextParts = [
-                    t("Sayfadan çıkarılan ürün eklenemedi. Validasyon başarısız."),
-                    t("Ürün Kimliği:" . " " . json_encode($myProduct->getIdentity())),
-                    t("Ürün Kimliği Hataları:") . " " . $validateProductIdentity,
-                    t("Ürün Adı:" . " " . json_encode($myProduct->getName())),
-                    t("Ürün Adı Hatası:") . " " . $validateProductName,
-                    t("Ürün Görseli:" . " " . json_encode($myProduct->getImage())),
-                    t("Ürün Görseli Hatası:") . " " . $validateProductImage,
-                    t("Ürün URL:" . " " . json_encode($myProduct->getUrl())),
-                    t("Ürün URL Hatası:") . " " . $validateProductURL,
-                ];
-                $this->logger->warning(implode(PHP_EOL, $errorTextParts));
+            // Check Product Already Exist -> Check By Identity and Marketplace
+            $productAlreadyExist = $this->productRepository->findOneBy(["marketplace" => $marketplace, "identity" => $myProduct->getIdentity()]);
+
+            if ($productAlreadyExist === NULL) {
+
+                // Validate Product Data
+                $validateProductIdentity = $this->validateProductIdentity($myProduct, $marketplace);
+                $validateProductName = $this->validateProductName($myProduct, $marketplace);
+                $validateProductImage = $this->validateProductImage($myProduct, $marketplace);
+                $validateProductURL = $this->validateProductURL($myProduct, $marketplace);
+
+
+                if ($validateProductIdentity->count() === 0 && $validateProductName->count() === 0 && $validateProductImage->count() === 0 && $validateProductURL->count() === 0) {
+
+                    // Persist Product If Validation Success
+                    $this->entityManager->persist($myProduct);
+                    $flushedProducts->add($myProduct);
+
+                } else {
+
+                    // Add Error If Validation Fails
+                    $errorTextParts = [
+                        t("Sayfadan çıkarılan ürün eklenemedi. Validasyon başarısız."),
+                        t("Ürün Kimliği:" . " " . json_encode($myProduct->getIdentity())),
+                        t("Ürün Kimliği Hataları:") . " " . $validateProductIdentity,
+                        t("Ürün Adı:" . " " . json_encode($myProduct->getName())),
+                        t("Ürün Adı Hatası:") . " " . $validateProductName,
+                        t("Ürün Görseli:" . " " . json_encode($myProduct->getImage())),
+                        t("Ürün Görseli Hatası:") . " " . $validateProductImage,
+                        t("Ürün URL:" . " " . json_encode($myProduct->getUrl())),
+                        t("Ürün URL Hatası:") . " " . $validateProductURL,
+                    ];
+                    $this->logger->warning(implode(PHP_EOL, $errorTextParts));
+                }
             }
+        }
+
+        if ($flushedProducts->count() > 0) {
+
+            $this->entityManager->flush();
+            return $flushedProducts;
 
         }
 

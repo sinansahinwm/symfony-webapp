@@ -2,6 +2,7 @@
 
 use App\Entity\Product;
 use App\MessageHandler\Event\WebScrapingRequestExtractProductsEvent;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\EventDispatcher\Attribute\AsEventListener;
 
@@ -22,8 +23,11 @@ class AmazonProductExtractor
         // Extract Products With DOM Crawler
         if ($myCrawler instanceof Crawler) {
 
+            // Create Array Collection For Extracted Products
+            $extractedProducts = new ArrayCollection();
+
             // Focus Products
-            $myCrawler->filterXPath('//div[@data-component-type="s-search-result"][@data-asin]')->each(function (Crawler $crawler) use ($myEvent) {
+            $myCrawler->filterXPath('//div[@data-component-type="s-search-result"][@data-asin]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Get Product Data
                 $productIdentity = $crawler->attr('data-asin');
@@ -41,13 +45,17 @@ class AmazonProductExtractor
                     $myProduct->setImage($productImage);
                     $myProduct->setUrl($productURL);
 
-                    // Push Created Product
-                    $this->extractorHelper->pushProduct($myProduct, $myEvent->getMarketplace());
+                    // Add Products
+                    $extractedProducts->add($myProduct);
 
                 }
 
 
             });
+
+            // Flush Extracted Products
+            $this->extractorHelper->pushProducts($extractedProducts, $myEvent->getMarketplace());
+
         }
 
         // Extract Products With XHR Logs
