@@ -5,6 +5,7 @@ use App\Controller\Admin\Table\MarketplaceTable;
 use App\Entity\Marketplace;
 use App\Form\Administrator\MarketplaceSearchKeywordType;
 use App\Form\Administrator\MarketplaceType;
+use App\Repository\ProductRepository;
 use App\Service\CrudTable\CrudTableService;
 use App\Service\MarketplaceSearchService;
 use App\Service\WebScrapingRequestService;
@@ -110,11 +111,22 @@ class MarketplaceController extends AbstractController
     }
 
     #[Route('/delete/{id}', name: 'delete')]
-    public function delete(Marketplace $marketplace, EntityManagerInterface $entityManager): Response
+    public function delete(Marketplace $marketplace, EntityManagerInterface $entityManager, ProductRepository $productRepository): Response
     {
-        $this->addFlash('pageNotificationSuccess', t("Pazaryeri başarıyla silindi."));
+        // Remove Products
+        $myProducts = $productRepository->findBy(["marketplace" => $marketplace]);
+        foreach ($myProducts as $index => $myProduct) {
+            $entityManager->remove($myProduct);
+        }
+        $entityManager->flush();
+
+        // Remove Marketplace
         $entityManager->remove($marketplace);
         $entityManager->flush();
+
+        // Release Message
+        $this->addFlash('pageNotificationSuccess', t("Pazaryeri başarıyla silindi."));
+
         return $this->redirectToRoute('app_administrator_marketplace_index', [], Response::HTTP_SEE_OTHER);
     }
 
