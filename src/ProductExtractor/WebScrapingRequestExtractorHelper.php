@@ -10,6 +10,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\ConstraintViolationListInterface;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use function Symfony\Component\Translation\t;
 
@@ -42,17 +44,21 @@ class WebScrapingRequestExtractorHelper
             $validateProductURL = $this->validateProductURL($myProduct, $marketplace);
 
             // If Validation Success -> Add Product
-            if ($validateProductIdentity === TRUE && $validateProductName === TRUE && $validateProductImage === TRUE && $validateProductURL === TRUE) {
+            if ($validateProductIdentity->count() === 0 && $validateProductName->count() === 0 && $validateProductImage->count() === 0 && $validateProductURL->count() === 0) {
                 $this->entityManager->persist($myProduct);
                 $this->entityManager->flush();
                 return $myProduct;
             } else {
                 $errorTextParts = [
                     t("Sayfadan çıkarılan ürün eklenemedi. Validasyon başarısız."),
-                    t("Ürün Kimliği: " . json_encode($myProduct->getIdentity(), JSON_PRETTY_PRINT)),
-                    t("Ürün Adı: " . json_encode($myProduct->getName(), JSON_PRETTY_PRINT)),
-                    t("Ürün Görseli: " . json_encode($myProduct->getImage(), JSON_PRETTY_PRINT)),
-                    t("Ürün URL: " . json_encode($myProduct->getUrl(), JSON_PRETTY_PRINT)),
+                    t("Ürün Kimliği:" . json_encode($myProduct->getIdentity())),
+                    t("Ürün Kimliği Hataları:") . $validateProductIdentity,
+                    t("Ürün Adı:" . json_encode($myProduct->getName())),
+                    t("Ürün Adı Hatası:") . $validateProductName,
+                    t("Ürün Görseli:" . json_encode($myProduct->getImage())),
+                    t("Ürün Görseli Hatası:") . $validateProductImage,
+                    t("Ürün URL:" . json_encode($myProduct->getUrl())),
+                    t("Ürün URL Hatası:") . $validateProductURL,
                 ];
                 $this->logger->warning(implode(PHP_EOL, $errorTextParts));
             }
@@ -62,48 +68,52 @@ class WebScrapingRequestExtractorHelper
         return FALSE;
     }
 
-    private function validateProductIdentity(Product $myProduct, Marketplace $marketplace): bool
+    private function validateProductIdentity(Product $myProduct, Marketplace $marketplace): ConstraintViolationListInterface
     {
         $validationAsserts = [
             new Assert\NotNull(),
             new Assert\NotBlank(),
             new Assert\NoSuspiciousCharacters(),
         ];
-        return $this->validator->validate($myProduct->getIdentity(), $validationAsserts)->count() === 0;
+        return $this->validator->validate($myProduct->getIdentity(), $validationAsserts);
     }
 
-    private function validateProductName(Product $myProduct, Marketplace $marketplace): bool
+    private function validateProductName(Product $myProduct, Marketplace $marketplace): ConstraintViolationListInterface
     {
         $validationAsserts = [
             new Assert\NotNull(),
             new Assert\NotBlank(),
             new Assert\NoSuspiciousCharacters(),
         ];
-        return $this->validator->validate($myProduct->getIdentity(), $validationAsserts)->count() === 0;
+        return $this->validator->validate($myProduct->getName(), $validationAsserts);
     }
 
-    private function validateProductImage(Product $myProduct, Marketplace $marketplace): bool
+    private function validateProductImage(Product $myProduct, Marketplace $marketplace): ConstraintViolationListInterface
     {
         $validationAsserts = [
             new Assert\NotNull(),
             new Assert\NotBlank(),
-            new Assert\Url(
-                protocols: self::ALLOWED_URL_PROTOCOLS
-            ),
+            new Assert\Callback(function (mixed $value, ExecutionContextInterface $context, mixed $payload) {
+                if (in_array(parse_url($value, PHP_URL_SCHEME), self::ALLOWED_URL_PROTOCOLS) === FALSE) {
+                    $context->addViolation(t("İzin verilmeyen URL protokolü."));
+                }
+            }),
         ];
-        return $this->validator->validate($myProduct->getIdentity(), $validationAsserts)->count() === 0;
+        return $this->validator->validate($myProduct->getImage(), $validationAsserts);
     }
 
-    private function validateProductURL(Product $myProduct, Marketplace $marketplace): bool
+    private function validateProductURL(Product $myProduct, Marketplace $marketplace): ConstraintViolationListInterface
     {
         $validationAsserts = [
             new Assert\NotNull(),
             new Assert\NotBlank(),
-            new Assert\Url(
-                protocols: self::ALLOWED_URL_PROTOCOLS
-            ),
+            new Assert\Callback(function (mixed $value, ExecutionContextInterface $context, mixed $payload) {
+                if (in_array(parse_url($value, PHP_URL_SCHEME), self::ALLOWED_URL_PROTOCOLS) === FALSE) {
+                    $context->addViolation(t("İzin verilmeyen URL protokolü."));
+                }
+            }),
         ];
-        return $this->validator->validate($myProduct->getIdentity(), $validationAsserts)->count() === 0;
+        return $this->validator->validate($myProduct->getUrl(), $validationAsserts);
     }
 
     public function getCrawler(WebScrapingRequest $webScrapingRequest, Marketplace $marketplace): Crawler|null
@@ -130,5 +140,6 @@ class WebScrapingRequestExtractorHelper
         }
         return NULL;
     }
+
 
 }
