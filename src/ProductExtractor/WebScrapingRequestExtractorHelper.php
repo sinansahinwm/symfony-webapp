@@ -49,10 +49,10 @@ class WebScrapingRequestExtractorHelper
             } else {
                 $errorTextParts = [
                     t("Sayfadan çıkarılan ürün eklenemedi. Validasyon başarısız."),
-                    t("Ürün Kimliği: " . json_encode($myProduct->getIdentity())),
-                    t("Ürün Adı: " . json_encode($myProduct->getName())),
-                    t("Ürün Görseli: " . json_encode($myProduct->getImage())),
-                    t("Ürün URL: " . json_encode($myProduct->getUrl())),
+                    t("Ürün Kimliği: " . json_encode($myProduct->getIdentity(), JSON_PRETTY_PRINT)),
+                    t("Ürün Adı: " . json_encode($myProduct->getName(), JSON_PRETTY_PRINT)),
+                    t("Ürün Görseli: " . json_encode($myProduct->getImage(), JSON_PRETTY_PRINT)),
+                    t("Ürün URL: " . json_encode($myProduct->getUrl(), JSON_PRETTY_PRINT)),
                 ];
                 $this->logger->warning(implode(PHP_EOL, $errorTextParts));
             }
