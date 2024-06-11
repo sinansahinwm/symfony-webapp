@@ -69,8 +69,8 @@ class PttAvmProductExtractor
     private function extractProductIdentityWithURL(mixed $productURL): null|string
     {
         if (is_string($productURL)) {
-            $parsedPath = parse_url($productURL, PHP_URL_PATH);
-            return str_replace(['/'], [''], $parsedPath);
+            $parsedURLPath = parse_url($productURL, PHP_URL_PATH);
+            return str_replace(['/'], [''], $parsedURLPath);
         }
         return NULL;
     }
