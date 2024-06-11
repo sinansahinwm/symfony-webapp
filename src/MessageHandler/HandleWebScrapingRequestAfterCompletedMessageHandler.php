@@ -3,14 +3,17 @@
 use App\Entity\WebScrapingRequest;
 use App\Message\HandleWebScrapingRequestAfterCompletedMessage;
 use App\Repository\WebScrapingRequestRepository;
+use Exception;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
+use function Symfony\Component\Translation\t;
 
 #[AsMessageHandler]
 class HandleWebScrapingRequestAfterCompletedMessageHandler
 {
 
-    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository, private EventDispatcherInterface $eventDispatcher)
+    public function __construct(private WebScrapingRequestRepository $webScrapingRequestRepository, private EventDispatcherInterface $eventDispatcher, private LoggerInterface $logger)
     {
     }
 
@@ -19,7 +22,17 @@ class HandleWebScrapingRequestAfterCompletedMessageHandler
         $myWebScrapingRequest = $this->webScrapingRequestRepository->find($myMessage->getWebScrapingRequestID());
 
         if ($myWebScrapingRequest instanceof WebScrapingRequest) {
-            $this->eventDispatcher->dispatch($myWebScrapingRequest, self::getEventDispatcherEventName($myWebScrapingRequest));
+            $eventDispatcherName = self::getEventDispatcherEventName($myWebScrapingRequest);
+            try {
+                $this->eventDispatcher->dispatch($myWebScrapingRequest, self::getEventDispatcherEventName($myWebScrapingRequest));
+            } catch (Exception $e) {
+                $errorTexts = [
+                    t("Ürün çıkarma işlemi sevk edilirken bir sorunla karşılaşıldı."),
+                    t("Sevk Edici:") . " " . $eventDispatcherName,
+                    t("Hata Açıklaması:") . " " . $e->getMessage(),
+                ];
+                $this->logger->error(implode(PHP_EOL, $errorTexts));
+            }
         }
 
     }

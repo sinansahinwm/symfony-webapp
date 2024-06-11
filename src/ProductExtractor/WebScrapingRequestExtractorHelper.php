@@ -75,7 +75,7 @@ class WebScrapingRequestExtractorHelper
                         t("Ürün URL:" . " " . serialize($myProduct->getUrl())),
                         t("Ürün URL Hatası:") . " " . $validateProductURL,
                     ];
-                    $this->logger->warning(implode(PHP_EOL, $errorTextParts));
+                    $this->logger->error(implode(PHP_EOL, $errorTextParts));
                 }
             }
         }
