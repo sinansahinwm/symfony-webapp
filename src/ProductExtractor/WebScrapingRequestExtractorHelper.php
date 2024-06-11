@@ -7,9 +7,11 @@ use App\Repository\ProductRepository;
 use App\Service\DomContentFramerService;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
+use Psr\Log\LoggerInterface;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use function Symfony\Component\Translation\t;
 
 
 class WebScrapingRequestExtractorHelper
@@ -19,7 +21,7 @@ class WebScrapingRequestExtractorHelper
         'https'
     ];
 
-    public function __construct(private EntityManagerInterface $entityManager, private ProductRepository $productRepository, private ValidatorInterface $validator, private DomContentFramerService $domContentFramerService)
+    public function __construct(private EntityManagerInterface $entityManager, private ProductRepository $productRepository, private ValidatorInterface $validator, private DomContentFramerService $domContentFramerService, private LoggerInterface $logger)
     {
     }
 
@@ -44,6 +46,15 @@ class WebScrapingRequestExtractorHelper
                 $this->entityManager->persist($myProduct);
                 $this->entityManager->flush();
                 return $myProduct;
+            } else {
+                $errorTextParts = [
+                    t("Sayfadan çıkarılan ürün eklenemedi. Validasyon başarısız."),
+                    t("Ürün Kimliği: " . json_encode($myProduct->getIdentity())),
+                    t("Ürün Adı: " . json_encode($myProduct->getName())),
+                    t("Ürün Görseli: " . json_encode($myProduct->getImage())),
+                    t("Ürün URL: " . json_encode($myProduct->getUrl())),
+                ];
+                $this->logger->warning(implode(PHP_EOL, $errorTextParts));
             }
 
         }
