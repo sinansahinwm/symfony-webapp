@@ -41,6 +41,7 @@ final class ProductFactory extends ModelFactory
             'image' => self::faker()->imageUrl,
             'marketplace' => MarketplaceFactory::random(),
             'name' => self::faker()->text(25),
+            'url' => self::faker()->url()
         ];
     }
 
