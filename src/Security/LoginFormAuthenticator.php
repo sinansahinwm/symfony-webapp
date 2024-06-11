@@ -34,6 +34,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public function authenticate(Request $request): Passport
     {
+
         $signInFormData = $request->get('auth_signin');
         $formDataEmail = $signInFormData["email"] ?? '';
         $formDataPassword = $signInFormData["password"] ?? '';
@@ -45,7 +46,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             new PasswordCredentials($formDataPassword),
             [
                 new CsrfTokenBadge('authenticate', $formDataCSRFToken),
-                new RememberMeBadge(),
+                // DEPRECED new RememberMeBadge(),
             ]
         );
     }
