@@ -26,12 +26,12 @@ security:
                 target: app_auth_signin
             custom_authenticator: App\Security\LoginFormAuthenticator
 
-            remember_me:
-                secret: '%kernel.secret%'
-                lifetime: 604800 # 7 Days
-                path: /
-                always_remember_me: true
-                signature_properties: ['password']
+            # remember_me:
+            #    secret: '%kernel.secret%'
+            #    lifetime: 604800 # 7 Days
+            #    path: /
+            #    always_remember_me: true
+            #    signature_properties: ['password']
 
 when@test:
     security:
