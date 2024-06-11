@@ -46,7 +46,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
             new PasswordCredentials($formDataPassword),
             [
                 new CsrfTokenBadge('authenticate', $formDataCSRFToken),
-                // DEPRECED new RememberMeBadge(),
+                new RememberMeBadge(),
             ]
         );
     }
