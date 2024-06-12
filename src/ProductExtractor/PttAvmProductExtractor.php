@@ -33,7 +33,7 @@ class PttAvmProductExtractor
                 $productURL = $crawler->filterXPath('//a[@data-v-215483ec][@data-v-3d8f1a36]')->attr('href');
                 $productImage = $crawler->filterXPath('//img[@data-v-3d8f1a36][contains(@src,"pimages")]')->attr('src');
                 $productName = $crawler->filterXPath('//img[@data-v-3d8f1a36][contains(@src,"pimages")]')->attr('alt');
-                $productIdentity = $this->extractProductIdentityWithURL($productURL);
+                $productIdentity = $this->extractProductIdentityWithURL($productURL); // example: 98703517
 
                 // Check Product Data
                 if ($productIdentity !== NULL && $productImage !== NULL && strlen($productName) > 0 && $productURL !== NULL) {
@@ -69,8 +69,14 @@ class PttAvmProductExtractor
     private function extractProductIdentityWithURL(mixed $productURL): null|string
     {
         if (is_string($productURL)) {
-            $parsedURLPath = parse_url($productURL, PHP_URL_PATH);
-            return str_replace(['/'], [''], $parsedURLPath);
+            $productSlugDelimeter = '-p-';
+            $parsedProductURLPath = parse_url($productURL, PHP_URL_PATH);
+            if (is_string($parsedProductURLPath)) {
+                $explodedParsedURL = explode($productSlugDelimeter, $parsedProductURLPath);
+                if (count($explodedParsedURL) === 2) {
+                    return $explodedParsedURL[array_key_last($explodedParsedURL)];
+                }
+            }
         }
         return NULL;
     }

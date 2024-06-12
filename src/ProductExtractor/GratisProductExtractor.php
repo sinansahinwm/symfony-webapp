@@ -39,7 +39,7 @@ class GratisProductExtractor
                 $productName = $crawler->filterXPath('//div[contains(@class,"infos")]//a[contains(@class,"cx-product-name")]//h5[contains(@class,"title")]')->innerText() ?? NULL;
                 $productImage = $crawler->filterXPath('//div[contains(@class,"view")]//img[not(contains(@src,"gratis-placeholder.svg"))]')->attr('src') ?? NULL;
                 $productURL = $crawler->filterXPath('//div[contains(@class,"view")]//a[contains(@class,"product-image-for-grid-item")]')->attr('href') ?? NULL;
-                $productIdentity = $crawler->filterXPath('//app-custom-add-to-cart//form[contains(@class,"add-to-cart-form")][@product-code]')->attr('product-code') ?? NULL;
+                $productIdentity = $crawler->filterXPath('//app-custom-add-to-cart//form[contains(@class,"add-to-cart-form")][@product-code]')->attr('product-code') ?? NULL; // example: 14000119
 
                 // Check Product Data
                 if ($productIdentity !== NULL && $productImage !== NULL && strlen($productName) > 0 && $productURL !== NULL) {

@@ -29,11 +29,17 @@ class MigrosTurkeyProductExtractor
             // Focus Products
             $myCrawler->filterXPath('//fe-product-image[@id="product-image"]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
+                // Check Placeholder Image Exist
+                $containsPlaceholderImage = str_contains($crawler->outerHtml(), 'data:image/png;base64');
+                if ($containsPlaceholderImage === TRUE) {
+                    return;
+                }
+
                 // Get Product Data
                 $productURL = $crawler->filterXPath('//a[@id="product-image-link"]')->attr('href');
                 $productImage = $crawler->filterXPath('//img[1][@felazyload]')->attr('src');
                 $productName = $crawler->filterXPath('//img[1][@felazyload]')->attr('alt');
-                $productIdentity = $this->extractProductIdentityWithURL($productURL);
+                $productIdentity = $this->extractProductIdentityWithURL($productURL); // example: 1aca28c
 
                 // Check Product Data
                 if ($productIdentity !== NULL && $productImage !== NULL && strlen($productName) > 0 && $productURL !== NULL) {
@@ -68,8 +74,14 @@ class MigrosTurkeyProductExtractor
     private function extractProductIdentityWithURL(mixed $productURL): null|string
     {
         if (is_string($productURL)) {
+            $productSlugDelimeter = '-p-';
             $parsedProductURLPath = parse_url($productURL, PHP_URL_PATH);
-            return str_replace(['/'], [''], $parsedProductURLPath);
+            if (is_string($parsedProductURLPath)) {
+                $explodedParsedURL = explode($productSlugDelimeter, $parsedProductURLPath);
+                if (count($explodedParsedURL) === 2) {
+                    return $explodedParsedURL[array_key_last($explodedParsedURL)];
+                }
+            }
         }
         return NULL;
     }

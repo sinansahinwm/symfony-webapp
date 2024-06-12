@@ -29,9 +29,8 @@ class NElevenProductExtractor
             // Focus Products
             $myCrawler->filterXPath('//ul[contains(@class,"list-ul")]//li//div[contains(@class,"columnContent")]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
-
                 // Get Product Data
-                $productIdentity = $crawler->attr('id');
+                $productIdentity = $this->fixIdentityProductWord($crawler->attr('id')); // example: 320349263
                 $productImage = $crawler->filterXPath('//img[contains(@class,"cardImage")]')->attr('data-src');
                 $productName = $crawler->filterXPath('//h3[contains(@class,"productName")]')->innerText();
                 $productURL = $crawler->filterXPath('//a[contains(@class,"plink")]')->attr('href');
@@ -65,6 +64,14 @@ class NElevenProductExtractor
         }
 
 
+    }
+
+    private function fixIdentityProductWord(mixed $productIdentity): string|null
+    {
+        if (is_string($productIdentity)) {
+            return str_replace(['p-'], [''], $productIdentity);
+        }
+        return NULL;
     }
 
 }

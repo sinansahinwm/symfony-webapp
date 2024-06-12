@@ -30,7 +30,7 @@ class AmazonTurkeyProductExtractor
             $myCrawler->filterXPath('//div[@data-component-type="s-search-result"][@data-asin]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Get Product Data
-                $productIdentity = $crawler->attr('data-asin');
+                $productIdentity = $crawler->attr('data-asin'); // example : B0BTVYBZ3P
                 $productImage = $crawler->filterXPath('//span[@data-component-type="s-product-image"]//img[contains(@class,"s-image")]')->attr('src');
                 $productName = $crawler->filterXPath('//div[contains(@class,"a-section")]//div[@data-cy="title-recipe"]//h2//a//span')->innerText();
                 $productURL = $crawler->filterXPath('//div[contains(@class,"a-section")]//div[@data-cy="title-recipe"]//h2//a')->attr('href');

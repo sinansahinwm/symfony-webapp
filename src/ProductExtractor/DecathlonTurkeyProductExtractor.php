@@ -30,7 +30,7 @@ class DecathlonTurkeyProductExtractor
             $myCrawler->filterXPath('//div[contains(@class,"product-list")]//div[@role="listitem"]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Get Product Data
-                $productIdentity = $crawler->attr('data-supermodelid');
+                $productIdentity = $crawler->attr('data-supermodelid'); // example: 12794
                 $productURL = $crawler->filterXPath('//a[contains(@class,"dpb-product-model-link")]')->attr('href');
                 $productImage = $crawler->filterXPath('//div[contains(@class,"dpb-models")]//img[@width][@height]')->attr('src');
 
