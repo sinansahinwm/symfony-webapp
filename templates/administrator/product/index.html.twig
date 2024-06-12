@@ -1,0 +1,10 @@
+{% extends 'layout/admin.html.twig' %}
+
+{% block pageTitle %}{{ 'Yönetici Paneli / Ürün'|trans }}{% endblock %}
+{% block contentTitle %}{{ 'Yönetici Paneli / Ürün'|trans }}{% endblock %}
+
+{% block body %}
+
+    {{ component('_crud_table_component', { table: productTable, title: 'Ürünler'|trans}) }}
+
+{% endblock %}
