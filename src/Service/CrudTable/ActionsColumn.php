@@ -18,7 +18,8 @@ class ActionsColumn extends AbstractColumn
         if (is_callable($theAction)) {
             $callResult = call_user_func($theAction, $this->subjectValue, $this->urlGenerator);
             $iconDef = ($callResult->getIcon() !== NULL) ? '<i class="' . $callResult->getIcon() . ' me-1"></i> ' : ' ';
-            return '<a class="dropdown-item" href="' . $callResult->getUrl() . '">' . $iconDef . $callResult->getText() . '</a>';
+            $targetBlank = ($this->options["target_blank"] === TRUE) ? 'target="_blank"' : '';
+            return '<a class="dropdown-item" href="' . $callResult->getUrl() . '" ' . $targetBlank . '>' . $iconDef . $callResult->getText() . '</a>';
         } else {
             return strval($this->subjectValue);
         }
@@ -34,8 +35,13 @@ class ActionsColumn extends AbstractColumn
     protected function configureOptions(OptionsResolver $resolver): static
     {
         parent::configureOptions($resolver);
+
         $resolver->setDefault('actions', []);
         $resolver->setAllowedTypes('actions', ['array']);
+
+        $resolver->setDefault('target_blank', []);
+        $resolver->setAllowedTypes('target_blank', ['null', 'bool']);
+
         $resolver->setDefault('className', 'text-center');
         $resolver->setDefault('label', ' ');
         $resolver->setDefault('searchable', FALSE);
