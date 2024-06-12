@@ -39,7 +39,7 @@ class ActionsColumn extends AbstractColumn
         $resolver->setDefault('actions', []);
         $resolver->setAllowedTypes('actions', ['array']);
 
-        $resolver->setDefault('target_blank', []);
+        $resolver->setDefault('target_blank', null);
         $resolver->setAllowedTypes('target_blank', ['null', 'bool']);
 
         $resolver->setDefault('className', 'text-center');
