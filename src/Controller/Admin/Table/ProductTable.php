@@ -5,6 +5,7 @@ use App\Service\CrudTable\ActionsColumn;
 use App\Service\CrudTable\CrudTableAction;
 use App\Service\CrudTable\DisableCachingCriteriaProvider;
 use App\Service\CrudTable\ImageColumn;
+use App\Service\CrudTable\ShowMoreTextColumn;
 use Doctrine\ORM\QueryBuilder;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORM\SearchCriteriaProvider;
 use Omines\DataTablesBundle\Adapter\Doctrine\ORMAdapter;
@@ -33,9 +34,10 @@ class ProductTable extends TableAbstractController implements DataTableTypeInter
             'label' => $this->t("Kimlik"),
             'orderable' => FALSE
         ]);
-        $dataTable->add('name', TextColumn::class, [
+        $dataTable->add('name', ShowMoreTextColumn::class, [
             'label' => $this->t("Ad"),
             'orderable' => FALSE,
+            'slice' => 50
         ]);
 
         $dataTable->add('id', ActionsColumn::class, [
