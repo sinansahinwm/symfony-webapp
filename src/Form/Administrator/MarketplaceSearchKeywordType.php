@@ -22,7 +22,10 @@ class MarketplaceSearchKeywordType extends AbstractFormType
             ->add('keyword', TextType::class, [
                 'label' => t("Arama Kelimesi"),
                 'mapped' => FALSE,
-                'help' => t("Arama kelimelerini virgülle ayırabilirsiniz.")
+                'help' => t("Arama kelimelerini virgülle ayırabilirsiniz."),
+                'attr' => [
+                    'autofocus' => 'on'
+                ]
             ])
             ->add('marketplaces', EntityType::class, [
                 'label' => t("Pazaryerleri"),
