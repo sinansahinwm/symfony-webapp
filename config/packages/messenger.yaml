@@ -2,6 +2,7 @@ framework:
     messenger:
         failure_transport: failed
         transports:
+
             # MESSENGER TRANSPORT : async
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
@@ -11,6 +12,7 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+
             # MESSENGER TRANSPORT : scraper
             scraper:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
@@ -20,6 +22,7 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+
             # MESSENGER TRANSPORT : scraper_completed
             scraper_completed:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
@@ -29,8 +32,8 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
-            # OTHER MESSENGER TRANSPORT
 
+            # OTHER MESSENGER TRANSPORTS
             failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
