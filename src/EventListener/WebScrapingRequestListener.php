@@ -41,6 +41,10 @@ class WebScrapingRequestListener
             $webhookURL = $this->prepareWebhookUrlForWebScrapingRequest();
             $webScrapingRequest->setWebhookUrl($webhookURL);
 
+            // Create Request Hash
+            $requestCacheHash = WebScrapingRequest::prepareCacheHash($webScrapingRequest);
+            $webScrapingRequest->setCacheHash($requestCacheHash);
+
         }
     }
 
@@ -95,13 +99,15 @@ class WebScrapingRequestListener
 
     private function requestCacheExist(WebScrapingRequest $webScrapingRequest): false|WebScrapingRequest
     {
-        return FALSE;
+        // Calculate Initial Hash
+        $initialRequestHash = WebScrapingRequest::prepareCacheHash($webScrapingRequest);
+
+        // Check Older Request Exist
         $myCachedRequest = $this->webScrapingRequestRepository->findOneBy([
-            'navigate_url' => $webScrapingRequest->getNavigateUrl(),
-            'status' => WebScrapingRequestStatusType::COMPLETED,
-            'steps' => $webScrapingRequest->getSteps(),
+            'cache_hash' => $initialRequestHash,
         ]);
 
+        // Check Cache Time
         if ($myCachedRequest instanceof WebScrapingRequest) {
             $timeNow = new DateTimeImmutable();
             $myCachedRequestCreatedAt = $myCachedRequest->getCreatedAt()->getTimestamp();

@@ -56,6 +56,9 @@ class WebScrapingRequest
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $xhrlog = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $cache_hash = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -226,6 +229,29 @@ class WebScrapingRequest
         $this->xhrlog = $xhrlog;
 
         return $this;
+    }
+
+    public function getCacheHash(): ?string
+    {
+        return $this->cache_hash;
+    }
+
+    public function setCacheHash(?string $cache_hash): static
+    {
+        $this->cache_hash = $cache_hash;
+
+        return $this;
+    }
+
+    public static function prepareCacheHash(WebScrapingRequest $webScrapingRequest): string
+    {
+        $hashParams = [
+            $webScrapingRequest->getNavigateUrl() ?? 'NULL',
+            $webScrapingRequest->getSteps() ?? 'NULL',
+            $webScrapingRequest->getWebhookUrl() ?? 'NULL',
+            $webScrapingRequest->getCompletedHandle() ?? 'NULL',
+        ];
+        return md5(implode("-", $hashParams));
     }
 
 }
