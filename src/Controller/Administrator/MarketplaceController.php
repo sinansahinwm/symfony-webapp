@@ -92,8 +92,13 @@ class MarketplaceController extends AbstractController
         $searchKeywordForm = $this->createForm(MarketplaceSearchKeywordType::class);
         $searchKeywordForm->handleRequest($request);
 
+        if($searchKeywordForm->isSubmitted() === TRUE && $searchKeywordForm->isSubmitted() === FALSE){
+            $formErrors = $searchKeywordForm->getErrors(TRUE);
+            echo serialize($formErrors);
+            exit("FORM GÖNDERİLDİ ANCAK HATALAR VAR");
+        }
         if ($searchKeywordForm->isSubmitted() && $searchKeywordForm->isValid()) {
-exit("FORM VALIDDE");
+
             // Get Unmapped Form Data
             $formKeyword = $searchKeywordForm->get("keyword")->getData();
             $formMarketplaces = $searchKeywordForm->get("marketplaces")->getData();
