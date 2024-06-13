@@ -58,7 +58,7 @@ class WebScrapingRequestListener
             $cachedObject = $this->requestCacheExist($webScrapingRequest);
 
             if ($cachedObject !== FALSE) {
-                exit("CAHED" . $cachedObject->getStatus());
+
                 // Copy Data to Requested Object
                 $webScrapingRequest->setWebhookUrl($cachedObject->getWebhookUrl());
                 $webScrapingRequest->setStatus($cachedObject->getStatus());
