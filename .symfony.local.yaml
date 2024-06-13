@@ -19,3 +19,9 @@ workers:
   messenger_consume_scheduler_default:
     cmd: [ 'symfony', 'console', 'messenger:consume', 'scheduler_default' ]
     watch: [ 'config/packages/messenger.yaml', 'src/Message', 'src/MessageHandler', 'src/CronTask', 'src/RemoteEvent', 'src/WebHook' ]
+  messenger_consume_scraper:
+    cmd: [ 'symfony', 'console', 'messenger:consume', 'scraper' ]
+    watch: [ 'config/packages/messenger.yaml', 'src/Message', 'src/MessageHandler', 'src/CronTask', 'src/RemoteEvent', 'src/WebHook' ]
+  messenger_consume_scraper_completed:
+    cmd: [ 'symfony', 'console', 'messenger:consume', 'scraper_completed' ]
+    watch: [ 'config/packages/messenger.yaml', 'src/Message', 'src/MessageHandler', 'src/CronTask', 'src/RemoteEvent', 'src/WebHook' ]
