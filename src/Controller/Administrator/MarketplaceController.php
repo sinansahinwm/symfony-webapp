@@ -1,6 +1,5 @@
 <?php namespace App\Controller\Administrator;
 
-use App\Config\MarketplaceSearchHandlerType;
 use App\Controller\Admin\Table\MarketplaceTable;
 use App\Entity\Marketplace;
 use App\Form\Administrator\MarketplaceSearchKeywordType;
@@ -8,11 +7,6 @@ use App\Form\Administrator\MarketplaceType;
 use App\Repository\ProductRepository;
 use App\Service\CrudTable\CrudTableService;
 use App\Service\MarketplaceSearchService;
-use App\Service\WebScrapingRequestService;
-use App\Service\WebScrapingRequestStep\ChangeStep;
-use App\Service\WebScrapingRequestStep\KeyDownStep;
-use App\Service\WebScrapingRequestStep\KeyUpStep;
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -115,7 +109,7 @@ class MarketplaceController extends AbstractController
     {
         // Remove Products
         $myProducts = $productRepository->findBy(["marketplace" => $marketplace]);
-        foreach ($myProducts as $index => $myProduct) {
+        foreach ($myProducts as $myProduct) {
             $entityManager->remove($myProduct);
         }
         $entityManager->flush();
