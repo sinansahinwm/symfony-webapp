@@ -43,7 +43,7 @@ class WebScrapingRequestTable extends TableAbstractController implements DataTab
             },
             'content' => function ($theValue) {
                 $badgeText = "--";
-                $decodedJSON = json_decode($theValue);
+                $decodedJSON = is_string($theValue) ? json_decode($theValue) : NULL;
                 if (is_array($decodedJSON)) {
                     $stepsCount = count($decodedJSON);
                     $badgeText = $stepsCount . " " . $this->t("adet");
