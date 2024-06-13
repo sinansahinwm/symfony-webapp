@@ -43,6 +43,7 @@ class MarketplaceSearchKeywordType extends AbstractFormType
     {
         $resolver->setDefaults([
             // 'data_class' => Marketplace::class,
+            'csrf_protection' => FALSE,
         ]);
     }
 }
