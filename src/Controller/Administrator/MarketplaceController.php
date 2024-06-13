@@ -93,7 +93,7 @@ class MarketplaceController extends AbstractController
         $searchKeywordForm->handleRequest($request);
 
         if ($searchKeywordForm->isSubmitted() && $searchKeywordForm->isValid()) {
-
+exit("FORM VALIDDE");
             // Get Unmapped Form Data
             $formKeyword = $searchKeywordForm->get("keyword")->getData();
             $formMarketplaces = $searchKeywordForm->get("marketplaces")->getData();
