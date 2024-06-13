@@ -9,15 +9,17 @@ use DateTimeImmutable;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsEntityListener;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+#[AsEntityListener(event: Events::prePersist, method: 'webScrapingRequestPrePersist', entity: WebScrapingRequest::class)]
 #[AsEntityListener(event: Events::postPersist, method: 'webScrapingRequestPostPersist', entity: WebScrapingRequest::class)]
 class WebScrapingRequestListener
 {
 
-    const CACHE_TIME_MINUTES = 30;
+    const CACHE_TIME_MINUTES = 60;
     const DEFAULT_SCRAPER_WEBHOOK_ROUTE = "firebase_scraper";
 
     public function __construct(
@@ -30,6 +32,18 @@ class WebScrapingRequestListener
     {
     }
 
+    public function webScrapingRequestPrePersist(WebScrapingRequest $webScrapingRequest, PrePersistEventArgs $myEvent)
+    {
+        // If Newly Created -> Set Webhook URL
+        if ($webScrapingRequest->getStatus() === WebScrapingRequestStatusType::NEWLY_CREATED) {
+
+            // Create Webhook URL
+            $webhookURL = $this->prepareWebhookUrlForWebScrapingRequest();
+            $webScrapingRequest->setWebhookUrl($webhookURL);
+
+        }
+    }
+
     public function webScrapingRequestPostPersist(WebScrapingRequest $webScrapingRequest, PostPersistEventArgs $myEvent): void
     {
 
@@ -37,20 +51,33 @@ class WebScrapingRequestListener
         if ($webScrapingRequest->getStatus() === WebScrapingRequestStatusType::NEWLY_CREATED) {
 
             // Check Cache Exist
-            $cacheExist = $this->requestCacheExist($webScrapingRequest);
+            $cachedObject = $this->requestCacheExist($webScrapingRequest);
 
-            if ($cacheExist !== FALSE) {
+            if ($cachedObject !== FALSE) {
 
-                // Use Cached Request
-                $this->addCachedRequest($webScrapingRequest, $cacheExist);
+                // Copy Data to Requested Object
+                $webScrapingRequest->setWebhookUrl($cachedObject->getWebhookUrl());
+                $webScrapingRequest->setStatus($cachedObject->getStatus());
+                $webScrapingRequest->setConsumedScreenshot($cachedObject->getConsumedScreenshot());
+                $webScrapingRequest->setConsumedContent($cachedObject->getConsumedContent());
+                $webScrapingRequest->setConsumedUrl($cachedObject->getConsumedUrl());
+                $webScrapingRequest->setConsumedRemoteStatus($cachedObject->getConsumedRemoteStatus());
+                $webScrapingRequest->setCompletedHandle($cachedObject->getCompletedHandle());
+                $webScrapingRequest->setSteps($cachedObject->getSteps());
+                $webScrapingRequest->setConsumedAt(new DateTimeImmutable());
+                $webScrapingRequest->setLastErrorMessage($cachedObject->getLastErrorMessage());
+                $webScrapingRequest->setXhrlog($cachedObject->getXhrlog());
+
+                // Persist Cached Request
+                $this->entityManager->persist($webScrapingRequest);
+                $this->entityManager->flush();
+
+                // Handle If Completed
+                $this->firebaseScraperWebhookConsumer->handleWebScrapingRequestIfCompleted($webScrapingRequest);
 
             } else {
 
-                // Request New
-                $webhookURL = $this->prepareWebhookUrlForWebScrapingRequest();
-                $webScrapingRequest->setWebhookUrl($webhookURL);
-                $this->entityManager->persist($webScrapingRequest);
-                $this->entityManager->flush();
+                // Dispatch Web Scraping Request Message
                 $myMessage = new ProccessWebScrapingRequestMessage($webScrapingRequest->getId());
                 $this->messageBus->dispatch($myMessage);
 
@@ -58,31 +85,6 @@ class WebScrapingRequestListener
 
 
         }
-
-    }
-
-    private function addCachedRequest(WebScrapingRequest $requestedObject, WebScrapingRequest $cachedObject): void
-    {
-
-        // Copy Data to Requested Object
-        $requestedObject->setWebhookUrl($cachedObject->getWebhookUrl());
-        $requestedObject->setStatus($cachedObject->getStatus());
-        $requestedObject->setConsumedScreenshot($cachedObject->getConsumedScreenshot());
-        $requestedObject->setConsumedContent($cachedObject->getConsumedContent());
-        $requestedObject->setConsumedUrl($cachedObject->getConsumedUrl());
-        $requestedObject->setConsumedRemoteStatus($cachedObject->getConsumedRemoteStatus());
-        $requestedObject->setCompletedHandle($cachedObject->getCompletedHandle());
-        $requestedObject->setSteps($cachedObject->getSteps());
-        $requestedObject->setConsumedAt(new DateTimeImmutable());
-        $requestedObject->setLastErrorMessage($cachedObject->getLastErrorMessage());
-        $requestedObject->setXhrlog($cachedObject->getXhrlog());
-
-        // Persist Requested Object
-        $this->entityManager->persist($requestedObject);
-        $this->entityManager->flush();
-
-        // Handle If Completed
-        $this->firebaseScraperWebhookConsumer->handleWebScrapingRequestIfCompleted($requestedObject);
 
     }
 
