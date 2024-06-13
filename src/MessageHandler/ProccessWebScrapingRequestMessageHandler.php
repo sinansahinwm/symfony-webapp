@@ -1,6 +1,4 @@
-<?php
-
-namespace App\MessageHandler;
+<?php namespace App\MessageHandler;
 
 use App\Config\WebScrapingRequestStatusType;
 use App\Entity\WebScrapingRequest;
@@ -25,7 +23,6 @@ final class ProccessWebScrapingRequestMessageHandler
      */
     public function __invoke(ProccessWebScrapingRequestMessage $myMessage)
     {
-        exit("PROCESS");
         $throwMessageError = NULL;
         $throwReasons = [];
 
