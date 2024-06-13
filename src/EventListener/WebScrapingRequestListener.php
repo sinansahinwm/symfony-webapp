@@ -32,7 +32,7 @@ class WebScrapingRequestListener
     {
     }
 
-    public function webScrapingRequestPrePersist(WebScrapingRequest $webScrapingRequest, PrePersistEventArgs $myEvent)
+    public function webScrapingRequestPrePersist(WebScrapingRequest $webScrapingRequest, PrePersistEventArgs $myEvent): void
     {
         // If Newly Created -> Set Webhook URL
         if ($webScrapingRequest->getStatus() === WebScrapingRequestStatusType::NEWLY_CREATED) {
