@@ -34,5 +34,5 @@ services:
     http_port: 8080
     instance_size_slug: apps-d-1vcpu-0.5gb
     name: symfony-webapp
-    run_command: heroku-php-apache2 & php bin/console messenger:consume async & php bin/console messenger:consume scheduler_default
+    run_command: heroku-php-apache2 & php bin/console messenger:consume async & php bin/console messenger:consume scheduler_default & php bin/console messenger:consume scraper & & php bin/console messenger:consume scraper_completed
     source_dir: /
