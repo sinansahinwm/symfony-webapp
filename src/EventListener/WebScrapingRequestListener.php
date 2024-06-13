@@ -95,6 +95,7 @@ class WebScrapingRequestListener
 
     private function requestCacheExist(WebScrapingRequest $webScrapingRequest): false|WebScrapingRequest
     {
+        return FALSE;
         $myCachedRequest = $this->webScrapingRequestRepository->findOneBy([
             'navigate_url' => $webScrapingRequest->getNavigateUrl(),
             'status' => WebScrapingRequestStatusType::COMPLETED,
