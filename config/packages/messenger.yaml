@@ -1,9 +1,8 @@
 framework:
     messenger:
         failure_transport: failed
-
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
+            # MESSENGER TRANSPORT : async
             async:
                 dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
                 options:
@@ -12,6 +11,26 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+            # MESSENGER TRANSPORT : scraper
+            scraper:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    use_notify: true
+                    check_delayed_interval: 60000
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+            # MESSENGER TRANSPORT : scraper_completed
+            scraper_completed:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    use_notify: true
+                    check_delayed_interval: 60000
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
+            # OTHER MESSENGER TRANSPORT
+
             failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
@@ -22,8 +41,8 @@ framework:
 
             # App Async Transports
             App\Message\AppEmailMessage: async
-            App\Message\ProccessWebScrapingRequestMessage: async
-            App\Message\HandleWebScrapingRequestAfterCompletedMessage: async
+            App\Message\ProccessWebScrapingRequestMessage: scraper
+            App\Message\HandleWebScrapingRequestAfterCompletedMessage: scraper_completed
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
