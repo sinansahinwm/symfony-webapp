@@ -25,7 +25,7 @@ final class ProccessWebScrapingRequestMessageHandler
      */
     public function __invoke(ProccessWebScrapingRequestMessage $myMessage)
     {
-
+        exit("PROCESS");
         $throwMessageError = NULL;
         $throwReasons = [];
 

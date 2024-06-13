@@ -49,7 +49,7 @@ class WebScrapingRequestListener
 
         // If Newly Created -> Send To Proccess
         if ($webScrapingRequest->getStatus() === WebScrapingRequestStatusType::NEWLY_CREATED) {
-            exit("POST PERSIST");
+
             // Check Cache Exist
             $cachedObject = $this->requestCacheExist($webScrapingRequest);
 
