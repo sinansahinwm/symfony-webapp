@@ -58,7 +58,7 @@ class WebScrapingRequestListener
             $cachedObject = $this->requestCacheExist($webScrapingRequest);
 
             if ($cachedObject !== FALSE) {
-
+                exit("CAHED" . $cachedObject->getStatus());
                 // Copy Data to Requested Object
                 $webScrapingRequest->setWebhookUrl($cachedObject->getWebhookUrl());
                 $webScrapingRequest->setStatus($cachedObject->getStatus());
@@ -104,6 +104,7 @@ class WebScrapingRequestListener
 
         // Check Older Request Exist
         $myCachedRequest = $this->webScrapingRequestRepository->findOneBy([
+            'status' => WebScrapingRequestStatusType::COMPLETED,
             'cache_hash' => $initialRequestHash,
         ]);
 

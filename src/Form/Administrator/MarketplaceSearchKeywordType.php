@@ -4,6 +4,7 @@ use App\Entity\Marketplace;
 use App\Form\AbstractFormType;
 use App\Repository\MarketplaceRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -17,14 +18,14 @@ class MarketplaceSearchKeywordType extends AbstractFormType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-
         $builder
-            ->add('keyword', TextType::class, [
+            ->add('keyword', TextareaType::class, [
                 'label' => t("Arama Kelimesi"),
                 'mapped' => FALSE,
-                'help' => t("Arama kelimelerini virgülle ayırabilirsiniz."),
+                'help' => t("Birden fazla kelime aramak için alt satıra ininiz."),
                 'attr' => [
-                    'autofocus' => 'on'
+                    'autofocus' => 'on',
+                    'rows' => 5
                 ]
             ])
             ->add('marketplaces', EntityType::class, [
