@@ -126,18 +126,19 @@ class MarketplaceController extends AbstractController
 
     private function proccessSearchKeywordForm(string $searchKeyword, iterable $marketplaces, MarketplaceSearchService $marketplaceSearchService): void
     {
-        foreach ($marketplaces as $marketplace) {
-            if ($marketplace instanceof Marketplace) {
-                if (strlen($searchKeyword) > 0) {
-                    $explodedSearchKeywords = explode(PHP_EOL, $searchKeyword);
-                    foreach ($explodedSearchKeywords as $explodedSearchKeyword) {
-                        $trimmedSearchKeyword = trim($explodedSearchKeyword);
-                        if (strlen($trimmedSearchKeyword) > 1) {
+        $explodedSearchKeywords = explode(PHP_EOL, $searchKeyword);
+        foreach ($explodedSearchKeywords as $explodedSearchKeyword) {
+            $trimmedSearchKeyword = trim($explodedSearchKeyword);
+            if (strlen($trimmedSearchKeyword) > 1) {
+                foreach ($marketplaces as $marketplace) {
+                    if ($marketplace instanceof Marketplace) {
+                        if (strlen($searchKeyword) > 0) {
                             $marketplaceSearchService->searchKeyword($trimmedSearchKeyword, $marketplace);
                         }
                     }
                 }
             }
         }
+
     }
 }
