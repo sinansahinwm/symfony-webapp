@@ -51,7 +51,7 @@ class WebScrapingRequestListener
                 $webScrapingRequest->setWebhookUrl($webhookURL);
                 $this->entityManager->persist($webScrapingRequest);
                 $this->entityManager->flush();
-
+                exit("sdgsdg");
                 $myMessage = new ProccessWebScrapingRequestMessage($webScrapingRequest->getId());
                 $this->messageBus->dispatch($myMessage);
 
