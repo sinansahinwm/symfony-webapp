@@ -3,9 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
 class Product
 {
@@ -29,6 +31,9 @@ class Product
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $url = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?DateTimeImmutable $created_at = null;
 
     public function getId(): ?int
     {
@@ -94,4 +99,23 @@ class Product
 
         return $this;
     }
+
+    public function getCreatedAt(): ?DateTimeImmutable
+    {
+        return $this->created_at;
+    }
+
+    public function setCreatedAt(?DateTimeImmutable $created_at): static
+    {
+        $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    public function setCreatedAtValue(): void
+    {
+        $this->created_at = new DateTimeImmutable();
+    }
+
 }
