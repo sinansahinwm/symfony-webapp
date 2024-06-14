@@ -99,6 +99,10 @@ class WebScrapingRequestListener
 
     private function requestCacheExist(WebScrapingRequest $webScrapingRequest): false|WebScrapingRequest
     {
+
+        // TODO : It's depreced because, finding by cache hash is soooo slow.
+        return FALSE;
+
         // Calculate Initial Hash
         $initialRequestHash = WebScrapingRequest::prepareCacheHash($webScrapingRequest);
 
