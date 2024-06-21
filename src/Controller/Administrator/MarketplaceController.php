@@ -2,13 +2,16 @@
 
 use App\Controller\Admin\Table\MarketplaceTable;
 use App\Entity\Marketplace;
+use App\Entity\Product;
 use App\Form\Administrator\MarketplaceSearchKeywordType;
 use App\Form\Administrator\MarketplaceType;
+use App\Repository\MarketplaceRepository;
 use App\Repository\ProductRepository;
 use App\Service\CrudTable\CrudTableService;
 use App\Service\MarketplaceSearchService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -102,6 +105,20 @@ class MarketplaceController extends AbstractController
         return $this->render('administrator/marketplace/search_keyword.html.twig', [
             'form' => $searchKeywordForm
         ]);
+    }
+
+    #[Route('/search_keyword_by_product/{theProduct}', name: 'search_keyword_by_product')]
+    public function searchKeywordByProduct(Product $theProduct, MarketplaceSearchService $marketplaceSearchService, MarketplaceRepository $marketplaceRepository): RedirectResponse
+    {
+        $selectedSearchKeyword = $theProduct->getName();
+        $marketplaces = $marketplaceRepository->findAll();
+
+        foreach ($marketplaces as $marketplace) {
+            $marketplaceSearchService->searchKeyword($selectedSearchKeyword, $marketplace);
+        }
+
+        $this->addFlash('pageNotificationSuccess', $selectedSearchKeyword . " " . t("ürünü için kazıma istekleri kuyruğa eklendi."));
+        return $this->redirectToRoute('app_administrator_web_scraping_request_index');
     }
 
     #[Route('/delete/{id}', name: 'delete')]

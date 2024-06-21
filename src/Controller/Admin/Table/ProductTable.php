@@ -51,6 +51,10 @@ class ProductTable extends TableAbstractController implements DataTableTypeInter
                     $theURL = $urlGenerator->generate('app_administrator_product_go_to_product_marketplace', ['theProduct' => $value]);
                     return new CrudTableAction($this->t("Pazaryerine Git"), $theURL, 'bx bx-store-alt');
                 },
+                function ($value, UrlGeneratorInterface $urlGenerator) {
+                    $theURL = $urlGenerator->generate('app_administrator_marketplace_search_keyword_by_product', ['theProduct' => $value]);
+                    return new CrudTableAction($this->t("Anahtar Kelime Araştır"), $theURL, 'bx bx-search');
+                },
             ]
         ]);
 
