@@ -27,7 +27,8 @@ class DecathlonTurkeyProductExtractor
             $extractedProducts = new ArrayCollection();
 
             // Focus Products
-            $myCrawler->filterXPath('//div[contains(@class,"product-list")]//div[@role="listitem"]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
+            $filteredProducts = $myCrawler->filterXPath('//div[contains(@class,"product-list")]//div[@role="listitem"]');
+            $filteredProducts->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Get Product Data
                 $productIdentity = $crawler->attr('data-supermodelid'); // example: 12794
@@ -57,6 +58,9 @@ class DecathlonTurkeyProductExtractor
 
             // Flush Extracted Products
             $this->extractorHelper->pushProducts($extractedProducts, $myEvent->getMarketplace());
+
+            // Flush Counts
+            $this->extractorHelper->pushCounts($myEvent->getWebScrapingRequest(), $filteredProducts->count(), $extractedProducts->count());
 
         }
 

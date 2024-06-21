@@ -45,6 +45,10 @@ class WebScrapingRequestListener
             $requestCacheHash = WebScrapingRequest::prepareCacheHash($webScrapingRequest);
             $webScrapingRequest->setCacheHash($requestCacheHash);
 
+            // Set Counts
+            $webScrapingRequest->setFilteredItemsCount(0);
+            $webScrapingRequest->setExtractedItemsCount(0);
+
         }
     }
 

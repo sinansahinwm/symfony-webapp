@@ -90,6 +90,14 @@ class WebScrapingRequestExtractorHelper
         return FALSE;
     }
 
+    public function pushCounts(WebScrapingRequest $webScrapingRequest, int $filteredItemsCount = 0, int $extractedItemsCount = 0): void
+    {
+        $webScrapingRequest->setFilteredItemsCount($filteredItemsCount);
+        $webScrapingRequest->setExtractedItemsCount($extractedItemsCount);
+        $this->entityManager->persist($webScrapingRequest);
+        $this->entityManager->flush();
+    }
+
     private function validateProductIdentity(Product $myProduct, Marketplace $marketplace): ConstraintViolationListInterface
     {
         $validationAsserts = [

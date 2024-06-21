@@ -12,6 +12,7 @@ class HepsiburadaProductExtractor
 {
 
     const VARIANT_IMAGE_SIZE = 600;
+    const EXTRACT_ALL_VARIANTS = FALSE;
 
     public function __construct(private WebScrapingRequestExtractorHelper $extractorHelper)
     {
@@ -44,13 +45,15 @@ class HepsiburadaProductExtractor
             // Flush Extracted Products
             $this->extractorHelper->pushProducts($extractedProducts, $myEvent->getMarketplace());
 
+            // Flush Counts
+            $this->extractorHelper->pushCounts($myEvent->getWebScrapingRequest(), $extractedProducts->count(), $extractedProducts->count());
+
         }
 
         // Extract Products With XHR Logs
         if (is_array($myXHRLog)) {
             // TODO : Extract Product With XHR
         }
-
 
     }
 
@@ -97,9 +100,14 @@ class HepsiburadaProductExtractor
                 $allProducts = $theData["products"];
                 if (is_array($allProducts)) {
                     foreach ($allProducts as $moriaProductData) {
+
+                        $productID = $moriaProductData["productId"];
+
+
                         if (isset($moriaProductData["variantList"])) {
                             // DEPRECED : This is main product identity $productIdentity = $moriaProductData["productId"];
                             $productVariantList = $moriaProductData["variantList"];
+
                             foreach ($productVariantList as $productVariant) {
 
                                 if (isset($productVariant["sku"]) && isset($productVariant["name"]) && isset($productVariant["images"]) && isset($productVariant["url"])) {
@@ -110,8 +118,11 @@ class HepsiburadaProductExtractor
                                     $variantURL = $this->fixVariantURL($productVariant["url"], $marketplace);
                                     $variantImage = $variantImageURLPlaceholder !== NULL ? str_replace('{size}', self::VARIANT_IMAGE_SIZE, $variantImageURLPlaceholder) : NULL;
 
+                                    // Check Var
+                                    $variantIsExtractable = self::EXTRACT_ALL_VARIANTS === TRUE || $productVariant["isDefault"] === TRUE;
+
                                     // Check Variables
-                                    if (strlen($variantIdentity) > 0 && strlen($variantName) > 0 && $variantURL !== NULL && $variantImage !== NULL) {
+                                    if (strlen($variantIdentity) > 0 && strlen($variantName) > 0 && $variantURL !== NULL && $variantImage !== NULL && $variantIsExtractable === TRUE) {
 
                                         // User Crawler And Create Product
                                         $myProduct = new Product();

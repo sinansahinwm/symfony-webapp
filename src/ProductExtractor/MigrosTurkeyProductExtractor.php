@@ -27,7 +27,8 @@ class MigrosTurkeyProductExtractor
             $extractedProducts = new ArrayCollection();
 
             // Focus Products
-            $myCrawler->filterXPath('//fe-product-image[@id="product-image"]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
+            $filteredProducts = $myCrawler->filterXPath('//fe-product-image[@id="product-image"]');
+            $filteredProducts->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Check Placeholder Image Exist
                 $containsPlaceholderImage = str_contains($crawler->outerHtml(), 'data:image/png;base64');
@@ -60,6 +61,9 @@ class MigrosTurkeyProductExtractor
 
             // Flush Extracted Products
             $this->extractorHelper->pushProducts($extractedProducts, $myEvent->getMarketplace());
+
+            // Flush Counts
+            $this->extractorHelper->pushCounts($myEvent->getWebScrapingRequest(), $filteredProducts->count(), $extractedProducts->count());
 
         }
 

@@ -27,7 +27,8 @@ class GratisProductExtractor
             $extractedProducts = new ArrayCollection();
 
             // Focus Products
-            $myCrawler->filterXPath('//div[contains(@class,"product-list-wrapper")]//app-custom-product-grid-item')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
+            $filteredProducts = $myCrawler->filterXPath('//div[contains(@class,"product-list-wrapper")]//app-custom-product-grid-item');
+            $filteredProducts->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Check Placeholder Exist
                 $crawlerPlaceholderExist = str_contains($crawler->outerHtml(), 'gratis-placeholder.svg');
@@ -60,6 +61,9 @@ class GratisProductExtractor
 
             // Flush Extracted Products
             $this->extractorHelper->pushProducts($extractedProducts, $myEvent->getMarketplace());
+
+            // Flush Counts
+            $this->extractorHelper->pushCounts($myEvent->getWebScrapingRequest(), $filteredProducts->count(), $extractedProducts->count());
 
         }
 

@@ -22,7 +22,13 @@
                 <!-- Status -->
                 <li class="nav-item" >
                     <button type="button" class="nav-link disabled" role="tab" data-bs-toggle="tab" data-bs-target="#navs-screenshot" aria-controls="navs-screenshot" aria-selected="true">
-                        <i class="bx bx-hash"></i> {{ webScrapingRequest.id }}
+                        <i class="bx bx-hash"></i>
+                        {{ webScrapingRequest.id }}
+                        {% if webScrapingRequest.filteredItemsCount is not same as(null) and webScrapingRequest.extractedItemsCount is not same as(null) %}
+                            <sup>
+                                {{ webScrapingRequest.filteredItemsCount }}/{{ webScrapingRequest.extractedItemsCount }}
+                            </sup>
+                        {% endif %}
                     </button>
                 </li>
 

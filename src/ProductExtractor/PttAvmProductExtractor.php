@@ -27,7 +27,8 @@ class PttAvmProductExtractor
             $extractedProducts = new ArrayCollection();
 
             // Focus Products
-            $myCrawler->filterXPath('//div[@data-v-3d8f1a36][@data-v-30d521fa][contains(@class,"product-list-box")]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
+            $filteredProducts = $myCrawler->filterXPath('//div[@data-v-3d8f1a36][@data-v-30d521fa][contains(@class,"product-list-box")]');
+            $filteredProducts->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Get Product Data
                 $productURL = $crawler->filterXPath('//a[@data-v-215483ec][@data-v-3d8f1a36]')->attr('href');
@@ -55,6 +56,9 @@ class PttAvmProductExtractor
 
             // Flush Extracted Products
             $this->extractorHelper->pushProducts($extractedProducts, $myEvent->getMarketplace());
+
+            // Flush Counts
+            $this->extractorHelper->pushCounts($myEvent->getWebScrapingRequest(), $filteredProducts->count(), $extractedProducts->count());
 
         }
 

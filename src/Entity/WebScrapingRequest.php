@@ -59,6 +59,12 @@ class WebScrapingRequest
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $cache_hash = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?int $filtered_items_count = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $extracted_items_count = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -252,6 +258,30 @@ class WebScrapingRequest
             $webScrapingRequest->getCompletedHandle() ?? 'NULL',
         ];
         return md5(implode("-", $hashParams));
+    }
+
+    public function getFilteredItemsCount(): ?int
+    {
+        return $this->filtered_items_count;
+    }
+
+    public function setFilteredItemsCount(?int $filtered_items_count): static
+    {
+        $this->filtered_items_count = $filtered_items_count;
+
+        return $this;
+    }
+
+    public function getExtractedItemsCount(): ?int
+    {
+        return $this->extracted_items_count;
+    }
+
+    public function setExtractedItemsCount(?int $extracted_items_count): static
+    {
+        $this->extracted_items_count = $extracted_items_count;
+
+        return $this;
     }
 
 }

@@ -27,7 +27,8 @@ class NElevenProductExtractor
             $extractedProducts = new ArrayCollection();
 
             // Focus Products
-            $myCrawler->filterXPath('//ul[contains(@class,"list-ul")]//li//div[contains(@class,"columnContent")]')->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
+            $filteredProducts = $myCrawler->filterXPath('//ul[contains(@class,"list-ul")]//li//div[contains(@class,"columnContent")]');
+            $filteredProducts->each(function (Crawler $crawler) use ($myEvent, $extractedProducts) {
 
                 // Get Product Data
                 $productIdentity = $this->fixIdentityProductWord($crawler->attr('id')); // example: 320349263
@@ -55,6 +56,9 @@ class NElevenProductExtractor
 
             // Flush Extracted Products
             $this->extractorHelper->pushProducts($extractedProducts, $myEvent->getMarketplace());
+
+            // Flush Counts
+            $this->extractorHelper->pushCounts($myEvent->getWebScrapingRequest(), $filteredProducts->count(), $extractedProducts->count());
 
         }
 
