@@ -67,7 +67,8 @@ class ProductTable extends TableAbstractController implements DataTableTypeInter
             'query' => function (QueryBuilder $builder) {
                 $builder
                     ->select('x')
-                    ->from(Product::class, 'x');
+                    ->from(Product::class, 'x')
+                    ->orderBy('x.created_at', 'DESC');
             },
         ]);
 
